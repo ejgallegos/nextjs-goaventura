@@ -3,7 +3,7 @@
 
 import { forwardRef, useState, ElementRef, ComponentPropsWithoutRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Added Image import
+import Image from 'next/image';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Sparkles, ShoppingCart } from 'lucide-react'; // Removed MountainSnow and X
+import { Menu, Sparkles, ShoppingCart } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -72,8 +72,7 @@ export default function Header() {
             alt="GoAventura Logo"
             width={183}
             height={40}
-            className="h-10 w-auto"
-            priority
+            className="h-10" 
           />
         </Link>
 
@@ -136,14 +135,13 @@ export default function Header() {
                 <Image
                   src="/logo.png"
                   alt="GoAventura Logo"
-                  width={128}
-                  height={28}
-                  className="h-7 w-auto"
-                  priority
+                  width={128} 
+                  height={28} 
+                  className="h-7" 
                 />
               </Link>
             </div>
-            <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]"> {/* Adjusted height to account for potential header/footer within sheet */}
+            <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]">
               <ul className="flex flex-col space-y-1 flex-grow">
                 {navLinks.map((link) => (
                   <li key={link.label}>
@@ -204,4 +202,3 @@ export default function Header() {
     </header>
   );
 }
-
