@@ -1,0 +1,43 @@
+import type { Product } from '@/lib/types';
+
+export const mockTransfers: Product[] = [
+  {
+    id: 'trn001',
+    name: 'Transfer Aeropuerto - Hotel Céntrico',
+    slug: 'transfer-aeropuerto-hotel',
+    description: 'Servicio de transfer privado desde el aeropuerto principal a tu hotel en la zona céntrica. Comodidad y puntualidad garantizadas.',
+    shortDescription: 'Privado desde aeropuerto a hotel céntrico.',
+    price: 40,
+    currency: 'USD',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'airport shuttle van',
+    category: 'Transfer',
+    tags: ['aeropuerto', 'hotel', 'privado', 'ciudad'],
+  },
+  {
+    id: 'trn002',
+    name: 'Transfer Hotel - Terminal de Cruceros',
+    slug: 'transfer-hotel-crucero',
+    description: 'Te llevamos desde tu hotel a la terminal de cruceros de forma rápida y segura. Empieza tus vacaciones sin preocupaciones.',
+    shortDescription: 'Desde hotel a terminal de cruceros.',
+    price: 35,
+    currency: 'USD',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'city transfer car',
+    category: 'Transfer',
+    tags: ['hotel', 'crucero', 'puerto', 'seguro'],
+  },
+  {
+    id: 'trn003',
+    name: 'Transfer Interurbano (Hasta 100km)',
+    slug: 'transfer-interurbano-100km',
+    description: 'Servicio de transfer interurbano para distancias de hasta 100km. Ideal para conectar ciudades cercanas o atracciones turísticas.',
+    shortDescription: 'Interurbano hasta 100km.',
+    price: 120,
+    currency: 'USD',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'minibus road',
+    category: 'Transfer',
+    tags: ['interurbano', 'distancia', 'flexible'],
+  },
+];

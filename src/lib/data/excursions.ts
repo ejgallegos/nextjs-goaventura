@@ -1,0 +1,43 @@
+import type { Product } from '@/lib/types';
+
+export const mockExcursions: Product[] = [
+  {
+    id: 'exc001',
+    name: 'Trekking al Cerro Encantado',
+    slug: 'trekking-cerro-encantado',
+    description: 'Una aventura inolvidable ascendiendo el místico Cerro Encantado. Disfruta de vistas panorámicas espectaculares y naturaleza pura. Apto para todos los niveles de experiencia.',
+    shortDescription: 'Ascenso al Cerro Encantado con vistas panorámicas.',
+    price: 75,
+    currency: 'USD',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'mountain landscape',
+    category: 'Excursion',
+    tags: ['trekking', 'montaña', 'naturaleza', 'aventura'],
+  },
+  {
+    id: 'exc002',
+    name: 'Kayak en el Lago Esmeralda',
+    slug: 'kayak-lago-esmeralda',
+    description: 'Explora las aguas cristalinas del Lago Esmeralda en kayak. Descubre calas escondidas y la fauna local en esta relajante excursión acuática.',
+    shortDescription: 'Explora el Lago Esmeralda en kayak.',
+    price: 50,
+    currency: 'USD',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'lake kayaking',
+    category: 'Excursion',
+    tags: ['kayak', 'lago', 'acuático', 'relax'],
+  },
+  {
+    id: 'exc003',
+    name: 'Cabalgata por el Valle Secreto',
+    slug: 'cabalgata-valle-secreto',
+    description: 'Recorre a caballo el pintoresco Valle Secreto, descubriendo paisajes únicos y conectando con la tradición local. Ideal para amantes de los caballos y la naturaleza.',
+    shortDescription: 'Paseo a caballo por el Valle Secreto.',
+    price: 90,
+    currency: 'USD',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'horse riding valley',
+    category: 'Excursion',
+    tags: ['cabalgata', 'valle', 'tradición', 'animales'],
+  },
+];
