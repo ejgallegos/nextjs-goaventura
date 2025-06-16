@@ -1,3 +1,4 @@
+
 export interface Product {
   id: string;
   name: string;
@@ -23,4 +24,13 @@ export interface BlogPost {
   imageUrl?: string;
   imageHint?: string;
   tags?: string[];
+}
+
+export interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  destination: string;
+  avatarUrl?: string; // Optional avatar for the author
+  avatarHint?: string; // Optional hint for AI avatar image
 }
