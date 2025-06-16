@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, forwardRef, type ElementRef, type ComponentPropsWithoutRef } from 'react';
+import { forwardRef, useState, type ElementRef, type ComponentPropsWithoutRef } from 'react';
 import Link from 'next/link';
 import {
   NavigationMenu,
@@ -14,8 +14,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Plane, X, MountainSnow, Users, BedDouble, Newspaper, Mail, ShoppingCart } from 'lucide-react';
-import Image from 'next/image';
+import { Menu, MountainSnow, Users, BedDouble, Newspaper, Mail, ShoppingCart, Sparkles, X } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -89,7 +88,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} legacyBehavior passHref>
+                  <Link href={link.href}>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -98,8 +97,9 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" legacyBehavior passHref>
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90")}>
+                <Link href="/ai/enhance-summary">
+                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90 flex items-center")}>
+                    <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
                   </NavigationMenuLink>
                 </Link>
@@ -122,7 +122,7 @@ export default function Header() {
               <span className="sr-only">Abrir menú</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm">
+          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0">
             <div className="flex justify-between items-center p-4 border-b">
               <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
                  <MountainSnow className="h-7 w-7 text-primary" />
@@ -133,17 +133,17 @@ export default function Header() {
                 <span className="sr-only">Cerrar menú</span>
               </Button>
             </div>
-            <nav className="flex flex-col space-y-2 p-4">
+            <nav className="flex flex-col space-y-1 p-4">
               {navLinks.map((link) =>
                 link.subLinks ? (
-                  <div key={link.label}>
-                    <span className="font-body text-lg font-medium text-foreground px-2 py-1">{link.label}</span>
-                    <ul className="pl-4">
+                  <div key={link.label} className="space-y-1 py-1">
+                    <span className="font-body text-base font-medium text-muted-foreground px-3 py-2 ">{link.label}</span>
+                    <ul className="pl-3 space-y-1">
                     {link.subLinks.map((subLink) => (
                       <li key={subLink.label}>
                         <Link
                           href={subLink.href}
-                          className="block rounded-md px-2 py-2 text-base font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                          className="block rounded-md px-3 py-2 text-base text-foreground hover:bg-accent hover:text-accent-foreground"
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           {subLink.label}
@@ -156,7 +156,7 @@ export default function Header() {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="block rounded-md px-2 py-2 text-lg font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.label}
@@ -165,14 +165,17 @@ export default function Header() {
               )}
                <Link
                   href="/ai/enhance-summary"
-                  className="block rounded-md px-2 py-2 text-lg font-medium bg-accent text-accent-foreground hover:bg-accent/90"
+                  className="flex items-center rounded-md px-3 py-2 text-base font-medium bg-accent text-accent-foreground hover:bg-accent/90"
                   onClick={() => setMobileMenuOpen(false)}
                 >
+                  <Sparkles className="mr-2 h-4 w-4" />
                   AI Summary
               </Link>
-              <Button variant="outline" size="icon" aria-label="Carrito" className="mt-4 w-full">
-                <ShoppingCart className="mr-2 h-5 w-5" /> Carrito
-              </Button>
+              <div className="pt-4 border-t mt-2">
+                <Button variant="outline" size="lg" aria-label="Carrito" className="w-full justify-start">
+                  <ShoppingCart className="mr-2 h-5 w-5" /> Carrito
+                </Button>
+              </div>
             </nav>
           </SheetContent>
         </Sheet>
