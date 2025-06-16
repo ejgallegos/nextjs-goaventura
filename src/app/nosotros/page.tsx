@@ -68,8 +68,8 @@ const AboutUsPage = () => {
         </section>
 
         <section className="text-center bg-secondary p-8 md:p-12 rounded-lg shadow-md">
-          <h2 className="font-headline text-3xl font-semibold text-foreground mb-4">¿Listo para tu Próxima Aventura?</h2>
-          <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+          <h2 className="font-headline text-3xl font-semibold text-secondary-foreground mb-4">¿Listo para tu Próxima Aventura?</h2>
+          <p className="text-secondary-foreground mb-6 max-w-xl mx-auto">
             Nuestro equipo de expertos está listo para ayudarte a planificar el viaje de tus sueños. Contáctanos hoy mismo.
           </p>
           <WhatsAppCtaButton
