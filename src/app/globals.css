@@ -8,85 +8,85 @@ code, pre {
 
 @layer base {
   :root {
-    --background: 210 27% 95.1%; /* Light Gray #F0F4F7 - Unchanged */
-    --foreground: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
+    --background: 210 27% 95.1%; /* #F0F4F7 (Original light gray - UNCHANGED) */
+    --foreground: 240 23% 15%;   /* #1e1e2f */
 
-    --card: 0 0% 100%; /* White cards - Unchanged */
-    --card-foreground: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 240 23% 15%; /* #1e1e2f */
 
-    --popover: 0 0% 100%; /* Unchanged */
-    --popover-foreground: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 240 23% 15%; /* #1e1e2f */
 
-    --primary: 180 91% 31%; /* Teal #059b9a - New */
-    --primary-foreground: 0 0% 100%; /* White - New */
+    --primary: 240 15% 39%;        /* #545473 */
+    --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 197 83% 22%; /* Dark Teal/Blue #095169 - New */
-    --secondary-foreground: 0 0% 100%; /* White - New */
+    --secondary: 240 13% 26%;      /* #3b3b4e */
+    --secondary-foreground: 0 0% 100%;/* White */
 
-    --muted: 210 25% 90%; /* Unchanged */
-    --muted-foreground: 210 10% 45%; /* Unchanged */
+    --muted: 240 25% 85%;          /* Light lavender, derived from #a7a7c8 */
+    --muted-foreground: 240 15% 39%; /* #545473 for text on muted */
 
-    --accent: 148 42% 52%; /* Green #53ba83 - New */
-    --accent-foreground: 148 80% 10%; /* Dark Green - New */
+    --accent: 240 14% 55%;         /* #7d7d9b */
+    --accent-foreground: 240 23% 15%;/* #1e1e2f for text on accent */
 
-    --destructive: 0 84.2% 60.2%; /* Unchanged */
+    --destructive: 0 84.2% 60.2%;    /* Unchanged */
     --destructive-foreground: 0 0% 98%; /* Unchanged */
 
-    --border: 197 50% 80%; /* New - Derived from new secondary */
-    --input: 0 0% 100%; /* White input background - Unchanged */
-    --ring: 180 91% 31%; /* Ring color matches new primary */
+    --border: 240 25% 80%;         /* Light lavender border, derived from #a7a7c8 */
+    --input: 0 0% 100%; /* White */
+    --ring: 240 15% 39%;           /* #545473 (matches primary) */
 
     --radius: 0.5rem; /* Unchanged */
 
-    /* Sidebar specific colors */
-    --sidebar-background: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
-    --sidebar-foreground: 0 0% 100%; /* White - New */
-    --sidebar-primary: 180 91% 31%; /* Teal #059b9a - New */
-    --sidebar-primary-foreground: 0 0% 100%; /* White - New */
-    --sidebar-accent: 148 42% 52%; /* Green #53ba83 - New */
-    --sidebar-accent-foreground: 148 80% 10%; /* Dark Green - New */
-    --sidebar-border: 247 70% 20%; /* New - Lighter shade of sidebar background */
-    --sidebar-ring: 180 91% 31%; /* Teal #059b9a - New */
+    /* Sidebar specific colors (consistent dark sidebar) */
+    --sidebar-background: 240 23% 15%; /* #1e1e2f */
+    --sidebar-foreground: 0 0% 100%;   /* White */
+    --sidebar-primary: 240 14% 55%;    /* #7d7d9b (as primary accent on dark sidebar) */
+    --sidebar-primary-foreground: 240 23% 10%; /* very dark for text on #7d7d9b */
+    --sidebar-accent: 240 25% 75%;     /* #a7a7c8 (as accent on dark sidebar) */
+    --sidebar-accent-foreground: 240 23% 15%; /* #1e1e2f for text on #a7a7c8 */
+    --sidebar-border: 240 13% 26%;    /* #3b3b4e */
+    --sidebar-ring: 240 14% 55%;       /* #7d7d9b (matches sidebar-primary) */
   }
 
   .dark {
-    --background: 210 10% 10%; /* Dark background for dark mode - Unchanged */
-    --foreground: 210 27% 90%; /* Lighter text for dark mode - Unchanged */
+    --background: 240 23% 15%;   /* #1e1e2f */
+    --foreground: 240 25% 75%;   /* #a7a7c8 */
 
-    --card: 210 10% 15%; /* Unchanged */
-    --card-foreground: 210 27% 90%; /* Unchanged */
+    --card: 240 13% 26%;         /* #3b3b4e */
+    --card-foreground: 240 25% 75%; /* #a7a7c8 */
 
-    --popover: 210 10% 15%; /* Unchanged */
-    --popover-foreground: 210 27% 90%; /* Unchanged */
+    --popover: 240 13% 26%;      /* #3b3b4e */
+    --popover-foreground: 240 25% 75%;/* #a7a7c8 */
 
-    --primary: 180 91% 31%; /* Teal #059b9a - New */
-    --primary-foreground: 0 0% 100%; /* White - New */
+    --primary: 240 14% 55%;        /* #7d7d9b */
+    --primary-foreground: 240 23% 10%; /* Very dark text on primary */
 
-    --secondary: 197 83% 22%; /* Dark Teal/Blue #095169 - New */
-    --secondary-foreground: 0 0% 100%; /* White - New */
+    --secondary: 240 15% 39%;      /* #545473 */
+    --secondary-foreground: 240 25% 85%;/* Lighter than #a7a7c8 for good contrast */
 
-    --muted: 210 10% 20%; /* Unchanged */
-    --muted-foreground: 210 10% 55%; /* Unchanged */
+    --muted: 240 13% 22%;          /* Darker than card background (e.g., #323241) */
+    --muted-foreground: 240 14% 65%; /* Lighter grayish purple (e.g., hsl(240, 14%, 65%)) */
 
-    --accent: 148 42% 52%; /* Green #53ba83 - New */
-    --accent-foreground: 148 80% 10%; /* Dark Green - New */
+    --accent: 240 25% 75%;         /* #a7a7c8 (lightest of the palette) */
+    --accent-foreground: 240 23% 15%;/* #1e1e2f (dark text on accent) */
 
-    --destructive: 0 62.8% 30.6%; /* Unchanged */
+    --destructive: 0 62.8% 30.6%;   /* Unchanged */
     --destructive-foreground: 0 0% 98%; /* Unchanged */
 
-    --border: 197 50% 30%; /* New - Darker version of light mode border */
-    --input: 210 10% 20%; /* Unchanged */
-    --ring: 180 91% 31%; /* Ring color matches new primary */
+    --border: 240 13% 35%;         /* Slightly lighter than card background for visibility */
+    --input: 240 13% 26%;          /* #3b3b4e (same as card background) */
+    --ring: 240 14% 55%;            /* #7d7d9b (matches dark primary) */
 
-    /* Sidebar specific colors for dark mode */
-    --sidebar-background: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
-    --sidebar-foreground: 0 0% 100%; /* White - New */
-    --sidebar-primary: 180 91% 31%; /* Teal #059b9a - New */
-    --sidebar-primary-foreground: 0 0% 100%; /* White - New */
-    --sidebar-accent: 148 42% 52%; /* Green #53ba83 - New */
-    --sidebar-accent-foreground: 148 80% 10%; /* Dark Green - New */
-    --sidebar-border: 247 70% 20%; /* New */
-    --sidebar-ring: 180 91% 31%; /* Teal #059b9a - New */
+    /* Sidebar specific colors for dark mode (same as light mode for consistent dark sidebar) */
+    --sidebar-background: 240 23% 15%; /* #1e1e2f */
+    --sidebar-foreground: 0 0% 100%;   /* White */
+    --sidebar-primary: 240 14% 55%;    /* #7d7d9b */
+    --sidebar-primary-foreground: 240 23% 10%;
+    --sidebar-accent: 240 25% 75%;     /* #a7a7c8 */
+    --sidebar-accent-foreground: 240 23% 15%;
+    --sidebar-border: 240 13% 26%;    /* #3b3b4e */
+    --sidebar-ring: 240 14% 55%;
   }
 }
 
