@@ -1,8 +1,7 @@
 
 "use client";
 
-import React, { useState, forwardRef } from 'react';
-import type { ElementRef, ComponentPropsWithoutRef } from 'react';
+import { useState, forwardRef, type ElementRef, type ComponentPropsWithoutRef } from 'react';
 import Link from 'next/link';
 import {
   NavigationMenu,
@@ -67,7 +66,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="container flex h-20 items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <MountainSnow className="h-8 w-8 text-primary" /> 
+          <MountainSnow className="h-8 w-8 text-primary" />
           <span className="font-headline text-2xl font-semibold text-primary">GoAventura</span>
         </Link>
 
@@ -107,7 +106,7 @@ export default function Header() {
               </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        
+
         <div className="hidden lg:flex items-center gap-2">
             <Button variant="ghost" size="icon" aria-label="Carrito">
                 <ShoppingCart className="h-5 w-5" />
