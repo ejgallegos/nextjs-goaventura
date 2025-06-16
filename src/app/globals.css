@@ -2,99 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: var(--font-alegreya), serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-belleza), sans-serif;
-}
-
 code, pre {
   font-family: var(--font-source-code-pro), monospace;
 }
 
 @layer base {
   :root {
-    --background: 210 27% 95.1%; /* Light Gray #F0F4F7 */
-    --foreground: 210 10% 23%; /* Darker gray for text */
+    --background: 210 27% 95.1%; /* Light Gray #F0F4F7 - Unchanged */
+    --foreground: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
 
-    --card: 0 0% 100%; /* White cards */
-    --card-foreground: 210 10% 23%; /* Darker gray text on cards */
+    --card: 0 0% 100%; /* White cards - Unchanged */
+    --card-foreground: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 10% 23%;
+    --popover: 0 0% 100%; /* Unchanged */
+    --popover-foreground: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
 
-    --primary: 197 78% 52%; /* Saturated Blue #29ABE2 */
-    --primary-foreground: 0 0% 100%; /* White for text on primary */
+    --primary: 180 91% 31%; /* Teal #059b9a - New */
+    --primary-foreground: 0 0% 100%; /* White - New */
 
-    --secondary: 210 25% 90%; /* Slightly darker light gray */
-    --secondary-foreground: 210 10% 23%;
+    --secondary: 197 83% 22%; /* Dark Teal/Blue #095169 - New */
+    --secondary-foreground: 0 0% 100%; /* White - New */
 
-    --muted: 210 25% 90%;
-    --muted-foreground: 210 10% 45%; /* Lighter gray for muted text */
+    --muted: 210 25% 90%; /* Unchanged */
+    --muted-foreground: 210 10% 45%; /* Unchanged */
 
-    --accent: 120 73.3% 75.1%; /* Vivid Green #90EE90 */
-    --accent-foreground: 120 60% 15%; /* Dark Green for text on accent */
+    --accent: 148 42% 52%; /* Green #53ba83 - New */
+    --accent-foreground: 148 80% 10%; /* Dark Green - New */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%; /* Unchanged */
+    --destructive-foreground: 0 0% 98%; /* Unchanged */
 
-    --border: 210 20% 85%; /* Slightly darker for borders */
-    --input: 0 0% 100%; /* White input background */
-    --ring: 197 78% 52%; /* Ring color matches primary */
+    --border: 197 50% 80%; /* New - Derived from new secondary */
+    --input: 0 0% 100%; /* White input background - Unchanged */
+    --ring: 180 91% 31%; /* Ring color matches new primary */
 
-    --radius: 0.5rem;
+    --radius: 0.5rem; /* Unchanged */
 
-    /* Sidebar specific colors - can be adjusted if sidebar style is different */
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 197 78% 52%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 120 73.3% 75.1%;
-    --sidebar-accent-foreground: 120 60% 15%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 197 78% 52%;
+    /* Sidebar specific colors */
+    --sidebar-background: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
+    --sidebar-foreground: 0 0% 100%; /* White - New */
+    --sidebar-primary: 180 91% 31%; /* Teal #059b9a - New */
+    --sidebar-primary-foreground: 0 0% 100%; /* White - New */
+    --sidebar-accent: 148 42% 52%; /* Green #53ba83 - New */
+    --sidebar-accent-foreground: 148 80% 10%; /* Dark Green - New */
+    --sidebar-border: 247 70% 20%; /* New - Lighter shade of sidebar background */
+    --sidebar-ring: 180 91% 31%; /* Teal #059b9a - New */
   }
 
   .dark {
-    --background: 210 10% 10%; /* Dark background for dark mode */
-    --foreground: 210 27% 90%; /* Lighter text for dark mode */
+    --background: 210 10% 10%; /* Dark background for dark mode - Unchanged */
+    --foreground: 210 27% 90%; /* Lighter text for dark mode - Unchanged */
 
-    --card: 210 10% 15%;
-    --card-foreground: 210 27% 90%;
+    --card: 210 10% 15%; /* Unchanged */
+    --card-foreground: 210 27% 90%; /* Unchanged */
 
-    --popover: 210 10% 15%;
-    --popover-foreground: 210 27% 90%;
+    --popover: 210 10% 15%; /* Unchanged */
+    --popover-foreground: 210 27% 90%; /* Unchanged */
 
-    --primary: 197 78% 52%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 180 91% 31%; /* Teal #059b9a - New */
+    --primary-foreground: 0 0% 100%; /* White - New */
 
-    --secondary: 210 10% 20%;
-    --secondary-foreground: 210 27% 90%;
+    --secondary: 197 83% 22%; /* Dark Teal/Blue #095169 - New */
+    --secondary-foreground: 0 0% 100%; /* White - New */
 
-    --muted: 210 10% 20%;
-    --muted-foreground: 210 10% 55%;
+    --muted: 210 10% 20%; /* Unchanged */
+    --muted-foreground: 210 10% 55%; /* Unchanged */
 
-    --accent: 120 73.3% 75.1%;
-    --accent-foreground: 120 60% 15%;
+    --accent: 148 42% 52%; /* Green #53ba83 - New */
+    --accent-foreground: 148 80% 10%; /* Dark Green - New */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%; /* Unchanged */
+    --destructive-foreground: 0 0% 98%; /* Unchanged */
 
-    --border: 210 10% 25%;
-    --input: 210 10% 20%;
-    --ring: 197 78% 52%;
+    --border: 197 50% 30%; /* New - Darker version of light mode border */
+    --input: 210 10% 20%; /* Unchanged */
+    --ring: 180 91% 31%; /* Ring color matches new primary */
 
     /* Sidebar specific colors for dark mode */
-    --sidebar-background: 210 10% 10%;
-    --sidebar-foreground: 210 27% 90%;
-    --sidebar-primary: 197 78% 52%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 120 73.3% 75.1%;
-    --sidebar-accent-foreground: 120 60% 15%;
-    --sidebar-border: 210 10% 25%;
-    --sidebar-ring: 197 78% 52%;
+    --sidebar-background: 247 79% 12%; /* Dark Blue/Purple #0c0636 - New */
+    --sidebar-foreground: 0 0% 100%; /* White - New */
+    --sidebar-primary: 180 91% 31%; /* Teal #059b9a - New */
+    --sidebar-primary-foreground: 0 0% 100%; /* White - New */
+    --sidebar-accent: 148 42% 52%; /* Green #53ba83 - New */
+    --sidebar-accent-foreground: 148 80% 10%; /* Dark Green - New */
+    --sidebar-border: 247 70% 20%; /* New */
+    --sidebar-ring: 180 91% 31%; /* Teal #059b9a - New */
   }
 }
 
@@ -104,6 +96,5 @@ code, pre {
   }
   body {
     @apply bg-background text-foreground;
-    /* Apply body font through tailwind.config.ts */
   }
 }
