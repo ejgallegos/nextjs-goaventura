@@ -72,7 +72,7 @@ export default function Header() {
             alt="GoAventura Logo"
             width={183}
             height={40}
-            className="h-10" 
+            className="h-15 w-auto" 
           />
         </Link>
 
