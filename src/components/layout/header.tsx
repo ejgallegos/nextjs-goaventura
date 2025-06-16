@@ -1,3 +1,4 @@
+
 "use client";
 
 import { forwardRef, useState, ElementRef, ComponentPropsWithoutRef } from 'react';
@@ -13,9 +14,9 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, MountainSnow, Sparkles, X, ShoppingCart } from 'lucide-react'; // Added ShoppingCart, X
+import { Menu, MountainSnow, Sparkles, X, ShoppingCart } from 'lucide-react';
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/theme-toggle"; // Added ThemeToggle
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -88,7 +89,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} legacyBehavior passHref>
+                  <Link href={link.href} asChild>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -97,7 +98,7 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" legacyBehavior passHref>
+                <Link href="/ai/enhance-summary" asChild>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90 flex items-center")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
@@ -122,18 +123,15 @@ export default function Header() {
               <span className="sr-only">Abrir menú</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0">
+          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0"> {/* SheetContent includes its own close button */}
             <div className="flex justify-between items-center p-4 border-b">
               <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
                  <MountainSnow className="h-7 w-7 text-primary" />
                 <span className="font-headline text-xl font-semibold text-primary">GoAventura</span>
               </Link>
-              <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
-                <X className="h-6 w-6" />
-                <span className="sr-only">Cerrar menú</span>
-              </Button>
+              {/* The explicit close button was here and is now removed to rely on SheetContent's default close button */}
             </div>
-            <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]"> {/* Adjusted height */}
+            <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]"> {/* Adjusted height to account for potential header/footer within sheet */}
               <ul className="flex flex-col space-y-1 flex-grow">
                 {navLinks.map((link) => (
                   <li key={link.label}>
@@ -178,8 +176,8 @@ export default function Header() {
                     </div>
                 </li>
               </ul>
-              <div className="mt-auto border-t pt-4 space-y-2">
-                 <div className="flex justify-between items-center px-3">
+              <div className="mt-auto border-t pt-4 space-y-2 px-2"> {/* Added px-2 for padding consistency */}
+                 <div className="flex justify-between items-center px-1"> {/* Adjusted padding */}
                     <span className="text-base font-medium text-foreground">Cambiar Tema</span>
                     <ThemeToggle />
                   </div>
@@ -194,3 +192,4 @@ export default function Header() {
     </header>
   );
 }
+
