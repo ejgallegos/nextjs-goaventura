@@ -1,4 +1,3 @@
-
 "use client";
 
 import { forwardRef, useState, ElementRef, ComponentPropsWithoutRef } from 'react';
@@ -14,8 +13,9 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, MountainSnow, Users, BedDouble, Newspaper, Mail, ShoppingCart, Sparkles, X } from 'lucide-react';
+import { Menu, MountainSnow, Sparkles, X, ShoppingCart } from 'lucide-react'; // Added ShoppingCart, X
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle"; // Added ThemeToggle
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -88,7 +88,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} asChild>
+                  <Link href={link.href} legacyBehavior passHref>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -97,7 +97,7 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" asChild>
+                <Link href="/ai/enhance-summary" legacyBehavior passHref>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90 flex items-center")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
@@ -111,6 +111,7 @@ export default function Header() {
             <Button variant="ghost" size="icon" aria-label="Carrito">
                 <ShoppingCart className="h-5 w-5" />
             </Button>
+            <ThemeToggle />
         </div>
 
         {/* Mobile Navigation */}
@@ -132,8 +133,8 @@ export default function Header() {
                 <span className="sr-only">Cerrar menú</span>
               </Button>
             </div>
-            <nav className="py-4 px-2">
-              <ul className="flex flex-col space-y-1">
+            <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]"> {/* Adjusted height */}
+              <ul className="flex flex-col space-y-1 flex-grow">
                 {navLinks.map((link) => (
                   <li key={link.label}>
                     {link.subLinks ? (
@@ -177,7 +178,11 @@ export default function Header() {
                     </div>
                 </li>
               </ul>
-              <div className="pt-4 border-t mt-4">
+              <div className="mt-auto border-t pt-4 space-y-2">
+                 <div className="flex justify-between items-center px-3">
+                    <span className="text-base font-medium text-foreground">Cambiar Tema</span>
+                    <ThemeToggle />
+                  </div>
                 <Button variant="outline" size="lg" aria-label="Carrito" className="w-full justify-start">
                   <ShoppingCart className="mr-2 h-5 w-5" /> Carrito
                 </Button>
@@ -189,5 +194,3 @@ export default function Header() {
     </header>
   );
 }
-
-    

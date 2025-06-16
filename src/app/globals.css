@@ -3,90 +3,90 @@
 @tailwind utilities;
 
 code, pre {
-  font-family: var(--font-source-code-pro), monospace;
+  font-family: var(--font-code), monospace;
 }
 
 @layer base {
   :root {
     --background: 210 27% 95.1%; /* #F0F4F7 (Original light gray - UNCHANGED) */
-    --foreground: 240 23% 15%;   /* #1e1e2f */
+    --foreground: 285 2% 14%;   /* #232325 (New "not so strong black") */
 
     --card: 0 0% 100%; /* White */
-    --card-foreground: 240 23% 15%; /* #1e1e2f */
+    --card-foreground: 285 2% 14%; /* New "not so strong black" */
 
     --popover: 0 0% 100%; /* White */
-    --popover-foreground: 240 23% 15%; /* #1e1e2f */
+    --popover-foreground: 285 2% 14%; /* New "not so strong black" */
 
-    --primary: 240 15% 39%;        /* #545473 */
+    --primary: 240 14% 55%;        /* #7d7d9b (Color 4) */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 240 13% 26%;      /* #3b3b4e */
+    --secondary: 240 15% 39%;      /* #545473 (Color 3) */
     --secondary-foreground: 0 0% 100%;/* White */
 
-    --muted: 240 25% 85%;          /* Light lavender, derived from #a7a7c8 */
-    --muted-foreground: 240 15% 39%; /* #545473 for text on muted */
+    --muted: 240 25% 90%;          /* Lighter than Color 5, e.g. hsl(240, 25%, 90%) */
+    --muted-foreground: 240 15% 39%; /* #545473 (Color 3) for text on muted */
 
-    --accent: 240 14% 55%;         /* #7d7d9b */
-    --accent-foreground: 240 23% 15%;/* #1e1e2f for text on accent */
+    --accent: 240 25% 75%;         /* #a7a7c8 (Color 5) */
+    --accent-foreground: 285 2% 14%;/* New "not so strong black" for text on accent */
 
     --destructive: 0 84.2% 60.2%;    /* Unchanged */
     --destructive-foreground: 0 0% 98%; /* Unchanged */
 
-    --border: 240 25% 80%;         /* Light lavender border, derived from #a7a7c8 */
+    --border: 240 14% 80%;         /* Lighter version of Color 4/5 for borders */
     --input: 0 0% 100%; /* White */
-    --ring: 240 15% 39%;           /* #545473 (matches primary) */
+    --ring: 240 14% 55%;           /* #7d7d9b (Color 4, matches primary) */
 
     --radius: 0.5rem; /* Unchanged */
 
     /* Sidebar specific colors (consistent dark sidebar) */
-    --sidebar-background: 240 23% 15%; /* #1e1e2f */
+    --sidebar-background: 240 23% 15%; /* #1e1e2f (Color 1) */
     --sidebar-foreground: 0 0% 100%;   /* White */
-    --sidebar-primary: 240 14% 55%;    /* #7d7d9b (as primary accent on dark sidebar) */
-    --sidebar-primary-foreground: 240 23% 10%; /* very dark for text on #7d7d9b */
-    --sidebar-accent: 240 25% 75%;     /* #a7a7c8 (as accent on dark sidebar) */
-    --sidebar-accent-foreground: 240 23% 15%; /* #1e1e2f for text on #a7a7c8 */
-    --sidebar-border: 240 13% 26%;    /* #3b3b4e */
-    --sidebar-ring: 240 14% 55%;       /* #7d7d9b (matches sidebar-primary) */
+    --sidebar-primary: 240 25% 75%;    /* #a7a7c8 (Color 5) */
+    --sidebar-primary-foreground: 240 23% 15%; /* #1e1e2f (Color 1) */
+    --sidebar-accent: 240 14% 55%;     /* #7d7d9b (Color 4) */
+    --sidebar-accent-foreground: 0 0% 100%; /* White */
+    --sidebar-border: 240 13% 26%;    /* #3b3b4e (Color 2) */
+    --sidebar-ring: 240 25% 75%;       /* #a7a7c8 (Color 5, matches sidebar-primary) */
   }
 
   .dark {
-    --background: 240 23% 15%;   /* #1e1e2f */
-    --foreground: 240 25% 75%;   /* #a7a7c8 */
+    --background: 240 23% 15%;   /* #1e1e2f (Color 1) */
+    --foreground: 240 25% 75%;   /* #a7a7c8 (Color 5) */
 
-    --card: 240 13% 26%;         /* #3b3b4e */
-    --card-foreground: 240 25% 75%; /* #a7a7c8 */
+    --card: 240 13% 26%;         /* #3b3b4e (Color 2) */
+    --card-foreground: 240 25% 75%; /* #a7a7c8 (Color 5) */
 
-    --popover: 240 13% 26%;      /* #3b3b4e */
-    --popover-foreground: 240 25% 75%;/* #a7a7c8 */
+    --popover: 240 13% 26%;      /* #3b3b4e (Color 2) */
+    --popover-foreground: 240 25% 75%;/* #a7a7c8 (Color 5) */
 
-    --primary: 240 14% 55%;        /* #7d7d9b */
-    --primary-foreground: 240 23% 10%; /* Very dark text on primary */
+    --primary: 240 25% 75%;        /* #a7a7c8 (Color 5) */
+    --primary-foreground: 240 23% 15%; /* #1e1e2f (Color 1) */
 
-    --secondary: 240 15% 39%;      /* #545473 */
-    --secondary-foreground: 240 25% 85%;/* Lighter than #a7a7c8 for good contrast */
+    --secondary: 240 14% 55%;      /* #7d7d9b (Color 4) */
+    --secondary-foreground: 0 0% 100%;/* White */
 
-    --muted: 240 13% 22%;          /* Darker than card background (e.g., #323241) */
-    --muted-foreground: 240 14% 65%; /* Lighter grayish purple (e.g., hsl(240, 14%, 65%)) */
+    --muted: 240 10% 20%;          /* Darker than Color 2 */
+    --muted-foreground: 240 14% 65%; /* Lighter than Color 4, grayish */
 
-    --accent: 240 25% 75%;         /* #a7a7c8 (lightest of the palette) */
-    --accent-foreground: 240 23% 15%;/* #1e1e2f (dark text on accent) */
+    --accent: 240 15% 39%;         /* #545473 (Color 3) */
+    --accent-foreground: 0 0% 100%;/* White */
 
     --destructive: 0 62.8% 30.6%;   /* Unchanged */
     --destructive-foreground: 0 0% 98%; /* Unchanged */
 
     --border: 240 13% 35%;         /* Slightly lighter than card background for visibility */
-    --input: 240 13% 26%;          /* #3b3b4e (same as card background) */
-    --ring: 240 14% 55%;            /* #7d7d9b (matches dark primary) */
+    --input: 240 13% 26%;          /* #3b3b4e (Color 2, same as card background) */
+    --ring: 240 25% 75%;            /* #a7a7c8 (Color 5, matches dark primary) */
 
     /* Sidebar specific colors for dark mode (same as light mode for consistent dark sidebar) */
-    --sidebar-background: 240 23% 15%; /* #1e1e2f */
+    --sidebar-background: 240 23% 15%; /* #1e1e2f (Color 1) */
     --sidebar-foreground: 0 0% 100%;   /* White */
-    --sidebar-primary: 240 14% 55%;    /* #7d7d9b */
-    --sidebar-primary-foreground: 240 23% 10%;
-    --sidebar-accent: 240 25% 75%;     /* #a7a7c8 */
-    --sidebar-accent-foreground: 240 23% 15%;
-    --sidebar-border: 240 13% 26%;    /* #3b3b4e */
-    --sidebar-ring: 240 14% 55%;
+    --sidebar-primary: 240 25% 75%;    /* #a7a7c8 (Color 5) */
+    --sidebar-primary-foreground: 240 23% 15%; /* #1e1e2f (Color 1) */
+    --sidebar-accent: 240 14% 55%;     /* #7d7d9b (Color 4) */
+    --sidebar-accent-foreground: 0 0% 100%; /* White */
+    --sidebar-border: 240 13% 26%;    /* #3b3b4e (Color 2) */
+    --sidebar-ring: 240 25% 75%;       /* #a7a7c8 (Color 5) */
   }
 }
 

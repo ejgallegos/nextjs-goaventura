@@ -12,7 +12,7 @@ export default {
       fontFamily: {
         body: ['Roboto', 'sans-serif'],
         headline: ['Roboto', 'sans-serif'],
-        code: ['Source Code Pro', 'monospace'],
+        code: ['monospace'], // Using a generic monospace
       },
       colors: {
         background: 'hsl(var(--background))',
