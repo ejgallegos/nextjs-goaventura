@@ -5,10 +5,11 @@ import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, Award, MessageSquareText, Users } from 'lucide-react';
+import { ArrowRight, Award, MessageSquareText, Users, BedDouble, HomeIcon, Mountain } from 'lucide-react';
 import Image from 'next/image';
-import TestimonialSlider from '@/components/testimonial-slider'; // Import the new slider
-import type { Testimonial } from '@/lib/types'; // Import Testimonial type
+import TestimonialSlider from '@/components/testimonial-slider';
+import type { Testimonial } from '@/lib/types';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 const mockTestimonials: Testimonial[] = [
   {
@@ -84,11 +85,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-12 lg:py-20 bg-secondary">
+      {/* Featured Accommodation Section */}
+      <section className="py-12 lg:py-20 bg-muted">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 lg:mb-12">
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-secondary-foreground">¿Por Qué Elegir GoAventura?</h2>
+            <BedDouble className="h-12 w-12 text-primary mx-auto mb-4" />
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">Alojamientos Destacados</h2>
+            <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Descansa en lugares únicos. Te presentamos una opción excepcional cerca del Parque Nacional Talampaya.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <Card className="max-w-2xl w-full shadow-xl overflow-hidden">
+              <CardHeader className="p-0">
+                <Image
+                  src="https://placehold.co/800x450.png"
+                  alt="Cabañas Altos del Talampaya"
+                  width={800}
+                  height={450}
+                  className="w-full h-64 object-cover"
+                  data-ai-hint="cabin mountains talampaya"
+                />
+              </CardHeader>
+              <CardContent className="p-6 text-center">
+                <Mountain className="h-10 w-10 text-accent mx-auto mb-3" />
+                <CardTitle className="font-headline text-2xl text-primary mb-2">Altos del Talampaya</CardTitle>
+                <CardDescription className="text-base text-muted-foreground mb-4">
+                  Disfruta de una estadía inolvidable en nuestras cabañas con vistas impresionantes al Parque Nacional Talampaya. Comodidad, naturaleza y aventura te esperan.
+                </CardDescription>
+              </CardContent>
+              <CardFooter className="p-6 pt-0 flex justify-center">
+                <Button size="lg" asChild variant="default">
+                  <Link href="/alojamientos">
+                    Explorar Alojamientos <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-12 lg:py-20 bg-background">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 lg:mb-12">
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">¿Por Qué Elegir GoAventura?</h2>
             <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
               Nos dedicamos a crear experiencias de viaje únicas y memorables para ti.
             </p>
@@ -120,10 +162,10 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-12 lg:py-20 bg-background">
+      <section className="py-12 lg:py-20 bg-secondary">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 lg:mb-12">
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">Lo Que Dicen Nuestros Viajeros</h2>
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-secondary-foreground">Lo Que Dicen Nuestros Viajeros</h2>
              <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
               Descubre por qué nuestros clientes aman viajar con GoAventura.
             </p>
@@ -133,7 +175,7 @@ export default function Home() {
       </section>
 
       {/* Trust Indicators Placeholder Section */}
-      <section className="py-8 lg:py-12 bg-secondary">
+      <section className="py-8 lg:py-12 bg-background"> {/* Changed background to contrast with testimonials */}
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-around items-center gap-8">
             <Image src="https://placehold.co/150x60.png" alt="Sello de Confianza" width={150} height={60} data-ai-hint="trust seal" className="opacity-70 hover:opacity-100 transition-opacity" />
