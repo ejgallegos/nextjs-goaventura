@@ -3,6 +3,7 @@
 
 import { forwardRef, useState, ElementRef, ComponentPropsWithoutRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Added Image import
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, MountainSnow, Sparkles, X, ShoppingCart } from 'lucide-react';
+import { Menu, Sparkles, ShoppingCart } from 'lucide-react'; // Removed MountainSnow and X
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -65,9 +66,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="container flex h-20 items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <MountainSnow className="h-8 w-8 text-primary" />
-          <span className="font-headline text-2xl font-semibold text-primary">GoAventura</span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.png"
+            alt="GoAventura Logo"
+            width={183}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -89,7 +96,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} asChild>
+                  <Link href={link.href} legacyBehavior passHref>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -98,7 +105,7 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" asChild>
+                <Link href="/ai/enhance-summary" legacyBehavior passHref>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90 flex items-center")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
@@ -123,13 +130,18 @@ export default function Header() {
               <span className="sr-only">Abrir menú</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0"> {/* SheetContent includes its own close button */}
+          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0">
             <div className="flex justify-between items-center p-4 border-b">
-              <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-                 <MountainSnow className="h-7 w-7 text-primary" />
-                <span className="font-headline text-xl font-semibold text-primary">GoAventura</span>
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
+                <Image
+                  src="/logo.png"
+                  alt="GoAventura Logo"
+                  width={128}
+                  height={28}
+                  className="h-7 w-auto"
+                  priority
+                />
               </Link>
-              {/* The explicit close button was here and is now removed to rely on SheetContent's default close button */}
             </div>
             <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]"> {/* Adjusted height to account for potential header/footer within sheet */}
               <ul className="flex flex-col space-y-1 flex-grow">
@@ -176,8 +188,8 @@ export default function Header() {
                     </div>
                 </li>
               </ul>
-              <div className="mt-auto border-t pt-4 space-y-2 px-2"> {/* Added px-2 for padding consistency */}
-                 <div className="flex justify-between items-center px-1"> {/* Adjusted padding */}
+              <div className="mt-auto border-t pt-4 space-y-2 px-2">
+                 <div className="flex justify-between items-center px-1">
                     <span className="text-base font-medium text-foreground">Cambiar Tema</span>
                     <ThemeToggle />
                   </div>

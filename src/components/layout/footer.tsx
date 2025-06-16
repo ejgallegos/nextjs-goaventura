@@ -1,6 +1,7 @@
 
 import Link from 'next/link';
-import { MountainSnow, Instagram, Facebook, Twitter, Youtube } from 'lucide-react'; // Removed Linkedin as it's not used
+import Image from 'next/image'; // Added Image import
+import { Instagram, Facebook, Twitter, Youtube } from 'lucide-react'; // Removed MountainSnow
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,12 +12,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {/* Logo and About */}
           <div className="md:col-span-1 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-               <MountainSnow className="h-8 w-8 text-sidebar-foreground" />
-              <span className="font-headline text-2xl font-semibold text-sidebar-foreground">GoAventura</span>
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/logo.png"
+                alt="GoAventura Logo"
+                width={183}
+                height={40}
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="text-sm text-sidebar-foreground/80">
-              Tu agencia de viajes de confianza. Exploramos el mundo contigo. Leg. 20019.
+              Tu agencia de viajes de confianza. Exploramos el mundo contigo.
             </p>
           </div>
 
