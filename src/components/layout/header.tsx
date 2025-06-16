@@ -88,7 +88,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} asChild>
+                  <Link href={link.href} legacyBehavior passHref>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -97,7 +97,7 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" asChild>
+                <Link href="/ai/enhance-summary" legacyBehavior passHref>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90 flex items-center")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
@@ -112,7 +112,6 @@ export default function Header() {
                 <ShoppingCart className="h-5 w-5" />
             </Button>
         </div>
-
 
         {/* Mobile Navigation */}
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -133,37 +132,39 @@ export default function Header() {
                 <span className="sr-only">Cerrar menú</span>
               </Button>
             </div>
-            <nav className="flex flex-col space-y-1 p-4">
-              {navLinks.map((link) =>
-                link.subLinks ? (
-                  <div key={link.label} className="space-y-1 py-1">
-                    <span className="font-body text-base font-medium text-muted-foreground px-3 py-2">{link.label}</span>
-                    <ul className="pl-3 space-y-1">
-                    {link.subLinks.map((subLink) => (
-                      <li key={subLink.label}>
-                        <Link
-                          href={subLink.href}
-                          className="block rounded-md px-3 py-2 text-base text-foreground hover:bg-accent hover:text-accent-foreground"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {subLink.label}
-                        </Link>
-                      </li>
-                    ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                )
-              )}
-              <div className="border-t pt-2 mt-2">
+            <nav className="py-4 px-2">
+              <div className="flex flex-col space-y-2">
+                {navLinks.map((link) =>
+                  link.subLinks ? (
+                    <div key={link.label} className="flex flex-col space-y-1">
+                      <span className="font-body text-base font-medium text-muted-foreground px-3 py-2">{link.label}</span>
+                      <ul className="pl-3 space-y-1">
+                      {link.subLinks.map((subLink) => (
+                        <li key={subLink.label}>
+                          <Link
+                            href={subLink.href}
+                            className="block rounded-md px-3 py-2 text-base text-foreground hover:bg-accent hover:text-accent-foreground"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {subLink.label}
+                          </Link>
+                        </li>
+                      ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="block rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  )
+                )}
+              </div>
+              <div className="border-t mt-4 pt-4">
                  <Link
                     href="/ai/enhance-summary"
                     className="flex items-center rounded-md px-3 py-2 text-base font-medium bg-accent text-accent-foreground hover:bg-accent/90"
@@ -173,7 +174,7 @@ export default function Header() {
                     AI Summary
                 </Link>
               </div>
-              <div className="pt-4 border-t mt-2">
+              <div className="pt-4 border-t mt-4">
                 <Button variant="outline" size="lg" aria-label="Carrito" className="w-full justify-start">
                   <ShoppingCart className="mr-2 h-5 w-5" /> Carrito
                 </Button>
