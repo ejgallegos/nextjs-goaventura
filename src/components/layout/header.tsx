@@ -72,7 +72,7 @@ export default function Header() {
             alt="GoAventura Logo"
             width={183}
             height={40}
-            className="h-10" 
+            className="h-15" 
           />
         </Link>
 
@@ -95,7 +95,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} asChild>
+                  <Link href={link.href} >
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base hover:bg-transparent")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -104,7 +104,7 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" asChild>
+                <Link href="/ai/enhance-summary" >
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base flex items-center hover:bg-transparent")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
