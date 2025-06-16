@@ -1,9 +1,9 @@
 
 "use client";
 
-import * as React from 'react'; // Added import for React
+import React, { useState, forwardRef } from 'react';
+import type { ElementRef, ComponentPropsWithoutRef } from 'react';
 import Link from 'next/link';
-import { useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Plane, X, MountainSnow, Users, BedDouble, Newspaper, Mail, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
-import { cn } from "@/lib/utils"; // Added import for cn
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -34,9 +34,9 @@ const navLinks = [
   { href: "/contacto", label: "Contacto" },
 ];
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a"> & { title: string }
+const ListItem = forwardRef<
+  ElementRef<"a">,
+  ComponentPropsWithoutRef<"a"> & { title: string }
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
