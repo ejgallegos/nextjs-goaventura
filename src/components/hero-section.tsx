@@ -1,22 +1,21 @@
-import Image from 'next/image';
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import WhatsAppCtaButton from './whatsapp-cta-button';
+import ImageSlider from './image-slider'; // Import the new slider
 import { ArrowRight } from 'lucide-react';
+
+const heroImages = [
+  { src: 'https://placehold.co/1920x1080.png', alt: 'Paisaje de aventura inspirador 1', hint: 'adventure landscape mountains' },
+  { src: 'https://placehold.co/1920x1080.png', alt: 'Paisaje de aventura inspirador 2', hint: 'serene beach sunset' },
+  { src: 'https://placehold.co/1920x1080.png', alt: 'Paisaje de aventura inspirador 3', hint: 'bustling city night' },
+];
 
 const HeroSection = () => {
   return (
     <div className="relative bg-secondary text-secondary-foreground py-16 sm:py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0">
-        <Image
-          src="https://placehold.co/1920x1080.png"
-          alt="Paisaje de aventura inspirador"
-          layout="fill"
-          objectFit="cover"
-          className="opacity-30"
-          priority
-          data-ai-hint="adventure landscape mountains"
-        />
+        <ImageSlider images={heroImages} className="h-full w-full" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
       </div>
       
