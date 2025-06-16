@@ -88,7 +88,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} legacyBehavior passHref>
+                  <Link href={link.href} asChild>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -97,7 +97,7 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" legacyBehavior passHref>
+                <Link href="/ai/enhance-summary" asChild>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90 flex items-center")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
@@ -137,7 +137,7 @@ export default function Header() {
               {navLinks.map((link) =>
                 link.subLinks ? (
                   <div key={link.label} className="space-y-1 py-1">
-                    <span className="font-body text-base font-medium text-muted-foreground px-3 py-2 ">{link.label}</span>
+                    <span className="font-body text-base font-medium text-muted-foreground px-3 py-2">{link.label}</span>
                     <ul className="pl-3 space-y-1">
                     {link.subLinks.map((subLink) => (
                       <li key={subLink.label}>
@@ -163,14 +163,16 @@ export default function Header() {
                   </Link>
                 )
               )}
-               <Link
-                  href="/ai/enhance-summary"
-                  className="flex items-center rounded-md px-3 py-2 text-base font-medium bg-accent text-accent-foreground hover:bg-accent/90"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  AI Summary
-              </Link>
+              <div className="border-t pt-2 mt-2">
+                 <Link
+                    href="/ai/enhance-summary"
+                    className="flex items-center rounded-md px-3 py-2 text-base font-medium bg-accent text-accent-foreground hover:bg-accent/90"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    AI Summary
+                </Link>
+              </div>
               <div className="pt-4 border-t mt-2">
                 <Button variant="outline" size="lg" aria-label="Carrito" className="w-full justify-start">
                   <ShoppingCart className="mr-2 h-5 w-5" /> Carrito
