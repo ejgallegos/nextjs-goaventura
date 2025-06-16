@@ -72,7 +72,7 @@ export default function Header() {
             alt="GoAventura Logo"
             width={183}
             height={40}
-            className="h-10 w-auto" 
+            className="h-10" 
           />
         </Link>
 
@@ -82,7 +82,7 @@ export default function Header() {
             {navLinks.map((link) =>
               link.subLinks ? (
                 <NavigationMenuItem key={link.label}>
-                  <NavigationMenuTrigger className="font-body text-base">{link.label}</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className={cn("font-body text-base hover:bg-transparent")}>{link.label}</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                       {link.subLinks.map((subLink) => (
@@ -96,7 +96,7 @@ export default function Header() {
               ) : (
                 <NavigationMenuItem key={link.label}>
                   <Link href={link.href} asChild>
-                    <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
+                    <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base hover:bg-transparent")}>
                       {link.label}
                     </NavigationMenuLink>
                   </Link>
@@ -105,7 +105,7 @@ export default function Header() {
             )}
              <NavigationMenuItem>
                 <Link href="/ai/enhance-summary" asChild>
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base flex items-center")}>
+                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base flex items-center hover:bg-transparent")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
                   </NavigationMenuLink>
