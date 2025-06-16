@@ -72,7 +72,7 @@ export default function Header() {
             alt="GoAventura Logo"
             width={183}
             height={40}
-            className="h-15 w-auto" 
+            className="h-10 w-auto" 
           />
         </Link>
 
@@ -95,7 +95,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} legacyBehavior passHref>
+                  <Link href={link.href} asChild>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -104,8 +104,8 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" legacyBehavior passHref>
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base bg-accent text-accent-foreground hover:bg-accent/90 flex items-center")}>
+                <Link href="/ai/enhance-summary" asChild>
+                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base flex items-center")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
                   </NavigationMenuLink>
@@ -177,7 +177,7 @@ export default function Header() {
                     <div className="border-t mt-3 pt-3">
                         <Link
                             href="/ai/enhance-summary"
-                            className="flex items-center rounded-md px-3 py-2 text-base font-medium bg-accent text-accent-foreground hover:bg-accent/90"
+                            className="flex items-center rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             <Sparkles className="mr-2 h-4 w-4" />
