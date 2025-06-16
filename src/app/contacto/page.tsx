@@ -1,9 +1,11 @@
+
 "use client"; // Required for form handling
 
-import { Metadata } from 'next';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import Image from 'next/image'; // Added import for Next.js Image component
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,15 +14,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone, MessageSquare } from 'lucide-react';
-import Link from 'next/link';
 
-// export const metadata: Metadata = { // Metadata needs to be exported from server components
-//   title: 'Contacto',
-//   description: 'Ponte en contacto con GoAventura. Estamos listos para ayudarte a planificar tu próxima aventura.',
-// };
-// For client components, handle title/meta differently or in a parent server component.
-// For now, we'll rely on the default title template or set it in a parent if this were a real app needing dynamic metadata here.
-
+// Removed Metadata import as it's not used in client components this way
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "El nombre debe tener al menos 2 caracteres." }),
@@ -171,8 +166,8 @@ const ContactPage = () => {
 
             {/* Placeholder for Map */}
             <div className="h-64 bg-muted rounded-lg flex items-center justify-center text-muted-foreground shadow-md">
-                <span>Mapa de ubicación (Placeholder)</span>
-                 <Image src="https://placehold.co/600x300.png?text=Mapa" alt="Mapa de ubicación" width={600} height={300} className="w-full h-full object-cover rounded-lg" data-ai-hint="map location" />
+                {/* <span>Mapa de ubicación (Placeholder)</span> Removed this span as image will cover it */}
+                 <Image src="https://placehold.co/600x300.png" alt="Mapa de ubicación" width={600} height={300} className="w-full h-full object-cover rounded-lg" data-ai-hint="map location" />
             </div>
           </div>
         </div>
