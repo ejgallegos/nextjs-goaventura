@@ -8,85 +8,85 @@ code, pre {
 
 @layer base {
   :root {
-    --background: 210 27% 95.1%; /* #F0F4F7 (Original light gray - UNCHANGED) */
-    --foreground: 212 51% 25%;   /* #1f3a61 (Color 1 - Dark Blue) */
+    --background: 210 8% 95%;    /* #f1f2f3 (Color 5) */
+    --foreground: 227 27% 14%;   /* #1a1e2d (Color 1) */
 
-    --card: 180 33% 95%; /* #f1f8f8 (Color 5 - Very Light Blue/Off-white) */
-    --card-foreground: 212 51% 25%; /* #1f3a61 (Color 1 - Dark Blue) */
+    --card: 210 8% 95%;          /* #f1f2f3 (Color 5) */
+    --card-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
 
-    --popover: 180 33% 95%; /* #f1f8f8 (Color 5) */
-    --popover-foreground: 212 51% 25%; /* #1f3a61 (Color 1) */
+    --popover: 210 8% 95%;       /* #f1f2f3 (Color 5) */
+    --popover-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
 
-    --primary: 204 38% 40%;        /* #3e6b8e (Color 2 - Medium Dark Blue) */
-    --primary-foreground: 180 33% 95%; /* #f1f8f8 (Color 5 - for text on primary) */
+    --primary: 214 19% 37%;        /* #4b5b71 (Color 2) */
+    --primary-foreground: 210 8% 95%; /* #f1f2f3 (Color 5 - for text on primary) */
 
-    --secondary: 201 30% 59%;      /* #74a1b9 (Color 3 - Medium Blue) */
-    --secondary-foreground: 180 33% 95%;/* #f1f8f8 (Color 5 - for text on secondary) */
+    --secondary: 208 25% 60%;      /* #809cb3 (Color 3) */
+    --secondary-foreground: 227 27% 14%;/* #1a1e2d (Color 1 - for text on secondary) */
 
-    --muted: 190 50% 92%;          /* #e0f1f5 (Lighter tint of Color 4's hue) */
-    --muted-foreground: 204 38% 40%; /* #3e6b8e (Color 2 - for text on muted) */
+    --muted: 197 48% 90%;          /* #e1f2f7 (Lighter tint of Color 4's hue) */
+    --muted-foreground: 214 19% 37%; /* #4b5b71 (Color 2 - for text on muted) */
 
-    --accent: 190 51% 76%;         /* #a3d7e0 (Color 4 - Light Blue) */
-    --accent-foreground: 212 51% 25%;/* #1f3a61 (Color 1 - for text on accent) */
+    --accent: 197 48% 76%;         /* #a3d0e0 (Color 4) */
+    --accent-foreground: 227 27% 14%;/* #1a1e2d (Color 1 - for text on accent) */
 
     --destructive: 0 84.2% 60.2%;    /* Unchanged */
     --destructive-foreground: 0 0% 98%; /* Unchanged */
 
-    --border: 190 50% 85%;         /* #c9e5ea (Slightly darker tint of Color 4 for borders) */
-    --input: 180 33% 95%; /* #f1f8f8 (Color 5 - matching card) */
-    --ring: 204 38% 40%;           /* #3e6b8e (Color 2 - matches primary) */
+    --border: 197 48% 70%;         /* #9ccbd9 (Slightly darker tint of Color 4 for borders) */
+    --input: 210 8% 95%;           /* #f1f2f3 (Color 5 - matching card) */
+    --ring: 214 19% 37%;           /* #4b5b71 (Color 2 - matches primary) */
 
     --radius: 0.5rem; /* Unchanged */
 
     /* Sidebar specific colors (consistent dark sidebar) */
-    --sidebar-background: 212 51% 25%; /* #1f3a61 (Color 1) */
-    --sidebar-foreground: 180 33% 95%;   /* #f1f8f8 (Color 5) */
-    --sidebar-primary: 190 51% 76%;    /* #a3d7e0 (Color 4) */
-    --sidebar-primary-foreground: 212 51% 25%; /* #1f3a61 (Color 1) */
-    --sidebar-accent: 201 30% 59%;     /* #74a1b9 (Color 3) */
-    --sidebar-accent-foreground: 180 33% 95%; /* #f1f8f8 (Color 5) */
-    --sidebar-border: 204 38% 30%;    /* #2b495e (Darker shade of Color 2) */
-    --sidebar-ring: 190 51% 76%;       /* #a3d7e0 (Color 4) */
+    --sidebar-background: 227 27% 14%; /* #1a1e2d (Color 1) */
+    --sidebar-foreground: 210 8% 95%;   /* #f1f2f3 (Color 5) */
+    --sidebar-primary: 197 48% 76%;    /* #a3d0e0 (Color 4) */
+    --sidebar-primary-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
+    --sidebar-accent: 208 25% 60%;     /* #809cb3 (Color 3) */
+    --sidebar-accent-foreground: 210 8% 95%; /* #f1f2f3 (Color 5) */
+    --sidebar-border: 214 19% 27%;    /* #364352 (Darker shade of Color 2) */
+    --sidebar-ring: 197 48% 76%;       /* #a3d0e0 (Color 4) */
   }
 
   .dark {
-    --background: 212 51% 25%;   /* #1f3a61 (Color 1 - Dark Blue) */
-    --foreground: 180 33% 95%;   /* #f1f8f8 (Color 5 - Very Light Blue/Off-white) */
+    --background: 227 27% 14%;   /* #1a1e2d (Color 1) */
+    --foreground: 210 8% 95%;   /* #f1f2f3 (Color 5) */
 
-    --card: 204 38% 30%;         /* #2b495e (Darker shade of Color 2) */
-    --card-foreground: 180 33% 95%; /* #f1f8f8 (Color 5) */
+    --card: 214 19% 27%;         /* #364352 (Darker shade of Color 2) */
+    --card-foreground: 210 8% 95%; /* #f1f2f3 (Color 5) */
 
-    --popover: 204 38% 30%;      /* #2b495e (Darker shade of Color 2) */
-    --popover-foreground: 180 33% 95%;/* #f1f8f8 (Color 5) */
+    --popover: 214 19% 27%;      /* #364352 (Darker shade of Color 2) */
+    --popover-foreground: 210 8% 95%;/* #f1f2f3 (Color 5) */
 
-    --primary: 190 51% 76%;        /* #a3d7e0 (Color 4 - Light Blue for pop) */
-    --primary-foreground: 212 51% 25%; /* #1f3a61 (Color 1 - for text on dark primary) */
+    --primary: 197 48% 76%;        /* #a3d0e0 (Color 4 - Light Blue for pop) */
+    --primary-foreground: 227 27% 14%; /* #1a1e2d (Color 1 - for text on dark primary) */
 
-    --secondary: 201 30% 59%;      /* #74a1b9 (Color 3 - Medium Blue) */
-    --secondary-foreground: 212 51% 25%;/* #1f3a61 (Color 1 - for text on dark secondary) */
+    --secondary: 208 25% 60%;      /* #809cb3 (Color 3) */
+    --secondary-foreground: 227 27% 14%;/* #1a1e2d (Color 1 - for text on dark secondary) */
 
-    --muted: 212 51% 20%;          /* #182c47 (Darker than background) */
-    --muted-foreground: 190 51% 70%; /* #9ccdd7 (Dimmer version of Color 4) */
+    --muted: 227 27% 10%;          /* #141720 (Darker than background) */
+    --muted-foreground: 197 48% 65%; /* #8fc3d1 (Dimmer version of Color 4) */
 
-    --accent: 201 30% 59%;         /* #74a1b9 (Color 3 - Medium Blue) */
-    --accent-foreground: 180 33% 95%;/* #f1f8f8 (Color 5 - for text on accent) */
+    --accent: 208 25% 60%;         /* #809cb3 (Color 3) */
+    --accent-foreground: 210 8% 95%;/* #f1f2f3 (Color 5 - for text on accent) */
 
     --destructive: 0 62.8% 30.6%;   /* Unchanged */
     --destructive-foreground: 0 0% 98%; /* Unchanged */
 
-    --border: 204 38% 32%;         /* #2f526a (Slightly lighter than dark card bg) */
-    --input: 204 38% 30%;          /* #2b495e (Darker shade of Color 2) */
-    --ring: 190 51% 76%;            /* #a3d7e0 (Color 4 - matches dark primary) */
+    --border: 214 19% 30%;         /* #3b4a5a (Slightly lighter than dark card bg) */
+    --input: 214 19% 27%;          /* #364352 (Darker shade of Color 2) */
+    --ring: 197 48% 76%;            /* #a3d0e0 (Color 4 - matches dark primary) */
 
     /* Sidebar specific colors for dark mode (same as light mode for consistent dark sidebar) */
-    --sidebar-background: 212 51% 25%; /* #1f3a61 (Color 1) */
-    --sidebar-foreground: 180 33% 95%;   /* #f1f8f8 (Color 5) */
-    --sidebar-primary: 190 51% 76%;    /* #a3d7e0 (Color 4) */
-    --sidebar-primary-foreground: 212 51% 25%; /* #1f3a61 (Color 1) */
-    --sidebar-accent: 201 30% 59%;     /* #74a1b9 (Color 3) */
-    --sidebar-accent-foreground: 180 33% 95%; /* #f1f8f8 (Color 5) */
-    --sidebar-border: 204 38% 30%;    /* #2b495e (Darker shade of Color 2) */
-    --sidebar-ring: 190 51% 76%;       /* #a3d7e0 (Color 4) */
+    --sidebar-background: 227 27% 14%; /* #1a1e2d (Color 1) */
+    --sidebar-foreground: 210 8% 95%;   /* #f1f2f3 (Color 5) */
+    --sidebar-primary: 197 48% 76%;    /* #a3d0e0 (Color 4) */
+    --sidebar-primary-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
+    --sidebar-accent: 208 25% 60%;     /* #809cb3 (Color 3) */
+    --sidebar-accent-foreground: 210 8% 95%; /* #f1f2f3 (Color 5) */
+    --sidebar-border: 214 19% 27%;    /* #364352 (Darker shade of Color 2) */
+    --sidebar-ring: 197 48% 76%;       /* #a3d0e0 (Color 4) */
   }
 }
 
