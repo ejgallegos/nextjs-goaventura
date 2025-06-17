@@ -6,9 +6,26 @@ import ImageSlider from './image-slider'; // Import the new slider
 import { ArrowRight } from 'lucide-react';
 
 const heroImages = [
-  { src: 'https://placehold.co/1920x1080.png', alt: 'Paisaje de aventura inspirador 1', hint: 'adventure landscape mountains' },
-  { src: 'https://placehold.co/1920x1080.png', alt: 'Paisaje de aventura inspirador 2', hint: 'serene beach sunset' },
-  { src: 'https://placehold.co/1920x1080.png', alt: 'Paisaje de aventura inspirador 3', hint: 'bustling city night' },
+	{
+		src: "/slider/lb-slider-3.png",
+		alt: "Paisaje de aventura inspirador 2",
+		hint: "serene beach sunset",
+	},
+	{
+    src: "/slider/slider-0.png",
+		alt: "Paisaje de aventura inspirador 1",
+		hint: "adventure landscape mountains",
+	},
+	{
+    src: "/slider/canon.png",
+		alt: "Paisaje de aventura inspirador 1",
+		hint: "adventure landscape mountains",
+	},
+  {
+    src: "/slider/zorro.png",
+    alt: "Paisaje de aventura inspirador 2",
+    hint: "serene beach sunset",
+  },
 ];
 
 const HeroSection = () => {
@@ -35,7 +52,7 @@ const HeroSection = () => {
           <WhatsAppCtaButton
             predefinedText="Hola, me gustaría obtener más información sobre los servicios de GoAventura."
             buttonText="Contactar por WhatsApp"
-            variant="accent"
+            variant="link"
             size="lg"
             className="shadow-lg transition-transform hover:scale-105"
           />

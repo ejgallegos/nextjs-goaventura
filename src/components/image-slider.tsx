@@ -48,7 +48,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, className }) => {
               alt={image.alt}
               layout="fill"
               objectFit="cover"
-              className="opacity-30" 
+              className="opacity-90" 
               priority={index === 0}
               data-ai-hint={image.hint}
             />
