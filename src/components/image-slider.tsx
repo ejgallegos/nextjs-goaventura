@@ -48,7 +48,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, className }) => {
               alt={image.alt}
               layout="fill"
               objectFit="cover"
-              className="brightness-90" // Removed opacity, added brightness filter
+              // className="brightness-90" // Removed brightness filter
               priority={index === 0}
               data-ai-hint={image.hint}
             />
@@ -60,3 +60,4 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, className }) => {
 };
 
 export default ImageSlider;
+
