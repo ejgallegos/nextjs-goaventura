@@ -33,7 +33,6 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, className }) => {
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
         spaceBetween={0}
         slidesPerView={1}
-        navigation
         pagination={{ clickable: true }}
         loop={true}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
@@ -48,7 +47,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, className }) => {
               alt={image.alt}
               layout="fill"
               objectFit="cover"
-              className="brightness-90" 
+                className="opacity-70" 
               priority={index === 0}
               data-ai-hint={image.hint}
             />
