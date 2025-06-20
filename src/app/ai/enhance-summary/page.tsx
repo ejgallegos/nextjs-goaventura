@@ -68,7 +68,7 @@ export default function EnhanceSummaryPage() {
 
   return (
     <>
-    <title>Mejorador de Resúmenes IA | GoAventura</title>
+    <title>Mejorador de Resúmenes IA | Go aventua</title>
     <div className="bg-background py-12 md:py-16">
       <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Card className="shadow-xl">

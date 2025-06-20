@@ -5,7 +5,7 @@ import { ArrowLeft, Cookie } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Política de Cookies',
-  description: 'Información sobre el uso de cookies en el sitio web de GoAventura.',
+  description: 'Información sobre el uso de cookies en el sitio web de Go aventua.',
 };
 
 export default function PoliticaCookiesPage() {
@@ -19,7 +19,7 @@ export default function PoliticaCookiesPage() {
         </header>
 
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-primary">
-          <p>Esta es la Política de Cookies para GoAventura, accesible desde https://goaventura.com.ar</p>
+          <p>Esta es la Política de Cookies para Go aventua, accesible desde https://goaventua.com.ar</p>
 
           <h2>¿Qué Son las Cookies?</h2>
           <p>Como es práctica común en casi todos los sitios web profesionales, este sitio utiliza cookies, que son pequeños archivos que se descargan en tu computadora, para mejorar tu experiencia. Esta página describe qué información recopilan, cómo la usamos y por qué a veces necesitamos almacenar estas cookies. También compartiremos cómo puedes evitar que estas cookies se almacenen, sin embargo, esto puede degradar o 'romper' ciertos elementos de la funcionalidad del sitio.</p>
@@ -53,9 +53,9 @@ export default function PoliticaCookiesPage() {
           
           <h2>Más Información</h2>
           <p>Esperamos que esto haya aclarado las cosas para ti y, como se mencionó anteriormente, si hay algo de lo que no estás seguro si necesitas o no, generalmente es más seguro dejar las cookies habilitadas en caso de que interactúe con una de las funciones que utilizas en nuestro sitio.</p>
-          <p>Sin embargo, si aún buscas más información, puedes contactarnos a través de uno de nuestros métodos de contacto preferidos: Correo electrónico: info@goaventura.com.ar</p>
+          <p>Sin embargo, si aún buscas más información, puedes contactarnos a través de uno de nuestros métodos de contacto preferidos: Correo electrónico: info@goaventua.com.ar</p>
           
-          <p className="mt-8 font-semibold">Por favor, reemplaza este contenido de ejemplo con la política de cookies real y legalmente compatible de GoAventura.</p>
+          <p className="mt-8 font-semibold">Por favor, reemplaza este contenido de ejemplo con la política de cookies real y legalmente compatible de Go aventua.</p>
         </div>
 
         <div className="mt-12 text-center">

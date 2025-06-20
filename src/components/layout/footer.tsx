@@ -15,7 +15,7 @@ const Footer = () => {
 						<Link href="/" className="inline-block mb-4">
 							<Image
 								src="/logo.png"
-								alt="GoAventura Logo"
+								alt="Go aventua Logo"
 								width={183}
 								height={40}
 								className="h-15 w-auto"
@@ -169,7 +169,7 @@ const Footer = () => {
 
 				<div className="mt-12 border-t border-sidebar-border/50 pt-8 text-center">
 					<p className="text-sm text-sidebar-foreground/80">
-						&copy; {currentYear} GoAventura. Todos los derechos
+						&copy; {currentYear} Go aventua. Todos los derechos
 						reservados.
 					</p>
 				</div>

@@ -5,7 +5,7 @@ import { ArrowLeft, FileText } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones',
-  description: 'Lee los términos y condiciones de uso de los servicios de GoAventura.',
+  description: 'Lee los términos y condiciones de uso de los servicios de Go aventua.',
 };
 
 export default function TerminosPage() {
@@ -19,37 +19,37 @@ export default function TerminosPage() {
         </header>
 
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-primary">
-          <p>Bienvenido a GoAventura. Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web de GoAventura.</p>
+          <p>Bienvenido a Go aventua. Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web de Go aventua.</p>
 
           <h2>1. Aceptación de los Términos</h2>
-          <p>Al acceder a este sitio web, asumimos que aceptas estos términos y condiciones en su totalidad. No continúes usando el sitio web de GoAventura si no aceptas todos los términos y condiciones establecidos en esta página.</p>
+          <p>Al acceder a este sitio web, asumimos que aceptas estos términos y condiciones en su totalidad. No continúes usando el sitio web de Go aventua si no aceptas todos los términos y condiciones establecidos en esta página.</p>
 
           <h2>2. Licencia</h2>
-          <p>A menos que se indique lo contrario, GoAventura y/o sus licenciantes poseen los derechos de propiedad intelectual de todo el material en GoAventura. Todos los derechos de propiedad intelectual son reservados. Puedes ver y/o imprimir páginas desde https://goaventura.com.ar para tu uso personal sujeto a las restricciones establecidas en estos términos y condiciones.</p>
+          <p>A menos que se indique lo contrario, Go aventua y/o sus licenciantes poseen los derechos de propiedad intelectual de todo el material en Go aventua. Todos los derechos de propiedad intelectual son reservados. Puedes ver y/o imprimir páginas desde https://goaventua.com.ar para tu uso personal sujeto a las restricciones establecidas en estos términos y condiciones.</p>
           <p>No debes:</p>
           <ul>
-            <li>Republicar material de https://goaventura.com.ar</li>
-            <li>Vender, alquilar o sublicenciar material de https://goaventura.com.ar</li>
-            <li>Reproducir, duplicar o copiar material de https://goaventura.com.ar</li>
-            <li>Redistribuir contenido de GoAventura (a menos que el contenido esté específicamente hecho para la redistribución).</li>
+            <li>Republicar material de https://goaventua.com.ar</li>
+            <li>Vender, alquilar o sublicenciar material de https://goaventua.com.ar</li>
+            <li>Reproducir, duplicar o copiar material de https://goaventua.com.ar</li>
+            <li>Redistribuir contenido de Go aventua (a menos que el contenido esté específicamente hecho para la redistribución).</li>
           </ul>
 
           <h2>3. Reservas y Pagos</h2>
-          <p>[Detalles sobre el proceso de reserva, políticas de pago, cancelación, reembolsos, etc. ESTE ES UN CONTENIDO DE EJEMPLO Y DEBE SER REEMPLAZADO POR LOS TÉRMINOS REALES DE GOAVENTURA.]</p>
+          <p>[Detalles sobre el proceso de reserva, políticas de pago, cancelación, reembolsos, etc. ESTE ES UN CONTENIDO DE EJEMPLO Y DEBE SER REEMPLAZADO POR LOS TÉRMINOS REALES DE Go aventua.]</p>
           
           <h2>4. Responsabilidad del Usuario</h2>
           <p>[Información sobre lo que se espera de los usuarios, comportamiento, información proporcionada, etc. ESTE ES UN CONTENIDO DE EJEMPLO.]</p>
 
           <h2>5. Limitación de Responsabilidad</h2>
-          <p>[Cláusulas sobre la limitación de responsabilidad de GoAventura. ESTE ES UN CONTENIDO DE EJEMPLO.]</p>
+          <p>[Cláusulas sobre la limitación de responsabilidad de Go aventua. ESTE ES UN CONTENIDO DE EJEMPLO.]</p>
 
           <h2>6. Modificaciones de los Términos</h2>
-          <p>GoAventura se reserva el derecho de revisar estos términos y condiciones en cualquier momento. Al usar este sitio web, se espera que revises estos términos de forma regular para asegurarte de que comprendes todos los términos y condiciones que rigen el uso de este sitio web.</p>
+          <p>Go aventua se reserva el derecho de revisar estos términos y condiciones en cualquier momento. Al usar este sitio web, se espera que revises estos términos de forma regular para asegurarte de que comprendes todos los términos y condiciones que rigen el uso de este sitio web.</p>
 
           <h2>7. Ley Aplicable</h2>
           <p>Estos términos se regirán e interpretarán de acuerdo con las leyes de Argentina, y te sometes irrevocablemente a la jurisdicción exclusiva de los tribunales en esa Estado o ubicación.</p>
 
-          <p className="mt-8 font-semibold">Por favor, reemplaza este contenido de ejemplo con los términos y condiciones legales reales de GoAventura.</p>
+          <p className="mt-8 font-semibold">Por favor, reemplaza este contenido de ejemplo con los términos y condiciones legales reales de Go aventua.</p>
         </div>
 
         <div className="mt-12 text-center">

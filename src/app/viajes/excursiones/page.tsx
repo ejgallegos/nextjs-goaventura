@@ -5,7 +5,7 @@ import type { Product } from '@/lib/types';
 
 export const metadata: Metadata = {
   title: 'Excursiones',
-  description: 'Descubre nuestra selección de emocionantes excursiones. Aventura y naturaleza te esperan con GoAventura.',
+  description: 'Descubre nuestra selección de emocionantes excursiones. Aventura y naturaleza te esperan con Go aventua.',
 };
 
 // This function would typically fetch data in a real app

@@ -5,7 +5,7 @@ import type { Product } from '@/lib/types';
 
 export const metadata: Metadata = {
   title: 'Transfers',
-  description: 'Servicios de transfer cómodos y seguros para tus viajes. GoAventura te lleva a tu destino.',
+  description: 'Servicios de transfer cómodos y seguros para tus viajes. Go aventua te lleva a tu destino.',
 };
 
 async function getTransfers(): Promise<Product[]> {
