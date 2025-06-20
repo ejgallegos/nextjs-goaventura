@@ -74,7 +74,7 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="relative aspect-video md:aspect-auto min-h-[300px] md:min-h-[500px] rounded-lg overflow-hidden shadow-xl">
+          <div className="relative aspect-video md:h-[500px] rounded-lg overflow-hidden shadow-xl">
             {excursion.imageGallery && excursion.imageGallery.length > 0 ? (
               <ImageSlider images={excursion.imageGallery} className="w-full h-full" />
             ) : (
