@@ -2,12 +2,40 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { BedDouble, ExternalLink } from 'lucide-react';
-import Image from 'next/image';
+import ImageSlider from '@/components/image-slider';
 
 export const metadata: Metadata = {
   title: 'Alojamientos',
   description: 'Encuentra el alojamiento perfecto para tu viaje. Colaboramos con los mejores proveedores.',
 };
+
+const accommodationImages = [
+  {
+    src: "https://placehold.co/600x300.png",
+    alt: "Hotel moderno con piscina",
+    hint: "modern hotel pool",
+  },
+  {
+    src: "https://placehold.co/600x300.png",
+    alt: "Apartamento acogedor con vistas a la ciudad",
+    hint: "cozy apartment city view",
+  },
+  {
+    src: "https://placehold.co/600x300.png",
+    alt: "Cabaña rústica en el bosque",
+    hint: "rustic cabin forest",
+  },
+  {
+    src: "https://placehold.co/600x300.png",
+    alt: "Lobby de hotel de lujo",
+    hint: "luxury hotel lobby",
+  },
+  {
+    src: "https://placehold.co/600x300.png",
+    alt: "Habitación de hotel con cama grande",
+    hint: "hotel room king bed",
+  },
+];
 
 const AlojamientosPage = () => {
   const externalAccommodationLink = "#"; // Replace with actual external link or subdomain
@@ -23,14 +51,9 @@ const AlojamientosPage = () => {
         </p>
         
         <div className="max-w-md mx-auto bg-card p-8 rounded-lg shadow-xl">
-            <Image 
-                src="https://placehold.co/600x300.png"
-                alt="Imagen de alojamientos variados"
-                width={600}
-                height={300}
-                className="rounded-md mb-6"
-                data-ai-hint="hotel booking collage"
-            />
+            <div className="rounded-lg overflow-hidden mb-6 aspect-video">
+                <ImageSlider images={accommodationImages} className="w-full h-full" />
+            </div>
           <p className="text-muted-foreground mb-6">
             Serás redirigido a nuestro portal de alojamientos asociado para completar tu búsqueda y reserva.
           </p>
