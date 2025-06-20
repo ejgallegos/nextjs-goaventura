@@ -20,15 +20,6 @@ const AboutUsPage = () => {
         </header>
 
         <section className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16">
-          <div>
-            <h2 className="font-headline text-3xl font-semibold text-foreground mb-4">Nuestra Historia</h2>
-            <p className="text-muted-foreground mb-4 leading-relaxed">
-              Go aventura nació de la pasión por explorar y compartir las maravillas del mundo. Desde nuestros inicios, nos hemos dedicado a diseñar itinerarios que van más allá de lo convencional, ofreciendo a nuestros viajeros autenticidad, aventura y un servicio excepcional. Creemos que viajar es una forma de crecer, aprender y conectar con otras culturas y con la naturaleza.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Con años de experiencia en la industria del turismo y un profundo conocimiento de los destinos que ofrecemos, nuestro equipo está comprometido con la excelencia y la satisfacción de cada cliente. Nos enorgullece ser parte de tus recuerdos más preciados.
-            </p>
-          </div>
           <div className="rounded-lg overflow-hidden shadow-xl">
             <Image
               src="https://placehold.co/600x400.png"
@@ -38,6 +29,15 @@ const AboutUsPage = () => {
               className="w-full h-auto object-cover"
               data-ai-hint="travel agency team"
             />
+          </div>
+          <div>
+            <h2 className="font-headline text-3xl font-semibold text-foreground mb-4">Nuestra Historia</h2>
+            <p className="text-muted-foreground mb-4 leading-relaxed">
+              Go aventura nació de la pasión por explorar y compartir las maravillas del mundo. Desde nuestros inicios, nos hemos dedicado a diseñar itinerarios que van más allá de lo convencional, ofreciendo a nuestros viajeros autenticidad, aventura y un servicio excepcional. Creemos que viajar es una forma de crecer, aprender y conectar con otras culturas y con la naturaleza.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Con años de experiencia en la industria del turismo y un profundo conocimiento de los destinos que ofrecemos, nuestro equipo está comprometido con la excelencia y la satisfacción de cada cliente. Nos enorgullece ser parte de tus recuerdos más preciados.
+            </p>
           </div>
         </section>
 
