@@ -95,7 +95,7 @@ export default function Header() {
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label}>
-                  <Link href={link.href} >
+                  <Link href={link.href} legacyBehavior passHref>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base hover:bg-transparent")}>
                       {link.label}
                     </NavigationMenuLink>
@@ -104,7 +104,7 @@ export default function Header() {
               )
             )}
              <NavigationMenuItem>
-                <Link href="/ai/enhance-summary" >
+                <Link href="/ai/enhance-summary" legacyBehavior passHref>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-body text-base flex items-center hover:bg-transparent")}>
                     <Sparkles className="mr-2 h-4 w-4" />
                     AI Summary
