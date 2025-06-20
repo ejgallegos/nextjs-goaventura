@@ -34,5 +34,12 @@ Al mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Lueg
     imageHint: 'lagoon mountains andes',
     category: 'Excursion',
     tags: ['Día Completo', '4x4', 'Fauna', 'Cordillera', 'Aventura'],
+    imageGallery: [
+      { src: 'https://placehold.co/800x600.png', alt: 'Paisaje 1 de Laguna Brava', hint: 'andes lagoon landscape' },
+      { src: 'https://placehold.co/800x600.png', alt: 'Vicuñas en Laguna Brava', hint: 'vicunas wildlife andes' },
+      { src: 'https://placehold.co/800x600.png', alt: 'Refugio en la montaña', hint: 'mountain shelter stone' },
+      { src: 'https://placehold.co/800x600.png', alt: 'Camioneta 4x4 en la cordillera', hint: '4x4 truck mountains' },
+      { src: 'https://placehold.co/800x600.png', alt: 'Flamencos en la laguna', hint: 'flamingos lagoon' },
+    ],
   },
 ];

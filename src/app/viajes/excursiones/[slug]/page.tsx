@@ -8,6 +8,7 @@ import { ArrowLeft, CalendarDays, DollarSign, Tag, Info } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
+import ImageSlider from '@/components/image-slider';
 
 interface ExcursionDetailPageProps {
   params: { slug: string };
@@ -72,16 +73,20 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="relative aspect-video md:aspect-auto md:h-full rounded-lg overflow-hidden shadow-xl">
-            <Image
-              src={excursion.imageUrl}
-              alt={`Imagen de ${excursion.name}`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              priority
-              data-ai-hint={excursion.imageHint}
-            />
+          <div className="relative aspect-video md:aspect-auto min-h-[300px] md:min-h-[500px] rounded-lg overflow-hidden shadow-xl">
+            {excursion.imageGallery && excursion.imageGallery.length > 0 ? (
+              <ImageSlider images={excursion.imageGallery} className="w-full h-full" />
+            ) : (
+              <Image
+                src={excursion.imageUrl}
+                alt={`Imagen de ${excursion.name}`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                priority
+                data-ai-hint={excursion.imageHint}
+              />
+            )}
           </div>
 
           <div className="space-y-6">

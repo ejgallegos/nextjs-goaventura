@@ -11,6 +11,7 @@ export interface Product {
   imageHint?: string; // For AI placeholder image search
   category: 'Excursion' | 'Transfer';
   tags?: string[];
+  imageGallery?: { src: string; alt: string; hint: string; }[];
 }
 
 export interface BlogPost {
