@@ -105,10 +105,6 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
             {excursion.shortDescription && (
               <p className="text-lg text-muted-foreground">{excursion.shortDescription}</p>
             )}
-            
-            <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground">
-              <ReactMarkdown>{excursion.description}</ReactMarkdown>
-            </div>
 
             {excursion.tags && excursion.tags.length > 0 && (
               <div>
@@ -132,6 +128,12 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
                 </Link>
               </Button>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-12 lg:mt-16 pt-8 border-t">
+          <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground">
+            <ReactMarkdown>{excursion.description}</ReactMarkdown>
           </div>
         </div>
       </div>
