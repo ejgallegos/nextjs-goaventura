@@ -82,7 +82,7 @@ export default async function TransferDetailPage({ params }: TransferDetailPageP
           </div>
 
           <div className="space-y-6">
-            <h1 className="font-headline text-3xl sm:text-4xl font-bold text-primary">{transfer.name}</h1>
+            <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{transfer.name}</h1>
             
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{transfer.category}</Badge>

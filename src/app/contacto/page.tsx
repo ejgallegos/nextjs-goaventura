@@ -59,7 +59,7 @@ const ContactPage = () => {
     <div className="bg-background py-12 md:py-16">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-12 md:mb-16">
-          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-primary">Ponte en Contacto</h1>
+          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Ponte en Contacto</h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             ¿Tienes preguntas o estás listo para planificar tu aventura? ¡Estamos aquí para ayudarte!
           </p>

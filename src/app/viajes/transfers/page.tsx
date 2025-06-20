@@ -19,7 +19,7 @@ export default async function TransfersPage() {
     <div className="bg-background py-12 md:py-16">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-10 md:mb-12">
-          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-primary">Transfers Confiables</h1>
+          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Transfers Confiables</h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             Viaja con tranquilidad. Ofrecemos transfers eficientes y seguros para aeropuertos, hoteles y más.
           </p>

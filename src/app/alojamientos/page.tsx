@@ -44,7 +44,7 @@ const AlojamientosPage = () => {
     <div className="bg-background py-12 md:py-16">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <BedDouble className="h-16 w-16 text-primary mx-auto mb-6" />
-        <h1 className="font-headline text-4xl sm:text-5xl font-bold text-primary mb-6">Encuentra tu Alojamiento Ideal</h1>
+        <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground mb-6">Encuentra tu Alojamiento Ideal</h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
           Para ofrecerte la mejor selección y precios en alojamientos, colaboramos con plataformas especializadas.
           Haz clic en el botón de abajo para explorar una amplia gama de hoteles, apartamentos y más.

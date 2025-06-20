@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <ArrowLeft className="inline-block mr-1 h-4 w-4" /> Volver al Blog
             </Link>
           </div>
-          <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-4">{post.title}</h1>
+          <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">{post.title}</h1>
           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
             <div className="flex items-center">
               <CalendarDays className="mr-1.5 h-4 w-4" />
@@ -108,7 +108,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Using dangerouslySetInnerHTML for mock Markdown content. In a real app, use a Markdown parser like react-markdown. */}
         <div 
-            className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-primary prose-a:text-accent prose-strong:text-foreground"
+            className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground"
             dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }} // Basic replacement for newlines
         />
         

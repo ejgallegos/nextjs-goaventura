@@ -14,11 +14,11 @@ export default function TerminosPage() {
       <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-10 md:mb-12">
           <FileText className="h-16 w-16 text-primary mx-auto mb-4" />
-          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-primary">Términos y Condiciones</h1>
+          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Términos y Condiciones</h1>
           <p className="mt-4 text-lg text-muted-foreground">Última actualización: {new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
         </header>
 
-        <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-primary">
+        <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground">
           <p>Bienvenido a Go aventura. Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web de Go aventura.</p>
 
           <h2>1. Aceptación de los Términos</h2>

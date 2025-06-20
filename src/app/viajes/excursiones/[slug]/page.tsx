@@ -91,7 +91,7 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
           </div>
 
           <div className="space-y-6">
-            <h1 className="font-headline text-3xl sm:text-4xl font-bold text-primary">{excursion.name}</h1>
+            <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{excursion.name}</h1>
             
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{excursion.category}</Badge>
@@ -106,7 +106,7 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
               <p className="text-lg text-muted-foreground">{excursion.shortDescription}</p>
             )}
             
-            <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-primary prose-a:text-accent prose-strong:text-foreground">
+            <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground">
               <ReactMarkdown>{excursion.description}</ReactMarkdown>
             </div>
 
