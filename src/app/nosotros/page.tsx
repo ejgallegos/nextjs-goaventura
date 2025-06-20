@@ -1,6 +1,6 @@
 
 import { Metadata } from 'next';
-import Image from 'next/image';
+import ImageSlider from '@/components/image-slider';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Users, Target, ShieldCheck, MessageCircle } from 'lucide-react';
 
@@ -8,6 +8,34 @@ export const metadata: Metadata = {
   title: 'Nosotros',
   description: 'Conoce más sobre Go aventura, nuestra misión, visión y el equipo que hace posibles tus aventuras.',
 };
+
+const aboutUsImages = [
+  {
+    src: "https://placehold.co/600x400.png",
+    alt: "Paisaje de La Rioja con montañas",
+    hint: "rioja landscape mountains",
+  },
+  {
+    src: "https://placehold.co/600x400.png",
+    alt: "Grupo de turistas en una excursión",
+    hint: "tourist group hiking",
+  },
+  {
+    src: "https://placehold.co/600x400.png",
+    alt: "Vehículo 4x4 en un camino de tierra",
+    hint: "4x4 offroad desert",
+  },
+  {
+    src: "https://placehold.co/600x400.png",
+    alt: "Vicuñas en su hábitat natural",
+    hint: "vicunas andes wildlife",
+  },
+  {
+    src: "https://placehold.co/600x400.png",
+    alt: "Cañón del Talampaya al atardecer",
+    hint: "talampaya canyon sunset",
+  },
+];
 
 const AboutUsPage = () => {
   return (
@@ -21,7 +49,10 @@ const AboutUsPage = () => {
         </header>
 
         <section className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16">
-          <div className="order-last md:order-first">
+          <div className="rounded-lg overflow-hidden shadow-xl h-full min-h-[400px]">
+            <ImageSlider images={aboutUsImages} className="w-full h-full" />
+          </div>
+          <div className="order-first md:order-last">
             <h2 className="font-headline text-3xl font-semibold text-foreground mb-4">Nuestra Historia</h2>
             <p className="text-muted-foreground mb-4 leading-relaxed">
               Go aventura EVyT Leg. 20019, es una empresa familiar que hace 2 años está en el rubro turístico de la provincia de La Rioja. Nos dedicamos a la venta de excursiones, traslados y alojamientos de los principales destinos turísticos de nuestra provincia, como así también a la venta de paquetes turísticos a nivel nacional e internacional.
@@ -29,16 +60,6 @@ const AboutUsPage = () => {
             <p className="text-muted-foreground leading-relaxed">
               Nuestra oficina se encuentra en la localidad de Villa Unión, cabecera del Dpto. Cnel. Felipe Varela, a 60km del Parque Nacional Talampaya, y a 35km de Laguna Brava (sitio Ramsar). Como así también nos encontramos en un punto estratégico entre los principales atractivos de las provincias de San Juan y Catamarca, lo que nos permite combinar circuitos con estas provincias.
             </p>
-          </div>
-          <div className="rounded-lg overflow-hidden shadow-xl">
-            <Image
-              src="https://placehold.co/600x400.png"
-              alt="Equipo de Go aventura en una expedición"
-              width={600}
-              height={400}
-              className="w-full h-auto object-cover"
-              data-ai-hint="travel agency team"
-            />
           </div>
         </section>
 
