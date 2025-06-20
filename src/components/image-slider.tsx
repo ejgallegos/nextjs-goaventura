@@ -3,13 +3,12 @@
 
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
-import 'swiper/css/effect-fade';
 
 interface SlideImage {
   src: string;
@@ -30,14 +29,12 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, className }) => {
   return (
     <div className={className}>
       <Swiper
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
+        modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}
         pagination={{ clickable: true }}
         loop={true}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
-        effect="fade"
-        fadeEffect={{ crossFade: true }}
         className="h-full w-full"
       >
         {images.map((image, index) => (
