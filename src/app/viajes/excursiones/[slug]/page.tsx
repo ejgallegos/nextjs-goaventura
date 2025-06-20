@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, CalendarDays, DollarSign, Tag, Info } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import ReactMarkdown from 'react-markdown';
 
 interface ExcursionDetailPageProps {
   params: { slug: string };
@@ -90,7 +91,7 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
               <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{excursion.category}</Badge>
               {excursion.price && (
                 <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground">
-                  <DollarSign className="mr-1.5 h-4 w-4" /> {excursion.currency} ${excursion.price}
+                  <DollarSign className="mr-1.5 h-4 w-4" /> {excursion.currency} ${excursion.price.toLocaleString('es-AR')}
                 </Badge>
               )}
             </div>
@@ -99,9 +100,8 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
               <p className="text-lg text-muted-foreground">{excursion.shortDescription}</p>
             )}
             
-            <div className="prose prose-sm sm:prose-base max-w-none text-foreground">
-              <h2 className="font-headline text-xl font-semibold border-b pb-2 mb-3">Descripción Detallada</h2>
-              <p>{excursion.description}</p>
+            <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-primary prose-a:text-accent prose-strong:text-foreground">
+              <ReactMarkdown>{excursion.description}</ReactMarkdown>
             </div>
 
             {excursion.tags && excursion.tags.length > 0 && (
