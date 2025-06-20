@@ -69,7 +69,7 @@ export default function Header() {
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
-            alt="Go aventua Logo"
+            alt="Go aventura Logo"
             width={183}
             height={40}
             className="h-15" 
@@ -134,7 +134,7 @@ export default function Header() {
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
                 <Image
                   src="/logo.png"
-                  alt="Go aventua Logo"
+                  alt="Go aventura Logo"
                   width={128} 
                   height={28} 
                   className="h-7" 

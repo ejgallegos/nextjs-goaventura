@@ -55,7 +55,7 @@ const ContactPage = () => {
   return (
     <>
     {/* Hack to set title since this is a client component */}
-    <title>Contacto | Go aventua</title> 
+    <title>Contacto | Go aventura</title> 
     <div className="bg-background py-12 md:py-16">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-12 md:mb-16">
@@ -145,7 +145,7 @@ const ContactPage = () => {
                 </li>
                 <li className="flex items-center">
                   <Mail className="h-5 w-5 mr-3 text-primary shrink-0" />
-                  <Link href="mailto:info@goaventua.com.ar" className="hover:text-primary">info@goaventua.com.ar (Placeholder)</Link>
+                  <Link href="mailto:info@goaventura.com.ar" className="hover:text-primary">info@goaventura.com.ar (Placeholder)</Link>
                 </li>
               </ul>
             </div>
@@ -157,7 +157,7 @@ const ContactPage = () => {
                 Haz clic abajo para enviarnos un mensaje por WhatsApp. ¡Es rápido y fácil!
               </p>
               <WhatsAppCtaButton
-                predefinedText="Hola Go aventua, tengo una consulta."
+                predefinedText="Hola Go aventura, tengo una consulta."
                 buttonText="Chatea con Nosotros en WhatsApp"
                 size="lg"
                 className="w-full"

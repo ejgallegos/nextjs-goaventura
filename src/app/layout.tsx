@@ -8,21 +8,21 @@ import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Go aventua - Tu Agencia de Viajes',
-    template: '%s | Go aventua',
+    default: 'Go aventura - Tu Agencia de Viajes',
+    template: '%s | Go aventura',
   },
-  description: 'Reserva tu próxima aventura con Go aventua. Excursiones, transfers, alojamientos y más.',
+  description: 'Reserva tu próxima aventura con Go aventura. Excursiones, transfers, alojamientos y más.',
   openGraph: {
-    title: 'Go aventua - Tu Agencia de Viajes',
-    description: 'Reserva tu próxima aventura con Go aventua. Excursiones, transfers, alojamientos y más.',
-    url: 'https://goaventua.com.ar', 
-    siteName: 'Go aventua',
+    title: 'Go aventura - Tu Agencia de Viajes',
+    description: 'Reserva tu próxima aventura con Go aventura. Excursiones, transfers, alojamientos y más.',
+    url: 'https://goaventura.com.ar', 
+    siteName: 'Go aventura',
     images: [
       {
-        url: 'https://placehold.co/1200x630.png?text=Go aventua', 
+        url: 'https://placehold.co/1200x630.png?text=Go aventura', 
         width: 1200,
         height: 630,
-        alt: 'Go aventua Logo',
+        alt: 'Go aventura Logo',
       },
     ],
     locale: 'es_AR',
@@ -41,10 +41,10 @@ export const metadata: Metadata = {
   },
   // twitter: { 
   //   card: 'summary_large_image',
-  //   title: 'Go aventua - Tu Agencia de Viajes',
-  //   description: 'Reserva tu próxima aventura con Go aventua.',
-  //   creator: '@goaventua', 
-  //   images: ['https://placehold.co/1200x630.png?text=Go aventua'], 
+  //   title: 'Go aventura - Tu Agencia de Viajes',
+  //   description: 'Reserva tu próxima aventura con Go aventura.',
+  //   creator: '@goaventura', 
+  //   images: ['https://placehold.co/1200x630.png?text=Go aventura'], 
   // },
 };
 
@@ -65,9 +65,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "TravelAgency",
-            "name": "Go aventua",
-            "url": "https://goaventua.com.ar", 
-            "logo": "https://goaventua.com.ar/logo.png", // Updated logo URL
+            "name": "Go aventura",
+            "url": "https://goaventura.com.ar", 
+            "logo": "https://goaventura.com.ar/logo.png", // Updated logo URL
             "contactPoint": {
               "@type": "ContactPoint",
               "telephone": "+54-9-XXX-XXXXXXX", 
@@ -81,8 +81,8 @@ export default function RootLayout({
               "addressCountry": "AR"
             },
             "sameAs": [ 
-              // "https://www.facebook.com/goaventua",
-              // "https://www.instagram.com/goaventua"
+              // "https://www.facebook.com/goaventura",
+              // "https://www.instagram.com/goaventura"
             ]
           }) }}
         />

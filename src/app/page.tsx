@@ -14,7 +14,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 const mockTestimonials: Testimonial[] = [
   {
     id: 'test001',
-    quote: "Una experiencia increíble, superó todas mis expectativas. El equipo de Go aventua fue muy profesional y amable.",
+    quote: "Una experiencia increíble, superó todas mis expectativas. El equipo de Go aventura fue muy profesional y amable.",
     author: 'Laura Gómez',
     destination: 'Trekking al Cerro Encantado',
     avatarUrl: 'https://placehold.co/100x100.png',
@@ -30,7 +30,7 @@ const mockTestimonials: Testimonial[] = [
   },
   {
     id: 'test003',
-    quote: "La cabalgata por el valle fue mágica. Los paisajes son de ensueño y los caballos muy bien cuidados. Gracias Go aventua.",
+    quote: "La cabalgata por el valle fue mágica. Los paisajes son de ensueño y los caballos muy bien cuidados. Gracias Go aventura.",
     author: 'Sofía Fernández',
     destination: 'Cabalgata Valle Secreto',
     avatarUrl: 'https://placehold.co/100x100.png',
@@ -46,7 +46,7 @@ const mockTestimonials: Testimonial[] = [
   },
    {
     id: 'test005',
-    quote: "Organización impecable y atención al detalle. Go aventua hizo que nuestro viaje fuera perfecto. Muy recomendables.",
+    quote: "Organización impecable y atención al detalle. Go aventura hizo que nuestro viaje fuera perfecto. Muy recomendables.",
     author: 'Ana Torres',
     destination: 'Paquete Patagonia Completa',
     avatarUrl: 'https://placehold.co/100x100.png',
@@ -130,7 +130,7 @@ export default function Home() {
       <section className="py-12 lg:py-20 bg-background">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 lg:mb-12">
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">¿Por Qué Elegir Go aventua?</h2>
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">¿Por Qué Elegir Go aventura?</h2>
             <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
               Nos dedicamos a crear experiencias de viaje únicas y memorables para ti.
             </p>
@@ -167,7 +167,7 @@ export default function Home() {
           <div className="text-center mb-10 lg:mb-12">
             <h2 className="font-headline text-3xl sm:text-4xl font-bold text-secondary-foreground">Lo Que Dicen Nuestros Viajeros</h2>
              <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Descubre por qué nuestros clientes aman viajar con Go aventua.
+              Descubre por qué nuestros clientes aman viajar con Go aventura.
             </p>
           </div>
           <TestimonialSlider testimonials={mockTestimonials} />

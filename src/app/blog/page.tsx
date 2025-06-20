@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Blog de Viajes',
-  description: 'Artículos, guías y consejos de viaje de Go aventua. Inspírate para tu próxima aventura.',
+  description: 'Artículos, guías y consejos de viaje de Go aventura. Inspírate para tu próxima aventura.',
 };
 
 async function getBlogPosts(): Promise<BlogPost[]> {
