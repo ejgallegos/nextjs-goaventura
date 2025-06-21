@@ -75,10 +75,15 @@ export default function Home() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
-          <div className="mt-12 text-center">
+          <div className="mt-12 text-center flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" asChild variant="outline">
               <Link href="/viajes/excursiones">
                 Ver Todas las Excursiones <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button size="lg" asChild variant="outline">
+              <Link href="/viajes/transfers">
+                Ver Todos los Transfers <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
