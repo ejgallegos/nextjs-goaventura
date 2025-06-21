@@ -5,7 +5,7 @@ import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, Award, MessageSquareText, Users, BedDouble, HomeIcon, Mountain } from 'lucide-react';
+import { ArrowRight, Award, MessageSquareText, Users, BedDouble, HomeIcon, Mountain, ShieldCheck, BookUser, Handshake } from 'lucide-react';
 import Image from 'next/image';
 import TestimonialSlider from '@/components/testimonial-slider';
 import type { Testimonial } from '@/lib/types';
@@ -179,14 +179,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust Indicators Placeholder Section */}
-      <section className="py-8 lg:py-12 bg-background"> {/* Changed background to contrast with testimonials */}
+      {/* Trust Indicators Section */}
+      <section className="py-8 lg:py-12 bg-background">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-around items-center gap-8">
-            <Image src="https://placehold.co/150x60.png" alt="Sello de Confianza" width={150} height={60} data-ai-hint="trust seal" className="opacity-70 hover:opacity-100 transition-opacity" />
-            <Image src="https://placehold.co/150x60.png" alt="Registro de Turismo" width={150} height={60} data-ai-hint="tourism registry" className="opacity-70 hover:opacity-100 transition-opacity" />
-            <span className="font-semibold text-muted-foreground">Leg. 20019</span>
-            <Image src="https://placehold.co/150x60.png" alt="Partner Logo" width={150} height={60} data-ai-hint="partner logo" className="opacity-70 hover:opacity-100 transition-opacity" />
+          <div className="flex flex-wrap justify-around items-center gap-8 text-muted-foreground">
+            <div className="flex items-center gap-3">
+              <ShieldCheck className="h-8 w-8 text-primary" />
+              <div className="text-left">
+                <p className="font-semibold text-foreground">Sello de Confianza</p>
+                <p className="text-sm">Compra Segura</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <BookUser className="h-8 w-8 text-primary" />
+               <div className="text-left">
+                <p className="font-semibold text-foreground">Registro de Turismo</p>
+                <p className="text-sm">Leg. 20019</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Handshake className="h-8 w-8 text-primary" />
+               <div className="text-left">
+                <p className="font-semibold text-foreground">Partners Oficiales</p>
+                <p className="text-sm">Colaboradores de Confianza</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
