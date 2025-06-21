@@ -72,7 +72,14 @@ export default function Header() {
             alt="Go aventura Logo"
             width={183}
             height={40}
-            className="h-15" 
+            className="h-15 dark:hidden" 
+          />
+          <Image
+            src="/logo-white.png"
+            alt="Go aventura Logo"
+            width={183}
+            height={40}
+            className="h-15 hidden dark:block" 
           />
         </Link>
 
@@ -143,7 +150,14 @@ export default function Header() {
                   alt="Go aventura Logo"
                   width={128} 
                   height={28} 
-                  className="h-7" 
+                  className="h-7 dark:hidden" 
+                />
+                 <Image
+                  src="/logo-white.png"
+                  alt="Go aventura Logo"
+                  width={128} 
+                  height={28} 
+                  className="h-7 hidden dark:block" 
                 />
               </Link>
             </div>

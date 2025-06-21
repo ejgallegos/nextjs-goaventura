@@ -18,7 +18,14 @@ const Footer = () => {
 								alt="Go aventura Logo"
 								width={183}
 								height={40}
-								className="h-15 w-auto"
+								className="h-15 w-auto dark:hidden"
+							/>
+              <Image
+								src="/logo-white.png"
+								alt="Go aventura Logo"
+								width={183}
+								height={40}
+								className="h-15 w-auto hidden dark:block"
 							/>
 						</Link>
 						<p className="text-sm text-sidebar-foreground/80">
