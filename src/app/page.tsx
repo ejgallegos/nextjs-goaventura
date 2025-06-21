@@ -75,15 +75,10 @@ export default function Home() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
-          <div className="mt-12 text-center flex flex-col sm:flex-row justify-center gap-4">
+          <div className="mt-12 text-center">
             <Button size="lg" asChild variant="outline">
-              <Link href="/viajes/excursiones">
-                Ver Todas las Excursiones <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button size="lg" asChild variant="outline">
-              <Link href="/viajes/transfers">
-                Ver Todos los Transfers <ArrowRight className="ml-2 h-5 w-5" />
+              <Link href="/viajes">
+                Ver Todos los Viajes <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
@@ -114,7 +109,7 @@ export default function Home() {
               </CardHeader>
               <CardContent className="p-6 text-center">
                 <Mountain className="h-10 w-10 text-accent mx-auto mb-3" />
-                <CardTitle className="font-headline text-2xl text-primary mb-2">Altos del Talampaya</CardTitle>
+                <CardTitle className="font-headline text-2xl text-foreground mb-2">Altos del Talampaya</CardTitle>
                 <CardDescription className="text-base text-muted-foreground mb-4">
                   Disfruta de una estadía inolvidable en nuestras cabañas con vistas impresionantes al Parque Nacional Talampaya. Comodidad, naturaleza y aventura te esperan.
                 </CardDescription>

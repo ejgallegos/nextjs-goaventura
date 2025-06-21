@@ -46,7 +46,7 @@ const HeroSection = () => {
         </p>
         <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
           <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transition-transform hover:scale-105">
-            <Link href="/viajes/excursiones">
+            <Link href="/viajes">
               Explorar Viajes <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>

@@ -25,6 +25,7 @@ const navLinks = [
   {
     label: "Viajes",
     subLinks: [
+      { href: "/viajes", label: "Todos los Viajes", description: "Explora todas nuestras aventuras." },
       { href: "/viajes/excursiones", label: "Excursiones", description: "Aventuras y tours guiados." },
       { href: "/viajes/transfers", label: "Transfers", description: "Transporte cómodo y seguro." },
     ],
@@ -36,12 +37,13 @@ const navLinks = [
 
 const ListItem = forwardRef<
   ElementRef<"a">,
-  ComponentPropsWithoutRef<typeof Link> & { title: string }
->(({ className, title, children, ...props }, ref) => {
+  ComponentPropsWithoutRef<"a"> & { title: string }
+>(({ className, title, children, href, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
         <Link
+          href={href || '#'}
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors  hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
@@ -92,7 +94,17 @@ export default function Header() {
                   <NavigationMenuTrigger className={cn("font-body text-base hover:bg-transparent")}>{link.label}</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                      {link.subLinks.map((subLink) => (
+                       {link.subLinks[0] && (
+                        <ListItem
+                          key={link.subLinks[0].label}
+                          href={link.subLinks[0].href}
+                          title={link.subLinks[0].label}
+                          className="md:col-span-2"
+                        >
+                          {link.subLinks[0].description}
+                        </ListItem>
+                      )}
+                      {link.subLinks.slice(1).map((subLink) => (
                         <ListItem key={subLink.label} href={subLink.href} title={subLink.label}>
                           {subLink.description}
                         </ListItem>
