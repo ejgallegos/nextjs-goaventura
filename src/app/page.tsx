@@ -5,7 +5,7 @@ import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, Award, MessageSquareText, Users, BedDouble, HomeIcon, Mountain, ShieldCheck, BookUser, Handshake } from 'lucide-react';
+import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag } from 'lucide-react';
 import Image from 'next/image';
 import TestimonialSlider from '@/components/testimonial-slider';
 import type { Testimonial } from '@/lib/types';
@@ -180,29 +180,24 @@ export default function Home() {
       </section>
 
       {/* Trust Indicators Section */}
-      <section className="py-8 lg:py-12 bg-background">
+      <section className="py-12 lg:py-16 bg-background">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-around items-center gap-8 text-muted-foreground">
-            <div className="flex items-center gap-3">
-              <ShieldCheck className="h-8 w-8 text-primary" />
-              <div className="text-left">
-                <p className="font-semibold text-foreground">Sello de Confianza</p>
-                <p className="text-sm">Compra Segura</p>
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="flex flex-col items-center gap-3">
+              <ShieldCheck className="h-10 w-10 text-primary" />
+              <p className="font-semibold text-foreground text-base">Tu reserva protegida</p>
             </div>
-            <div className="flex items-center gap-3">
-              <BookUser className="h-8 w-8 text-primary" />
-               <div className="text-left">
-                <p className="font-semibold text-foreground">Registro de Turismo</p>
-                <p className="text-sm">Leg. 20019</p>
-              </div>
+            <div className="flex flex-col items-center gap-3">
+              <CreditCard className="h-10 w-10 text-primary" />
+              <p className="font-semibold text-foreground text-base">Todos los medios de pago</p>
             </div>
-            <div className="flex items-center gap-3">
-              <Handshake className="h-8 w-8 text-primary" />
-               <div className="text-left">
-                <p className="font-semibold text-foreground">Partners Oficiales</p>
-                <p className="text-sm">Colaboradores de Confianza</p>
-              </div>
+            <div className="flex flex-col items-center gap-3">
+              <Clock className="h-10 w-10 text-primary" />
+              <p className="font-semibold text-foreground text-base">Comunicación las 24hs</p>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <Tag className="h-10 w-10 text-primary" />
+              <p className="font-semibold text-foreground text-base">Consulta por las promos</p>
             </div>
           </div>
         </div>
