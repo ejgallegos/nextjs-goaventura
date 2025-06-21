@@ -4,7 +4,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import Image from 'next/image'; // Added import for Next.js Image component
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -164,11 +163,6 @@ const ContactPage = () => {
               />
             </div>
 
-            {/* Placeholder for Map */}
-            <div className="h-64 bg-muted rounded-lg flex items-center justify-center text-muted-foreground shadow-md">
-                {/* <span>Mapa de ubicación (Placeholder)</span> Removed this span as image will cover it */}
-                 <Image src="https://placehold.co/600x300.png" alt="Mapa de ubicación" width={600} height={300} className="w-full h-full object-cover rounded-lg" data-ai-hint="map location" />
-            </div>
           </div>
         </div>
       </div>
