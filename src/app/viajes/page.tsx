@@ -1,6 +1,6 @@
 
 import { Metadata } from 'next';
-import { mockExcursiones } from '@/lib/data/excursions';
+import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
 import type { Product } from '@/lib/types';
 import ViajesList from './viajes-list';
