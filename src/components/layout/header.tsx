@@ -1,7 +1,7 @@
 
 "use client";
 
-import { forwardRef, useState, ElementRef, ComponentPropsWithoutRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -9,8 +9,6 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
@@ -22,45 +20,11 @@ import { ThemeToggle } from "@/components/theme-toggle";
 const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/nosotros", label: "Nosotros" },
-  {
-    label: "Viajes",
-    subLinks: [
-      { href: "/viajes", label: "Todos los Viajes", description: "Explora todas nuestras aventuras." },
-      { href: "/viajes/excursiones", label: "Excursiones", description: "Aventuras y tours guiados." },
-      { href: "/viajes/transfers", label: "Transfers", description: "Transporte cómodo y seguro." },
-    ],
-  },
+  { href: "/viajes", label: "Viajes" },
   { href: "/alojamientos", label: "Alojamientos" },
   { href: "/blog", label: "Blog" },
   { href: "/contacto", label: "Contacto" },
 ];
-
-const ListItem = forwardRef<
-  ElementRef<"a">,
-  ComponentPropsWithoutRef<"a"> & { title: string }
->(({ className, title, children, href, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <Link
-          href={href || '#'}
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors  hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -88,43 +52,18 @@ export default function Header() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
-            {navLinks.map((link) =>
-              link.subLinks ? (
-                <NavigationMenuItem key={link.label}>
-                  <NavigationMenuTrigger className={cn("font-body text-base hover:bg-transparent")}>{link.label}</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                       {link.subLinks[0] && (
-                        <ListItem
-                          key={link.subLinks[0].label}
-                          href={link.subLinks[0].href}
-                          title={link.subLinks[0].label}
-                          className="md:col-span-2"
-                        >
-                          {link.subLinks[0].description}
-                        </ListItem>
-                      )}
-                      {link.subLinks.slice(1).map((subLink) => (
-                        <ListItem key={subLink.label} href={subLink.href} title={subLink.label}>
-                          {subLink.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              ) : (
-                <NavigationMenuItem key={link.label}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={link.href}
-                      className={cn(navigationMenuTriggerStyle(), "font-body text-base hover:bg-transparent")}
-                    >
-                      {link.label}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              )
-            )}
+            {navLinks.map((link) => (
+              <NavigationMenuItem key={link.label}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href={link.href}
+                    className={cn(navigationMenuTriggerStyle(), "font-body text-base hover:bg-transparent")}
+                  >
+                    {link.label}
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
              <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
@@ -177,32 +116,13 @@ export default function Header() {
               <ul className="flex flex-col space-y-1 flex-grow">
                 {navLinks.map((link) => (
                   <li key={link.label}>
-                    {link.subLinks ? (
-                      <div className="flex flex-col space-y-1">
-                        <span className="font-body text-base font-medium text-muted-foreground px-3 py-2">{link.label}</span>
-                        <ul className="pl-3 space-y-1">
-                          {link.subLinks.map((subLink) => (
-                            <li key={subLink.label}>
-                              <Link
-                                href={subLink.href}
-                                className="block rounded-md px-3 py-2 text-base text-foreground hover:bg-accent hover:text-accent-foreground"
-                                onClick={() => setMobileMenuOpen(false)}
-                              >
-                                {subLink.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ) : (
-                      <Link
-                        href={link.href}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    )}
+                    <Link
+                      href={link.href}
+                      className="block rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
                  <li>
