@@ -73,8 +73,8 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
           <span className="text-foreground font-medium">{excursion.name}</span>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="relative aspect-video md:h-[400px] rounded-lg overflow-hidden shadow-xl">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 items-start">
+          <div className="md:col-span-2 relative aspect-video rounded-lg overflow-hidden shadow-xl">
             {excursion.imageGallery && excursion.imageGallery.length > 0 ? (
               <ImageSlider images={excursion.imageGallery} className="w-full h-full" />
             ) : (
@@ -89,7 +89,7 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
             )}
           </div>
 
-          <div className="space-y-6">
+          <div className="md:col-span-3 space-y-6">
             <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{excursion.name}</h1>
             
             <div className="flex flex-wrap gap-2">
