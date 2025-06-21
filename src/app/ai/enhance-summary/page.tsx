@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -8,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { enhanceSummary, EnhanceSummaryInput, EnhanceSummaryOutput } from '@/ai/flows/enhance-summary';
 import { Sparkles, FileText, CheckCircle } from 'lucide-react';
@@ -76,7 +77,7 @@ export default function EnhanceSummaryPage() {
             <div className="inline-block p-3 bg-primary/10 rounded-full mx-auto mb-4">
               <Sparkles className="h-10 w-10 text-primary" />
             </div>
-            <CardTitle className="font-headline text-3xl sm:text-4xl text-primary">Mejorador de Resúmenes con IA</CardTitle>
+            <CardTitle className="font-headline text-3xl sm:text-4xl text-foreground">Mejorador de Resúmenes con IA</CardTitle>
             <CardDescription className="text-lg text-muted-foreground mt-2">
               Pega un texto original y tu resumen. Nuestra IA lo analizará y añadirá detalles importantes que podrías haber omitido.
             </CardDescription>
@@ -148,7 +149,7 @@ export default function EnhanceSummaryPage() {
         {enhancedSummaryResult && (
           <Card className="mt-10 shadow-xl">
             <CardHeader>
-              <CardTitle className="font-headline text-2xl text-primary flex items-center">
+              <CardTitle className="font-headline text-2xl text-foreground flex items-center">
                 <CheckCircle className="mr-2 h-7 w-7 text-green-500" />
                 Resumen Mejorado por IA
               </CardTitle>
