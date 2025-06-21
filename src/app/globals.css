@@ -38,6 +38,9 @@ code, pre {
 
     --radius: 0.5rem; /* Unchanged */
 
+    --whatsapp: 145 63% 49%; /* #25d366 */
+    --whatsapp-foreground: 0 0% 100%; /* white */
+
     /* Sidebar specific colors (consistent dark sidebar) */
     --sidebar-background: 227 27% 14%; /* #1a1e2d (Color 1) */
     --sidebar-foreground: 210 8% 95%;   /* #f1f2f3 (Color 5) */
@@ -77,6 +80,9 @@ code, pre {
     --border: 214 19% 30%;         /* #3b4a5a (Slightly lighter than dark card bg) */
     --input: 214 19% 27%;          /* #364352 (Darker shade of Color 2) */
     --ring: 197 48% 76%;            /* #a3d0e0 (Color 4 - matches dark primary) */
+
+    --whatsapp: 145 63% 49%; /* #25d366 */
+    --whatsapp-foreground: 0 0% 100%; /* white */
 
     /* Sidebar specific colors for dark mode (same as light mode for consistent dark sidebar) */
     --sidebar-background: 227 27% 14%; /* #1a1e2d (Color 1) */

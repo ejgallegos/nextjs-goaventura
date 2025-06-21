@@ -45,6 +45,10 @@ export default {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
+        whatsapp: {
+          DEFAULT: 'hsl(var(--whatsapp))',
+          foreground: 'hsl(var(--whatsapp-foreground))',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
