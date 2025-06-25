@@ -12,7 +12,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Sparkles, ShoppingCart } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -34,18 +34,11 @@ export default function Header() {
       <div className="container flex h-20 items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo.png"
-            alt="Go aventura Logo"
-            width={183}
-            height={40}
-            className="h-15 dark:hidden" 
-          />
-          <Image
             src="/logo-white.png"
             alt="Go aventura Logo"
             width={183}
             height={40}
-            className="h-15 hidden dark:block" 
+            className="h-15"
           />
         </Link>
 
@@ -94,21 +87,15 @@ export default function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0">
+            <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
             <div className="flex justify-between items-center p-4 border-b">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
-                <Image
-                  src="/logo.png"
-                  alt="Go aventura Logo"
-                  width={128} 
-                  height={28} 
-                  className="h-7 dark:hidden" 
-                />
                  <Image
                   src="/logo-white.png"
                   alt="Go aventura Logo"
                   width={128} 
                   height={28} 
-                  className="h-7 hidden dark:block" 
+                  className="h-7" 
                 />
               </Link>
             </div>
