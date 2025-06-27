@@ -1,7 +1,6 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-// WhatsAppCtaButton import removed
 import ImageSlider from './image-slider'; 
 import { ArrowRight } from 'lucide-react';
 
@@ -30,7 +29,7 @@ const heroImages = [
 
 const HeroSection = () => {
   return (
-    <div className="relative bg-secondary text-secondary-foreground py-16 sm:py-24 lg:py-32 overflow-hidden">
+    <div className="relative flex items-center justify-center bg-secondary text-secondary-foreground h-[70vh] sm:h-auto sm:py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0">
         <ImageSlider images={heroImages} className="h-full w-full" />
       </div>
@@ -41,7 +40,7 @@ const HeroSection = () => {
         <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground">
           Reserva tu próxima <span className="text-primary-foreground">¡Go aventura!</span>
         </h1>
-        <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-primary-foreground opacity-90">
+        <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-primary-foreground opacity-90 hidden sm:block">
           Descubre excursiones emocionantes, transfers confiables y los mejores alojamientos con Go aventura. Tu viaje soñado comienza aquí.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -50,7 +49,6 @@ const HeroSection = () => {
               Explorar Viajes <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
-          {/* WhatsAppCtaButton removed */}
         </div>
       </div>
     </div>
