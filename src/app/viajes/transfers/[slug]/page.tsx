@@ -12,6 +12,8 @@ interface TransferDetailPageProps {
   params: { slug: string };
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
+
 async function getTransfer(slug: string): Promise<Product | undefined> {
   return mockTransfers.find((p) => p.slug === slug);
 }
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: TransferDetailPageProps): Pro
     openGraph: {
       title: transfer.name,
       description: transfer.shortDescription || transfer.description.substring(0, 160),
-      images: [{ url: transfer.imageUrl, alt: transfer.name }],
+      images: [{ url: new URL(transfer.imageUrl, siteUrl).toString(), alt: transfer.name }],
     },
   };
 }
@@ -57,77 +59,103 @@ export default async function TransferDetailPage({ params }: TransferDetailPageP
 
   const whatsappText = `Hola, estoy interesado/a en el transfer "${transfer.name}". Quisiera más información.`;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: transfer.name,
+    description: transfer.description,
+    image: new URL(transfer.imageUrl, siteUrl).toString(),
+    sku: transfer.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'Go aventura',
+    },
+    offers: transfer.price ? {
+      '@type': 'Offer',
+      price: transfer.price,
+      priceCurrency: transfer.currency,
+      availability: 'https://schema.org/InStock',
+      url: `${siteUrl}/viajes/transfers/${transfer.slug}`,
+    } : undefined,
+  };
+
+
   return (
-    <div className="bg-background">
-      <div className="container max-w-7xl mx-auto py-8 sm:py-12 px-4">
-        <div className="mb-6 text-sm">
-          <Link href="/" className="text-muted-foreground hover:text-primary">Inicio</Link>
-          <span className="mx-2 text-muted-foreground">/</span>
-          <Link href="/viajes/transfers" className="text-muted-foreground hover:text-primary">Transfers</Link>
-          <span className="mx-2 text-muted-foreground">/</span>
-          <span className="text-foreground font-medium">{transfer.name}</span>
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="relative aspect-video md:aspect-auto md:h-full rounded-lg overflow-hidden shadow-xl">
-            <Image
-              src={transfer.imageUrl}
-              alt={`Imagen de ${transfer.name}`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              priority
-              data-ai-hint={transfer.imageHint}
-            />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="bg-background">
+        <div className="container max-w-7xl mx-auto py-8 sm:py-12 px-4">
+          <div className="mb-6 text-sm font-body">
+            <Link href="/" className="text-muted-foreground hover:text-primary">Inicio</Link>
+            <span className="mx-2 text-muted-foreground">/</span>
+            <Link href="/viajes" className="text-muted-foreground hover:text-primary">Viajes</Link>
+            <span className="mx-2 text-muted-foreground">/</span>
+            <span className="text-foreground font-medium">{transfer.name}</span>
           </div>
-
-          <div className="space-y-6">
-            <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{transfer.name}</h1>
-            
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{transfer.category}</Badge>
-              {transfer.price && (
-                <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground">
-                  <DollarSign className="mr-1.5 h-4 w-4" /> {transfer.currency} ${transfer.price}
-                </Badge>
-              )}
+          
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div className="relative aspect-video md:aspect-auto md:h-full rounded-lg overflow-hidden shadow-xl">
+              <Image
+                src={transfer.imageUrl}
+                alt={`Imagen de ${transfer.name}`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                priority
+                data-ai-hint={transfer.imageHint}
+              />
             </div>
 
-            {transfer.shortDescription && (
-              <p className="text-lg text-muted-foreground">{transfer.shortDescription}</p>
-            )}
-            
-            <div className="prose prose-sm sm:prose-base max-w-none text-foreground">
-              <h2 className="font-headline text-xl font-semibold border-b pb-2 mb-3">Detalles del Servicio</h2>
-              <p>{transfer.description}</p>
-            </div>
-
-            {transfer.tags && transfer.tags.length > 0 && (
-              <div>
-                <h3 className="font-headline text-lg font-semibold mb-2">Características:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {transfer.tags.map((tag) => (
-                    <Badge key={tag} variant="outline">{tag}</Badge>
-                  ))}
-                </div>
+            <div className="space-y-6">
+              <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{transfer.name}</h1>
+              
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{transfer.category}</Badge>
+                {transfer.price && (
+                  <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground">
+                    <DollarSign className="mr-1.5 h-4 w-4" /> {transfer.currency} ${transfer.price}
+                  </Badge>
+                )}
               </div>
-            )}
-            
-            <div className="pt-4">
-              <WhatsAppCtaButton predefinedText={whatsappText} buttonText="Solicitar Transfer" size="lg" className="w-full sm:w-auto" />
-            </div>
 
-             <div className="mt-8">
-              <Button variant="outline" asChild>
-                <Link href="/viajes/transfers">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Volver a todos los transfers
-                </Link>
-              </Button>
+              {transfer.shortDescription && (
+                <p className="text-lg text-muted-foreground font-body">{transfer.shortDescription}</p>
+              )}
+              
+              <div className="prose prose-sm sm:prose-base max-w-none text-foreground font-body">
+                <h2 className="font-headline text-xl font-semibold border-b pb-2 mb-3">Detalles del Servicio</h2>
+                <p>{transfer.description}</p>
+              </div>
+
+              {transfer.tags && transfer.tags.length > 0 && (
+                <div>
+                  <h3 className="font-headline text-lg font-semibold mb-2">Características:</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {transfer.tags.map((tag) => (
+                      <Badge key={tag} variant="outline">{tag}</Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <div className="pt-4">
+                <WhatsAppCtaButton predefinedText={whatsappText} buttonText="Solicitar Transfer" size="lg" className="w-full sm:w-auto" />
+              </div>
+
+               <div className="mt-8">
+                <Button variant="outline" asChild>
+                  <Link href="/viajes">
+                    <ArrowLeft className="mr-2 h-4 w-4" /> Volver a todos los viajes
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
-

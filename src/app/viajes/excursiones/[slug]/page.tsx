@@ -15,6 +15,8 @@ interface ExcursionDetailPageProps {
   params: { slug: string };
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
+
 // This function would typically fetch data in a real app
 async function getExcursion(slug: string): Promise<Product | undefined> {
   return mockExcursions.find((p) => p.slug === slug);
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: ExcursionDetailPageProps): Pr
     openGraph: {
       title: excursion.name,
       description: excursion.shortDescription || excursion.description.substring(0, 160),
-      images: [{ url: excursion.imageUrl, alt: excursion.name }],
+      images: [{ url: new URL(excursion.imageUrl, siteUrl).toString(), alt: excursion.name }],
     },
   };
 }
@@ -60,82 +62,109 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
   }
 
   const whatsappText = `Hola, estoy interesado/a en la excursión "${excursion.name}". Quisiera más información.`;
+  
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: excursion.name,
+    description: excursion.description,
+    image: new URL(excursion.imageUrl, siteUrl).toString(),
+    sku: excursion.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'Go aventura',
+    },
+    offers: excursion.price ? {
+      '@type': 'Offer',
+      price: excursion.price,
+      priceCurrency: excursion.currency,
+      availability: 'https://schema.org/InStock',
+      url: `${siteUrl}/viajes/excursiones/${excursion.slug}`,
+    } : undefined,
+  };
+
 
   return (
-    <div className="bg-background">
-      <div className="container max-w-7xl mx-auto py-8 sm:py-12 px-4">
-        {/* Breadcrumbs (optional) */}
-        <div className="mb-6 text-sm">
-          <Link href="/" className="text-muted-foreground hover:text-primary">Inicio</Link>
-          <span className="mx-2 text-muted-foreground">/</span>
-          <Link href="/viajes/excursiones" className="text-muted-foreground hover:text-primary">Excursiones</Link>
-          <span className="mx-2 text-muted-foreground">/</span>
-          <span className="text-foreground font-medium">{excursion.name}</span>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 items-start">
-          <div className="md:col-span-2 relative aspect-video rounded-lg overflow-hidden shadow-xl">
-            {excursion.imageGallery && excursion.imageGallery.length > 0 ? (
-              <ImageSlider images={excursion.imageGallery} className="w-full h-full" />
-            ) : (
-              <Image
-                src={excursion.imageUrl}
-                alt={`Imagen de ${excursion.name}`}
-                fill
-                className="object-cover"
-                priority
-                data-ai-hint={excursion.imageHint}
-              />
-            )}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="bg-background">
+        <div className="container max-w-7xl mx-auto py-8 sm:py-12 px-4">
+          {/* Breadcrumbs (optional) */}
+          <div className="mb-6 text-sm font-body">
+            <Link href="/" className="text-muted-foreground hover:text-primary">Inicio</Link>
+            <span className="mx-2 text-muted-foreground">/</span>
+            <Link href="/viajes" className="text-muted-foreground hover:text-primary">Viajes</Link>
+            <span className="mx-2 text-muted-foreground">/</span>
+            <span className="text-foreground font-medium">{excursion.name}</span>
           </div>
-
-          <div className="md:col-span-3 space-y-6">
-            <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{excursion.name}</h1>
-            
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{excursion.category}</Badge>
-              {excursion.price && (
-                <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground">
-                  <DollarSign className="mr-1.5 h-4 w-4" /> {excursion.currency} ${excursion.price.toLocaleString('es-AR')}
-                </Badge>
+          
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 items-start">
+            <div className="md:col-span-2 relative aspect-video rounded-lg overflow-hidden shadow-xl">
+              {excursion.imageGallery && excursion.imageGallery.length > 0 ? (
+                <ImageSlider images={excursion.imageGallery} className="w-full h-full" />
+              ) : (
+                <Image
+                  src={excursion.imageUrl}
+                  alt={`Imagen de ${excursion.name}`}
+                  fill
+                  className="object-cover"
+                  priority
+                  data-ai-hint={excursion.imageHint}
+                />
               )}
             </div>
 
-            {excursion.shortDescription && (
-              <p className="text-lg text-muted-foreground">{excursion.shortDescription}</p>
-            )}
-
-            {excursion.tags && excursion.tags.length > 0 && (
-              <div>
-                <h3 className="font-headline text-lg font-semibold mb-2">Etiquetas:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {excursion.tags.map((tag) => (
-                    <Badge key={tag} variant="outline">{tag}</Badge>
-                  ))}
-                </div>
+            <div className="md:col-span-3 space-y-6">
+              <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{excursion.name}</h1>
+              
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{excursion.category}</Badge>
+                {excursion.price && (
+                  <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground">
+                    <DollarSign className="mr-1.5 h-4 w-4" /> {excursion.currency} ${excursion.price.toLocaleString('es-AR')}
+                  </Badge>
+                )}
               </div>
-            )}
-            
-            <div className="pt-4">
-              <WhatsAppCtaButton predefinedText={whatsappText} buttonText="Consultar Disponibilidad" size="lg" className="w-full sm:w-auto" />
-            </div>
 
-             <div className="mt-8">
-              <Button variant="outline" asChild>
-                <Link href="/viajes/excursiones">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Volver a todas las excursiones
-                </Link>
-              </Button>
+              {excursion.shortDescription && (
+                <p className="text-lg text-muted-foreground font-body">{excursion.shortDescription}</p>
+              )}
+
+              {excursion.tags && excursion.tags.length > 0 && (
+                <div>
+                  <h3 className="font-headline text-lg font-semibold mb-2">Etiquetas:</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {excursion.tags.map((tag) => (
+                      <Badge key={tag} variant="outline">{tag}</Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <div className="pt-4">
+                <WhatsAppCtaButton predefinedText={whatsappText} buttonText="Consultar Disponibilidad" size="lg" className="w-full sm:w-auto" />
+              </div>
+
+               <div className="mt-8">
+                <Button variant="outline" asChild>
+                  <Link href="/viajes">
+                    <ArrowLeft className="mr-2 h-4 w-4" /> Volver a todos los viajes
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="mt-12 lg:mt-16 pt-8 border-t">
-          <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground">
-            <ReactMarkdown>{excursion.description}</ReactMarkdown>
+          <div className="mt-12 lg:mt-16 pt-8 border-t">
+            <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground prose-a:font-semibold prose-a:no-underline hover:prose-a:underline">
+              <ReactMarkdown>{excursion.description}</ReactMarkdown>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

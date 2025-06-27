@@ -8,91 +8,91 @@ code, pre {
 
 @layer base {
   :root {
-    --background: 210 8% 95%;    /* #f1f2f3 (Color 5) */
-    --foreground: 227 27% 14%;   /* #1a1e2d (Color 1) */
+    --background: 210 29% 96%;      /* #F0F4F7 */
+    --foreground: 220 13% 15%;     /* Darker for contrast */
 
-    --card: 210 8% 95%;          /* #f1f2f3 (Color 5) */
-    --card-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
+    --card: 210 29% 100%;       /* White for cards to pop */
+    --card-foreground: 220 13% 15%;
 
-    --popover: 210 8% 95%;       /* #f1f2f3 (Color 5) */
-    --popover-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
+    --popover: 210 29% 100%;
+    --popover-foreground: 220 13% 15%;
 
-    --primary: 214 19% 37%;        /* #4b5b71 (Color 2) */
-    --primary-foreground: 210 8% 95%; /* #f1f2f3 (Color 5 - for text on primary) */
+    --primary: 197 76% 52%;         /* #29ABE2 */
+    --primary-foreground: 210 29% 98%; /* White text on primary */
 
-    --secondary: 208 25% 60%;      /* #809cb3 (Color 3) */
-    --secondary-foreground: 227 27% 14%;/* #1a1e2d (Color 1 - for text on secondary) */
+    --secondary: 197 60% 85%;       /* Lighter blue */
+    --secondary-foreground: 197 76% 25%; /* Darker blue for text */
 
-    --muted: 197 48% 90%;          /* #e1f2f7 (Lighter tint of Color 4's hue) */
-    --muted-foreground: 214 19% 37%; /* #4b5b71 (Color 2 - for text on muted) */
+    --muted: 210 29% 93%;          /* Slightly darker than background */
+    --muted-foreground: 210 15% 45%;
 
-    --accent: 197 48% 76%;         /* #a3d0e0 (Color 4) */
-    --accent-foreground: 227 27% 14%;/* #1a1e2d (Color 1 - for text on accent) */
+    --accent: 120 73% 75%;          /* #90EE90 */
+    --accent-foreground: 120 50% 25%; /* Dark green for text */
 
-    --destructive: 0 84.2% 60.2%;    /* Unchanged */
-    --destructive-foreground: 0 0% 98%; /* Unchanged */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 197 48% 70%;         /* #9ccbd9 (Slightly darker tint of Color 4 for borders) */
-    --input: 210 8% 95%;           /* #f1f2f3 (Color 5 - matching card) */
-    --ring: 214 19% 37%;           /* #4b5b71 (Color 2 - matches primary) */
+    --border: 210 20% 88%;
+    --input: 210 20% 92%;
+    --ring: 197 76% 52%;
 
-    --radius: 0.5rem; /* Unchanged */
+    --radius: 0.5rem;
 
     --whatsapp: 145 63% 49%; /* #25d366 */
-    --whatsapp-foreground: 0 0% 100%; /* white */
+    --whatsapp-foreground: 0 0% 100%;
 
     /* Sidebar specific colors (consistent dark sidebar) */
-    --sidebar-background: 227 27% 14%; /* #1a1e2d (Color 1) */
-    --sidebar-foreground: 210 8% 95%;   /* #f1f2f3 (Color 5) */
-    --sidebar-primary: 197 48% 76%;    /* #a3d0e0 (Color 4) */
-    --sidebar-primary-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
-    --sidebar-accent: 208 25% 60%;     /* #809cb3 (Color 3) */
-    --sidebar-accent-foreground: 210 8% 95%; /* #f1f2f3 (Color 5) */
-    --sidebar-border: 214 19% 27%;    /* #364352 (Darker shade of Color 2) */
-    --sidebar-ring: 197 48% 76%;       /* #a3d0e0 (Color 4) */
+    --sidebar-background: 227 27% 14%; /* #1a1e2d */
+    --sidebar-foreground: 210 8% 95%;   /* #f1f2f3 */
+    --sidebar-primary: 197 76% 52%;     /* #29ABE2 */
+    --sidebar-primary-foreground: 210 8% 95%;
+    --sidebar-accent: 120 73% 75%;      /* #90EE90 */
+    --sidebar-accent-foreground: 120 50% 25%;
+    --sidebar-border: 214 19% 27%;
+    --sidebar-ring: 197 76% 52%;
   }
 
   .dark {
-    --background: 227 27% 14%;   /* #1a1e2d (Color 1) */
-    --foreground: 210 8% 95%;   /* #f1f2f3 (Color 5) */
+    --background: 220 13% 10%;
+    --foreground: 210 29% 96%;
 
-    --card: 214 19% 27%;         /* #364352 (Darker shade of Color 2) */
-    --card-foreground: 210 8% 95%; /* #f1f2f3 (Color 5) */
+    --card: 220 13% 15%;
+    --card-foreground: 210 29% 96%;
 
-    --popover: 214 19% 27%;      /* #364352 (Darker shade of Color 2) */
-    --popover-foreground: 210 8% 95%;/* #f1f2f3 (Color 5) */
+    --popover: 220 13% 15%;
+    --popover-foreground: 210 29% 96%;
 
-    --primary: 197 48% 76%;        /* #a3d0e0 (Color 4 - Light Blue for pop) */
-    --primary-foreground: 227 27% 14%; /* #1a1e2d (Color 1 - for text on dark primary) */
+    --primary: 197 76% 52%; /* #29ABE2 */
+    --primary-foreground: 210 29% 98%;
 
-    --secondary: 208 25% 60%;      /* #809cb3 (Color 3) */
-    --secondary-foreground: 227 27% 14%;/* #1a1e2d (Color 1 - for text on dark secondary) */
+    --secondary: 197 76% 25%;
+    --secondary-foreground: 210 29% 98%;
 
-    --muted: 227 27% 10%;          /* #141720 (Darker than background) */
-    --muted-foreground: 197 48% 65%; /* #8fc3d1 (Dimmer version of Color 4) */
+    --muted: 220 13% 20%;
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 208 25% 60%;         /* #809cb3 (Color 3) */
-    --accent-foreground: 210 8% 95%;/* #f1f2f3 (Color 5 - for text on accent) */
+    --accent: 120 73% 75%; /* #90EE90 */
+    --accent-foreground: 120 50% 25%;
 
-    --destructive: 0 62.8% 30.6%;   /* Unchanged */
-    --destructive-foreground: 0 0% 98%; /* Unchanged */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214 19% 30%;         /* #3b4a5a (Slightly lighter than dark card bg) */
-    --input: 214 19% 27%;          /* #364352 (Darker shade of Color 2) */
-    --ring: 197 48% 76%;            /* #a3d0e0 (Color 4 - matches dark primary) */
+    --border: 210 13% 25%;
+    --input: 210 13% 22%;
+    --ring: 197 76% 52%;
 
-    --whatsapp: 145 63% 49%; /* #25d366 */
-    --whatsapp-foreground: 0 0% 100%; /* white */
+    --whatsapp: 145 63% 49%;
+    --whatsapp-foreground: 0 0% 100%;
 
     /* Sidebar specific colors for dark mode (same as light mode for consistent dark sidebar) */
-    --sidebar-background: 227 27% 14%; /* #1a1e2d (Color 1) */
-    --sidebar-foreground: 210 8% 95%;   /* #f1f2f3 (Color 5) */
-    --sidebar-primary: 197 48% 76%;    /* #a3d0e0 (Color 4) */
-    --sidebar-primary-foreground: 227 27% 14%; /* #1a1e2d (Color 1) */
-    --sidebar-accent: 208 25% 60%;     /* #809cb3 (Color 3) */
-    --sidebar-accent-foreground: 210 8% 95%; /* #f1f2f3 (Color 5) */
-    --sidebar-border: 214 19% 27%;    /* #364352 (Darker shade of Color 2) */
-    --sidebar-ring: 197 48% 76%;       /* #a3d0e0 (Color 4) */
+    --sidebar-background: 227 27% 14%;
+    --sidebar-foreground: 210 8% 95%;
+    --sidebar-primary: 197 76% 52%;
+    --sidebar-primary-foreground: 210 8% 95%;
+    --sidebar-accent: 120 73% 75%;
+    --sidebar-accent-foreground: 120 50% 25%;
+    --sidebar-border: 214 19% 27%;
+    --sidebar-ring: 197 76% 52%;
   }
 }
 

@@ -6,23 +6,29 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { ThemeProvider } from '@/components/theme-provider';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: 'Go aventura - Tu Agencia de Viajes',
+    default: 'Go aventura - Tu Agencia de Viajes en La Rioja',
     template: '%s | Go aventura',
   },
-  description: 'Reserva tu próxima aventura con Go aventura. Excursiones, transfers, alojamientos y más.',
+  description: 'Reserva tu próxima aventura con Go aventura. Excursiones, transfers, y alojamientos en La Rioja y el noroeste argentino. Leg. 20019.',
   openGraph: {
-    title: 'Go aventura - Tu Agencia de Viajes',
-    description: 'Reserva tu próxima aventura con Go aventura. Excursiones, transfers, alojamientos y más.',
-    url: 'https://goaventura.com.ar', 
+    title: {
+      default: 'Go aventura - Tu Agencia de Viajes en La Rioja',
+      template: '%s | Go aventura',
+    },
+    description: 'Reserva tu próxima aventura con Go aventura. Excursiones, transfers, y alojamientos en La Rioja y el noroeste argentino.',
+    url: siteUrl, 
     siteName: 'Go aventura',
     images: [
       {
-        url: 'https://placehold.co/1200x630.png?text=Go aventura', 
+        url: '/og-image.png', // Replace with your actual OG image path
         width: 1200,
         height: 630,
-        alt: 'Go aventura Logo',
+        alt: 'Go aventura - Aventura en el noroeste argentino',
       },
     ],
     locale: 'es_AR',
@@ -39,13 +45,13 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  // twitter: { 
-  //   card: 'summary_large_image',
-  //   title: 'Go aventura - Tu Agencia de Viajes',
-  //   description: 'Reserva tu próxima aventura con Go aventura.',
-  //   creator: '@goaventura', 
-  //   images: ['https://placehold.co/1200x630.png?text=Go aventura'], 
-  // },
+  twitter: { 
+    card: 'summary_large_image',
+    title: 'Go aventura - Tu Agencia de Viajes en La Rioja',
+    description: 'Reserva tu próxima aventura con Go aventura: excursiones, transfers y más.',
+    // creator: '@goaventura_twitter', // Replace with your Twitter handle
+    images: ['/og-image.png'], // Replace with your actual OG image path
+  },
 };
 
 export default function RootLayout({
@@ -53,38 +59,42 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TravelAgency',
+    name: 'Go aventura',
+    description: 'Agencia de viajes y turismo en La Rioja, especializada en excursiones, transfers y alojamientos en el noroeste argentino.',
+    url: siteUrl,
+    logo: `${siteUrl}/logo.png`,
+    image: `${siteUrl}/og-image.png`,
+    telephone: '+5493825582955', // IMPORTANT: Replace with the real phone number
+    email: 'goaventura.vya@gmail.com', // IMPORTANT: Replace with the real email
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Joaquín V. González 125',
+      addressLocality: 'Villa Unión',
+      addressRegion: 'La Rioja',
+      postalCode: 'F5350',
+      addressCountry: 'AR',
+    },
+    openingHours: 'Mo,Tu,We,Th,Fr,Sa,Su 08:00-22:00', // Example, adjust as needed
+    sameAs: [
+      // "https://www.facebook.com/goaventura", // Add your social media links
+      // "https://www.instagram.com/goaventura"
+    ],
+    priceRange: '$$',
+  };
+
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Belleza&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
         
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TravelAgency",
-            "name": "Go aventura",
-            "url": "https://goaventura.com.ar", 
-            "logo": "https://goaventura.com.ar/logo.png", // Updated logo URL
-            "contactPoint": {
-              "@type": "ContactPoint",
-              "telephone": "+54-9-XXX-XXXXXXX", 
-              "contactType": "Customer Service"
-            },
-            "address": { 
-              "@type": "PostalAddress",
-              "streetAddress": "Calle Falsa 123",
-              "addressLocality": "Ciudad",
-              "postalCode": "CP",
-              "addressCountry": "AR"
-            },
-            "sameAs": [ 
-              // "https://www.facebook.com/goaventura",
-              // "https://www.instagram.com/goaventura"
-            ]
-          }) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">

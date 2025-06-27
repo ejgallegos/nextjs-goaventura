@@ -6,10 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, CalendarDays, UserCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import ReactMarkdown from 'react-markdown';
 
 interface BlogPostPageProps {
   params: { slug: string };
 }
+
+// Assume site URL is defined in environment variables for absolute URLs
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
 async function getPost(slug: string): Promise<BlogPost | undefined> {
   return mockBlogPosts.find((p) => p.slug === slug);
@@ -29,7 +33,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
-      images: post.imageUrl ? [{ url: post.imageUrl, alt: post.title }] : [],
+      images: post.imageUrl ? [{ url: new URL(post.imageUrl, siteUrl).toString(), alt: post.title }] : [],
     },
   };
 }
@@ -62,64 +66,86 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </div>
     );
   }
+  
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/blog/${post.slug}`,
+    },
+    headline: post.title,
+    description: post.excerpt,
+    image: post.imageUrl ? new URL(post.imageUrl, siteUrl).toString() : undefined,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Go aventura',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/logo.png`,
+      },
+    },
+    datePublished: post.date,
+    dateModified: post.date, // Assuming date is also last modified date
+  };
 
   return (
-    <article className="bg-background py-8 sm:py-12">
-      <div className="container max-w-4xl mx-auto px-4">
-        <header className="mb-8">
-          <div className="mb-4 text-sm">
-            <Link href="/blog" className="text-muted-foreground hover:text-primary">
-              <ArrowLeft className="inline-block mr-1 h-4 w-4" /> Volver al Blog
-            </Link>
-          </div>
-          <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">{post.title}</h1>
-          <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-            <div className="flex items-center">
-              <CalendarDays className="mr-1.5 h-4 w-4" />
-              <span>Publicado el {formatDate(post.date)}</span>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <article className="bg-background py-8 sm:py-12">
+        <div className="container max-w-4xl mx-auto px-4">
+          <header className="mb-8">
+            <div className="mb-4 text-sm">
+              <Link href="/blog" className="text-muted-foreground hover:text-primary">
+                <ArrowLeft className="inline-block mr-1 h-4 w-4" /> Volver al Blog
+              </Link>
             </div>
-            <div className="flex items-center">
-              <UserCircle className="mr-1.5 h-4 w-4" />
-              <span>Por {post.author}</span>
+            <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">{post.title}</h1>
+            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+              <div className="flex items-center">
+                <CalendarDays className="mr-1.5 h-4 w-4" />
+                <time dateTime={post.date}>Publicado el {formatDate(post.date)}</time>
+              </div>
+              <div className="flex items-center">
+                <UserCircle className="mr-1.5 h-4 w-4" />
+                <span>Por {post.author}</span>
+              </div>
             </div>
-          </div>
-          {post.tags && post.tags.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">{tag}</Badge>
-              ))}
+            {post.tags && post.tags.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary">{tag}</Badge>
+                ))}
+              </div>
+            )}
+          </header>
+
+          {post.imageUrl && (
+            <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg mb-8">
+              <Image
+                src={post.imageUrl}
+                alt={`Imagen principal de ${post.title}`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px"
+                priority
+                data-ai-hint={post.imageHint}
+              />
             </div>
           )}
-        </header>
 
-        {post.imageUrl && (
-          <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg mb-8">
-            <Image
-              src={post.imageUrl}
-              alt={`Imagen principal de ${post.title}`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px"
-              priority
-              data-ai-hint={post.imageHint}
-            />
+          <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground prose-a:font-semibold prose-a:no-underline hover:prose-a:underline">
+            <ReactMarkdown>{post.content}</ReactMarkdown>
           </div>
-        )}
-
-        {/* Using dangerouslySetInnerHTML for mock Markdown content. In a real app, use a Markdown parser like react-markdown. */}
-        <div 
-            className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground"
-            dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }} // Basic replacement for newlines
-        />
-        
-        {/* A more robust solution would be:
-        <ReactMarkdown components={{...}} remarkPlugins={[...]} rehypePlugins={[...]}>
-            {post.content}
-        </ReactMarkdown> 
-        But this requires installing react-markdown and its ecosystem.
-        For now, this basic HTML rendering will do for the mock data.
-        */}
-      </div>
-    </article>
+        </div>
+      </article>
+    </>
   );
 }
