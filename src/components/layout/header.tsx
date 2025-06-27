@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -34,11 +33,18 @@ export default function Header() {
       <div className="container flex h-20 items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center">
           <Image
+            src="/logo.png"
+            alt="Go aventura Logo"
+            width={183}
+            height={40}
+            className="h-15 w-auto dark:hidden"
+          />
+          <Image
             src="/logo-white.png"
             alt="Go aventura Logo"
             width={183}
             height={40}
-            className="h-15"
+            className="h-15 w-auto hidden dark:block"
           />
         </Link>
 
@@ -91,11 +97,18 @@ export default function Header() {
             <div className="flex justify-between items-center p-4 border-b">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
                  <Image
+                  src="/logo.png"
+                  alt="Go aventura Logo"
+                  width={128} 
+                  height={28} 
+                  className="h-7 w-auto dark:hidden" 
+                />
+                 <Image
                   src="/logo-white.png"
                   alt="Go aventura Logo"
                   width={128} 
                   height={28} 
-                  className="h-7" 
+                  className="h-7 w-auto hidden dark:block" 
                 />
               </Link>
             </div>
