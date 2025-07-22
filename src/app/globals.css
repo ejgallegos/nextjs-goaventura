@@ -8,91 +8,89 @@ code, pre {
 
 @layer base {
   :root {
-    --background: 210 29% 96%;      /* #F0F4F7 */
-    --foreground: 220 13% 15%;     /* Darker for contrast */
+    --background: 220 33% 97%; /* #F2F4F7 */
+    --foreground: 238 48% 21%; /* #1C1E4F */
 
-    --card: 210 29% 100%;       /* White for cards to pop */
-    --card-foreground: 220 13% 15%;
+    --card: 220 33% 100%;       /* White for cards to pop */
+    --card-foreground: 238 48% 21%; /* #1C1E4F */
 
-    --popover: 210 29% 100%;
-    --popover-foreground: 220 13% 15%;
+    --popover: 220 33% 100%;
+    --popover-foreground: 238 48% 21%;
 
-    --primary: 197 76% 52%;         /* #29ABE2 */
-    --primary-foreground: 210 29% 98%; /* White text on primary */
+    --primary: 239 28% 42%;         /* #5B5D9A */
+    --primary-foreground: 220 33% 97%; /* #F2F4F7 - For text on primary */
 
-    --secondary: 197 60% 85%;       /* Lighter blue */
-    --secondary-foreground: 197 76% 25%; /* Darker blue for text */
+    --secondary: 212 25% 64%;       /* #8C9FBA */
+    --secondary-foreground: 238 48% 21%; /* #1C1E4F - For text on secondary */
 
-    --muted: 210 29% 93%;          /* Slightly darker than background */
-    --muted-foreground: 210 15% 45%;
+    --muted: 212 25% 85%;          /* #C5D4E2 */
+    --muted-foreground: 239 28% 30%; /* Darker version of primary for text */
 
-    --accent: 120 73% 75%;          /* #90EE90 */
-    --accent-foreground: 120 50% 25%; /* Dark green for text */
-
+    --accent: 212 25% 64%;          /* #8C9FBA - Using secondary as accent */
+    --accent-foreground: 238 48% 21%; /* #1C1E4F - For text on accent */
+    
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 210 20% 88%;
-    --input: 210 20% 92%;
-    --ring: 197 76% 52%;
-
-    --radius: 0.5rem;
+    --border: 212 25% 85%; /* #C5D4E2 */
+    --input: 212 25% 89%; /* Lighter than muted */
+    --ring: 239 28% 42%; /* #5B5D9A */
 
     --whatsapp: 145 63% 49%; /* #25d366 */
     --whatsapp-foreground: 0 0% 100%;
 
     /* Sidebar specific colors (consistent dark sidebar) */
-    --sidebar-background: 227 27% 14%; /* #1a1e2d */
-    --sidebar-foreground: 210 8% 95%;   /* #f1f2f3 */
-    --sidebar-primary: 197 76% 52%;     /* #29ABE2 */
-    --sidebar-primary-foreground: 210 8% 95%;
-    --sidebar-accent: 120 73% 75%;      /* #90EE90 */
-    --sidebar-accent-foreground: 120 50% 25%;
-    --sidebar-border: 214 19% 27%;
-    --sidebar-ring: 197 76% 52%;
+    --sidebar-background: 238 48% 21%; /* #1C1E4F */
+    --sidebar-foreground: 220 33% 97%;   /* #F2F4F7 */
+    --sidebar-primary: 239 28% 62%;     /* #8C9FBA */
+    --sidebar-primary-foreground: 238 48% 15%;
+    --sidebar-accent: 212 25% 85%;      /* #C5D4E2 */
+    --sidebar-accent-foreground: 238 48% 21%;
+    --sidebar-border: 239 28% 30%;
+    --sidebar-ring: 212 25% 64%;
   }
 
   .dark {
-    --background: 220 13% 10%;
-    --foreground: 210 29% 96%;
+    --background: 238 48% 15%; /* Darker version of #1C1E4F */
+    --foreground: 220 33% 97%; /* #F2F4F7 */
 
-    --card: 220 13% 15%;
-    --card-foreground: 210 29% 96%;
+    --card: 238 48% 21%; /* #1C1E4F */
+    --card-foreground: 220 33% 97%; /* #F2F4F7 */
 
-    --popover: 220 13% 15%;
-    --popover-foreground: 210 29% 96%;
+    --popover: 238 48% 21%;
+    --popover-foreground: 220 33% 97%;
 
-    --primary: 197 76% 52%; /* #29ABE2 */
-    --primary-foreground: 210 29% 98%;
+    --primary: 239 28% 62%;         /* Lighter version of #5B5D9A */
+    --primary-foreground: 238 48% 15%; /* Dark for text on primary */
 
-    --secondary: 197 76% 25%;
-    --secondary-foreground: 210 29% 98%;
+    --secondary: 239 28% 32%;       /* Darker version of #5B5D9A */
+    --secondary-foreground: 220 33% 97%; /* #F2F4F7 */
 
-    --muted: 220 13% 20%;
-    --muted-foreground: 210 15% 65%;
+    --muted: 238 48% 25%;
+    --muted-foreground: 212 25% 75%;
 
-    --accent: 120 73% 75%; /* #90EE90 */
-    --accent-foreground: 120 50% 25%;
+    --accent: 212 25% 64%;          /* #8C9FBA */
+    --accent-foreground: 238 48% 21%; /* #1C1E4F */
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 210 13% 25%;
-    --input: 210 13% 22%;
-    --ring: 197 76% 52%;
+    --border: 239 28% 30%;
+    --input: 239 28% 32%;
+    --ring: 212 25% 64%;
 
     --whatsapp: 145 63% 49%;
     --whatsapp-foreground: 0 0% 100%;
 
     /* Sidebar specific colors for dark mode (same as light mode for consistent dark sidebar) */
-    --sidebar-background: 227 27% 14%;
-    --sidebar-foreground: 210 8% 95%;
-    --sidebar-primary: 197 76% 52%;
-    --sidebar-primary-foreground: 210 8% 95%;
-    --sidebar-accent: 120 73% 75%;
-    --sidebar-accent-foreground: 120 50% 25%;
-    --sidebar-border: 214 19% 27%;
-    --sidebar-ring: 197 76% 52%;
+    --sidebar-background: 238 48% 21%; /* #1C1E4F */
+    --sidebar-foreground: 220 33% 97%;   /* #F2F4F7 */
+    --sidebar-primary: 212 25% 64%;     /* #8C9FBA */
+    --sidebar-primary-foreground: 238 48% 15%;
+    --sidebar-accent: 212 25% 85%;      /* #C5D4E2 */
+    --sidebar-accent-foreground: 238 48% 21%;
+    --sidebar-border: 239 28% 30%;
+    --sidebar-ring: 212 25% 64%;
   }
 }
 
