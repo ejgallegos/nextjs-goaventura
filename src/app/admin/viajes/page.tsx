@@ -5,7 +5,6 @@ import { z } from 'zod';
 
 import { columns } from './components/columns';
 import { DataTable } from './components/data-table';
-import {-productSchema } from './data/schema';
 import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
 import type { Product } from '@/lib/types';
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 // Simulate fetching data. In a real app, this would be from a database.
-async function getTasks(): Promise<Product[]> {
+async function getTasks(): Promise<(Product & {status: string})[]> {
     const allProducts = [...mockExcursions, ...mockTransfers];
     allProducts.sort((a, b) => a.name.localeCompare(b.name));
     return allProducts.map(p => ({...p, status: 'published'})); // Add dummy status

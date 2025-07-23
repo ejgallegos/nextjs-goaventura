@@ -82,14 +82,14 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
       <DataTableColumnHeader column={column} title="Precio" />
     ),
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"))
+      const price = parseFloat(row.getValue("price") ?? "0")
       const currency: string = row.original.currency || 'ARS';
       const formatted = new Intl.NumberFormat("es-AR", {
         style: "currency",
         currency: currency,
       }).format(price)
 
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="font-medium text-right">{formatted}</div>
     },
   },
   {
