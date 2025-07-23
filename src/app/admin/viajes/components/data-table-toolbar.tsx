@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DataTableViewOptions } from "./data-table-view-options"
 
-import { priorities, statuses } from "../data/data"
+import { statuses } from "../data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
-import { AddTripForm } from "./add-trip-form"
+import { AddTripButton } from "./add-trip-form"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -60,7 +60,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
        <div className="flex items-center space-x-2">
-         <AddTripForm />
+         <AddTripButton />
         <DataTableViewOptions table={table} />
       </div>
     </div>

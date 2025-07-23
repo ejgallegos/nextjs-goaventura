@@ -2,6 +2,7 @@
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -20,15 +21,24 @@ import {
 
 import { labels } from "../data/data"
 import { productSchema } from "../data/schema"
+import { Product } from "@/lib/types";
 
-interface DataTableRowActionsProps<TData> {
+interface DataTableRowActionsProps<TData extends { slug: string }> {
   row: Row<TData>
 }
 
-export function DataTableRowActions<TData>({
+export function DataTableRowActions<TData extends { slug: string }>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = productSchema.parse(row.original)
+  const router = useRouter();
+
+  const handleEdit = () => {
+    // Assuming the row data has a slug or id to identify the trip
+    const slug = row.original.slug;
+    router.push(`/admin/viajes/editor?slug=${slug}`);
+  };
+
 
   return (
     <DropdownMenu>
@@ -42,7 +52,7 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Editar</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleEdit}>Editar</DropdownMenuItem>
         <DropdownMenuItem>Hacer una copia</DropdownMenuItem>
         <DropdownMenuItem>Favorito</DropdownMenuItem>
         <DropdownMenuSeparator />

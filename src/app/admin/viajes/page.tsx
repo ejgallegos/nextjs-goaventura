@@ -3,7 +3,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { z } from 'zod';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
