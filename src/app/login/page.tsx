@@ -14,6 +14,9 @@ import { useToast } from "@/hooks/use-toast";
 import { LogIn } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { auth } from '@/lib/firebase';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
@@ -29,9 +32,12 @@ export default function LoginPage() {
   
   // Redirect if already logged in
   useEffect(() => {
-    if (localStorage.getItem('isAuthenticated') === 'true') {
-      router.replace('/admin/viajes');
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.replace('/admin/viajes');
+      }
+    });
+    return () => unsubscribe();
   }, [router]);
 
   const form = useForm<LoginFormValues>({
@@ -44,31 +50,27 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
-    // Simulate API call
-    console.log("Login attempt with:", data.email);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // In a real app, you'd verify credentials against a backend.
-    // Here, we'll just simulate a successful login for any valid input.
-    
-    // Simulate success
-    localStorage.setItem('isAuthenticated', 'true');
-    toast({
-      title: "Inicio de Sesión Exitoso",
-      description: "¡Bienvenido de nuevo!",
-    });
-    router.push('/admin/viajes');
-
-    // Example of error handling (can be implemented with a real backend)
-    /*
-    toast({
-      title: "Error de Inicio de Sesión",
-      description: "Las credenciales son incorrectas. Por favor, inténtalo de nuevo.",
-      variant: "destructive",
-    });
-    */
-    
-    setIsLoading(false);
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      toast({
+        title: "Inicio de Sesión Exitoso",
+        description: "¡Bienvenido de nuevo!",
+      });
+      router.push('/admin/viajes');
+    } catch (error: any) {
+      console.error("Error de inicio de sesión:", error);
+      let description = "Ocurrió un error inesperado.";
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        description = "Las credenciales son incorrectas. Por favor, inténtalo de nuevo.";
+      }
+       toast({
+        title: "Error de Inicio de Sesión",
+        description: description,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
