@@ -1,7 +1,7 @@
 
 "use client";
 
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -31,9 +31,9 @@ import { useToast } from '@/hooks/use-toast';
 import { Product } from '@/lib/types';
 import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, X } from 'lucide-react';
+import { getTasks, saveTasks } from '../page'; // Import new functions
 
 const tripSchema = z.object({
   name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres.'),
@@ -45,9 +45,16 @@ const tripSchema = z.object({
   imageUrl: z.string().optional(), // Added for image handling
 });
 
-// Simulate fetching data for editing
-const getTripBySlug = (slug: string): Product | undefined => {
-  const allTrips = [...mockExcursions, ...mockTransfers];
+const generateSlug = (name: string) => {
+    return name
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');
+};
+
+// Simulate fetching data for editing - now from our localStorage-aware function
+const getTripBySlug = async (slug: string): Promise<Product | undefined> => {
+  const allTrips = await getTasks();
   return allTrips.find(trip => trip.slug === slug);
 };
 
@@ -68,7 +75,7 @@ const ImageUpload = ({ value, onChange, onRemove }: { value?: string, onChange: 
                                 alt="Imagen de producto"
                                 className="aspect-video w-full rounded-md object-cover"
                                 height="200"
-                                src={value}
+                                src={value || 'https://placehold.co/300x200.png'}
                                 width="300"
                             />
                             <div className="absolute inset-0 bg-black/20 group-hover:opacity-100 opacity-0 transition-opacity flex items-center justify-center">
@@ -109,6 +116,7 @@ export default function TripEditorForm() {
   const router = useRouter();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
+  const [tripId, setTripId] = useState<string | null>(null);
   
   const slug = searchParams.get('slug');
 
@@ -127,26 +135,29 @@ export default function TripEditorForm() {
 
   useEffect(() => {
     if (slug) {
-      const tripData = getTripBySlug(slug);
-      if (tripData) {
-        setIsEditing(true);
-        form.reset({
-            name: tripData.name,
-            shortDescription: tripData.shortDescription,
-            category: tripData.category,
-            status: 'published', // Assuming existing trips are published
-            price: tripData.price,
-            description: tripData.description,
-            imageUrl: tripData.imageUrl,
-        });
+      const fetchTrip = async () => {
+        const tripData = await getTripBySlug(slug);
+        if (tripData) {
+          setIsEditing(true);
+          setTripId(tripData.id);
+          form.reset({
+              name: tripData.name,
+              shortDescription: tripData.shortDescription,
+              category: tripData.category,
+              status: (tripData as any).status || 'published',
+              price: tripData.price,
+              description: tripData.description,
+              imageUrl: tripData.imageUrl,
+          });
+        }
       }
+      fetchTrip();
     }
   }, [slug, form]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // In a real app, you would upload the file and get a URL
       const reader = new FileReader();
       reader.onloadend = () => {
         form.setValue('imageUrl', reader.result as string);
@@ -159,16 +170,40 @@ export default function TripEditorForm() {
     form.setValue('imageUrl', '');
   }
 
-  const onSubmit = (values: z.infer<typeof tripSchema>) => {
-    // In a real app, you'd send this to your backend
-    console.log('Trip data:', values);
+  const onSubmit = async (values: z.infer<typeof tripSchema>) => {
+    const allTrips = await getTasks();
+    let updatedTrips;
+
+    if (isEditing && tripId) {
+        updatedTrips = allTrips.map(trip => {
+            if (trip.id === tripId) {
+                return {
+                    ...trip,
+                    ...values,
+                    slug: generateSlug(values.name), // Update slug if name changes
+                };
+            }
+            return trip;
+        });
+    } else {
+        const newTrip: Product & { status: string } = {
+            id: `prod_${Date.now()}`,
+            slug: generateSlug(values.name),
+            ...values,
+            imageUrl: values.imageUrl || 'https://placehold.co/600x400.png',
+        };
+        updatedTrips = [...allTrips, newTrip];
+    }
+    
+    await saveTasks(updatedTrips);
 
     toast({
-      title: `Viaje ${isEditing ? 'Actualizado' : 'Creado'} (Simulación)`,
-      description: `El viaje "${values.name}" ha sido guardado.`,
+      title: `Viaje ${isEditing ? 'Actualizado' : 'Creado'}`,
+      description: `El viaje "${values.name}" ha sido guardado exitosamente.`,
     });
 
     router.push('/admin/viajes');
+    router.refresh(); // Tell Next.js to refresh the data on the target page
   };
   
   const isLoading = form.formState.isSubmitting;

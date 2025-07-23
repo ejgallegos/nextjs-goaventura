@@ -11,18 +11,45 @@ import { DataTable } from './components/data-table';
 import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
 import type { Product } from '@/lib/types';
-import { productSchema } from './data/schema';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { LogOut } from 'lucide-react';
 
+const TASKS_STORAGE_KEY = 'goaventura_tasks';
 
-// Simulate fetching data. In a real app, this would be from a database.
-async function getTasks(): Promise<(Product & {status: string})[]> {
+// This function now handles getting data from localStorage or falling back to mocks
+export async function getTasks(): Promise<(Product & {status: string})[]> {
+    if (typeof window !== 'undefined') {
+        const storedTasks = localStorage.getItem(TASKS_STORAGE_KEY);
+        if (storedTasks) {
+            try {
+                return JSON.parse(storedTasks);
+            } catch (e) {
+                console.error("Failed to parse tasks from localStorage", e);
+                // Fallback to mocks if parsing fails
+            }
+        }
+    }
+    // Default mock data
     const allProducts = [...mockExcursions, ...mockTransfers];
     allProducts.sort((a, b) => a.name.localeCompare(b.name));
-    return allProducts.map(p => ({...p, status: 'published'})); // Add dummy status
+    const tasks = allProducts.map(p => ({...p, status: 'published'}));
+    
+    // Save initial mock data to localStorage if not present
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
+    }
+
+    return tasks;
 }
+
+// New function to save tasks to localStorage
+export async function saveTasks(tasks: (Product & {status: string})[]): Promise<void> {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
+    }
+}
+
 
 export default function TaskPage() {
   const [tasks, setTasks] = useState<(Product & {status: string})[]>([]);
