@@ -9,6 +9,7 @@ import { DataTableViewOptions } from "./data-table-view-options"
 
 import { priorities, statuses } from "../data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import { AddTripForm } from "./add-trip-form"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -59,13 +60,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
        <div className="flex items-center space-x-2">
-         <Button
-            variant="default"
-            size="sm"
-            className="h-8"
-          >
-            Añadir Viaje
-          </Button>
+         <AddTripForm />
         <DataTableViewOptions table={table} />
       </div>
     </div>

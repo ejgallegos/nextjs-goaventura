@@ -1,6 +1,8 @@
-import { Metadata } from 'next';
-import { promises as fs } from 'fs';
-import path from 'path';
+
+"use client";
+
+import { useState, useEffect } from 'react';
+import type { Metadata } from 'next';
 import { z } from 'zod';
 
 import { columns } from './components/columns';
@@ -10,10 +12,6 @@ import { mockTransfers } from '@/lib/data/transfers';
 import type { Product } from '@/lib/types';
 import { productSchema } from './data/schema';
 
-export const metadata: Metadata = {
-  title: 'Gestor de Contenido - Viajes',
-  description: 'Administra las excursiones y transfers del sitio.',
-};
 
 // Simulate fetching data. In a real app, this would be from a database.
 async function getTasks(): Promise<(Product & {status: string})[]> {
@@ -22,11 +20,32 @@ async function getTasks(): Promise<(Product & {status: string})[]> {
     return allProducts.map(p => ({...p, status: 'published'})); // Add dummy status
 }
 
-export default async function TaskPage() {
-  const tasks = await getTasks();
+export default function TaskPage() {
+  const [tasks, setTasks] = useState<(Product & {status: string})[]>([]);
+
+  useEffect(() => {
+    getTasks().then(data => setTasks(data));
+  }, []);
+  
+  if (!tasks.length) {
+    return (
+        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+             <div className="flex items-center justify-between space-y-2">
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight">¡Bienvenido de nuevo!</h2>
+                <p className="text-muted-foreground">
+                  Aquí está la lista de tus viajes.
+                </p>
+              </div>
+            </div>
+            <p>Cargando viajes...</p>
+        </div>
+    )
+  }
 
   return (
     <>
+      <title>Gestor de Contenido - Viajes</title>
       <div className="md:hidden">
         <div className="w-full h-full flex items-center justify-center p-8">
             <p>El gestor de contenido no está disponible en dispositivos móviles.</p>
