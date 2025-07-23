@@ -37,7 +37,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-foreground/75"></div>
       
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground">
+        <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]">
           Reserva tu próxima <span className="text-primary-foreground">¡Go aventura!</span>
         </h1>
         <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-primary-foreground opacity-90 hidden sm:block">
