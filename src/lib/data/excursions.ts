@@ -57,5 +57,19 @@ Al mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Lueg
     category: 'Excursion',
     tags: ['Medio Día', 'Geología', 'Cultura', 'Cañón'],
     isFeatured: true,
+  },
+  {
+    id: 'exc003',
+    name: 'Cañon del Triasico',
+    slug: 'canon-del-triasico',
+    description: 'Recorrido por el lecho de un río seco, visitando paredones de más de 100 mts de altura, variedad de colores en los estratos de la tierra, petroglifos y morteros comunitarios. Un viaje en el tiempo de más de 250 millones de años.',
+    shortDescription: 'Viaje en el tiempo a la era de los dinosaurios.',
+    price: 25000,
+    currency: 'ARS',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'triassic canyon geology',
+    category: 'Excursion',
+    tags: ['Medio Día', 'Geología', 'Aventura'],
+    isFeatured: false,
   }
 ];
