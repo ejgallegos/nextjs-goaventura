@@ -52,8 +52,9 @@ const HeroSection = () => {
         >
             {slides.length > 0 ? (
                 slides.map((slide) => (
-                    <SwiperSlide key={slide.id} className="relative h-full w-full flex items-center justify-center text-center">
-                        <div className="absolute inset-0">
+                    <SwiperSlide key={slide.id}>
+                       <div className="relative h-full w-full flex items-center justify-center text-center">
+                         <div className="absolute inset-0">
                              <Image
                                 src={slide.imageUrl}
                                 alt={slide.title}
@@ -89,10 +90,12 @@ const HeroSection = () => {
                                 </div>
                             )}
                         </div>
+                       </div>
                     </SwiperSlide>
                 ))
             ) : (
-                 <SwiperSlide className="relative h-full w-full flex items-center justify-center text-center">
+                 <SwiperSlide>
+                    <div className="relative h-full w-full flex items-center justify-center text-center">
                      <div className="absolute inset-0 bg-foreground/75"></div>
                      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                          <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
@@ -107,6 +110,7 @@ const HeroSection = () => {
                             comienza aquí.
                         </p>
                       </div>
+                    </div>
                  </SwiperSlide>
             )}
         </Swiper>
