@@ -1,3 +1,4 @@
+
 import type { Product } from '@/lib/types';
 
 export const mockExcursions: Product[] = [
@@ -43,4 +44,18 @@ Al mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Lueg
     ],
     isFeatured: true,
   },
+  {
+    id: 'exc002',
+    name: 'Parque Nacional Talampaya',
+    slug: 'parque-nacional-talampaya',
+    description: `Excursión de medio día. En esta excursión visitaremos el imponente Cañón de Talampaya, recorriendo en combis del concesionario del parque, un circuito de 2,5 hs de duración, donde conoceremos las geoformas y la historia del lugar.`,
+    shortDescription: 'Visita guiada al imponente cañón, sus geoformas e historia.',
+    price: 30000,
+    currency: 'ARS',
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'talampaya canyon red rocks',
+    category: 'Excursion',
+    tags: ['Medio Día', 'Geología', 'Cultura', 'Cañón'],
+    isFeatured: true,
+  }
 ];
