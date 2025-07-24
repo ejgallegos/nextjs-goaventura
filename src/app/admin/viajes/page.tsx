@@ -16,6 +16,7 @@ import { getProducts } from '@/lib/data/products'; // UPDATED
 
 export default function TaskPage() {
   const [tasks, setTasks] = useState<(Product & {status: string})[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Added loading state
   const router = useRouter();
   const { toast } = useToast();
 
@@ -38,29 +39,25 @@ export default function TaskPage() {
   };
 
   useEffect(() => {
-    // getTasks().then(data => setTasks(data));
     const fetchProducts = async () => {
+      setIsLoading(true);
       const data = await getProducts();
       setTasks(data);
+      setIsLoading(false);
     }
     fetchProducts();
   }, []);
   
-  if (!tasks.length) {
-    return (
-        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
-             <div className="flex items-center justify-between space-y-2">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight">¡Bienvenido de nuevo!</h2>
-                <p className="text-muted-foreground">
-                  Aquí está la lista de tus viajes.
-                </p>
-              </div>
-            </div>
-            <p>Cargando viajes...</p>
-        </div>
-    )
+  const renderContent = () => {
+    if (isLoading) {
+        return <p>Cargando viajes...</p>;
+    }
+    if (tasks.length === 0) {
+        return <DataTable data={[]} columns={columns} />; // Show table with "No results"
+    }
+    return <DataTable data={tasks} columns={columns} />;
   }
+
 
   return (
     <>
@@ -85,7 +82,7 @@ export default function TaskPage() {
             </Button>
           </div>
         </div>
-        <DataTable data={tasks} columns={columns} />
+        {renderContent()}
       </div>
     </>
   );
