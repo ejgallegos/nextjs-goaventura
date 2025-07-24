@@ -5,7 +5,7 @@ import { mockBlogPosts } from './blog';
 const BLOG_POSTS_STORAGE_KEY = 'goaventura_blog_posts';
 
 // This function handles getting data from localStorage or falling back to mocks
-export async function getBlogPosts(): Promise<(BlogPost & {status: string})[]> {
+export async function getBlogPosts(): Promise<(BlogPost)[]> {
     // If on the client-side, try to use localStorage
     if (typeof window !== 'undefined') {
         const storedPosts = localStorage.getItem(BLOG_POSTS_STORAGE_KEY);
@@ -21,7 +21,7 @@ export async function getBlogPosts(): Promise<(BlogPost & {status: string})[]> {
     }
     
     // On the server OR if localStorage is empty/corrupt, use mock data
-    const postsWithStatus = mockBlogPosts.map(p => ({...p, status: 'published'}));
+    const postsWithStatus = mockBlogPosts.map(p => ({...p, status: 'published' as const}));
     
     // If on client, save initial mock data to localStorage if it wasn't there
     if (typeof window !== 'undefined' && !localStorage.getItem(BLOG_POSTS_STORAGE_KEY)) {
@@ -32,7 +32,7 @@ export async function getBlogPosts(): Promise<(BlogPost & {status: string})[]> {
 }
 
 // New function to save posts to localStorage
-export async function saveBlogPosts(posts: (BlogPost & {status: string})[]): Promise<void> {
+export async function saveBlogPosts(posts: (BlogPost)[]): Promise<void> {
     if (typeof window !== 'undefined') {
         localStorage.setItem(BLOG_POSTS_STORAGE_KEY, JSON.stringify(posts));
     }

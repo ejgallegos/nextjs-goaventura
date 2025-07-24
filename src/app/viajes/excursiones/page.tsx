@@ -12,7 +12,7 @@ export default function ExcursionesPage() {
   useEffect(() => {
     const fetchExcursions = async () => {
       const allProducts = await getProducts();
-      const excursionProducts = allProducts.filter(p => p.category === 'Excursion');
+      const excursionProducts = allProducts.filter(p => p.category === 'Excursion' && p.status === 'published');
       setExcursions(excursionProducts);
     };
     fetchExcursions();

@@ -6,7 +6,7 @@ import { mockTransfers } from './transfers';
 const PRODUCTS_STORAGE_KEY = 'goaventura_products';
 
 // This function now handles getting data from localStorage or falling back to mocks
-export async function getProducts(): Promise<(Product & {status: string})[]> {
+export async function getProducts(): Promise<(Product)[]> {
     // If on the client-side, try to use localStorage
     if (typeof window !== 'undefined') {
         const storedTasks = localStorage.getItem(PRODUCTS_STORAGE_KEY);
@@ -35,7 +35,7 @@ export async function getProducts(): Promise<(Product & {status: string})[]> {
 }
 
 // New function to save tasks to localStorage
-export async function saveProducts(tasks: (Product & {status: string})[]): Promise<void> {
+export async function saveProducts(tasks: (Product)[]): Promise<void> {
     if (typeof window !== 'undefined') {
         localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(tasks));
     }

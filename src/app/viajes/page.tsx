@@ -12,8 +12,9 @@ export default function ViajesPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await getProducts();
-      setProducts(data);
+      const allProducts = await getProducts();
+      const publishedProducts = allProducts.filter(p => p.status === 'published');
+      setProducts(publishedProducts);
     };
     fetchProducts();
   }, []);

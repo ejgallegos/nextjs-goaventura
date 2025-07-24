@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, DollarSign, Info, Loader2 } from 'lucide-react';
+import { ArrowLeft, DollarSign, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import ImageSlider from '@/components/image-slider';
@@ -14,33 +14,12 @@ import ImageSlider from '@/components/image-slider';
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
 interface TripDetailPageContentProps {
-  product: Product | null | undefined;
+  product: Product;
   productType: 'Excursión' | 'Transfer';
 }
 
 export default function TripDetailPageContent({ product, productType }: TripDetailPageContentProps) {
-  if (product === undefined) {
-    return (
-      <div className="container mx-auto py-12 px-4 text-center flex justify-center items-center h-96">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (product === null) {
-    return (
-      <div className="container mx-auto py-12 px-4 text-center">
-        <h1 className="text-3xl font-bold mb-4">{productType} no encontrado</h1>
-        <p className="text-muted-foreground">Lo sentimos, el {productType.toLowerCase()} que buscas no existe o ha sido movido.</p>
-        <Button asChild className="mt-6">
-          <Link href={`/viajes/${productType.toLowerCase()}es`}>
-            <ArrowLeft className="mr-2 h-4 w-4" /> Volver a {productType}es
-          </Link>
-        </Button>
-      </div>
-    );
-  }
-
+  
   const whatsappText = `Hola, estoy interesado/a en ${productType.toLowerCase()} "${product.name}". Quisiera más información.`;
   
   const jsonLd = {
@@ -66,7 +45,6 @@ export default function TripDetailPageContent({ product, productType }: TripDeta
 
   return (
     <>
-      <title>{`${product.name} | Go aventura`}</title>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

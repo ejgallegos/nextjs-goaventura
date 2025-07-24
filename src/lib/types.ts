@@ -12,6 +12,7 @@ export interface Product {
   category: 'Excursion' | 'Transfer';
   tags?: string[];
   imageGallery?: { src: string; alt: string; hint: string; }[];
+  status?: 'draft' | 'published' | 'archived';
 }
 
 export interface BlogPost {
@@ -25,6 +26,7 @@ export interface BlogPost {
   imageUrl?: string;
   imageHint?: string;
   tags?: string[];
+  status?: 'draft' | 'published' | 'archived';
 }
 
 export interface Testimonial {

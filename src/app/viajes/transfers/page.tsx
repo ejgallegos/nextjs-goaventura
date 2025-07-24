@@ -12,7 +12,7 @@ export default function TransfersPage() {
   useEffect(() => {
     const fetchTransfers = async () => {
       const allProducts = await getProducts();
-      const transferProducts = allProducts.filter(p => p.category === 'Transfer');
+      const transferProducts = allProducts.filter(p => p.category === 'Transfer' && p.status === 'published');
       setTransfers(transferProducts);
     };
     fetchTransfers();
