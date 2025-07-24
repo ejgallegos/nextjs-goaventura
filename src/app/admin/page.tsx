@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Mountain, BookOpen } from "lucide-react";
+import { Mountain, BookOpen, Images } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
@@ -13,7 +13,7 @@ export default function AdminDashboardPage() {
           Selecciona qué sección de contenido quieres gestionar.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -43,6 +43,22 @@ export default function AdminDashboardPage() {
           <CardContent>
             <Button asChild>
               <Link href="/admin/blog">Ir al Blog</Link>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Images className="h-6 w-6" />
+              Gestor de Slider
+            </CardTitle>
+            <CardDescription>
+              Gestiona las diapositivas del carrusel principal.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/admin/slider">Ir al Slider</Link>
             </Button>
           </CardContent>
         </Card>

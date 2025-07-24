@@ -1,4 +1,5 @@
 
+
 export interface Product {
   id: string;
   name: string;
@@ -36,4 +37,16 @@ export interface Testimonial {
   destination: string;
   avatarUrl?: string; // Optional avatar for the author
   avatarHint?: string; // Optional hint for AI avatar image
+}
+
+export interface HeroSlide {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+  imageHint?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  status: 'draft' | 'published';
 }
