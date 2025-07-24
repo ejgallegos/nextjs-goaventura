@@ -5,7 +5,7 @@ import { ArrowLeft, ShieldCheck } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad',
-  description: 'Conoce cómo Go aventura recopila, usa y protege tu información personal.',
+  description: 'Conoce cómo Go aventura recopila, usa y protege tu información personal de acuerdo con la Ley 25.326 de Argentina.',
 };
 
 export default function PoliticaPrivacidadPage() {
@@ -15,46 +15,51 @@ export default function PoliticaPrivacidadPage() {
         <header className="text-center mb-10 md:mb-12">
           <ShieldCheck className="h-16 w-16 text-primary mx-auto mb-4" />
           <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Política de Privacidad</h1>
-          <p className="mt-4 text-lg text-muted-foreground">Última actualización: {new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p className="mt-4 text-lg text-muted-foreground">Última actualización: 1 de Agosto de 2024</p>
         </header>
 
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground">
-          <p>En Go aventura, accesible desde https://goaventura.com.ar, una de nuestras principales prioridades es la privacidad de nuestros visitantes. Este documento de Política de Privacidad contiene tipos de información que son recopilados y registrados por Go aventura y cómo los usamos.</p>
+          <p>En Go aventura (EVyT Leg. 20019), accesible desde https://goaventura.com.ar, la privacidad de nuestros visitantes es una de nuestras principales prioridades. Este documento de Política de Privacidad contiene los tipos de información que son recopilados y registrados por Go aventura y cómo los usamos, en cumplimiento con la Ley de Protección de Datos Personales N° 25.326 de la República Argentina.</p>
 
-          <h2>1. Información que Recopilamos</h2>
-          <p>La información personal que se te pide que proporciones, y las razones por las que se te pide que la proporciones, se te aclararán en el momento en que te pidamos que proporciones tu información personal.</p>
-          <p>Si nos contactas directamente, podemos recibir información adicional sobre ti, como tu nombre, dirección de correo electrónico, número de teléfono, el contenido del mensaje y/o archivos adjuntos que nos puedas enviar, y cualquier otra información que elijas proporcionar.</p>
-          <p>Cuando te registras para una Cuenta, podemos pedir tu información de contacto, incluyendo elementos como nombre, nombre de la compañía, dirección, dirección de correo electrónico y número de teléfono.</p>
+          <h2>1. Responsable de la Base de Datos</h2>
+          <p>Go aventura, con domicilio en Joaquín V. González 125, Villa Unión, La Rioja, Argentina, es el responsable de las bases de datos con la información personal recopilada a través de este sitio web.</p>
 
-          <h2>2. Cómo Usamos tu Información</h2>
-          <p>Usamos la información que recopilamos de varias maneras, incluyendo para:</p>
+          <h2>2. Información que Recopilamos</h2>
+          <p>Recopilamos información personal que usted nos proporciona voluntariamente al contactarnos, solicitar un presupuesto, suscribirse a nuestro boletín o contratar nuestros servicios. Esta información puede incluir, entre otros:</p>
           <ul>
-            <li>Proveer, operar y mantener nuestro sitio web</li>
-            <li>Mejorar, personalizar y expandir nuestro sitio web</li>
-            <li>Entender y analizar cómo usas nuestro sitio web</li>
-            <li>Desarrollar nuevos productos, servicios, características y funcionalidades</li>
-            <li>Comunicarnos contigo, ya sea directamente o a través de uno de nuestros socios, incluyendo para servicio al cliente, para proporcionarte actualizaciones y otra información relacionada con el sitio web, y para fines de marketing y promoción</li>
-            <li>Enviarte correos electrónicos</li>
-            <li>Encontrar y prevenir el fraude</li>
+            <li>Nombre y Apellido</li>
+            <li>Dirección de correo electrónico</li>
+            <li>Número de teléfono</li>
+            <li>Cualquier otro dato que usted provea en el cuerpo de su mensaje o consulta.</li>
           </ul>
-
-          <h2>3. Archivos de Registro (Log Files)</h2>
-          <p>Go aventura sigue un procedimiento estándar de uso de archivos de registro. Estos archivos registran a los visitantes cuando visitan sitios web. Todas las empresas de hosting hacen esto y una parte de los análisis de los servicios de hosting. La información recopilada por los archivos de registro incluye direcciones de protocolo de internet (IP), tipo de navegador, proveedor de servicios de Internet (ISP), sello de fecha y hora, páginas de referencia/salida, y posiblemente el número de clics. Estos no están vinculados a ninguna información que sea personalmente identificable. El propósito de la información es analizar tendencias, administrar el sitio, rastrear el movimiento de los usuarios en el sitio web y recopilar información demográfica.</p>
           
-          <h2>4. Cookies y Web Beacons</h2>
-          <p>Como cualquier otro sitio web, Go aventura usa 'cookies'. Estas cookies se utilizan para almacenar información, incluidas las preferencias de los visitantes, y las páginas del sitio web a las que el visitante accedió o visitó. La información se utiliza para optimizar la experiencia de los usuarios personalizando el contenido de nuestra página web según el tipo de navegador de los visitantes y/u otra información.</p>
-
-          <h2>5. Derechos de Privacidad (No Vender Mi Información Personal)</h2>
-          <p>[Información sobre derechos específicos de privacidad como CCPA o GDPR, si aplica. ESTE ES UN CONTENIDO DE EJEMPLO.]</p>
-
-          <h2>6. Derechos de Protección de Datos GDPR</h2>
-          <p>[Información sobre los derechos GDPR para usuarios de la UE. ESTE ES UN CONTENIDO DE EJEMPLO.]</p>
+          <h2>3. Finalidad del Tratamiento de Datos</h2>
+          <p>La información personal que recopilamos se utiliza con las siguientes finalidades:</p>
+          <ul>
+            <li>Proveer, operar y mantener nuestro sitio web y los servicios solicitados.</li>
+            <li>Mejorar, personalizar y expandir nuestros servicios y la experiencia del usuario.</li>
+            <li>Entender y analizar cómo usa nuestro sitio web para optimizar su funcionamiento.</li>
+            <li>Comunicarnos con usted para fines de servicio al cliente, para proporcionarle actualizaciones sobre los servicios contratados y para fines de marketing y promoción, siempre que contemos con su consentimiento.</li>
+            <li>Procesar sus reservas y pagos.</li>
+            <li>Prevenir el fraude y garantizar la seguridad de nuestro sitio.</li>
+          </ul>
           
-          <h2>7. Información para Niños</h2>
-          <p>Otra parte de nuestra prioridad es agregar protección para los niños mientras usan internet. Alentamos a los padres y tutores a observar, participar y/o monitorear y guiar su actividad en línea.</p>
-          <p>Go aventura no recopila conscientemente ninguna Información de Identificación Personal de niños menores de 13 años. Si crees que tu hijo proporcionó este tipo de información en nuestro sitio web, te instamos encarecidamente a que te pongas en contacto con nosotros de inmediato y haremos nuestros mejores esfuerzos para eliminar rápidamente dicha información de nuestros registros.</p>
+          <h2>4. Consentimiento</h2>
+          <p>Al proporcionar sus datos personales, usted otorga su consentimiento libre, expreso e informado para que su información sea utilizada con las finalidades mencionadas anteriormente. Puede retirar su consentimiento en cualquier momento, comunicándose con nosotros a través de los medios de contacto provistos.</p>
+
+          <h2>5. Derechos de los Titulares de los Datos</h2>
+          <p>Usted tiene derecho a ejercer los derechos de acceso, rectificación, actualización y supresión de sus datos personales, de forma gratuita y a intervalos no inferiores a seis meses, salvo que se acredite un interés legítimo al efecto.</p>
+          <p>Para ejercer estos derechos, puede enviar un correo electrónico a info@goaventura.com.ar (Placeholder), acreditando su identidad. Su solicitud será procesada dentro de los plazos estipulados por la normativa vigente.</p>
+          <p>La AGENCIA DE ACCESO A LA INFORMACIÓN PÚBLICA, en su carácter de Órgano de Control de la Ley N° 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de las normas vigentes en materia de protección de datos personales.</p>
+
+          <h2>6. Seguridad de los Datos</h2>
+          <p>Go aventura adopta las medidas técnicas y organizativas necesarias para garantizar la seguridad y confidencialidad de sus datos personales, a fin de evitar su adulteración, pérdida, consulta o tratamiento no autorizado, y que permitan detectar desviaciones de información.</p>
+
+          <h2>7. Cookies</h2>
+          <p>Nuestro sitio utiliza cookies para mejorar su experiencia. Para más información, por favor consulte nuestra <Link href="/legal/politica-de-cookies">Política de Cookies</Link>.</p>
           
-          <p className="mt-8 font-semibold">Por favor, reemplaza este contenido de ejemplo con la política de privacidad real y legalmente compatible de Go aventura.</p>
+          <h2>8. Información para Niños</h2>
+          <p>Nuestros servicios no están dirigidos a menores de 18 años. No recopilamos de forma intencionada información de identificación personal de menores. Si usted es padre o tutor y sabe que su hijo nos ha proporcionado información personal, por favor contáctenos para que podamos tomar las medidas necesarias.</p>
         </div>
 
         <div className="mt-12 text-center">
