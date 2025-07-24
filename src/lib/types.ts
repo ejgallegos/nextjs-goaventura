@@ -49,4 +49,5 @@ export interface HeroSlide {
   buttonText?: string;
   buttonLink?: string;
   status: 'draft' | 'published';
+  order?: number;
 }

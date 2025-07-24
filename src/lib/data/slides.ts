@@ -1,4 +1,5 @@
 
+
 import type { HeroSlide } from '@/lib/types';
 
 const SLIDES_STORAGE_KEY = 'goaventura_slides';
@@ -14,6 +15,7 @@ const mockSlides: HeroSlide[] = [
     buttonText: 'Explorar Viajes',
     buttonLink: '/viajes',
     status: 'published',
+    order: 1,
   },
   {
     id: 'slide002',
@@ -25,6 +27,7 @@ const mockSlides: HeroSlide[] = [
     buttonText: 'Ver Excursiones',
     buttonLink: '/viajes/excursiones',
     status: 'published',
+    order: 2,
   },
     {
     id: 'slide003',
@@ -36,6 +39,7 @@ const mockSlides: HeroSlide[] = [
     buttonText: 'Contáctanos',
     buttonLink: '/contacto',
     status: 'published',
+    order: 3,
   },
   {
     id: 'slide004',
@@ -47,25 +51,36 @@ const mockSlides: HeroSlide[] = [
     buttonText: '',
     buttonLink: '',
     status: 'published',
+    order: 4,
   },
 ];
 
 
 export async function getSlides(): Promise<HeroSlide[]> {
+    let slides: HeroSlide[] = mockSlides;
     if (typeof window !== 'undefined') {
         const storedSlides = localStorage.getItem(SLIDES_STORAGE_KEY);
         if (storedSlides) {
             try {
-                return JSON.parse(storedSlides);
+                slides = JSON.parse(storedSlides);
             } catch (e) {
                 console.error("Failed to parse slides from localStorage", e);
+                // If parsing fails, fall back to mockSlides
             }
         } else {
              localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(mockSlides));
-             return mockSlides;
         }
     }
-    return mockSlides;
+    
+    // Sort slides by order property. Slides without an order will be pushed to the end.
+    slides.sort((a, b) => {
+        if (a.order === undefined && b.order === undefined) return 0;
+        if (a.order === undefined) return 1;
+        if (b.order === undefined) return -1;
+        return a.order - b.order;
+    });
+
+    return slides;
 }
 
 export async function saveSlides(slides: HeroSlide[]): Promise<void> {

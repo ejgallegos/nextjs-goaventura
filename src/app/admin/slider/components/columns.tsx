@@ -34,6 +34,21 @@ export const columns: ColumnDef<HeroSlide>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  {
+    accessorKey: "order",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Orden" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="w-12 text-center">
+          <span className="font-medium">
+            {row.getValue("order")}
+          </span>
+        </div>
+      )
+    },
+  },
    {
     accessorKey: "imageUrl",
     header: ({ column }) => (

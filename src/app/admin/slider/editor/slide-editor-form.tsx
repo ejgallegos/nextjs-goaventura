@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -40,6 +41,7 @@ const slideSchema = z.object({
   imageUrl: z.string().url('Debe ser una URL de imagen válida.'),
   buttonText: z.string().optional(),
   buttonLink: z.string().optional(),
+  order: z.coerce.number().optional(),
 });
 
 const generateSlug = (title: string) => {
@@ -125,6 +127,7 @@ export default function SlideEditorForm() {
         imageUrl: '',
         buttonText: '',
         buttonLink: '',
+        order: 0,
     },
   });
 
@@ -142,6 +145,7 @@ export default function SlideEditorForm() {
               imageUrl: slideData.imageUrl,
               buttonText: slideData.buttonText,
               buttonLink: slideData.buttonLink,
+              order: slideData.order,
           });
         }
       }
@@ -268,27 +272,45 @@ export default function SlideEditorForm() {
                       )}
                     />
                 </div>
-                 <FormField
-                    control={form.control}
-                    name="status"
-                    render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Estado</FormLabel>
-                         <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                            <FormControl>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Seleccionar estado" />
-                                </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                                <SelectItem value="draft">Borrador</SelectItem>
-                                <SelectItem value="published">Publicado</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <FormMessage />
-                    </FormItem>
-                    )}
-                />
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                        control={form.control}
+                        name="status"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Estado</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Seleccionar estado" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="draft">Borrador</SelectItem>
+                                    <SelectItem value="published">Publicado</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+                     <FormField
+                      control={form.control}
+                      name="order"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Orden</FormLabel>
+                          <FormControl>
+                            <Input type="number" placeholder="Ej: 1" {...field} />
+                          </FormControl>
+                          <FormDescription>
+                            Posición en el slider (1, 2, 3...).
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                </div>
             </div>
             
             <div className="grid gap-3">

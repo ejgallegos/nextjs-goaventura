@@ -47,6 +47,7 @@ export function DataTableViewOptions<TData>({
             if (column.id === 'imageUrl') columnName = 'Imagen';
             if (column.id === 'title') columnName = 'Título';
             if (column.id === 'status') columnName = 'Estado';
+            if (column.id === 'order') columnName = 'Orden';
 
             return (
               <DropdownMenuCheckboxItem
