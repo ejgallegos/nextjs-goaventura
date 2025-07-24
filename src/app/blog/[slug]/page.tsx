@@ -1,48 +1,18 @@
+
+"use client"
 import { Metadata } from 'next';
 import Image from 'next/image';
-import { mockBlogPosts } from '@/lib/data/blog';
 import type { BlogPost } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, CalendarDays, UserCircle } from 'lucide-react';
+import { ArrowLeft, CalendarDays, UserCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import { getBlogPosts } from '@/lib/data/blog-posts';
 
-interface BlogPostPageProps {
-  params: { slug: string };
-}
-
-// Assume site URL is defined in environment variables for absolute URLs
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
-
-async function getPost(slug: string): Promise<BlogPost | undefined> {
-  return mockBlogPosts.find((p) => p.slug === slug);
-}
-
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getPost(params.slug);
-  if (!post) {
-    return { title: 'Artículo no encontrado' };
-  }
-  return {
-    title: post.title,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      type: 'article',
-      publishedTime: post.date,
-      authors: [post.author],
-      images: post.imageUrl ? [{ url: new URL(post.imageUrl, siteUrl).toString(), alt: post.title }] : [],
-    },
-  };
-}
-
-export async function generateStaticParams() {
-  return mockBlogPosts.map((post) => ({
-    slug: post.slug,
-  }));
-}
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('es-ES', {
@@ -50,8 +20,29 @@ const formatDate = (dateString: string) => {
   });
 };
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPost(params.slug);
+export default function BlogPostPage() {
+  const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
+  const params = useParams();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const slug = params.slug as string;
+      if (slug) {
+        const allPosts = await getBlogPosts();
+        const foundPost = allPosts.find((p) => p.slug === slug);
+        setPost(foundPost || null);
+      }
+    };
+    fetchPost();
+  }, [params.slug]);
+  
+  if (post === undefined) {
+    return (
+      <div className="container mx-auto py-12 px-4 text-center flex justify-center items-center h-96">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -90,11 +81,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       },
     },
     datePublished: post.date,
-    dateModified: post.date, // Assuming date is also last modified date
+    dateModified: post.date,
   };
 
   return (
     <>
+      <title>{`${post.title} | Go aventura`}</title>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -149,3 +141,4 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     </>
   );
 }
+

@@ -1,8 +1,6 @@
 
 import { MetadataRoute } from 'next';
-import { mockBlogPosts } from '@/lib/data/blog';
-import { mockExcursions } from '@/lib/data/excursions';
-import { mockTransfers } from '@/lib/data/transfers';
+import { getBlogPosts } from '@/lib/data/blog-posts';
 import { getProducts } from '@/lib/data/products';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -26,20 +24,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '/' ? 1 : 0.8,
   }));
 
-  const blogPostRoutes = mockBlogPosts.map((post) => ({
-    url: `${siteUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
+  const posts = await getBlogPosts();
+  const blogPostRoutes = posts
+    .filter(post => post.status === 'published')
+    .map((post) => ({
+      url: `${siteUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
   }));
 
-  // Fetch dynamic products
   const products = await getProducts();
-  const productRoutes = products.map((product) => ({
-    url: `${siteUrl}/viajes/${product.category.toLowerCase()}es/${product.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
+  const productRoutes = products
+    .filter(product => product.status === 'published')
+    .map((product) => ({
+      url: `${siteUrl}/viajes/${product.category.toLowerCase()}es/${product.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
   }));
 
 

@@ -5,18 +5,18 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import Link from 'next/link';
+import { LogOut, ArrowLeft } from 'lucide-react';
 
 import { columns } from './components/columns';
 import { DataTable } from './components/data-table';
-import type { Product } from '@/lib/types';
+import type { BlogPost } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { LogOut, ArrowLeft } from 'lucide-react';
-import { getProducts } from '@/lib/data/products';
+import { getBlogPosts, saveBlogPosts } from '@/lib/data/blog-posts';
+import Link from 'next/link';
 
-export default function TaskPage() {
-  const [tasks, setTasks] = useState<(Product & {status: string})[]>([]);
+export default function BlogAdminPage() {
+  const [posts, setPosts] = useState<(BlogPost & {status: string})[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { toast } = useToast();
@@ -40,26 +40,26 @@ export default function TaskPage() {
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchPosts = async () => {
       setIsLoading(true);
-      const data = await getProducts();
-      setTasks(data);
+      const data = await getBlogPosts();
+      setPosts(data);
       setIsLoading(false);
     }
-    fetchProducts();
+    fetchPosts();
   }, []);
   
   const renderContent = () => {
     if (isLoading) {
-        return <p>Cargando viajes...</p>;
+        return <p>Cargando artículos...</p>;
     }
-    return <DataTable data={tasks} columns={columns} />;
+    return <DataTable data={posts} columns={columns} />;
   }
 
 
   return (
     <>
-      <title>Gestor de Contenido - Viajes</title>
+      <title>Gestor de Contenido - Blog</title>
       <div className="md:hidden">
         <div className="w-full h-full flex items-center justify-center p-8">
             <p>El gestor de contenido no está disponible en dispositivos móviles.</p>
@@ -68,9 +68,9 @@ export default function TaskPage() {
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight">Gestor de Viajes</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Gestor de Artículos del Blog</h2>
             <p className="text-muted-foreground">
-              Aquí está la lista de tus excursiones y transfers.
+              Aquí está la lista de todos tus artículos.
             </p>
           </div>
           <div className="flex items-center space-x-2">
