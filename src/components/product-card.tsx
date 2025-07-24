@@ -13,7 +13,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const productTypePath = product.category === 'Excursion' ? 'excursiones' : 'transfers';
+  const productTypePath = product.category.toLowerCase() === 'excursion' ? 'excursiones' : 'transfers';
   const productPageUrl = `/viajes/${productTypePath}/${product.slug}`;
   const whatsappText = `Hola, me interesa ${product.category === 'Excursion' ? 'la excursión' : 'el transfer'} "${product.name}".`;
 
