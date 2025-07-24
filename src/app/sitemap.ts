@@ -38,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const productRoutes = products
     .filter(product => product.status === 'published')
     .map((product) => ({
-      url: `${siteUrl}/viajes/${product.category.toLowerCase()}es/${product.slug}`,
+      url: `${siteUrl}/viajes/${product.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.9,

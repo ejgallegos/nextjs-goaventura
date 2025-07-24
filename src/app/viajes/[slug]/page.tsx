@@ -3,7 +3,7 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/lib/data/products';
-import TripDetailPageContent from '../../components/trip-detail-page';
+import TripDetailPageContent from '../components/trip-detail-page';
 
 type Props = {
   params: { slug: string };
@@ -16,11 +16,11 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const products = await getProducts();
-  const product = products.find(p => p.slug === params.slug && p.category === 'Excursion' && p.status === 'published');
+  const product = products.find(p => p.slug === params.slug && p.status === 'published');
 
   if (!product) {
     return {
-      title: 'Excursión no encontrada',
+      title: 'Viaje no encontrado',
     }
   }
 
@@ -33,7 +33,7 @@ export async function generateMetadata(
     openGraph: {
       title: product.name,
       description: product.shortDescription || product.description.substring(0, 160),
-      url: `${siteUrl}/viajes/excursiones/${product.slug}`,
+      url: `${siteUrl}/viajes/${product.slug}`,
       images: ogImage,
     },
     twitter: {
@@ -47,19 +47,19 @@ export async function generateMetadata(
 
 export async function generateStaticParams() {
   const products = await getProducts();
-  const excursions = products.filter(p => p.category === 'Excursion' && p.status === 'published');
-  return excursions.map((excursion) => ({
-    slug: excursion.slug,
+  const publishedProducts = products.filter(p => p.status === 'published');
+  return publishedProducts.map((product) => ({
+    slug: product.slug,
   }));
 }
 
-export default async function ExcursionDetailPage({ params }: Props) {
+export default async function TripDetailPage({ params }: Props) {
   const products = await getProducts();
-  const product = products.find(p => p.slug === params.slug && p.category === 'Excursion' && p.status === 'published');
+  const product = products.find(p => p.slug === params.slug && p.status === 'published');
   
   if (!product) {
     notFound();
   }
 
-  return <TripDetailPageContent product={product} productType="Excursión" />;
+  return <TripDetailPageContent product={product} productType={product.category} />;
 }

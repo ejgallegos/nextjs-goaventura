@@ -49,18 +49,18 @@ const Footer = () => {
 							</li>
 							<li>
 								<Link
-									href="/viajes/excursiones"
+									href="/viajes"
 									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
 								>
-									Excursiones
+									Viajes
 								</Link>
 							</li>
 							<li>
 								<Link
-									href="/viajes/transfers"
+									href="/alojamientos"
 									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
 								>
-									Transfers
+									Alojamientos
 								</Link>
 							</li>
 							<li>
