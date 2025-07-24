@@ -6,7 +6,7 @@ import { Mountain, BookOpen, Images } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-muted/40 p-4">
+    <div className="flex flex-col items-center bg-muted/40 p-4 pt-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Panel de Administración</h1>
         <p className="text-muted-foreground">
