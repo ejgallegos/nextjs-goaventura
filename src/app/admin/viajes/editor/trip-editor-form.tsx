@@ -41,6 +41,7 @@ const tripSchema = z.object({
   price: z.coerce.number().optional(),
   description: z.string().min(10, 'La descripción debe tener al menos 10 caracteres.'),
   imageUrl: z.string().optional(), // Added for image handling
+  tags: z.string().optional(), // Represent tags as a comma-separated string for simplicity in form
 });
 
 const generateSlug = (name: string) => {
@@ -128,6 +129,7 @@ export default function TripEditorForm() {
         price: 0,
         description: '',
         imageUrl: '',
+        tags: '',
     },
   });
 
@@ -146,6 +148,7 @@ export default function TripEditorForm() {
               price: tripData.price,
               description: tripData.description,
               imageUrl: tripData.imageUrl,
+              tags: tripData.tags?.join(', '),
           });
         }
       }
@@ -171,6 +174,7 @@ export default function TripEditorForm() {
   const onSubmit = async (values: z.infer<typeof tripSchema>) => {
     const allTrips = await getProducts(); // UPDATED
     let updatedTrips;
+    const productTags = values.tags?.split(',').map(tag => tag.trim()).filter(Boolean) || [];
 
     if (isEditing && tripId) {
         updatedTrips = allTrips.map(trip => {
@@ -179,6 +183,7 @@ export default function TripEditorForm() {
                     ...trip,
                     ...values,
                     slug: generateSlug(values.name), // Update slug if name changes
+                    tags: productTags,
                 };
             }
             return trip;
@@ -188,6 +193,7 @@ export default function TripEditorForm() {
             id: `prod_${Date.now()}`,
             slug: generateSlug(values.name),
             ...values,
+            tags: productTags,
             imageUrl: values.imageUrl || 'https://placehold.co/600x400.png',
         };
         updatedTrips = [...allTrips, newTrip];
@@ -328,6 +334,25 @@ export default function TripEditorForm() {
               )}
             />
         </div>
+
+         <div className="grid gap-3">
+            <FormField
+                control={form.control}
+                name="tags"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Etiquetas</FormLabel>
+                    <FormControl>
+                        <Input placeholder="4x4, Aventura, Cordillera" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                        Separa las etiquetas con comas.
+                    </FormDescription>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+        </div>
         
         <div className="flex justify-end">
             <Button type="submit" disabled={isLoading}>
@@ -339,3 +364,5 @@ export default function TripEditorForm() {
     </Form>
   );
 }
+
+    
