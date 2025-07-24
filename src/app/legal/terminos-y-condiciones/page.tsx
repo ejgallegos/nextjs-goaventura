@@ -1,3 +1,4 @@
+
 import { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -19,7 +20,7 @@ export default function TerminosPage() {
         </header>
 
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground">
-          <p>Bienvenido a Go aventura. Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web y los servicios de Go aventura (EVyT Leg. 20019), en adelante "la Agencia".</p>
+          <p>Bienvenido a Go aventura. Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web y los servicios de Go aventura (EVyT Leg. 20019, <Link href="https://www.argentina.gob.ar/servicio/consultar-agencias-de-viajes" target="_blank" rel="noopener noreferrer">ver legajo</Link>), en adelante "la Agencia".</p>
 
           <h2>1. Aceptación de los Términos</h2>
           <p>Al acceder a este sitio web y/o contratar nuestros servicios, usted acepta estos términos y condiciones en su totalidad. No continúe usando el sitio web de Go aventura si no acepta todos los términos y condiciones establecidos en esta página.</p>

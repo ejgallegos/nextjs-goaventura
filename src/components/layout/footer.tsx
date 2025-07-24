@@ -25,9 +25,12 @@ const Footer = () => {
 							Tu agencia de viajes de confianza. Exploramos el
 							mundo contigo.
 						</p>
-						<p className="text-xs text-sidebar-foreground/70 mt-2">
-							Leg. 20019
-						</p>
+						<div className="text-xs text-sidebar-foreground/70 mt-2">
+							<p>Leg. 20019</p>
+                            <Link href="https://www.argentina.gob.ar/servicio/consultar-agencias-de-viajes" target="_blank" rel="noopener noreferrer" className="hover:text-sidebar-primary transition-colors underline">
+                                Legajo Habilitante
+                            </Link>
+						</div>
 					</div>
 
 					{/* Quick Links */}

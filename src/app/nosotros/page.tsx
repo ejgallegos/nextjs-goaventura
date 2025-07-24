@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import ImageSlider from '@/components/image-slider';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Users, Target, ShieldCheck, MessageCircle } from 'lucide-react';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Nosotros',
@@ -82,9 +83,10 @@ const AboutUsPage = () => {
             <div className="p-6 bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="font-headline text-2xl font-semibold text-foreground mb-2">Nuestros Valores</h3>
-              <p className="text-sm text-muted-foreground">
-                Pasión, Compromiso, Calidad, Confianza y Responsabilidad. Leg. 20019.
-              </p>
+              <div className="text-sm text-muted-foreground space-y-1">
+                 <p>Pasión, Compromiso, Calidad, Confianza y Responsabilidad.</p>
+                 <p>Leg. 20019 - <Link href="https://www.argentina.gob.ar/servicio/consultar-agencias-de-viajes" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">Legajo Habilitante</Link></p>
+              </div>
             </div>
           </div>
         </section>
