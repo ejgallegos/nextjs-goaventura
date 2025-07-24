@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Sparkles, ShoppingCart } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -63,24 +64,10 @@ export default function Header() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
-             <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href="/ai/enhance-summary"
-                    className={cn(navigationMenuTriggerStyle(), "font-body text-base flex items-center hover:bg-transparent")}
-                  >
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    AI Summary
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
         <div className="hidden lg:flex items-center gap-2">
-            <Button variant="ghost" size="icon" aria-label="Carrito">
-                <ShoppingCart className="h-5 w-5" />
-            </Button>
             <ThemeToggle />
         </div>
 
@@ -125,27 +112,12 @@ export default function Header() {
                     </Link>
                   </li>
                 ))}
-                 <li>
-                    <div className="border-t mt-3 pt-3">
-                        <Link
-                            href="/ai/enhance-summary"
-                            className="flex items-center rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
-                            onClick={() => setMobileMenuOpen(false)}
-                        >
-                            <Sparkles className="mr-2 h-4 w-4" />
-                            AI Summary
-                        </Link>
-                    </div>
-                </li>
               </ul>
               <div className="mt-auto border-t pt-4 space-y-2 px-2">
                  <div className="flex justify-between items-center px-1">
                     <span className="text-base font-medium text-foreground">Cambiar Tema</span>
                     <ThemeToggle />
                   </div>
-                <Button variant="outline" size="lg" aria-label="Carrito" className="w-full justify-start">
-                  <ShoppingCart className="mr-2 h-5 w-5" /> Carrito
-                </Button>
               </div>
             </nav>
           </SheetContent>
