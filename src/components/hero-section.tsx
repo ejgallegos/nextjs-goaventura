@@ -32,7 +32,7 @@ const HeroSection = () => {
 
   if (!slides) {
     return (
-      <div className="relative flex items-center justify-center bg-secondary h-[70vh] sm:h-auto sm:py-24 lg:py-32 overflow-hidden">
+      <div className="relative flex items-center justify-center bg-secondary h-[70vh] overflow-hidden">
         <Skeleton className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0 bg-foreground/75"></div>
       </div>
@@ -40,7 +40,7 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="relative h-[70vh] sm:h-auto sm:py-24 lg:py-32 bg-secondary text-secondary-foreground overflow-hidden">
+    <section className="relative h-[70vh] bg-secondary text-secondary-foreground overflow-hidden">
         <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={0}
