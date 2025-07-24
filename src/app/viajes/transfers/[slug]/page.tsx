@@ -20,10 +20,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
 export default function TransferDetailPage({ params }: TransferDetailPageProps) {
   const [transfer, setTransfer] = useState<Product | null | undefined>(undefined);
-  const { slug } = params;
-
+  
   useEffect(() => {
     const fetchTransfer = async () => {
+      const slug = params.slug;
       if (slug) {
         const products = await getProducts();
         const foundTransfer = products.find(p => p.slug === slug && p.category === 'Transfer');
@@ -31,7 +31,7 @@ export default function TransferDetailPage({ params }: TransferDetailPageProps) 
       }
     };
     fetchTransfer();
-  }, [slug]);
+  }, [params.slug]);
 
   if (transfer === undefined) {
     return (

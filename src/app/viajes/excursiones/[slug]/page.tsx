@@ -21,10 +21,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
 export default function ExcursionDetailPage({ params }: ExcursionDetailPageProps) {
   const [excursion, setExcursion] = useState<Product | null | undefined>(undefined);
-  const { slug } = params;
 
   useEffect(() => {
     const fetchExcursion = async () => {
+      const slug = params.slug;
       if (slug) {
         const products = await getProducts();
         const foundExcursion = products.find(p => p.slug === slug && p.category === 'Excursion');
@@ -32,7 +32,7 @@ export default function ExcursionDetailPage({ params }: ExcursionDetailPageProps
       }
     };
     fetchExcursion();
-  }, [slug]);
+  }, [params.slug]);
   
   if (excursion === undefined) {
     return (
