@@ -1,15 +1,17 @@
 
+"use client";
+
+import { useState, useEffect } from 'react';
 import HeroSection from '@/components/hero-section';
 import ProductCard from '@/components/product-card';
-import { mockExcursions } from '@/lib/data/excursions';
-import { mockTransfers } from '@/lib/data/transfers';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag } from 'lucide-react';
 import Image from 'next/image';
 import TestimonialSlider from '@/components/testimonial-slider';
-import type { Testimonial } from '@/lib/types';
+import type { Product, Testimonial } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { getProducts } from '@/lib/data/products';
 
 const mockTestimonials: Testimonial[] = [
   {
@@ -55,7 +57,18 @@ const mockTestimonials: Testimonial[] = [
 ];
 
 export default function Home() {
-  const featuredProducts = [...mockExcursions.slice(0, 2), ...mockTransfers.slice(0, 1)];
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const allProducts = await getProducts();
+      // Logic to select featured products (e.g., first 2 excursions, 1 transfer)
+      const excursions = allProducts.filter(p => p.category === 'Excursion').slice(0, 2);
+      const transfers = allProducts.filter(p => p.category === 'Transfer').slice(0, 1);
+      setFeaturedProducts([...excursions, ...transfers]);
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -71,9 +84,13 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {featuredProducts.length > 0 ? (
+              featuredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
+            ) : (
+              <p className="text-center col-span-3">Cargando servicios destacados...</p>
+            )}
           </div>
           <div className="mt-12 text-center">
             <Button size="lg" asChild variant="outline">

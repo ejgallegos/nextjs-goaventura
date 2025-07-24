@@ -29,11 +29,9 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Product } from '@/lib/types';
-import { mockExcursions } from '@/lib/data/excursions';
-import { mockTransfers } from '@/lib/data/transfers';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, X } from 'lucide-react';
-import { getTasks, saveTasks } from '../page'; // Import new functions
+import { getProducts, saveProducts } from '@/lib/data/products'; // UPDATED
 
 const tripSchema = z.object({
   name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres.'),
@@ -54,7 +52,7 @@ const generateSlug = (name: string) => {
 
 // Simulate fetching data for editing - now from our localStorage-aware function
 const getTripBySlug = async (slug: string): Promise<Product | undefined> => {
-  const allTrips = await getTasks();
+  const allTrips = await getProducts();
   return allTrips.find(trip => trip.slug === slug);
 };
 
@@ -171,7 +169,7 @@ export default function TripEditorForm() {
   }
 
   const onSubmit = async (values: z.infer<typeof tripSchema>) => {
-    const allTrips = await getTasks();
+    const allTrips = await getProducts(); // UPDATED
     let updatedTrips;
 
     if (isEditing && tripId) {
@@ -195,7 +193,7 @@ export default function TripEditorForm() {
         updatedTrips = [...allTrips, newTrip];
     }
     
-    await saveTasks(updatedTrips);
+    await saveProducts(updatedTrips); // UPDATED
 
     toast({
       title: `Viaje ${isEditing ? 'Actualizado' : 'Creado'}`,

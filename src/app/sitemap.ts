@@ -1,9 +1,11 @@
+
 import { MetadataRoute } from 'next';
 import { mockBlogPosts } from '@/lib/data/blog';
 import { mockExcursions } from '@/lib/data/excursions';
 import { mockTransfers } from '@/lib/data/transfers';
+import { getProducts } from '@/lib/data/products';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
   const staticRoutes = [
@@ -31,20 +33,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const excursionRoutes = mockExcursions.map((excursion) => ({
-    url: `${siteUrl}/viajes/excursiones/${excursion.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
-  }));
-  
-  const transferRoutes = mockTransfers.map((transfer) => ({
-    url: `${siteUrl}/viajes/transfers/${transfer.slug}`,
+  // Fetch dynamic products
+  const products = await getProducts();
+  const productRoutes = products.map((product) => ({
+    url: `${siteUrl}/viajes/${product.category.toLowerCase()}es/${product.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.9,
   }));
 
 
-  return [...staticRoutes, ...blogPostRoutes, ...excursionRoutes, ...transferRoutes];
+  return [...staticRoutes, ...blogPostRoutes, ...productRoutes];
 }

@@ -1,12 +1,16 @@
-import { Metadata } from 'next';
+
+"use client";
+
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { mockTransfers } from '@/lib/data/transfers';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, DollarSign, Tag, Info, Car } from 'lucide-react';
+import { ArrowLeft, DollarSign, Tag, Info, Car, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { getProducts } from '@/lib/data/products';
+
 
 interface TransferDetailPageProps {
   params: { slug: string };
@@ -14,34 +18,25 @@ interface TransferDetailPageProps {
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
-async function getTransfer(slug: string): Promise<Product | undefined> {
-  return mockTransfers.find((p) => p.slug === slug);
-}
+export default function TransferDetailPage({ params }: TransferDetailPageProps) {
+  const [transfer, setTransfer] = useState<Product | null | undefined>(undefined);
 
-export async function generateMetadata({ params }: TransferDetailPageProps): Promise<Metadata> {
-  const transfer = await getTransfer(params.slug);
-  if (!transfer) {
-    return { title: 'Transfer no encontrado' };
+  useEffect(() => {
+    const fetchTransfer = async () => {
+      const products = await getProducts();
+      const foundTransfer = products.find(p => p.slug === params.slug && p.category === 'Transfer');
+      setTransfer(foundTransfer);
+    };
+    fetchTransfer();
+  }, [params.slug]);
+
+  if (transfer === undefined) {
+    return (
+      <div className="container mx-auto py-12 px-4 text-center flex justify-center items-center h-96">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
-  return {
-    title: transfer.name,
-    description: transfer.shortDescription || transfer.description.substring(0, 160),
-    openGraph: {
-      title: transfer.name,
-      description: transfer.shortDescription || transfer.description.substring(0, 160),
-      images: [{ url: new URL(transfer.imageUrl, siteUrl).toString(), alt: transfer.name }],
-    },
-  };
-}
-
-export async function generateStaticParams() {
-  return mockTransfers.map((transfer) => ({
-    slug: transfer.slug,
-  }));
-}
-
-export default async function TransferDetailPage({ params }: TransferDetailPageProps) {
-  const transfer = await getTransfer(params.slug);
 
   if (!transfer) {
     return (
@@ -82,6 +77,7 @@ export default async function TransferDetailPage({ params }: TransferDetailPageP
 
   return (
     <>
+      <title>{`${transfer.name} | Go aventura`}</title>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

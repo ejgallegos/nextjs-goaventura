@@ -1,24 +1,30 @@
 
-import { Metadata } from 'next';
-import { mockExcursions } from '@/lib/data/excursions';
-import { mockTransfers } from '@/lib/data/transfers';
+"use client";
+
+import { useState, useEffect } from 'react';
 import type { Product } from '@/lib/types';
 import ViajesList from './viajes-list';
+import { getProducts } from '@/lib/data/products';
+import { Loader2 } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Todos los Viajes',
-  description: 'Explora todas nuestras excursiones y transfers. Tu próxima aventura te espera con Go aventura.',
-};
+export default function ViajesPage() {
+  const [products, setProducts] = useState<Product[] | null>(null);
 
-async function getProducts(): Promise<Product[]> {
-  const allProducts = [...mockExcursions, ...mockTransfers];
-  // Sort products alphabetically by name for a consistent order
-  allProducts.sort((a, b) => a.name.localeCompare(b.name));
-  return allProducts;
-}
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProducts();
+      setProducts(data);
+    };
+    fetchProducts();
+  }, []);
 
-export default async function ViajesPage() {
-  const products = await getProducts();
-
+  if (products === null) {
+     return (
+       <div className="container mx-auto py-12 px-4 text-center flex justify-center items-center h-96">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+  
   return <ViajesList products={products} />;
 }

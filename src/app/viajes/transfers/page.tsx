@@ -1,21 +1,26 @@
-import { Metadata } from 'next';
+
+"use client";
+
+import { useState, useEffect } from 'react';
 import ProductCard from '@/components/product-card';
-import { mockTransfers } from '@/lib/data/transfers';
 import type { Product } from '@/lib/types';
+import { getProducts } from '@/lib/data/products';
 
-export const metadata: Metadata = {
-  title: 'Transfers',
-  description: 'Servicios de transfer cómodos y seguros para tus viajes. Go aventura te lleva a tu destino.',
-};
+export default function TransfersPage() {
+  const [transfers, setTransfers] = useState<Product[]>([]);
 
-async function getTransfers(): Promise<Product[]> {
-  return mockTransfers;
-}
-
-export default async function TransfersPage() {
-  const transfers = await getTransfers();
+  useEffect(() => {
+    const fetchTransfers = async () => {
+      const allProducts = await getProducts();
+      const transferProducts = allProducts.filter(p => p.category === 'Transfer');
+      setTransfers(transferProducts);
+    };
+    fetchTransfers();
+  }, []);
 
   return (
+    <>
+    <title>Transfers | Go Aventura</title>
     <div className="bg-background py-12 md:py-16">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-10 md:mb-12">
@@ -33,10 +38,11 @@ export default async function TransfersPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-xl text-muted-foreground">No hay servicios de transfer disponibles en este momento. Vuelve pronto.</p>
+            <p className="text-xl text-muted-foreground">Cargando transfers...</p>
           </div>
         )}
       </div>
     </div>
+    </>
   );
 }

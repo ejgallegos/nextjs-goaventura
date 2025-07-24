@@ -1,24 +1,26 @@
-import { Metadata } from 'next';
+
+"use client";
+
+import { useState, useEffect } from 'react';
 import ProductCard from '@/components/product-card';
-import { mockExcursions } from '@/lib/data/excursions';
 import type { Product } from '@/lib/types';
+import { getProducts } from '@/lib/data/products';
 
-export const metadata: Metadata = {
-  title: 'Excursiones',
-  description: 'Descubre nuestra selección de emocionantes excursiones. Aventura y naturaleza te esperan con Go aventura.',
-};
+export default function ExcursionesPage() {
+  const [excursions, setExcursions] = useState<Product[]>([]);
 
-// This function would typically fetch data in a real app
-async function getExcursions(): Promise<Product[]> {
-  // Simulate API delay
-  // await new Promise(resolve => setTimeout(resolve, 500));
-  return mockExcursions;
-}
-
-export default async function ExcursionesPage() {
-  const excursions = await getExcursions();
+  useEffect(() => {
+    const fetchExcursions = async () => {
+      const allProducts = await getProducts();
+      const excursionProducts = allProducts.filter(p => p.category === 'Excursion');
+      setExcursions(excursionProducts);
+    };
+    fetchExcursions();
+  }, []);
 
   return (
+    <>
+    <title>Excursiones | Go Aventura</title>
     <div className="bg-background py-12 md:py-16">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-10 md:mb-12">
@@ -36,10 +38,11 @@ export default async function ExcursionesPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-xl text-muted-foreground">No hay excursiones disponibles en este momento. Vuelve pronto.</p>
+            <p className="text-xl text-muted-foreground">Cargando excursiones...</p>
           </div>
         )}
       </div>
     </div>
+    </>
   );
 }

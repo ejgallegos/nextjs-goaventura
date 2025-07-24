@@ -1,3 +1,4 @@
+
 "use client"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
@@ -34,7 +35,7 @@ import {
 import { labels } from "../data/data"
 import { productSchema } from "../data/schema"
 import { Product } from "@/lib/types";
-import { getTasks, saveTasks } from "../page";
+import { getProducts, saveProducts } from "@/lib/data/products"; // UPDATED
 import { useToast } from "@/hooks/use-toast";
 
 interface DataTableRowActionsProps<TData extends { slug: string; id: string; name: string }> {
@@ -56,9 +57,9 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
 
   const handleDelete = async () => {
     try {
-      const allTrips = await getTasks();
+      const allTrips = await getProducts();
       const updatedTrips = allTrips.filter(trip => trip.id !== row.original.id);
-      await saveTasks(updatedTrips);
+      await saveProducts(updatedTrips); // UPDATED
       
       toast({
         title: "Viaje Eliminado",

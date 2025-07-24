@@ -1,15 +1,17 @@
 
-import { Metadata } from 'next';
+"use client";
+
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { mockExcursions } from '@/lib/data/excursions';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, CalendarDays, DollarSign, Tag, Info } from 'lucide-react';
+import { ArrowLeft, CalendarDays, DollarSign, Tag, Info, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import ImageSlider from '@/components/image-slider';
+import { getProducts } from '@/lib/data/products';
 
 interface ExcursionDetailPageProps {
   params: { slug: string };
@@ -17,37 +19,27 @@ interface ExcursionDetailPageProps {
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
-// This function would typically fetch data in a real app
-async function getExcursion(slug: string): Promise<Product | undefined> {
-  return mockExcursions.find((p) => p.slug === slug);
-}
+export default function ExcursionDetailPage({ params }: ExcursionDetailPageProps) {
+  const [excursion, setExcursion] = useState<Product | null | undefined>(undefined);
 
-export async function generateMetadata({ params }: ExcursionDetailPageProps): Promise<Metadata> {
-  const excursion = await getExcursion(params.slug);
-  if (!excursion) {
-    return { title: 'Excursión no encontrada' };
+  useEffect(() => {
+    const fetchExcursion = async () => {
+      const products = await getProducts();
+      const foundExcursion = products.find(p => p.slug === params.slug && p.category === 'Excursion');
+      setExcursion(foundExcursion);
+    };
+    fetchExcursion();
+  }, [params.slug]);
+  
+  if (excursion === undefined) {
+    return (
+       <div className="container mx-auto py-12 px-4 text-center flex justify-center items-center h-96">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
-  return {
-    title: excursion.name,
-    description: excursion.shortDescription || excursion.description.substring(0, 160),
-    openGraph: {
-      title: excursion.name,
-      description: excursion.shortDescription || excursion.description.substring(0, 160),
-      images: [{ url: new URL(excursion.imageUrl, siteUrl).toString(), alt: excursion.name }],
-    },
-  };
-}
 
-export async function generateStaticParams() {
-  return mockExcursions.map((excursion) => ({
-    slug: excursion.slug,
-  }));
-}
-
-export default async function ExcursionDetailPage({ params }: ExcursionDetailPageProps) {
-  const excursion = await getExcursion(params.slug);
-
-  if (!excursion) {
+  if (excursion === null) {
     return (
       <div className="container mx-auto py-12 px-4 text-center">
         <h1 className="text-3xl font-bold mb-4">Excursión no encontrada</h1>
@@ -86,6 +78,7 @@ export default async function ExcursionDetailPage({ params }: ExcursionDetailPag
 
   return (
     <>
+      <title>{`${excursion.name} | Go aventura`}</title>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
