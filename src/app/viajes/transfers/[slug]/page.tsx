@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
@@ -12,14 +13,11 @@ import { Button } from '@/components/ui/button';
 import { getProducts } from '@/lib/data/products';
 
 
-interface TransferDetailPageProps {
-  params: { slug: string };
-}
-
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
-export default function TransferDetailPage({ params }: TransferDetailPageProps) {
+export default function TransferDetailPage() {
   const [transfer, setTransfer] = useState<Product | null | undefined>(undefined);
+  const params = useParams();
   
   useEffect(() => {
     const fetchTransfer = async () => {

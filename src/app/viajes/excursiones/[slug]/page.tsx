@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
@@ -13,14 +14,11 @@ import ReactMarkdown from 'react-markdown';
 import ImageSlider from '@/components/image-slider';
 import { getProducts } from '@/lib/data/products';
 
-interface ExcursionDetailPageProps {
-  params: { slug: string };
-}
-
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
-export default function ExcursionDetailPage({ params }: ExcursionDetailPageProps) {
+export default function ExcursionDetailPage() {
   const [excursion, setExcursion] = useState<Product | null | undefined>(undefined);
+  const params = useParams();
 
   useEffect(() => {
     const fetchExcursion = async () => {
