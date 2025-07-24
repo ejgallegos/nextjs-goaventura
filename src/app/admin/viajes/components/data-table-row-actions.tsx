@@ -2,7 +2,7 @@
 "use client"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
-import { Row } from "@tanstack/react-table"
+import { Row, Table } from "@tanstack/react-table"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -31,21 +31,34 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 
-
-import { labels } from "../data/data"
-import { productSchema } from "../data/schema"
 import { Product } from "@/lib/types";
-import { getProducts, saveProducts } from "@/lib/data/products"; // UPDATED
+import { getProducts, saveProducts } from "@/lib/data/products";
 import { useToast } from "@/hooks/use-toast";
 
-interface DataTableRowActionsProps<TData extends { slug: string; id: string; name: string }> {
-  row: Row<TData>
+const generateSlug = (name: string) => {
+    return name
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');
+};
+
+const availableTags = [
+    { value: 'Aventura', label: 'Aventura' },
+    { value: '4x4', label: '4x4' },
+    { value: 'Cultural', label: 'Cultural' },
+    { value: 'Fauna', label: 'Fauna' },
+    { value: 'Cordillera', label: 'Cordillera' },
+];
+
+interface DataTableRowActionsProps<TData extends { slug: string; id: string; name: string, tags?: string[], isFeatured?: boolean }> {
+  row: Row<TData>,
+  table: Table<TData>
 }
 
-export function DataTableRowActions<TData extends { slug: string; id: string; name: string }>({
+export function DataTableRowActions<TData extends { slug: string; id: string; name: string, tags?: string[], isFeatured?: boolean }>({
   row,
+  table,
 }: DataTableRowActionsProps<TData>) {
-  const task = productSchema.parse(row.original)
   const router = useRouter();
   const { toast } = useToast();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -55,20 +68,109 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
     router.push(`/admin/viajes/editor?slug=${slug}`);
   };
 
+  const handleCopy = async () => {
+    try {
+        const allTrips = await getProducts();
+        const originalTrip = row.original;
+
+        const newTrip: Product = {
+            ...originalTrip,
+            id: `prod_${Date.now()}`,
+            name: `${originalTrip.name} (Copia)`,
+            slug: generateSlug(`${originalTrip.name} (Copia)`),
+            status: 'draft',
+            isFeatured: false,
+        };
+
+        const updatedTrips = [...allTrips, newTrip];
+        await saveProducts(updatedTrips);
+
+        toast({
+            title: "Viaje Duplicado",
+            description: `Se creó una copia de "${originalTrip.name}".`,
+        });
+
+        // Redirect to the new copy's editor page
+        router.push(`/admin/viajes/editor?slug=${newTrip.slug}`);
+        router.refresh();
+
+    } catch (error) {
+        toast({
+            title: "Error",
+            description: "No se pudo duplicar el viaje.",
+            variant: "destructive",
+        });
+    }
+  };
+
+  const handleToggleFeatured = async () => {
+      try {
+        const allTrips = await getProducts();
+        const updatedTrips = allTrips.map(trip => 
+            trip.id === row.original.id ? { ...trip, isFeatured: !trip.isFeatured } : trip
+        );
+        await saveProducts(updatedTrips);
+
+        // Optimistic UI update
+        table.options.meta?.updateData(row.index, 'isFeatured', !row.original.isFeatured)
+
+        toast({
+            title: "Viaje Actualizado",
+            description: `"${row.original.name}" ahora ${!row.original.isFeatured ? 'es' : 'no es'} un viaje destacado.`,
+        });
+      } catch (error) {
+          toast({
+            title: "Error",
+            description: "No se pudo actualizar el estado de destacado.",
+            variant: "destructive",
+        });
+      }
+  };
+
+  const handleSetTag = async (tag: string) => {
+    try {
+        const allTrips = await getProducts();
+        const updatedTrips = allTrips.map(trip => {
+            if (trip.id === row.original.id) {
+                // Ensure tags array exists and add tag if it's not already there
+                const currentTags = trip.tags || [];
+                const newTags = currentTags.includes(tag) ? currentTags : [...currentTags, tag];
+                return { ...trip, tags: newTags };
+            }
+            return trip;
+        });
+
+        await saveProducts(updatedTrips);
+
+        // Optimistic UI update
+        const updatedTags = [...(row.original.tags || []), tag];
+        table.options.meta?.updateData(row.index, 'tags', updatedTags);
+        
+        toast({
+            title: "Etiqueta Añadida",
+            description: `Se añadió la etiqueta "${tag}" a "${row.original.name}".`,
+        });
+    } catch (error) {
+         toast({
+            title: "Error",
+            description: "No se pudo añadir la etiqueta.",
+            variant: "destructive",
+        });
+    }
+  }
+
   const handleDelete = async () => {
     try {
       const allTrips = await getProducts();
       const updatedTrips = allTrips.filter(trip => trip.id !== row.original.id);
-      await saveProducts(updatedTrips); // UPDATED
+      await saveProducts(updatedTrips); 
       
       toast({
         title: "Viaje Eliminado",
         description: `El viaje "${row.original.name}" ha sido eliminado exitosamente.`,
       });
 
-      // Refresh the page to reflect changes
-      // This is a simple way to update the table. For a more seamless UX,
-      // you could lift the state up or use a state management library.
+      // Refresh page to reflect changes from persistent storage
       window.location.reload();
 
     } catch (error) {
@@ -96,15 +198,17 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem onClick={handleEdit}>Editar</DropdownMenuItem>
-          <DropdownMenuItem>Hacer una copia</DropdownMenuItem>
-          <DropdownMenuItem>Favorito</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleCopy}>Hacer una copia</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleToggleFeatured}>
+            {row.original.isFeatured ? 'Quitar de Destacados' : 'Marcar como Destacado'}
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Etiquetas</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              <DropdownMenuRadioGroup value={task.category}>
-                {labels.map((label) => (
-                  <DropdownMenuRadioItem key={label.value} value={label.value}>
+              <DropdownMenuRadioGroup value={row.original.tags?.join(',') || ''}>
+                {availableTags.map((label) => (
+                  <DropdownMenuRadioItem key={label.value} value={label.value} onSelect={() => handleSetTag(label.value)}>
                     {label.label}
                   </DropdownMenuRadioItem>
                 ))}
@@ -119,7 +223,6 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>

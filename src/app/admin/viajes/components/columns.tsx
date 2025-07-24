@@ -1,10 +1,11 @@
+
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { labels, priorities, statuses } from "../data/data"
+import { statuses } from "../data/data"
 import { Product } from "@/lib/types" // Using main Product type
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
@@ -97,7 +98,7 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
       <DataTableColumnHeader column={column} title="Precio" />
     ),
     cell: ({ row }) => {
-      const price = parseFloat(row.original.price ?? "0")
+      const price = parseFloat(row.original.price?.toString() ?? "0")
       const currency: string = row.original.currency || 'ARS';
       const formatted = new Intl.NumberFormat("es-AR", {
         style: "currency",
@@ -126,6 +127,6 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row, table }) => <DataTableRowActions row={row} table={table} />,
   },
 ]

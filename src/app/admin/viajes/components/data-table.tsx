@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -27,6 +28,7 @@ import {
 
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
+import { Product } from "@/lib/types"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -44,9 +46,10 @@ export function DataTable<TData, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [tableData, setTableData] = React.useState(data)
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     state: {
       sorting,
@@ -65,6 +68,16 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    // Add meta to update data optimistically
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: unknown) => {
+        setTableData((prev) =>
+          prev.map((row, index) =>
+            index === rowIndex ? { ...row, [columnId]: value } : row
+          )
+        );
+      },
+    },
   })
 
   return (

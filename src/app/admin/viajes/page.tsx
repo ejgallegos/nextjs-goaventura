@@ -15,6 +15,13 @@ import { useToast } from '@/hooks/use-toast';
 import { LogOut, ArrowLeft } from 'lucide-react';
 import { getProducts } from '@/lib/data/products';
 
+// Extend the react-table meta type
+declare module '@tanstack/react-table' {
+    interface TableMeta<TData> {
+        updateData: (rowIndex: number, columnId: string, value: unknown) => void
+    }
+}
+
 export default function TaskPage() {
   const [tasks, setTasks] = useState<(Product & {status: string})[]>([]);
   const [isLoading, setIsLoading] = useState(true);
