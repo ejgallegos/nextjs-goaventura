@@ -34,7 +34,7 @@ const HeroSection = () => {
     return (
       <div className="relative flex items-center justify-center bg-secondary h-[70vh] overflow-hidden">
         <Skeleton className="absolute inset-0 w-full h-full" />
-        <div className="absolute inset-0 bg-foreground/75"></div>
+        <div className="absolute inset-0 bg-foreground/30"></div>
       </div>
     );
   }
@@ -64,7 +64,7 @@ const HeroSection = () => {
                                 data-ai-hint={slide.imageHint || 'adventure landscape'}
                             />
                         </div>
-                        <div className="absolute inset-0 bg-foreground/75"></div>
+                        <div className="absolute inset-0 bg-foreground/30"></div>
                          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                             <h1
                                 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]"
@@ -96,7 +96,7 @@ const HeroSection = () => {
             ) : (
                  <SwiperSlide>
                     <div className="relative h-full w-full flex items-center justify-center text-center">
-                     <div className="absolute inset-0 bg-foreground/75"></div>
+                     <div className="absolute inset-0 bg-foreground/30"></div>
                      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                          <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
                             Reserva tu próxima{" "}
