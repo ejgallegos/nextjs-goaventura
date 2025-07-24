@@ -46,8 +46,8 @@ Al mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Lueg
   },
   {
     id: 'exc002',
-    name: 'Parque Nacional Talampaya',
-    slug: 'parque-nacional-talampaya',
+    name: 'Excursión al Parque Nacional Talampaya',
+    slug: 'excursion-parque-nacional-talampaya',
     description: `Excursión de medio día. En esta excursión visitaremos el imponente Cañón de Talampaya, recorriendo en combis del concesionario del parque, un circuito de 2,5 hs de duración, donde conoceremos las geoformas y la historia del lugar.`,
     shortDescription: 'Visita guiada al imponente cañón, sus geoformas e historia.',
     price: 30000,
