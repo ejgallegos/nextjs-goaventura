@@ -8,6 +8,7 @@ import { labels, priorities, statuses } from "../data/data"
 import { Product } from "@/lib/types" // Using main Product type
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
+import { Star } from "lucide-react"
 
 export const columns: ColumnDef<Product & { status: string }>[] = [
   {
@@ -34,6 +35,20 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+   {
+    accessorKey: "isFeatured",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Dest." />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex w-8 justify-center">
+            {row.getValue("isFeatured") ? <Star className="h-4 w-4 text-amber-400 fill-amber-400" /> : <Star className="h-4 w-4 text-muted-foreground/40" />}
+        </div>
+      )
+    },
+    enableSorting: true,
+  },
   {
     accessorKey: "name",
     header: ({ column }) => (
@@ -42,7 +57,7 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[400px] truncate font-medium">
             {row.getValue("name")}
           </span>
         </div>
@@ -82,7 +97,7 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
       <DataTableColumnHeader column={column} title="Precio" />
     ),
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price") ?? "0")
+      const price = parseFloat(row.original.price ?? "0")
       const currency: string = row.original.currency || 'ARS';
       const formatted = new Intl.NumberFormat("es-AR", {
         style: "currency",

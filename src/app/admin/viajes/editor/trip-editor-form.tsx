@@ -32,6 +32,8 @@ import { Product } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, X } from 'lucide-react';
 import { getProducts, saveProducts } from '@/lib/data/products'; // UPDATED
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 const tripSchema = z.object({
   name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres.'),
@@ -42,6 +44,7 @@ const tripSchema = z.object({
   description: z.string().min(10, 'La descripción debe tener al menos 10 caracteres.'),
   imageUrl: z.string().optional(), // Added for image handling
   tags: z.string().optional(), // Represent tags as a comma-separated string for simplicity in form
+  isFeatured: z.boolean().default(false).optional(),
 });
 
 const generateSlug = (name: string) => {
@@ -130,6 +133,7 @@ export default function TripEditorForm() {
         description: '',
         imageUrl: '',
         tags: '',
+        isFeatured: false,
     },
   });
 
@@ -149,6 +153,7 @@ export default function TripEditorForm() {
               description: tripData.description,
               imageUrl: tripData.imageUrl,
               tags: tripData.tags?.join(', '),
+              isFeatured: tripData.isFeatured,
           });
         }
       }
@@ -307,12 +312,39 @@ export default function TripEditorForm() {
                 </div>
             </div>
             
-            <div className="grid gap-3">
+            <div className="grid gap-6">
                 <ImageUpload 
                   value={imageUrl}
                   onChange={handleImageChange}
                   onRemove={handleRemoveImage}
                 />
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Opciones Adicionales</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                         <FormField
+                            control={form.control}
+                            name="isFeatured"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                                    <div className="space-y-0.5">
+                                        <FormLabel>Marcar como Destacado</FormLabel>
+                                        <FormDescription>
+                                            El viaje aparecerá en la página de inicio.
+                                        </FormDescription>
+                                    </div>
+                                    <FormControl>
+                                        <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                    </CardContent>
+                </Card>
             </div>
         </div>
 

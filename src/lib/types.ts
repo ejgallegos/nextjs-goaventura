@@ -14,6 +14,7 @@ export interface Product {
   tags?: string[];
   imageGallery?: { src: string; alt: string; hint: string; }[];
   status?: 'draft' | 'published' | 'archived';
+  isFeatured?: boolean;
 }
 
 export interface BlogPost {

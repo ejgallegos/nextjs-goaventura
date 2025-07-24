@@ -41,5 +41,6 @@ Al mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Lueg
       { src: 'https://placehold.co/800x600.png', alt: 'Camioneta 4x4 en la cordillera', hint: '4x4 truck mountains' },
       { src: 'https://placehold.co/800x600.png', alt: 'Flamencos en la laguna', hint: 'flamingos lagoon' },
     ],
+    isFeatured: true,
   },
 ];

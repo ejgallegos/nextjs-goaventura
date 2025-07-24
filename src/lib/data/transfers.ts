@@ -13,6 +13,7 @@ export const mockTransfers: Product[] = [
     imageHint: 'airport shuttle van',
     category: 'Transfer',
     tags: ['aeropuerto', 'hotel', 'privado', 'ciudad'],
+    isFeatured: true,
   },
   {
     id: 'trn002',
@@ -26,6 +27,7 @@ export const mockTransfers: Product[] = [
     imageHint: 'city transfer car',
     category: 'Transfer',
     tags: ['hotel', 'crucero', 'puerto', 'seguro'],
+    isFeatured: false,
   },
   {
     id: 'trn003',
@@ -39,5 +41,6 @@ export const mockTransfers: Product[] = [
     imageHint: 'minibus road',
     category: 'Transfer',
     tags: ['interurbano', 'distancia', 'flexible'],
+    isFeatured: false,
   },
 ];

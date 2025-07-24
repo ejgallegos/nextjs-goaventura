@@ -42,6 +42,13 @@ export function DataTableViewOptions<TData>({
               typeof column.accessorFn !== "undefined" && column.getCanHide()
           )
           .map((column) => {
+            let columnName = column.id;
+            if (column.id === 'isFeatured') columnName = 'Destacado';
+            if (column.id === 'name') columnName = 'Nombre';
+            if (column.id === 'status') columnName = 'Estado';
+            if (column.id === 'price') columnName = 'Precio';
+            if (column.id === 'category') columnName = 'Tipo';
+            
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}
@@ -49,7 +56,7 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {columnName}
               </DropdownMenuCheckboxItem>
             )
           })}

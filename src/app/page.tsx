@@ -6,25 +6,44 @@ import HeroSection from '@/components/hero-section';
 import ProductCard from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag } from 'lucide-react';
+import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getProducts } from '@/lib/data/products';
 
 export default function Home() {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const allProducts = await getProducts();
-      // Logic to select featured products (e.g., first 2 excursions, 1 transfer)
-      const excursions = allProducts.filter(p => p.category === 'Excursion' && p.status === 'published').slice(0, 2);
-      const transfers = allProducts.filter(p => p.category === 'Transfer' && p.status === 'published').slice(0, 1);
-      setFeaturedProducts([...excursions, ...transfers]);
+      // Logic to select featured products based on isFeatured flag
+      const featured = allProducts.filter(p => p.isFeatured && p.status === 'published');
+      setFeaturedProducts(featured);
     };
     fetchProducts();
   }, []);
+
+  const renderFeaturedProducts = () => {
+    if (featuredProducts === null) {
+      return (
+         <div className="text-center col-span-full py-8 flex justify-center items-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      );
+    }
+    if (featuredProducts.length === 0) {
+      return (
+        <p className="text-center col-span-3 text-muted-foreground">
+          No hay servicios destacados en este momento. Vuelve a consultar más tarde.
+        </p>
+      );
+    }
+    return featuredProducts.map((product) => (
+      <ProductCard key={product.id} product={product} />
+    ));
+  }
 
   return (
     <div className="flex flex-col">
@@ -40,13 +59,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {featuredProducts.length > 0 ? (
-              featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))
-            ) : (
-              <p className="text-center col-span-3">Cargando servicios destacados...</p>
-            )}
+            {renderFeaturedProducts()}
           </div>
           <div className="mt-12 text-center">
             <Button size="lg" asChild variant="outline">
