@@ -44,12 +44,17 @@ const slideSchema = z.object({
   order: z.coerce.number().optional(),
 });
 
-const generateSlug = (title: string) => {
-    return title
+const generateSlug = (text: string) => {
+    return text
+        .toString()
+        .normalize('NFD') // split an accented letter into the base letter and the accent
+        .replace(/[\u0300-\u036f]/g, '') // remove all previously split accents
         .toLowerCase()
+        .trim()
         .replace(/<[^>]*>?/gm, '') // Remove HTML tags
-        .replace(/ /g, '-')
-        .replace(/[^\w-]+/g, '');
+        .replace(/\s+/g, '-') // replace spaces with -
+        .replace(/[^\w-]+/g, '') // remove all non-word chars
+        .replace(/--+/g, '-'); // replace multiple - with single -
 };
 
 const getSlideBySlug = async (slug: string): Promise<HeroSlide | undefined> => {

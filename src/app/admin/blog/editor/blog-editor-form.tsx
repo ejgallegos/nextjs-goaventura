@@ -43,11 +43,16 @@ const blogSchema = z.object({
   tags: z.string().optional(), // Represent tags as a comma-separated string for simplicity in form
 });
 
-const generateSlug = (title: string) => {
-    return title
+const generateSlug = (text: string) => {
+    return text
+        .toString()
+        .normalize('NFD') // split an accented letter into the base letter and the accent
+        .replace(/[\u0300-\u036f]/g, '') // remove all previously split accents
         .toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/[^\w-]+/g, '');
+        .trim()
+        .replace(/\s+/g, '-') // replace spaces with -
+        .replace(/[^\w-]+/g, '') // remove all non-word chars
+        .replace(/--+/g, '-'); // replace multiple - with single -
 };
 
 const getPostBySlug = async (slug: string): Promise<BlogPost | undefined> => {

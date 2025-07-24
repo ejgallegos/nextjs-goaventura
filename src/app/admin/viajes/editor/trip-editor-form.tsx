@@ -47,11 +47,16 @@ const tripSchema = z.object({
   isFeatured: z.boolean().default(false).optional(),
 });
 
-const generateSlug = (name: string) => {
-    return name
+const generateSlug = (text: string) => {
+    return text
+        .toString()
+        .normalize('NFD') // split an accented letter into the base letter and the accent
+        .replace(/[\u0300-\u036f]/g, '') // remove all previously split accents
         .toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/[^\w-]+/g, '');
+        .trim()
+        .replace(/\s+/g, '-') // replace spaces with -
+        .replace(/[^\w-]+/g, '') // remove all non-word chars
+        .replace(/--+/g, '-'); // replace multiple - with single -
 };
 
 // Simulate fetching data for editing - now from our localStorage-aware function
