@@ -81,14 +81,14 @@ export default function LoginPage() {
           <CardHeader className="text-center">
               <Link href="/" className="mb-4 inline-block">
                 <Image
-                  src="/logo.png"
+                  src="/logo-white.png"
                   alt="Go aventura Logo"
                   width={183}
                   height={40}
                   className="h-10 w-auto mx-auto dark:hidden"
                 />
                  <Image
-                  src="/logo-white.png"
+                  src="/logo.png"
                   alt="Go aventura Logo"
                   width={183}
                   height={40}

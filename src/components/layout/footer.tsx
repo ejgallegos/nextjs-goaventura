@@ -14,18 +14,11 @@ const Footer = () => {
 					<div className="md:col-span-1 lg:col-span-1">
 						<Link href="/" className="inline-block mb-4">
 							<Image
-								src="/logo.png"
-								alt="Go aventura Logo"
-								width={183}
-								height={40}
-								className="h-15 w-auto dark:hidden"
-							/>
-              <Image
 								src="/logo-white.png"
 								alt="Go aventura Logo"
 								width={183}
 								height={40}
-								className="h-15 w-auto hidden dark:block"
+								className="h-15 w-auto"
 							/>
 						</Link>
 						<p className="text-sm text-sidebar-foreground/80">
