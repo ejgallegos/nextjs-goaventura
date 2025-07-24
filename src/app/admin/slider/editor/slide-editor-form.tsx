@@ -38,7 +38,7 @@ const slideSchema = z.object({
   title: z.string().min(3, 'El título debe tener al menos 3 caracteres.'),
   subtitle: z.string().optional(),
   status: z.enum(['draft', 'published']),
-  imageUrl: z.string().url('Debe ser una URL de imagen válida.'),
+  imageUrl: z.string().optional(),
   buttonText: z.string().optional(),
   buttonLink: z.string().optional(),
   order: z.coerce.number().optional(),
