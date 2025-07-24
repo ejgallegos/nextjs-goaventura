@@ -36,6 +36,8 @@ code, pre {
     --input: 212 25% 89%; /* Lighter than muted */
     --ring: 239 28% 42%; /* #5B5D9A */
 
+    --radius: 0.5rem; /* Added for rounded corners */
+
     --whatsapp: 145 63% 49%; /* #25d366 */
     --whatsapp-foreground: 0 0% 100%;
 
@@ -78,6 +80,8 @@ code, pre {
     --border: 239 28% 30%;
     --input: 239 28% 32%;
     --ring: 212 25% 64%;
+
+    --radius: 0.5rem; /* Added for rounded corners */
 
     --whatsapp: 145 63% 49%;
     --whatsapp-foreground: 0 0% 100%;
