@@ -1,22 +1,12 @@
 
-"use client";
 
-import { useState, useEffect } from 'react';
 import ProductCard from '@/components/product-card';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/lib/data/products';
 
-export default function TransfersPage() {
-  const [transfers, setTransfers] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const fetchTransfers = async () => {
-      const allProducts = await getProducts();
-      const transferProducts = allProducts.filter(p => p.category === 'Transfer' && p.status === 'published');
-      setTransfers(transferProducts);
-    };
-    fetchTransfers();
-  }, []);
+export default async function TransfersPage() {
+  const allProducts = await getProducts();
+  const transfers = allProducts.filter(p => p.category === 'Transfer' && p.status === 'published');
 
   return (
     <>
@@ -38,7 +28,7 @@ export default function TransfersPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-xl text-muted-foreground">Cargando transfers...</p>
+            <p className="text-xl text-muted-foreground">No hay transfers disponibles en este momento.</p>
           </div>
         )}
       </div>
