@@ -8,53 +8,9 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag } from 'lucide-react';
 import Image from 'next/image';
-import TestimonialSlider from '@/components/testimonial-slider';
-import type { Product, Testimonial } from '@/lib/types';
+import type { Product } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getProducts } from '@/lib/data/products';
-
-const mockTestimonials: Testimonial[] = [
-  {
-    id: 'test001',
-    quote: "Una experiencia increíble, superó todas mis expectativas. El equipo de Go aventura fue muy profesional y amable.",
-    author: 'Laura Gómez',
-    destination: 'Trekking al Cerro Encantado',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    avatarHint: 'woman smiling'
-  },
-  {
-    id: 'test002',
-    quote: "El transfer fue puntual y el conductor muy servicial. ¡Recomendadísimo para empezar las vacaciones sin estrés!",
-    author: 'Carlos Ruiz',
-    destination: 'Transfer Aeropuerto',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    avatarHint: 'man glasses'
-  },
-  {
-    id: 'test003',
-    quote: "La cabalgata por el valle fue mágica. Los paisajes son de ensueño y los caballos muy bien cuidados. Gracias Go aventura.",
-    author: 'Sofía Fernández',
-    destination: 'Cabalgata Valle Secreto',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    avatarHint: 'woman nature'
-  },
-  {
-    id: 'test004',
-    quote: "El kayak en el Lago Esmeralda fue lo mejor de nuestro viaje. Aguas tranquilas y vistas impresionantes. ¡Volveremos!",
-    author: 'Martín Herrera',
-    destination: 'Kayak Lago Esmeralda',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    avatarHint: 'man adventure'
-  },
-   {
-    id: 'test005',
-    quote: "Organización impecable y atención al detalle. Go aventura hizo que nuestro viaje fuera perfecto. Muy recomendables.",
-    author: 'Ana Torres',
-    destination: 'Paquete Patagonia Completa',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    avatarHint: 'woman travel'
-  }
-];
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
@@ -63,8 +19,8 @@ export default function Home() {
     const fetchProducts = async () => {
       const allProducts = await getProducts();
       // Logic to select featured products (e.g., first 2 excursions, 1 transfer)
-      const excursions = allProducts.filter(p => p.category === 'Excursion').slice(0, 2);
-      const transfers = allProducts.filter(p => p.category === 'Transfer').slice(0, 1);
+      const excursions = allProducts.filter(p => p.category === 'Excursion' && p.status === 'published').slice(0, 2);
+      const transfers = allProducts.filter(p => p.category === 'Transfer' && p.status === 'published').slice(0, 1);
       setFeaturedProducts([...excursions, ...transfers]);
     };
     fetchProducts();
@@ -175,19 +131,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-12 lg:py-20 bg-secondary">
-        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 lg:mb-12">
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-secondary-foreground">Lo Que Dicen Nuestros Viajeros</h2>
-             <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Descubre por qué nuestros clientes aman viajar con Go aventura.
-            </p>
-          </div>
-          <TestimonialSlider testimonials={mockTestimonials} />
         </div>
       </section>
 
