@@ -29,11 +29,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             data-ai-hint={product.imageHint}
           />
         </Link>
-        {product.price && (
+        {product.price && product.price > 0 ? (
            <Badge variant="secondary" className="absolute top-2 right-2 text-sm font-semibold bg-primary text-primary-foreground flex items-center gap-1">
             <User className="h-4 w-4" />
             <span>{product.currency} ${product.price.toLocaleString('es-AR')}</span>
           </Badge>
+        ) : (
+           <Badge variant="secondary" className="absolute top-2 right-2 text-sm font-semibold bg-accent text-accent-foreground">
+              Consultar precio
+           </Badge>
         )}
       </CardHeader>
       <CardContent className="flex-grow p-4 space-y-3">
@@ -67,5 +71,3 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 };
 
 export default ProductCard;
-
-    

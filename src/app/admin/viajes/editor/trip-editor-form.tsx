@@ -134,7 +134,7 @@ export default function TripEditorForm() {
         shortDescription: '',
         category: 'Excursion',
         status: 'draft',
-        price: 0,
+        price: undefined,
         description: '',
         imageUrl: '',
         tags: '',
@@ -287,7 +287,7 @@ export default function TripEditorForm() {
                         <FormItem>
                           <FormLabel>Precio</FormLabel>
                           <FormControl>
-                            <Input type="number" placeholder="Ej: 5000" {...field} />
+                            <Input type="number" placeholder="Dejar en blanco si no aplica" {...field} onChange={event => field.onChange(event.target.value === '' ? undefined : +event.target.value)} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

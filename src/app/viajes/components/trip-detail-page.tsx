@@ -15,12 +15,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
 interface TripDetailPageContentProps {
   product: Product;
-  productType: 'Excursión' | 'Transfer';
 }
 
-export default function TripDetailPageContent({ product, productType }: TripDetailPageContentProps) {
+export default function TripDetailPageContent({ product }: TripDetailPageContentProps) {
   
-  const whatsappText = `Hola, estoy interesado/a en ${productType.toLowerCase()} "${product.name}". Quisiera más información.`;
+  const whatsappText = `Hola, estoy interesado/a en ${product.category.toLowerCase()} "${product.name}". Quisiera más información.`;
   
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -33,13 +32,19 @@ export default function TripDetailPageContent({ product, productType }: TripDeta
       '@type': 'Brand',
       name: 'Go aventura',
     },
-    offers: product.price ? {
+    offers: product.price && product.price > 0 ? {
       '@type': 'Offer',
       price: product.price,
       priceCurrency: product.currency || 'ARS',
       availability: 'https://schema.org/InStock',
-      url: `${siteUrl}/viajes/${product.category.toLowerCase()}es/${product.slug}`,
-    } : undefined,
+      url: `${siteUrl}/viajes/${product.slug}`,
+    } : {
+      '@type': 'Offer',
+      price: "0", // Indicate price is available on request
+      priceCurrency: product.currency || 'ARS',
+      availability: 'https://schema.org/InStock',
+      url: `${siteUrl}/viajes/${product.slug}`,
+    },
   };
 
 
@@ -80,9 +85,9 @@ export default function TripDetailPageContent({ product, productType }: TripDeta
               
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{product.category}</Badge>
-                {product.price && (
+                {product.price && product.price > 0 && (
                   <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground">
-                    <DollarSign className="mr-1.5 h-4 w-4" /> {product.currency} ${product.price.toLocaleString('es-AR')}
+                    <DollarSign className="mr-1.5 h-4 w-4" /> {product.currency} ${product.price.toLocaleString('es-AR')} por persona
                   </Badge>
                 )}
               </div>
