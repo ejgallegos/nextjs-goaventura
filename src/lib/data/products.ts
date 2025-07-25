@@ -1,42 +1,47 @@
 
+'use server';
+
+import { promises as fs } from 'fs';
+import path from 'path';
 import type { Product } from '@/lib/types';
 import { mockExcursions } from './excursions';
 import { mockTransfers } from './transfers';
 
-const PRODUCTS_STORAGE_KEY = 'goaventura_products';
+const jsonFilePath = path.resolve(process.cwd(), 'public/data/products.json');
 
-// This function now handles getting data from localStorage or falling back to mocks
-export async function getProducts(): Promise<(Product)[]> {
-    // If on the client-side, try to use localStorage
-    if (typeof window !== 'undefined') {
-        const storedTasks = localStorage.getItem(PRODUCTS_STORAGE_KEY);
-        if (storedTasks) {
-            try {
-                // If we have data in localStorage, use it
-                return JSON.parse(storedTasks);
-            } catch (e) {
-                console.error("Failed to parse products from localStorage", e);
-                // Fallback to mocks if parsing fails
-            }
-        }
+async function initializeJsonFile() {
+    try {
+        await fs.access(jsonFilePath);
+    } catch {
+        // If the file doesn't exist, create it with mock data
+        const allProducts = [...mockExcursions, ...mockTransfers];
+        allProducts.sort((a, b) => a.name.localeCompare(b.name));
+        const tasks = allProducts.map(p => ({...p, status: 'published' as const}));
+        await fs.writeFile(jsonFilePath, JSON.stringify(tasks, null, 2), 'utf8');
     }
-    
-    // On the server OR if localStorage is empty/corrupt, use mock data
-    const allProducts = [...mockExcursions, ...mockTransfers];
-    allProducts.sort((a, b) => a.name.localeCompare(b.name));
-    const tasks = allProducts.map(p => ({...p, status: 'published'}));
-    
-    // If on client, save initial mock data to localStorage if it wasn't there
-    if (typeof window !== 'undefined' && !localStorage.getItem(PRODUCTS_STORAGE_KEY)) {
-        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(tasks));
-    }
-
-    return tasks;
 }
 
-// New function to save tasks to localStorage
-export async function saveProducts(tasks: (Product)[]): Promise<void> {
-    if (typeof window !== 'undefined') {
-        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(tasks));
+// This function now handles getting data from the JSON file
+export async function getProducts(): Promise<(Product & {status: string})[]> {
+    await initializeJsonFile();
+    try {
+        const fileContents = await fs.readFile(jsonFilePath, 'utf8');
+        const products = JSON.parse(fileContents);
+        return products;
+    } catch (error) {
+        console.error("Error reading or parsing products JSON file:", error);
+        // Fallback to mocks if reading/parsing fails
+        const allProducts = [...mockExcursions, ...mockTransfers];
+        allProducts.sort((a, b) => a.name.localeCompare(b.name));
+        return allProducts.map(p => ({ ...p, status: 'published' as const }));
+    }
+}
+
+// New function to save products to the JSON file
+export async function saveProducts(products: (Product & {status: string})[]): Promise<void> {
+    try {
+        await fs.writeFile(jsonFilePath, JSON.stringify(products, null, 2), 'utf8');
+    } catch (error) {
+        console.error("Error writing products to JSON file:", error);
     }
 }

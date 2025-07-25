@@ -1,8 +1,11 @@
 
+'use server';
 
+import { promises as fs } from 'fs';
+import path from 'path';
 import type { HeroSlide } from '@/lib/types';
 
-const SLIDES_STORAGE_KEY = 'goaventura_slides';
+const jsonFilePath = path.resolve(process.cwd(), 'public/data/slides.json');
 
 const mockSlides: HeroSlide[] = [
   {
@@ -25,7 +28,7 @@ const mockSlides: HeroSlide[] = [
     imageUrl: '/slider/lb-slider-3.png',
     imageHint: 'serene beach sunset',
     buttonText: 'Ver Excursiones',
-    buttonLink: '/viajes/excursiones',
+    buttonLink: '/viajes',
     status: 'published',
     order: 2,
   },
@@ -55,24 +58,27 @@ const mockSlides: HeroSlide[] = [
   },
 ];
 
+async function initializeJsonFile() {
+    try {
+        const dataPath = path.resolve(process.cwd(), 'public/data');
+        await fs.mkdir(dataPath, { recursive: true });
+        await fs.access(jsonFilePath);
+    } catch {
+        await fs.writeFile(jsonFilePath, JSON.stringify(mockSlides, null, 2), 'utf8');
+    }
+}
 
 export async function getSlides(): Promise<HeroSlide[]> {
-    let slides: HeroSlide[] = mockSlides;
-    if (typeof window !== 'undefined') {
-        const storedSlides = localStorage.getItem(SLIDES_STORAGE_KEY);
-        if (storedSlides) {
-            try {
-                slides = JSON.parse(storedSlides);
-            } catch (e) {
-                console.error("Failed to parse slides from localStorage", e);
-                // If parsing fails, fall back to mockSlides
-            }
-        } else {
-             localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(mockSlides));
-        }
+    await initializeJsonFile();
+    let slides: HeroSlide[] = [];
+    try {
+        const fileContents = await fs.readFile(jsonFilePath, 'utf8');
+        slides = JSON.parse(fileContents);
+    } catch (e) {
+        console.error("Failed to parse slides from JSON, falling back to mocks", e);
+        slides = mockSlides;
     }
     
-    // Sort slides by order property. Slides without an order will be pushed to the end.
     slides.sort((a, b) => {
         if (a.order === undefined && b.order === undefined) return 0;
         if (a.order === undefined) return 1;
@@ -84,7 +90,9 @@ export async function getSlides(): Promise<HeroSlide[]> {
 }
 
 export async function saveSlides(slides: HeroSlide[]): Promise<void> {
-    if (typeof window !== 'undefined') {
-        localStorage.setItem(SLIDES_STORAGE_KEY, JSON.stringify(slides));
+    try {
+        await fs.writeFile(jsonFilePath, JSON.stringify(slides, null, 2), 'utf8');
+    } catch (error) {
+        console.error("Error writing slides to JSON file:", error);
     }
 }

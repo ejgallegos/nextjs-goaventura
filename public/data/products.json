@@ -1,0 +1,130 @@
+
+[
+  {
+    "id": "exc001",
+    "name": "Reserva Provincial Laguna Brava",
+    "slug": "reserva-provincial-laguna-brava",
+    "description": "Excursión de día completo, saliendo desde Villa Unión, visitando los Refugios históricos de la ruta de los arrieros a Chile, Valles y Quebradas multicolores, avistaje de fauna autóctona (vicuñas, guanacos, zorros) y de flamencos rosados en la laguna.\n\nLlegamos hasta los 4300 msnm, recorriendo la imponente Cordillera de los Andes.\n\n### Detalles\n* **Salidas:** Todos los días.\n* **Horarios:** Salida 08:00 hs – Regreso 18:00 hs.\n* **Recorrido:** 350 km.\n* **Incluye:** Vehículo 4×4, guía profesional, box lunch, seguro.\n* **No Incluye:** Ingreso a la reserva.\n\n### Itinerario\nSalimos desde Villa Unión por la mañana, por ruta 76 hacia el oeste, pasando por las localidades de Villa Castelli y Vinchina, donde haremos una breve parada para conocer la “Estrella Diaguita” y la Iglesia de adobe.\n\nContinuamos por la Quebrada de la Troya, pasando por la “Pirámide” y el paraje de Jagüé. Desde allí comenzamos el ascenso a la Cordillera, por la quebrada del Peñón, visitando los refugios históricos de arrieros: El Peñón, del Veladero, y Barrancas Blancas. Durante el recorrido haremos paradas para observar la flora y fauna del lugar.\n\nAl mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Luego haremos un recorrido por la laguna para el avistaje de flamencos y vicuñas. Por la tarde emprendemos el regreso a Villa Unión.\n\n### Recomendaciones\n* Llevar ropa cómoda, abrigo, gorro, protector solar y lentes de sol.\n* Personas con problemas cardíacos, consultar a su médico.\n* No apto para menores de 5 años.",
+    "shortDescription": "Excursión 4x4 de día completo a la Cordillera de los Andes, avistaje de fauna y paisajes únicos.",
+    "price": 60000,
+    "currency": "ARS",
+    "imageUrl": "https://placehold.co/600x400.png",
+    "imageHint": "lagoon mountains andes",
+    "category": "Excursion",
+    "tags": [
+      "Día Completo",
+      "4x4",
+      "Fauna",
+      "Cordillera",
+      "Aventura"
+    ],
+    "imageGallery": [
+      {
+        "src": "https://placehold.co/800x600.png",
+        "alt": "Paisaje 1 de Laguna Brava",
+        "hint": "andes lagoon landscape"
+      },
+      {
+        "src": "https://placehold.co/800x600.png",
+        "alt": "Vicuñas en Laguna Brava",
+        "hint": "vicunas wildlife andes"
+      },
+      {
+        "src": "https://placehold.co/800x600.png",
+        "alt": "Refugio en la montaña",
+        "hint": "mountain shelter stone"
+      },
+      {
+        "src": "https://placehold.co/800x600.png",
+        "alt": "Camioneta 4x4 en la cordillera",
+        "hint": "4x4 truck mountains"
+      },
+      {
+        "src": "https://placehold.co/800x600.png",
+        "alt": "Flamencos en la laguna",
+        "hint": "flamingos lagoon"
+      }
+    ],
+    "isFeatured": true,
+    "status": "published"
+  },
+  {
+    "id": "exc002",
+    "name": "Excursión al Parque Nacional Talampaya",
+    "slug": "excursion-parque-nacional-talampaya",
+    "description": "Excursión de medio día. En esta excursión visitaremos el imponente Cañón de Talampaya, recorriendo en combis del concesionario del parque, un circuito de 2,5 hs de duración, donde conoceremos las geoformas y la historia del lugar.",
+    "shortDescription": "Visita guiada al imponente cañón, sus geoformas e historia.",
+    "price": 30000,
+    "currency": "ARS",
+    "imageUrl": "https://placehold.co/600x400.png",
+    "imageHint": "talampaya canyon red rocks",
+    "category": "Excursion",
+    "tags": [
+      "Medio Día",
+      "Geología",
+      "Cultura",
+      "Cañón"
+    ],
+    "isFeatured": true,
+    "status": "published"
+  },
+  {
+    "id": "exc003",
+    "name": "Cañon del Triasico",
+    "slug": "canon-del-triasico",
+    "description": "Recorrido por el lecho de un río seco, visitando paredones de más de 100 mts de altura, variedad de colores en los estratos de la tierra, petroglifos y morteros comunitarios. Un viaje en el tiempo de más de 250 millones de años.",
+    "shortDescription": "Viaje en el tiempo a la era de los dinosaurios.",
+    "price": 25000,
+    "currency": "ARS",
+    "imageUrl": "https://placehold.co/600x400.png",
+    "imageHint": "triassic canyon geology",
+    "category": "Excursion",
+    "tags": [
+      "Medio Día",
+      "Geología",
+      "Aventura"
+    ],
+    "isFeatured": false,
+    "status": "published"
+  },
+  {
+    "id": "trn001",
+    "name": "Transfer Aeropuerto La Rioja - Villa Unión",
+    "slug": "transfer-aeropuerto-lr-villa-union",
+    "description": "Servicio de transfer privado desde el aeropuerto de La Rioja (Capitán Vicente Almandos Almonacid) hasta tu alojamiento en Villa Unión. Comodidad, seguridad y puntualidad garantizadas para que comiences tu aventura sin preocupaciones.",
+    "shortDescription": "Privado desde el aeropuerto de La Rioja a Villa Unión.",
+    "price": 150,
+    "currency": "USD",
+    "imageUrl": "https://placehold.co/600x400.png",
+    "imageHint": "airport shuttle van",
+    "category": "Transfer",
+    "tags": [
+      "aeropuerto",
+      "hotel",
+      "privado",
+      "villa union"
+    ],
+    "isFeatured": false,
+    "status": "published"
+  },
+  {
+    "id": "trn002",
+    "name": "Transfer Villa Unión - Parque Nacional Talampaya",
+    "slug": "transfer-villa-union-talampaya",
+    "description": "Te llevamos desde tu hotel en Villa Unión hasta la entrada del Parque Nacional Talampaya. Viaja cómodo y a tiempo para tu excursión.",
+    "shortDescription": "Desde Villa Unión al Parque Nacional Talampaya.",
+    "price": 25000,
+    "currency": "ARS",
+    "imageUrl": "https://placehold.co/600x400.png",
+    "imageHint": "van talampaya entrance",
+    "category": "Transfer",
+    "tags": [
+      "parque nacional",
+      "talampaya",
+      "villa union",
+      "seguro"
+    ],
+    "isFeatured": false,
+    "status": "published"
+  }
+]

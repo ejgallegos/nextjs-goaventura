@@ -145,7 +145,7 @@ export default function BlogEditorForm() {
               title: postData.title,
               excerpt: postData.excerpt,
               author: postData.author,
-              status: (postData as any).status || 'published',
+              status: postData.status,
               content: postData.content,
               imageUrl: postData.imageUrl,
               tags: postData.tags?.join(', '),
@@ -189,7 +189,7 @@ export default function BlogEditorForm() {
             return post;
         });
     } else {
-        const newPost: BlogPost & { status: string } = {
+        const newPost: BlogPost = {
             id: `blog_${Date.now()}`,
             slug: generateSlug(values.title),
             date: new Date().toISOString(),

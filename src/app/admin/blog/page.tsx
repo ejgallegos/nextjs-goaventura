@@ -12,7 +12,7 @@ import { DataTable } from './components/data-table';
 import type { BlogPost } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { getBlogPosts, saveBlogPosts } from '@/lib/data/blog-posts';
+import { getBlogPosts } from '@/lib/data/blog-posts';
 import Link from 'next/link';
 
 export default function BlogAdminPage() {

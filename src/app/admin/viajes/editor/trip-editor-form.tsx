@@ -31,7 +31,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Product } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, X } from 'lucide-react';
-import { getProducts, saveProducts } from '@/lib/data/products'; // UPDATED
+import { getProducts, saveProducts } from '@/lib/data/products';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 
@@ -39,7 +39,7 @@ const tripSchema = z.object({
   name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres.'),
   shortDescription: z.string().optional(),
   category: z.enum(['Excursion', 'Transfer']),
-  status: z.enum(['draft', 'published']),
+  status: z.enum(['draft', 'published', 'archived']),
   price: z.coerce.number().optional(),
   description: z.string().min(10, 'La descripción debe tener al menos 10 caracteres.'),
   imageUrl: z.string().optional(), // Added for image handling
@@ -153,7 +153,7 @@ export default function TripEditorForm() {
               name: tripData.name,
               shortDescription: tripData.shortDescription,
               category: tripData.category,
-              status: (tripData as any).status || 'published',
+              status: tripData.status,
               price: tripData.price,
               description: tripData.description,
               imageUrl: tripData.imageUrl,
@@ -199,7 +199,7 @@ export default function TripEditorForm() {
             return trip;
         });
     } else {
-        const newTrip: Product & { status: string } = {
+        const newTrip: Product = {
             id: `prod_${Date.now()}`,
             slug: generateSlug(values.name),
             ...values,
@@ -308,6 +308,7 @@ export default function TripEditorForm() {
                                 <SelectContent>
                                     <SelectItem value="draft">Borrador</SelectItem>
                                     <SelectItem value="published">Publicado</SelectItem>
+                                    <SelectItem value="archived">Archivado</SelectItem>
                                 </SelectContent>
                             </Select>
                             <FormMessage />
@@ -401,5 +402,3 @@ export default function TripEditorForm() {
     </Form>
   );
 }
-
-    
