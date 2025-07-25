@@ -8,21 +8,28 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-import type { Product } from '@/lib/types';
+import type { Product, FeaturedAccommodation } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getProducts } from '@/lib/data/products';
+import { getFeaturedAccommodation } from '@/lib/data/featured-accommodation';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
+  const [featuredAccommodation, setFeaturedAccommodation] = useState<FeaturedAccommodation | null>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
+      // Products
       const allProducts = await getProducts();
-      // Logic to select featured products based on isFeatured flag
       const featured = allProducts.filter(p => p.isFeatured && p.status === 'published');
       setFeaturedProducts(featured);
+      
+      // Accommodation
+      const accommodationData = await getFeaturedAccommodation();
+      setFeaturedAccommodation(accommodationData);
     };
-    fetchProducts();
+    fetchData();
   }, []);
 
   const renderFeaturedProducts = () => {
@@ -43,6 +50,57 @@ export default function Home() {
     return featuredProducts.map((product) => (
       <ProductCard key={product.id} product={product} />
     ));
+  }
+
+  const renderFeaturedAccommodation = () => {
+    if (featuredAccommodation === null) {
+        return (
+            <div className="flex justify-center">
+                <Card className="max-w-2xl w-full shadow-xl overflow-hidden">
+                    <Skeleton className="w-full h-64" />
+                    <CardContent className="p-6 text-center">
+                        <Skeleton className="h-10 w-10 mx-auto mb-3" />
+                        <Skeleton className="h-7 w-48 mx-auto mb-2" />
+                        <Skeleton className="h-4 w-full mb-1" />
+                        <Skeleton className="h-4 w-3/4 mx-auto" />
+                    </CardContent>
+                    <CardFooter className="p-6 pt-0 flex justify-center">
+                        <Skeleton className="h-11 w-48" />
+                    </CardFooter>
+                </Card>
+            </div>
+        );
+    }
+    return (
+        <div className="flex justify-center">
+            <Card className="max-w-2xl w-full shadow-xl overflow-hidden">
+              <CardHeader className="p-0">
+                <Image
+                  src={featuredAccommodation.imageUrl}
+                  alt={featuredAccommodation.title}
+                  width={800}
+                  height={450}
+                  className="w-full h-64 object-cover"
+                  data-ai-hint={featuredAccommodation.imageHint}
+                />
+              </CardHeader>
+              <CardContent className="p-6 text-center">
+                <Mountain className="h-10 w-10 text-accent mx-auto mb-3" />
+                <CardTitle className="font-headline text-2xl text-foreground mb-2">{featuredAccommodation.title}</CardTitle>
+                <CardDescription className="text-base text-muted-foreground mb-4">
+                  {featuredAccommodation.description}
+                </CardDescription>
+              </CardContent>
+              <CardFooter className="p-6 pt-0 flex justify-center">
+                <Button size="lg" asChild variant="default">
+                  <Link href={featuredAccommodation.buttonLink} target="_blank" rel="noopener noreferrer">
+                    {featuredAccommodation.buttonText} <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+    )
   }
 
   return (
@@ -81,34 +139,7 @@ export default function Home() {
               Descansa en lugares únicos. Te presentamos una opción excepcional cerca del Parque Nacional Talampaya.
             </p>
           </div>
-          <div className="flex justify-center">
-            <Card className="max-w-2xl w-full shadow-xl overflow-hidden">
-              <CardHeader className="p-0">
-                <Image
-                  src="https://placehold.co/800x450.png"
-                  alt="Cabañas Altos del Talampaya"
-                  width={800}
-                  height={450}
-                  className="w-full h-64 object-cover"
-                  data-ai-hint="cabin mountains talampaya"
-                />
-              </CardHeader>
-              <CardContent className="p-6 text-center">
-                <Mountain className="h-10 w-10 text-accent mx-auto mb-3" />
-                <CardTitle className="font-headline text-2xl text-foreground mb-2">Altos del Talampaya</CardTitle>
-                <CardDescription className="text-base text-muted-foreground mb-4">
-                  Disfruta de una estadía inolvidable en nuestras cabañas con vistas impresionantes al Parque Nacional Talampaya. Comodidad, naturaleza y aventura te esperan.
-                </CardDescription>
-              </CardContent>
-              <CardFooter className="p-6 pt-0 flex justify-center">
-                <Button size="lg" asChild variant="default">
-                  <Link href="http://altosdeltalampaya.goaventura.com.ar/" target="_blank" rel="noopener noreferrer">
-                    Explorar Alojamientos <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
+          {renderFeaturedAccommodation()}
         </div>
       </section>
 

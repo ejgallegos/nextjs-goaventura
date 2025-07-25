@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Mountain, BookOpen, Images } from "lucide-react";
+import { Mountain, BookOpen, Images, BedDouble } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
@@ -13,7 +13,7 @@ export default function AdminDashboardPage() {
           Selecciona qué sección de contenido quieres gestionar.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl w-full mb-20">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -59,6 +59,22 @@ export default function AdminDashboardPage() {
           <CardContent>
             <Button asChild>
               <Link href="/admin/slider">Ir al Slider</Link>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BedDouble className="h-6 w-6" />
+              Gestor Aloj. Destacado
+            </CardTitle>
+            <CardDescription>
+              Edita la tarjeta de alojamiento destacado de la página de inicio.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/admin/alojamiento-destacado/editor">Editar Destacado</Link>
             </Button>
           </CardContent>
         </Card>

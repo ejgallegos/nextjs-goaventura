@@ -52,3 +52,12 @@ export interface HeroSlide {
   status: 'draft' | 'published';
   order?: number;
 }
+
+export interface FeaturedAccommodation {
+  title: string;
+  description: string;
+  imageUrl: string;
+  imageHint?: string;
+  buttonText: string;
+  buttonLink: string;
+}
