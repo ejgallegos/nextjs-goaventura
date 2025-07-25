@@ -1,5 +1,4 @@
 
-
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -15,6 +14,7 @@ export default function AdminDashboardPage() {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full mb-20">
+        {/* 1. Gestor de Viajes */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -31,22 +31,8 @@ export default function AdminDashboardPage() {
             </Button>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Star className="h-6 w-6" />
-              Gestor de Promociones
-            </CardTitle>
-            <CardDescription>
-              Crea y gestiona paquetes y promociones especiales.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild>
-              <Link href="/admin/promociones">Ir a Promociones</Link>
-            </Button>
-          </CardContent>
-        </Card>
+        
+        {/* 2. Gestor de Blog */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -63,6 +49,26 @@ export default function AdminDashboardPage() {
             </Button>
           </CardContent>
         </Card>
+        
+        {/* 3. Gestor de Promociones */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Star className="h-6 w-6" />
+              Gestor de Promociones
+            </CardTitle>
+            <CardDescription>
+              Crea y gestiona paquetes y promociones especiales.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/admin/promociones">Ir a Promociones</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* 4. Gestor de Slider */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -79,6 +85,8 @@ export default function AdminDashboardPage() {
             </Button>
           </CardContent>
         </Card>
+
+        {/* 5. Gestor Aloj. Destacado */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -95,6 +103,8 @@ export default function AdminDashboardPage() {
             </Button>
           </CardContent>
         </Card>
+
+        {/* 6. Estadísticas */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
