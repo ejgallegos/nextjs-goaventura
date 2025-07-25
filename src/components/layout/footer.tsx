@@ -150,23 +150,6 @@ const Footer = () => {
 								<Youtube size={24} />
 							</Link>
 						</div>
-						<p className="text-sm text-sidebar-foreground/80 mt-4">
-							Suscríbete a nuestro newsletter para ofertas
-							exclusivas.
-						</p>
-						<form className="mt-2 flex">
-							<input
-								type="email"
-								placeholder="Tu email"
-								className="w-full p-2 rounded-l-md border border-input bg-background text-foreground placeholder:text-sidebar-foreground/60 focus:ring-primary focus:border-primary text-sm"
-							/>
-							<button
-								type="submit"
-								className="bg-sidebar-primary text-sidebar-primary-foreground p-2 rounded-r-md hover:bg-sidebar-primary/90 text-sm"
-							>
-								Suscribir
-							</button>
-						</form>
 					</div>
 				</div>
 
