@@ -13,7 +13,7 @@ export default function AdminDashboardPage() {
           Selecciona qué sección de contenido quieres gestionar.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full mb-20">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
