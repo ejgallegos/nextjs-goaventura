@@ -1,0 +1,21 @@
+[
+  {
+    "id": "promo_1722542400000",
+    "slug": "paquete-talampaya-aventura",
+    "title": "Paquete Talampaya Aventura",
+    "description": "Una experiencia completa de 3 días y 2 noches para descubrir la magia de Talampaya y sus alrededores. Incluye alojamiento, excursiones y más.",
+    "price": 150000,
+    "currency": "ARS",
+    "imageUrl": "https://placehold.co/600x400.png",
+    "imageHint": "talampaya canyon adventure",
+    "status": "published",
+    "isFeatured": true,
+    "included": [
+      "2 Noches de alojamiento en Villa Unión",
+      "Excursión al Parque Nacional Talampaya (Cañón)",
+      "Excursión al Cañón del Triásico",
+      "Guía profesional"
+    ],
+    "validity": "Válido para viajar hasta el 31/12/2024"
+  }
+]

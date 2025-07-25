@@ -15,6 +15,7 @@ import { getProducts } from '@/lib/data/products';
 import { getFeaturedAccommodation } from '@/lib/data/featured-accommodation';
 import { getPromotions } from '@/lib/data/promotions';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from '@/components/ui/badge';
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
