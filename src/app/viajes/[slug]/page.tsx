@@ -1,65 +1,46 @@
 
+'use client'
+
+import { useState, useEffect } from 'react';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/lib/data/products';
 import TripDetailPageContent from '../components/trip-detail-page';
+import { Loader2 } from 'lucide-react';
 
-type Props = {
-  params: { slug: string };
-};
+export default function TripDetailPage() {
+  const [product, setProduct] = useState<Product | null | undefined>(null);
+  const params = useParams();
+  const slug = params.slug as string;
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
-
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const products = await getProducts();
-  const product = products.find(p => p.slug === params.slug && p.status === 'published');
-
-  if (!product) {
-    return {
-      title: 'Viaje no encontrado',
+  useEffect(() => {
+    if (slug) {
+      const fetchProduct = async () => {
+        const products = await getProducts();
+        const foundProduct = products.find(p => p.slug === slug && p.status === 'published');
+        setProduct(foundProduct);
+      };
+      fetchProduct();
     }
+  }, [slug]);
+
+  if (product === null) {
+    return (
+       <div className="container mx-auto py-12 px-4 text-center flex justify-center items-center h-96">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
-
-  const previousImages = (await parent).openGraph?.images || []
-  const ogImage = product.imageUrl ? new URL(product.imageUrl, siteUrl).toString() : previousImages;
-
-  return {
-    title: product.name,
-    description: product.shortDescription || product.description.substring(0, 160),
-    openGraph: {
-      title: product.name,
-      description: product.shortDescription || product.description.substring(0, 160),
-      url: `${siteUrl}/viajes/${product.slug}`,
-      images: ogImage,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: product.name,
-      description: product.shortDescription || product.description.substring(0, 160),
-      images: [product.imageUrl || ''],
-    },
-  }
-}
-
-export async function generateStaticParams() {
-  const products = await getProducts();
-  const publishedProducts = products.filter(p => p.status === 'published');
-  return publishedProducts.map((product) => ({
-    slug: product.slug,
-  }));
-}
-
-export default async function TripDetailPage({ params }: Props) {
-  const products = await getProducts();
-  const product = products.find(p => p.slug === params.slug && p.status === 'published');
   
-  if (!product) {
+  if (product === undefined) {
     notFound();
   }
 
-  return <TripDetailPageContent product={product} productType={product.category} />;
+  return (
+    <>
+      <title>{product.name} | Go aventura</title>
+      <TripDetailPageContent product={product} />
+    </>
+  );
 }

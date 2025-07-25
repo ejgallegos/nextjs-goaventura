@@ -33,7 +33,11 @@ const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
 
   const handleClick = () => {
     if (productId && productName) {
-      trackWhatsappClick(productId, productName);
+        const clickedKey = `clicked-whatsapp-${productId}`;
+        if (!localStorage.getItem(clickedKey)) {
+            trackWhatsappClick(productId, productName);
+            localStorage.setItem(clickedKey, 'true');
+        }
     }
   };
 

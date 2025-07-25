@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, DollarSign, Info, User } from 'lucide-react';
+import { ArrowLeft, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import ImageSlider from '@/components/image-slider';
@@ -22,7 +22,12 @@ interface TripDetailPageContentProps {
 export default function TripDetailPageContent({ product }: TripDetailPageContentProps) {
   
   useEffect(() => {
-    trackView(product.id, product.name);
+    // Unique view tracking using localStorage
+    const viewedKey = `viewed-product-${product.id}`;
+    if (!localStorage.getItem(viewedKey)) {
+        trackView(product.id, product.name);
+        localStorage.setItem(viewedKey, 'true');
+    }
   }, [product.id, product.name]);
 
   const whatsappText = `Hola, estoy interesado/a en ${product.category.toLowerCase()} "${product.name}". Quisiera más información.`;
@@ -44,13 +49,7 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
       priceCurrency: product.currency || 'ARS',
       availability: 'https://schema.org/InStock',
       url: `${siteUrl}/viajes/${product.slug}`,
-    } : {
-      '@type': 'Offer',
-      price: "0", // Indicate price is available on request
-      priceCurrency: product.currency || 'ARS',
-      availability: 'https://schema.org/InStock',
-      url: `${siteUrl}/viajes/${product.slug}`,
-    },
+    } : undefined,
   };
 
 
@@ -89,11 +88,12 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
             <div className="md:col-span-3 space-y-6">
               <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{product.name}</h1>
               
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{product.category}</Badge>
+              <div className="flex flex-wrap gap-2 items-center">
+                <Badge variant="secondary" className="text-sm">{product.category}</Badge>
                 {product.price && product.price > 0 && (
-                  <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground flex items-center gap-1">
-                    <User className="h-4 w-4" /> {product.currency} ${product.price.toLocaleString('es-AR')}
+                   <Badge variant="secondary" className="text-base font-semibold bg-primary text-primary-foreground flex items-center gap-1">
+                    <User className="h-4 w-4" />
+                    <span>{product.currency} ${product.price.toLocaleString('es-AR')}</span>
                   </Badge>
                 )}
               </div>

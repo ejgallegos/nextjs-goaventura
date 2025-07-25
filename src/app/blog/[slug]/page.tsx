@@ -1,65 +1,19 @@
 
+'use client'
+
+import { useState, useEffect } from 'react';
 import type { Metadata, ResolvingMetadata } from 'next';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import type { BlogPost } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, CalendarDays, UserCircle } from 'lucide-react';
+import { ArrowLeft, CalendarDays, UserCircle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import { getBlogPosts } from '@/lib/data/blog-posts';
 
-type Props = {
-  params: { slug: string };
-};
-
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
-
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const posts = await getBlogPosts();
-  const post = posts.find(p => p.slug === params.slug && p.status === 'published');
-
-  if (!post) {
-    return {
-      title: 'Artículo no encontrado'
-    }
-  }
-
-  const previousImages = (await parent).openGraph?.images || []
-  const ogImage = post.imageUrl ? new URL(post.imageUrl, siteUrl).toString() : previousImages;
-
-  return {
-    title: post.title,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      url: `${siteUrl}/blog/${post.slug}`,
-      type: 'article',
-      publishedTime: post.date,
-      authors: [post.author],
-      images: ogImage,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
-      images: [ogImage],
-    },
-  }
-}
-
-export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-  const publishedPosts = posts.filter(p => p.status === 'published');
-  return publishedPosts.map((post) => ({
-    slug: post.slug,
-  }));
-}
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('es-ES', {
@@ -67,11 +21,31 @@ const formatDate = (dateString: string) => {
   });
 };
 
-export default async function BlogPostPage({ params }: Props) {
-  const posts = await getBlogPosts();
-  const post = posts.find((p) => p.slug === params.slug && p.status === 'published');
+export default function BlogPostPage() {
+  const [post, setPost] = useState<BlogPost | null | undefined>(null);
+  const params = useParams();
+  const slug = params.slug as string;
 
-  if (!post) {
+  useEffect(() => {
+    if (slug) {
+      const fetchPost = async () => {
+        const posts = await getBlogPosts();
+        const foundPost = posts.find(p => p.slug === slug && p.status === 'published');
+        setPost(foundPost);
+      };
+      fetchPost();
+    }
+  }, [slug]);
+  
+  if (post === null) {
+     return (
+       <div className="container mx-auto py-12 px-4 text-center flex justify-center items-center h-96">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (post === undefined) {
     notFound();
   }
   
@@ -103,6 +77,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
+      <title>{post.title} | Go aventura</title>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
