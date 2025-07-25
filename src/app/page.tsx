@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -6,17 +7,19 @@ import HeroSection from '@/components/hero-section';
 import ProductCard from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag, Loader2 } from 'lucide-react';
+import { ArrowRight, Award, MessageSquareText, Users, BedDouble, Mountain, ShieldCheck, CreditCard, Clock, Tag, Loader2, Star } from 'lucide-react';
 import Image from 'next/image';
-import type { Product, FeaturedAccommodation } from '@/lib/types';
+import type { Product, FeaturedAccommodation, Promotion } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getProducts } from '@/lib/data/products';
 import { getFeaturedAccommodation } from '@/lib/data/featured-accommodation';
+import { getPromotions } from '@/lib/data/promotions';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
   const [featuredAccommodation, setFeaturedAccommodation] = useState<FeaturedAccommodation | null>(null);
+  const [featuredPromotions, setFeaturedPromotions] = useState<Promotion[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +31,11 @@ export default function Home() {
       // Accommodation
       const accommodationData = await getFeaturedAccommodation();
       setFeaturedAccommodation(accommodationData);
+
+      // Promotions
+      const allPromotions = await getPromotions();
+      const featuredPromos = allPromotions.filter(p => p.isFeatured && p.status === 'published');
+      setFeaturedPromotions(featuredPromos);
     };
     fetchData();
   }, []);
@@ -51,6 +59,60 @@ export default function Home() {
       <ProductCard key={product.id} product={product} />
     ));
   }
+  
+  const renderFeaturedPromotions = () => {
+    if (featuredPromotions === null) {
+      return (
+         <div className="text-center col-span-full py-8 flex justify-center items-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      );
+    }
+    if (featuredPromotions.length === 0) {
+      return null;
+    }
+    return featuredPromotions.map((promo) => (
+       <Card key={promo.id} className="flex flex-col overflow-hidden h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg">
+          <CardHeader className="p-0 relative">
+            <Link href={`/promociones/${promo.slug}`} aria-label={`Ver detalles de ${promo.title}`}>
+              <Image
+                src={promo.imageUrl}
+                alt={`Imagen de ${promo.title}`}
+                width={600}
+                height={400}
+                className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                data-ai-hint={promo.imageHint}
+              />
+            </Link>
+             <Badge variant="secondary" className="absolute top-2 left-2 text-sm font-semibold bg-amber-500 text-white flex items-center gap-1">
+                <Star className="h-4 w-4" />
+                <span>Promoción</span>
+            </Badge>
+          </CardHeader>
+          <CardContent className="flex-grow p-4 space-y-3">
+            <Link href={`/promociones/${promo.slug}`} aria-label={`Ver detalles de ${promo.title}`}>
+            <CardTitle className="font-headline text-xl hover:text-primary transition-colors line-clamp-2">{promo.title}</CardTitle>
+            </Link>
+            <p className="text-sm text-muted-foreground line-clamp-3">{promo.description}</p>
+          </CardContent>
+          <CardFooter className="p-4 flex items-center justify-between gap-2 border-t">
+            {promo.price ? (
+                <div className="font-semibold text-lg text-primary">
+                    {promo.currency} ${promo.price.toLocaleString('es-AR')}
+                </div>
+            ) : (
+                <div className="font-semibold text-muted-foreground">Consultar</div>
+            )}
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/promociones/${promo.slug}`}>
+                Ver Detalles <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
+    ));
+  }
+
 
   const renderFeaturedAccommodation = () => {
     if (featuredAccommodation === null) {
@@ -128,9 +190,27 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      {/* Featured Promotions Section */}
+      {featuredPromotions && featuredPromotions.length > 0 && (
+          <section className="py-12 lg:py-20 bg-muted">
+             <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-10 lg:mb-12">
+                    <Star className="h-12 w-12 text-primary mx-auto mb-4" />
+                    <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">Promociones Especiales</h2>
+                    <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Aprovecha nuestros paquetes exclusivos y vive una aventura completa al mejor precio.
+                    </p>
+                </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    {renderFeaturedPromotions()}
+                </div>
+             </div>
+          </section>
+      )}
 
       {/* Featured Accommodation Section */}
-      <section className="py-12 lg:py-20 bg-muted">
+      <section className="py-12 lg:py-20 bg-background">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 lg:mb-12">
             <BedDouble className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -144,7 +224,7 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-12 lg:py-20 bg-background">
+      <section className="py-12 lg:py-20 bg-muted">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 lg:mb-12">
             <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">¿Por Qué Elegir Go aventura?</h2>

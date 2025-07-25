@@ -1,7 +1,9 @@
 
+
 import { MetadataRoute } from 'next';
 import { getBlogPosts } from '@/lib/data/blog-posts';
 import { getProducts } from '@/lib/data/products';
+import { getPromotions } from '@/lib/data/promotions';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
@@ -11,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/nosotros',
     '/viajes',
     '/alojamientos',
+    '/promociones',
     '/blog',
     '/contacto',
     '/ai/enhance-summary',
@@ -43,7 +46,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.9,
   }));
+  
+  const promotions = await getPromotions();
+  const promotionRoutes = promotions
+    .filter(promo => promo.status === 'published')
+    .map((promo) => ({
+      url: `${siteUrl}/promociones/${promo.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    }));
 
 
-  return [...staticRoutes, ...blogPostRoutes, ...productRoutes];
+  return [...staticRoutes, ...blogPostRoutes, ...productRoutes, ...promotionRoutes];
 }

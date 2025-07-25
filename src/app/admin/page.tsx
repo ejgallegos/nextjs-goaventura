@@ -1,8 +1,9 @@
 
+
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Mountain, BookOpen, Images, BedDouble, BarChartHorizontal } from "lucide-react";
+import { Mountain, BookOpen, Images, BedDouble, BarChartHorizontal, Star } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
@@ -27,6 +28,22 @@ export default function AdminDashboardPage() {
           <CardContent>
             <Button asChild>
               <Link href="/admin/viajes">Ir a Viajes</Link>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Star className="h-6 w-6" />
+              Gestor de Promociones
+            </CardTitle>
+            <CardDescription>
+              Crea y gestiona paquetes y promociones especiales.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/admin/promociones">Ir a Promociones</Link>
             </Button>
           </CardContent>
         </Card>

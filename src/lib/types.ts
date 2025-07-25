@@ -61,3 +61,18 @@ export interface FeaturedAccommodation {
   buttonText: string;
   buttonLink: string;
 }
+
+export interface Promotion {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  price?: number;
+  currency?: string;
+  imageUrl: string;
+  imageHint?: string;
+  status: 'draft' | 'published';
+  isFeatured?: boolean;
+  included?: string[];
+  validity?: string;
+}
