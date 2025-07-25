@@ -6,10 +6,12 @@ import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, DollarSign, Info } from 'lucide-react';
+import { ArrowLeft, DollarSign, Info, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import ImageSlider from '@/components/image-slider';
+import { useEffect } from 'react';
+import { trackView } from '@/lib/data/statistics';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
@@ -19,6 +21,10 @@ interface TripDetailPageContentProps {
 
 export default function TripDetailPageContent({ product }: TripDetailPageContentProps) {
   
+  useEffect(() => {
+    trackView(product.id, product.name);
+  }, [product.id, product.name]);
+
   const whatsappText = `Hola, estoy interesado/a en ${product.category.toLowerCase()} "${product.name}". Quisiera más información.`;
   
   const jsonLd = {
@@ -86,8 +92,8 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-sm"><Info className="mr-1.5 h-4 w-4"/>{product.category}</Badge>
                 {product.price && product.price > 0 && (
-                  <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground">
-                    <DollarSign className="mr-1.5 h-4 w-4" /> {product.currency} ${product.price.toLocaleString('es-AR')} por persona
+                  <Badge variant="secondary" className="text-sm bg-accent text-accent-foreground flex items-center gap-1">
+                    <User className="h-4 w-4" /> {product.currency} ${product.price.toLocaleString('es-AR')}
                   </Badge>
                 )}
               </div>
@@ -108,7 +114,14 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
               )}
               
               <div className="pt-4">
-                <WhatsAppCtaButton predefinedText={whatsappText} buttonText="Consultar Disponibilidad" size="lg" className="w-full sm:w-auto" />
+                <WhatsAppCtaButton 
+                  predefinedText={whatsappText} 
+                  buttonText="Consultar Disponibilidad" 
+                  size="lg" 
+                  className="w-full sm:w-auto"
+                  productId={product.id}
+                  productName={product.name}
+                />
               </div>
 
                <div className="mt-8">

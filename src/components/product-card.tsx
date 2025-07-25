@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
@@ -64,6 +65,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           buttonText="Consultar"
           size="sm"
           className="w-full sm:w-auto"
+          productId={product.id}
+          productName={product.name}
         />
       </CardFooter>
     </Card>

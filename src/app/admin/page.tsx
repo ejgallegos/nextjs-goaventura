@@ -2,18 +2,18 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Mountain, BookOpen, Images, BedDouble } from "lucide-react";
+import { Mountain, BookOpen, Images, BedDouble, BarChartHorizontal } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
-    <div className="flex flex-col items-center bg-muted/40 p-4 pt-8">
+    <div className="flex flex-col items-center bg-muted/40 p-4 pt-8 min-h-screen">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Panel de Administración</h1>
         <p className="text-muted-foreground">
           Selecciona qué sección de contenido quieres gestionar.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl w-full mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full mb-20">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -75,6 +75,22 @@ export default function AdminDashboardPage() {
           <CardContent>
             <Button asChild>
               <Link href="/admin/alojamiento-destacado/editor">Editar Destacado</Link>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BarChartHorizontal className="h-6 w-6" />
+              Estadísticas de Viajes
+            </CardTitle>
+            <CardDescription>
+              Métricas de vistas y consultas de tus productos.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/admin/estadisticas">Ver Estadísticas</Link>
             </Button>
           </CardContent>
         </Card>
