@@ -1,0 +1,14 @@
+{
+  "products": {
+    "exc001": {
+      "id": "exc001",
+      "name": "Reserva Provincial Laguna Brava",
+      "views": 2,
+      "whatsappClicks": 0
+    }
+  },
+  "summary": {
+    "totalViews": 2,
+    "totalWhatsappClicks": 0
+  }
+}

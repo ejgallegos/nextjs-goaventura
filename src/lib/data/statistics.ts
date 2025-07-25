@@ -9,6 +9,8 @@ export interface ProductStat {
     name: string;
     views: number;
     whatsappClicks: number;
+    viewsByDate: { [date: string]: number };
+    whatsappClicksByDate: { [date: string]: number };
 }
 
 export interface StatisticsData {
@@ -18,6 +20,8 @@ export interface StatisticsData {
     summary: {
         totalViews: number;
         totalWhatsappClicks: number;
+        viewsByDate: { [date: string]: number };
+        whatsappClicksByDate: { [date: string]: number };
     }
 }
 
@@ -27,8 +31,15 @@ const initialData: StatisticsData = {
     products: {},
     summary: {
         totalViews: 0,
-        totalWhatsappClicks: 0
+        totalWhatsappClicks: 0,
+        viewsByDate: {},
+        whatsappClicksByDate: {}
     }
+};
+
+// Helper to get date in YYYY-MM-DD format
+const getTodayString = () => {
+    return new Date().toISOString().split('T')[0];
 };
 
 async function initializeJsonFile() {
@@ -43,7 +54,15 @@ export async function getStatistics(): Promise<StatisticsData> {
     await initializeJsonFile();
     try {
         const fileContents = await fs.readFile(jsonFilePath, 'utf8');
-        return JSON.parse(fileContents);
+        const data = JSON.parse(fileContents);
+        // Ensure data structure is valid, especially for older data
+        if (!data.summary) {
+            data.summary = initialData.summary;
+        }
+        if (!data.products) {
+            data.products = initialData.products;
+        }
+        return data;
     } catch (error) {
         console.error("Error reading or parsing statistics JSON file:", error);
         return initialData;
@@ -63,16 +82,26 @@ async function saveStatistics(data: StatisticsData): Promise<void> {
 export async function trackView(productId: string, productName: string) {
     try {
         const stats = await getStatistics();
+        const today = getTodayString();
         
         // Product specific
         if (!stats.products[productId]) {
-            stats.products[productId] = { id: productId, name: productName, views: 0, whatsappClicks: 0 };
+            stats.products[productId] = { 
+                id: productId, 
+                name: productName, 
+                views: 0, 
+                whatsappClicks: 0,
+                viewsByDate: {},
+                whatsappClicksByDate: {}
+            };
         }
         stats.products[productId].name = productName; // Update name in case it changes
         stats.products[productId].views = (stats.products[productId].views || 0) + 1;
-        
+        stats.products[productId].viewsByDate[today] = (stats.products[productId].viewsByDate[today] || 0) + 1;
+
         // Summary
         stats.summary.totalViews = (stats.summary.totalViews || 0) + 1;
+        stats.summary.viewsByDate[today] = (stats.summary.viewsByDate[today] || 0) + 1;
         
         await saveStatistics(stats);
     } catch (error) {
@@ -83,17 +112,27 @@ export async function trackView(productId: string, productName: string) {
 export async function trackWhatsappClick(productId: string, productName: string) {
      try {
         const stats = await getStatistics();
+        const today = getTodayString();
 
         // Product specific
         if (!stats.products[productId]) {
-            stats.products[productId] = { id: productId, name: productName, views: 0, whatsappClicks: 0 };
+             stats.products[productId] = { 
+                id: productId, 
+                name: productName, 
+                views: 0, 
+                whatsappClicks: 0,
+                viewsByDate: {},
+                whatsappClicksByDate: {}
+            };
         }
         stats.products[productId].name = productName;
         stats.products[productId].whatsappClicks = (stats.products[productId].whatsappClicks || 0) + 1;
+        stats.products[productId].whatsappClicksByDate[today] = (stats.products[productId].whatsappClicksByDate[today] || 0) + 1;
 
         // Summary
         stats.summary.totalWhatsappClicks = (stats.summary.totalWhatsappClicks || 0) + 1;
-        
+        stats.summary.whatsappClicksByDate[today] = (stats.summary.whatsappClicksByDate[today] || 0) + 1;
+
         await saveStatistics(stats);
     } catch (error) {
         console.error(`Failed to track WhatsApp click for product ${productId}:`, error);
