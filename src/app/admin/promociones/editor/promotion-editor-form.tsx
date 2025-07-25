@@ -30,7 +30,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Promotion } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, BedDouble } from 'lucide-react';
 import { getPromotions, savePromotions } from '@/lib/data/promotions';
 import { Switch } from '@/components/ui/switch';
 
@@ -43,6 +43,9 @@ const promotionSchema = z.object({
   included: z.string().optional(),
   validity: z.string().optional(),
   isFeatured: z.boolean().default(false).optional(),
+  accommodationName: z.string().optional(),
+  accommodationLink: z.string().url('Debe ser una URL válida.').optional().or(z.literal('')),
+  accommodationImageUrl: z.string().optional(),
 });
 
 const generateSlug = (text: string) => {
@@ -62,13 +65,13 @@ const getPromotionBySlug = async (slug: string): Promise<Promotion | undefined> 
   return allPromos.find(promo => promo.slug === slug);
 };
 
-const ImageUpload = ({ value, onChange, onRemove }: { value?: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, onRemove: () => void }) => {
+const ImageUpload = ({ value, onChange, onRemove, title, description, hint }: { value?: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, onRemove: () => void, title: string, description: string, hint: string }) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Imagen de la Promoción</CardTitle>
+                <CardTitle>{title}</CardTitle>
                 <CardDescription>
-                    Sube una imagen representativa para el paquete.
+                    {description}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -76,7 +79,7 @@ const ImageUpload = ({ value, onChange, onRemove }: { value?: string, onChange: 
                     {value ? (
                         <div className="relative group">
                             <Image
-                                alt="Imagen de promoción"
+                                alt="Imagen subida"
                                 className="aspect-video w-full rounded-md object-cover"
                                 height="200"
                                 src={value || 'https://placehold.co/300x200.png'}
@@ -97,7 +100,7 @@ const ImageUpload = ({ value, onChange, onRemove }: { value?: string, onChange: 
                                     <p className="mb-2 text-sm text-muted-foreground">
                                         <span className="font-semibold">Haz clic para subir</span> o arrastra y suelta
                                     </p>
-                                    <p className="text-xs text-muted-foreground">PNG, JPG, o WEBP (MAX. 800x400px)</p>
+                                    <p className="text-xs text-muted-foreground">{hint}</p>
                                 </div>
                                 <input id="dropzone-file" type="file" className="hidden" onChange={onChange} accept="image/*" />
                             </label>
@@ -129,6 +132,9 @@ export default function PromotionEditorForm() {
         included: '',
         validity: '',
         isFeatured: false,
+        accommodationName: '',
+        accommodationLink: '',
+        accommodationImageUrl: '',
     },
   });
 
@@ -149,19 +155,19 @@ export default function PromotionEditorForm() {
     }
   }, [slug, form]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (field: 'imageUrl' | 'accommodationImageUrl') => (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        form.setValue('imageUrl', reader.result as string);
+        form.setValue(field, reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleRemoveImage = () => {
-    form.setValue('imageUrl', '');
+  const handleRemoveImage = (field: 'imageUrl' | 'accommodationImageUrl') => () => {
+    form.setValue(field, '');
   }
 
   const onSubmit = async (values: z.infer<typeof promotionSchema>) => {
@@ -205,6 +211,7 @@ export default function PromotionEditorForm() {
   
   const isLoading = form.formState.isSubmitting;
   const imageUrl = form.watch('imageUrl');
+  const accommodationImageUrl = form.watch('accommodationImageUrl');
 
   return (
     <Form {...form}>
@@ -278,8 +285,11 @@ export default function PromotionEditorForm() {
             <div className="grid gap-6">
                 <ImageUpload 
                   value={imageUrl}
-                  onChange={handleImageChange}
-                  onRemove={handleRemoveImage}
+                  onChange={handleImageChange('imageUrl')}
+                  onRemove={handleRemoveImage('imageUrl')}
+                  title="Imagen de la Promoción"
+                  description="Sube una imagen representativa para el paquete."
+                  hint="PNG, JPG, o WEBP (MAX. 800x400px)"
                 />
                  <Card>
                     <CardHeader>
@@ -346,7 +356,59 @@ export default function PromotionEditorForm() {
             />
         </div>
         
-        <div className="flex justify-end">
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <BedDouble className="h-6 w-6" />
+                    Detalles del Alojamiento (Opcional)
+                </CardTitle>
+                <CardDescription>
+                    Añade información sobre el alojamiento incluido en la promoción.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="grid md:grid-cols-3 gap-6">
+                <div className="md:col-span-2 grid gap-6">
+                    <FormField
+                        control={form.control}
+                        name="accommodationName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Nombre del Alojamiento</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ej: Hotel de las Montañas" {...field} value={field.value ?? ''} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="accommodationLink"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Enlace del Alojamiento</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="URL para ver o reservar el alojamiento" {...field} value={field.value ?? ''} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                 <div className="grid gap-6">
+                     <ImageUpload
+                        value={accommodationImageUrl}
+                        onChange={handleImageChange('accommodationImageUrl')}
+                        onRemove={handleRemoveImage('accommodationImageUrl')}
+                        title="Imagen del Alojamiento"
+                        description="Sube una foto del hotel o cabaña."
+                        hint="PNG, JPG, o WEBP (MAX. 800x400px)"
+                    />
+                </div>
+            </CardContent>
+        </Card>
+        
+        <div className="flex justify-end mt-6">
             <Button type="submit" disabled={isLoading}>
                 {isLoading ? 'Guardando...' : 'Guardar Cambios'}
             </Button>

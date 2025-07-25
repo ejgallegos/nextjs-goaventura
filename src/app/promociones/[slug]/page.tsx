@@ -10,8 +10,9 @@ import Link from 'next/link';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CheckCircle, Calendar, DollarSign, Loader2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Calendar, DollarSign, Loader2, BedDouble, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function PromotionDetailPage() {
   const [promotion, setPromotion] = useState<Promotion | null | undefined>(null);
@@ -54,19 +55,52 @@ export default function PromotionDetailPage() {
              </Link>
             </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 items-start">
-            <div className="md:col-span-2 relative aspect-video rounded-lg overflow-hidden shadow-xl">
-                 <Image
-                  src={promotion.imageUrl}
-                  alt={`Imagen de ${promotion.title}`}
-                  fill
-                  className="object-cover"
-                  priority
-                  data-ai-hint={promotion.imageHint}
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div className="space-y-6">
+                <div className="relative aspect-video rounded-lg overflow-hidden shadow-xl">
+                    <Image
+                    src={promotion.imageUrl}
+                    alt={`Imagen de ${promotion.title}`}
+                    fill
+                    className="object-cover"
+                    priority
+                    data-ai-hint={promotion.imageHint}
+                    />
+                </div>
+                 {promotion.accommodationImageUrl && promotion.accommodationName && (
+                     <Card className="bg-muted/50">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2 text-xl">
+                                <BedDouble className="h-5 w-5 text-primary" />
+                                Alojamiento Incluido
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-col sm:flex-row gap-4">
+                            <div className="sm:w-1/3 relative aspect-video rounded-md overflow-hidden">
+                                <Image
+                                    src={promotion.accommodationImageUrl}
+                                    alt={`Imagen de ${promotion.accommodationName}`}
+                                    fill
+                                    className="object-cover"
+                                    data-ai-hint={promotion.accommodationImageHint}
+                                />
+                            </div>
+                            <div className="sm:w-2/3">
+                                <h4 className="font-semibold text-lg">{promotion.accommodationName}</h4>
+                                {promotion.accommodationLink && (
+                                     <Button variant="link" asChild className="p-0 h-auto mt-2">
+                                        <Link href={promotion.accommodationLink} target="_blank" rel="noopener noreferrer">
+                                            Ver Alojamiento <ExternalLink className="ml-1.5 h-4 w-4" />
+                                        </Link>
+                                    </Button>
+                                )}
+                            </div>
+                        </CardContent>
+                    </Card>
+                 )}
             </div>
 
-            <div className="md:col-span-3 space-y-6">
+            <div className="space-y-6">
               <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{promotion.title}</h1>
               
               <div className="flex flex-wrap gap-2">

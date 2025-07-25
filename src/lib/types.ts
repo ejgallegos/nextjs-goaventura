@@ -75,4 +75,8 @@ export interface Promotion {
   isFeatured?: boolean;
   included?: string[];
   validity?: string;
+  accommodationName?: string;
+  accommodationLink?: string;
+  accommodationImageUrl?: string;
+  accommodationImageHint?: string;
 }
