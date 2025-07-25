@@ -251,7 +251,7 @@ export default function TripEditorForm() {
                         <FormItem>
                           <FormLabel>Subtítulo (Descripción Corta)</FormLabel>
                           <FormControl>
-                            <Input placeholder="Un subtítulo atractivo" {...field} />
+                            <Input placeholder="Un subtítulo atractivo" {...field} value={field.value ?? ''} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -287,7 +287,7 @@ export default function TripEditorForm() {
                         <FormItem>
                           <FormLabel>Precio</FormLabel>
                           <FormControl>
-                            <Input type="number" placeholder="Dejar en blanco si no aplica" {...field} onChange={event => field.onChange(event.target.value === '' ? undefined : +event.target.value)} />
+                            <Input type="number" placeholder="Dejar en blanco si no aplica" {...field} value={field.value ?? ''} onChange={event => field.onChange(event.target.value === '' ? undefined : +event.target.value)} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -381,7 +381,7 @@ export default function TripEditorForm() {
                 <FormItem>
                     <FormLabel>Etiquetas</FormLabel>
                     <FormControl>
-                        <Input placeholder="4x4, Aventura, Cordillera" {...field} />
+                        <Input placeholder="4x4, Aventura, Cordillera" {...field} value={field.value ?? ''} />
                     </FormControl>
                     <FormDescription>
                         Separa las etiquetas con comas.

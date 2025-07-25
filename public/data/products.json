@@ -1,4 +1,3 @@
-
 [
   {
     "id": "exc001",
@@ -51,10 +50,9 @@
   {
     "id": "exc002",
     "name": "Excursión al Parque Nacional Talampaya",
-    "slug": "excursion-parque-nacional-talampaya",
+    "slug": "excursion-al-parque-nacional-talampaya",
     "description": "Excursión de medio día. En esta excursión visitaremos el imponente Cañón de Talampaya, recorriendo en combis del concesionario del parque, un circuito de 2,5 hs de duración, donde conoceremos las geoformas y la historia del lugar.",
     "shortDescription": "Visita guiada al imponente cañón, sus geoformas e historia.",
-    "price": 30000,
     "currency": "ARS",
     "imageUrl": "https://placehold.co/600x400.png",
     "imageHint": "talampaya canyon red rocks",
