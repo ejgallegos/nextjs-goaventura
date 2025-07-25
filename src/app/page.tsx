@@ -102,7 +102,7 @@ export default function Home() {
               </CardContent>
               <CardFooter className="p-6 pt-0 flex justify-center">
                 <Button size="lg" asChild variant="default">
-                  <Link href="/alojamientos">
+                  <Link href="http://altosdeltalampaya.goaventura.com.ar/" target="_blank" rel="noopener noreferrer">
                     Explorar Alojamientos <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
