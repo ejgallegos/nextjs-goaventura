@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Loader2, Eye, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Loader2, Eye, MessageSquare, Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -20,12 +20,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getStatistics, type StatisticsData } from '@/lib/data/statistics';
+import { getStatistics, type StatisticsData, type ProductStat } from '@/lib/data/statistics';
 import { Badge } from '@/components/ui/badge';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { DateRange } from 'react-day-picker';
+import { format, isWithinInterval, startOfDay } from 'date-fns';
+
+type FilteredProductStat = {
+  id: string;
+  name: string;
+  views: number;
+  whatsappClicks: number;
+};
+
 
 export default function StatisticsPage() {
   const [stats, setStats] = useState<StatisticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [date, setDate] = useState<DateRange | undefined>();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -37,9 +50,44 @@ export default function StatisticsPage() {
     fetchStats();
   }, []);
 
-  const sortedProducts = stats?.products 
-    ? Object.values(stats.products).sort((a, b) => (b.views || 0) - (a.views || 0))
-    : [];
+  const getFilteredStats = (): FilteredProductStat[] => {
+    if (!stats?.products) return [];
+
+    const productArray = Object.values(stats.products);
+
+    if (!date?.from || !date?.to) {
+      // If no date range, return total stats
+      return productArray.map(p => ({
+        id: p.id,
+        name: p.name,
+        views: p.views || 0,
+        whatsappClicks: p.whatsappClicks || 0,
+      })).sort((a,b) => b.views - a.views);
+    }
+    
+    const interval = { start: startOfDay(date.from), end: startOfDay(date.to) };
+
+    const filtered = productArray.map(product => {
+      const viewsInRange = Object.entries(product.viewsByDate || {})
+        .filter(([dateStr]) => isWithinInterval(startOfDay(new Date(dateStr)), interval))
+        .reduce((sum, [, count]) => sum + count, 0);
+
+      const clicksInRange = Object.entries(product.whatsappClicksByDate || {})
+        .filter(([dateStr]) => isWithinInterval(startOfDay(new Date(dateStr)), interval))
+        .reduce((sum, [, count]) => sum + count, 0);
+
+      return {
+        id: product.id,
+        name: product.name,
+        views: viewsInRange,
+        whatsappClicks: clicksInRange,
+      };
+    });
+
+    return filtered.sort((a,b) => b.views - a.views);
+  };
+  
+  const sortedProducts = getFilteredStats();
 
   const renderContent = () => {
     if (isLoading) {
@@ -51,7 +99,7 @@ export default function StatisticsPage() {
     }
     
     if (!stats || sortedProducts.length === 0) {
-      return <p className="text-center text-muted-foreground py-8">No hay estadísticas para mostrar.</p>;
+      return <p className="text-center text-muted-foreground py-8">No hay estadísticas para mostrar en el rango seleccionado.</p>;
     }
 
     return (
@@ -74,8 +122,8 @@ export default function StatisticsPage() {
             </TableHeader>
             <TableBody>
               {sortedProducts.map(product => {
-                  const conversionRate = (product.views && product.views > 0)
-                    ? ((product.whatsappClicks || 0) / product.views) * 100
+                  const conversionRate = (product.views > 0)
+                    ? (product.whatsappClicks / product.views) * 100
                     : 0;
                 return (
                   <TableRow key={product.id}>
@@ -120,6 +168,42 @@ export default function StatisticsPage() {
               <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
                 Estadísticas de Viajes
               </h1>
+            </div>
+             <div className="flex items-center gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      id="date"
+                      variant={"outline"}
+                      className="w-[300px] justify-start text-left font-normal"
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date?.from ? (
+                        date.to ? (
+                          <>
+                            {format(date.from, "LLL dd, y")} -{" "}
+                            {format(date.to, "LLL dd, y")}
+                          </>
+                        ) : (
+                          format(date.from, "LLL dd, y")
+                        )
+                      ) : (
+                        <span>Seleccionar un rango de fechas</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      initialFocus
+                      mode="range"
+                      defaultMonth={date?.from}
+                      selected={date}
+                      onSelect={setDate}
+                      numberOfMonths={2}
+                    />
+                  </PopoverContent>
+                </Popover>
+                 <Button onClick={() => setDate(undefined)} variant="ghost" disabled={!date}>Resetear</Button>
             </div>
             {renderContent()}
           </div>
