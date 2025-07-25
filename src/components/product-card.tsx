@@ -5,7 +5,7 @@ import type { Product } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import WhatsAppCtaButton from './whatsapp-cta-button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, User } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface ProductCardProps {
@@ -30,8 +30,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           />
         </Link>
         {product.price && (
-           <Badge variant="secondary" className="absolute top-2 right-2 text-base font-semibold bg-primary text-primary-foreground">
-            {product.currency} ${product.price}
+           <Badge variant="secondary" className="absolute top-2 right-2 text-sm font-semibold bg-primary text-primary-foreground flex items-center gap-1">
+            <User className="h-4 w-4" />
+            <span>{product.currency} ${product.price.toLocaleString('es-AR')}</span>
           </Badge>
         )}
       </CardHeader>
