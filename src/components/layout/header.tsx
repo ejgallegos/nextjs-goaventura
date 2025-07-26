@@ -21,7 +21,7 @@ const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/viajes", label: "Viajes" },
-  { href: "/alojamientos", label: "Alojamientos" },
+  { href: "https://altosdeltalampaya.goaventura.com.ar/", label: "Alojamientos" },
   { href: "/blog", label: "Blog" },
   { href: "/contacto", label: "Contacto" },
 ];
@@ -57,6 +57,8 @@ export default function Header() {
                 <NavigationMenuLink asChild>
                   <Link
                     href={link.href}
+                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className={cn(navigationMenuTriggerStyle(), "font-body text-base hover:bg-transparent")}
                   >
                     {link.label}
@@ -105,6 +107,8 @@ export default function Header() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                       className="block rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
                       onClick={() => setMobileMenuOpen(false)}
                     >
