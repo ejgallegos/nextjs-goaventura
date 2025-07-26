@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import type { Product } from '@/lib/types';
-import ViajesList from './components/viajes-list';
+import ViajesList from './viajes-list';
 import { getProducts } from '@/lib/data/products';
 import { Loader2 } from 'lucide-react';
 

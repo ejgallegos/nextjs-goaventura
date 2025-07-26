@@ -134,10 +134,10 @@ const ContactPage = () => {
             <div>
               <h2 className="font-headline text-2xl font-semibold text-foreground mb-4">Información de Contacto</h2>
               <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-center">
+                {/*<li className="flex items-center">
                   <MapPin className="h-5 w-5 mr-3 text-primary shrink-0" />
                   <span>Calle Falsa 123, Ciudad, Provincia, Argentina (Placeholder)</span>
-                </li>
+                </li>*/}
                 <li className="flex items-center">
                   <Phone className="h-5 w-5 mr-3 text-primary shrink-0" />
                   <Link href="tel:+5491122334455" className="hover:text-primary">+54 9 11 2233-4455 (Placeholder)</Link>
