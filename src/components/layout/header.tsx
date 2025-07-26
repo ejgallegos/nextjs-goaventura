@@ -7,15 +7,13 @@ import Image from 'next/image';
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from 'lucide-react';
-import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
+import NavLink from './nav-link';
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -54,16 +52,7 @@ export default function Header() {
           <NavigationMenuList>
             {navLinks.map((link) => (
               <NavigationMenuItem key={link.label}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={link.href}
-                    target={link.href.startsWith('http') ? '_blank' : undefined}
-                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className={cn(navigationMenuTriggerStyle(), "font-body text-base hover:bg-transparent")}
-                  >
-                    {link.label}
-                  </Link>
-                </NavigationMenuLink>
+                <NavLink href={link.href} label={link.label} />
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>
