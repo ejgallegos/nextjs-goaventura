@@ -51,6 +51,9 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
     } : undefined,
   };
 
+  const mainImageUrl = product.imageGallery && product.imageGallery.length > 0
+    ? product.imageGallery[0].src
+    : product.imageUrl;
 
   return (
     <>
@@ -68,20 +71,17 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Left Column: Image Gallery */}
-            <div className="w-full relative aspect-video rounded-lg overflow-hidden shadow-xl lg:sticky lg:top-24">
-              {product.imageGallery && product.imageGallery.length > 0 ? (
-                <ImageSlider images={product.imageGallery} className="w-full h-full" />
-              ) : (
-                <Image
-                  src={product.imageUrl}
+             <div className="w-full relative aspect-video rounded-lg overflow-hidden shadow-xl lg:sticky lg:top-24">
+               <Image
+                  src={mainImageUrl}
                   alt={`Imagen de ${product.name}`}
                   fill
                   className="object-cover"
                   priority
                   data-ai-hint={product.imageHint}
                 />
-              )}
             </div>
+
 
             {/* Right Column: Product Info & CTA */}
             <div className="space-y-6">
