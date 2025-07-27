@@ -67,11 +67,11 @@ const HeroSection = () => {
                         <div className="absolute inset-0 bg-foreground/30"></div>
                          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                             <h1
-                                className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]"
+                                className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]"
                                 dangerouslySetInnerHTML={{ __html: slide.title }}
                             ></h1>
                             {slide.subtitle && (
-                                <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-primary-foreground opacity-90 hidden sm:block [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
+                                <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-white opacity-90 hidden sm:block [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
                                     {slide.subtitle}
                                 </p>
                             )}
@@ -98,13 +98,13 @@ const HeroSection = () => {
                     <div className="relative h-full w-full flex items-center justify-center text-center">
                      <div className="absolute inset-0 bg-foreground/30"></div>
                      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                         <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
+                         <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
                             Reserva tu próxima{" "}
-                            <span className="text-primary-foreground">
+                            <span className="text-white">
                                 ¡Go aventura!
                             </span>
                         </h1>
-                         <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-primary-foreground opacity-90 hidden sm:block [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
+                         <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-white opacity-90 hidden sm:block [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
                             Descubre excursiones emocionantes, transfers confiables y
                             los mejores alojamientos con Go aventura. Tu viaje soñado
                             comienza aquí.
