@@ -31,7 +31,7 @@ Al mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Lueg
     shortDescription: 'Excursión 4x4 de día completo a la Cordillera de los Andes, avistaje de fauna y paisajes únicos.',
     price: 60000,
     currency: 'ARS',
-    imageUrl: '/slider/lb-slider-3.png',
+    imageUrl: '/slider/lb-slider-1.png',
     imageHint: 'lagoon mountains andes',
     category: 'Excursion',
     tags: ['Día Completo', '4x4', 'Fauna', 'Cordillera', 'Aventura'],
