@@ -51,6 +51,23 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
     enableSorting: true,
   },
   {
+    accessorKey: "featuredOrder",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Orden Dest." />
+    ),
+    cell: ({ row }) => {
+      const order = row.getValue("featuredOrder")
+      return (
+        <div className="w-12 text-center">
+          <span className="font-medium">
+            {typeof order === 'number' ? order : '-'}
+          </span>
+        </div>
+      )
+    },
+    enableSorting: true,
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nombre" />
@@ -58,7 +75,7 @@ export const columns: ColumnDef<Product & { status: string }>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[400px] truncate font-medium">
+          <span className="max-w-[350px] truncate font-medium">
             {row.getValue("name")}
           </span>
         </div>

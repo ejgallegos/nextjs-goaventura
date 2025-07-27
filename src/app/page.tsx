@@ -26,7 +26,14 @@ export default function Home() {
     const fetchData = async () => {
       // Products
       const allProducts = await getProducts();
-      const featured = allProducts.filter(p => p.isFeatured && p.status === 'published');
+      const featured = allProducts
+        .filter(p => p.isFeatured && p.status === 'published')
+        .sort((a, b) => {
+            if (a.featuredOrder === undefined && b.featuredOrder === undefined) return 0;
+            if (a.featuredOrder === undefined) return 1;
+            if (b.featuredOrder === undefined) return -1;
+            return a.featuredOrder - b.featuredOrder;
+        });
       setFeaturedProducts(featured);
       
       // Accommodation

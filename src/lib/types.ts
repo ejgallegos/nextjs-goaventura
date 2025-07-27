@@ -15,6 +15,7 @@ export interface Product {
   imageGallery?: { src: string; alt: string; hint: string; }[];
   status: 'draft' | 'published' | 'archived';
   isFeatured?: boolean;
+  featuredOrder?: number;
 }
 
 export interface BlogPost {

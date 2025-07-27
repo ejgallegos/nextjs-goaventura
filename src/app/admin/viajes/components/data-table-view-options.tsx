@@ -1,3 +1,4 @@
+
 "use client"
 
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
@@ -44,6 +45,7 @@ export function DataTableViewOptions<TData>({
           .map((column) => {
             let columnName = column.id;
             if (column.id === 'isFeatured') columnName = 'Destacado';
+            if (column.id === 'featuredOrder') columnName = 'Orden Dest.';
             if (column.id === 'name') columnName = 'Nombre';
             if (column.id === 'status') columnName = 'Estado';
             if (column.id === 'price') columnName = 'Precio';

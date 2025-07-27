@@ -45,6 +45,7 @@ const tripSchema = z.object({
   imageUrl: z.string().optional(), // Added for image handling
   tags: z.string().optional(), // Represent tags as a comma-separated string for simplicity in form
   isFeatured: z.boolean().default(false).optional(),
+  featuredOrder: z.coerce.number().optional(),
 });
 
 const generateSlug = (text: string) => {
@@ -139,8 +140,11 @@ export default function TripEditorForm() {
         imageUrl: '',
         tags: '',
         isFeatured: false,
+        featuredOrder: undefined,
     },
   });
+  
+  const isFeatured = form.watch('isFeatured');
 
   useEffect(() => {
     if (slug) {
@@ -159,6 +163,7 @@ export default function TripEditorForm() {
               imageUrl: tripData.imageUrl,
               tags: tripData.tags?.join(', '),
               isFeatured: tripData.isFeatured,
+              featuredOrder: tripData.featuredOrder,
           });
         }
       }
@@ -194,6 +199,8 @@ export default function TripEditorForm() {
                     ...values,
                     slug: generateSlug(values.name), // Update slug if name changes
                     tags: productTags,
+                    // Reset featuredOrder if not featured anymore
+                    featuredOrder: values.isFeatured ? values.featuredOrder : undefined,
                 };
             }
             return trip;
@@ -205,6 +212,7 @@ export default function TripEditorForm() {
             ...values,
             tags: productTags,
             imageUrl: values.imageUrl || 'https://placehold.co/600x400.png',
+            featuredOrder: values.isFeatured ? values.featuredOrder : undefined,
         };
         updatedTrips = [...allTrips, newTrip];
     }
@@ -328,7 +336,7 @@ export default function TripEditorForm() {
                     <CardHeader>
                         <CardTitle>Opciones Adicionales</CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="grid gap-4">
                          <FormField
                             control={form.control}
                             name="isFeatured"
@@ -349,6 +357,24 @@ export default function TripEditorForm() {
                                 </FormItem>
                             )}
                         />
+                         {isFeatured && (
+                           <FormField
+                              control={form.control}
+                              name="featuredOrder"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Orden Destacado</FormLabel>
+                                  <FormControl>
+                                    <Input type="number" placeholder="Ej: 1" {...field} value={field.value ?? ''} onChange={event => field.onChange(event.target.value === '' ? undefined : +event.target.value)}/>
+                                  </FormControl>
+                                  <FormDescription>
+                                    Posición en la página de inicio (1, 2, 3...).
+                                  </FormDescription>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                        )}
                     </CardContent>
                 </Card>
             </div>
