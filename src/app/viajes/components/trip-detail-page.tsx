@@ -6,8 +6,7 @@ import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, User } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, User, DollarSign, Tag, Info } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import ImageSlider from '@/components/image-slider';
 import { useEffect } from 'react';
@@ -62,15 +61,14 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
       <div className="bg-background">
         <div className="container max-w-7xl mx-auto py-8 sm:py-12 px-4">
           <div className="mb-6 text-sm font-body">
-            <Link href="/" className="text-muted-foreground hover:text-primary">Inicio</Link>
-            <span className="mx-2 text-muted-foreground">/</span>
-            <Link href="/viajes" className="text-muted-foreground hover:text-primary">Viajes</Link>
-            <span className="mx-2 text-muted-foreground">/</span>
-            <span className="text-foreground font-medium">{product.name}</span>
+            <Link href="/viajes" className="text-muted-foreground hover:text-primary flex items-center w-fit">
+                <ArrowLeft className="inline-block mr-1 h-4 w-4" /> Volver a todos los viajes
+             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12 items-start">
-            <div className="md:col-span-2 relative aspect-video rounded-lg overflow-hidden shadow-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Left Column: Image Gallery */}
+            <div className="w-full relative aspect-video rounded-lg overflow-hidden shadow-xl lg:sticky lg:top-24">
               {product.imageGallery && product.imageGallery.length > 0 ? (
                 <ImageSlider images={product.imageGallery} className="w-full h-full" />
               ) : (
@@ -85,56 +83,53 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
               )}
             </div>
 
-            <div className="md:col-span-3 space-y-6">
-              <h1 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">{product.name}</h1>
+            {/* Right Column: Product Info & CTA */}
+            <div className="space-y-6">
+               <Badge variant="secondary" className="text-sm font-medium">{product.category}</Badge>
               
-              <div className="flex flex-wrap gap-2 items-center">
-                <Badge variant="secondary" className="text-sm">{product.category}</Badge>
-                {product.price && product.price > 0 && (
-                   <Badge variant="secondary" className="text-base font-semibold bg-primary text-primary-foreground flex items-center gap-1">
-                    <User className="h-4 w-4" />
+              <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground">{product.name}</h1>
+              
+              {product.shortDescription && (
+                <p className="text-lg text-muted-foreground">{product.shortDescription}</p>
+              )}
+
+              {product.price && product.price > 0 && (
+                 <div className="text-4xl font-bold text-primary flex items-baseline gap-2">
                     <span>{product.currency} ${product.price.toLocaleString('es-AR')}</span>
-                  </Badge>
+                    <span className="text-lg font-normal text-muted-foreground">/ por persona</span>
+                 </div>
+                )}
+              
+              <div className="pt-4 border-t">
+                 <h3 className="font-headline text-lg font-semibold mb-3 flex items-center gap-2">
+                    <Info className="h-5 w-5"/>
+                    Detalles
+                 </h3>
+                {product.tags && product.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                        {product.tags.map((tag) => (
+                        <Badge key={tag} variant="outline" className="text-sm">{tag}</Badge>
+                        ))}
+                    </div>
                 )}
               </div>
-
-              {product.shortDescription && (
-                <p className="text-lg text-muted-foreground font-body">{product.shortDescription}</p>
-              )}
-
-              {product.tags && product.tags.length > 0 && (
-                <div>
-                  <h3 className="font-headline text-lg font-semibold mb-2">Etiquetas:</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {product.tags.map((tag) => (
-                      <Badge key={tag} variant="outline">{tag}</Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
               
               <div className="pt-4">
                 <WhatsAppCtaButton 
                   predefinedText={whatsappText} 
                   buttonText="Consultar Disponibilidad" 
                   size="lg" 
-                  className="w-full sm:w-auto"
+                  className="w-full text-lg"
                   productId={product.id}
                   productName={product.name}
                 />
               </div>
 
-               <div className="mt-8">
-                <Button variant="outline" asChild>
-                  <Link href="/viajes">
-                    <ArrowLeft className="mr-2 h-4 w-4" /> Volver a todos los viajes
-                  </Link>
-                </Button>
-              </div>
             </div>
           </div>
 
           <div className="mt-12 lg:mt-16 pt-8 border-t">
+            <h2 className="font-headline text-3xl font-semibold text-foreground mb-4">Descripción Completa</h2>
             <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground prose-a:text-accent prose-strong:text-foreground prose-a:font-semibold prose-a:no-underline hover:prose-a:underline">
               <ReactMarkdown>{product.description}</ReactMarkdown>
             </div>
