@@ -52,7 +52,7 @@ Al mediodía arribaremos a la Laguna Brava, donde almorzaremos (Box Lunch). Lueg
     shortDescription: 'Visita guiada al imponente cañón, sus geoformas e historia.',
     price: 30000,
     currency: 'ARS',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: '/slider/canon.png',
     imageHint: 'talampaya canyon red rocks',
     category: 'Excursion',
     tags: ['Medio Día', 'Geología', 'Cultura', 'Cañón'],

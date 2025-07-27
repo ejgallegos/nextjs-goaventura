@@ -8,7 +8,6 @@ import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, User, DollarSign, Tag, Info } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import ImageSlider from '@/components/image-slider';
 import { useEffect } from 'react';
 import { trackView } from '@/lib/data/statistics';
 
