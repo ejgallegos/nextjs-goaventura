@@ -23,7 +23,9 @@ export default function BlogPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       const allPosts = await getBlogPosts();
-      const publishedPosts = allPosts.filter(p => p.status === 'published');
+      const publishedPosts = allPosts
+        .filter(p => p.status === 'published')
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Sort by date descending
       setPosts(publishedPosts);
     };
     fetchPosts();
