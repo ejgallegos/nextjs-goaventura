@@ -1,108 +1,106 @@
 
 import { Metadata } from 'next';
-import ImageSlider from '@/components/image-slider';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
-import { Users, Target, ShieldCheck, MessageCircle } from 'lucide-react';
+import { Users, Target, ShieldCheck, Mountain, BedDouble, Car, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
   title: 'Nosotros',
-  description: 'Conoce más sobre Go aventura, nuestra misión, visión y el equipo que hace posibles tus aventuras.',
+  description: 'Conoce más sobre Go aventura, nuestra misión, visión y el equipo que hace posibles tus aventuras en La Rioja.',
 };
-
-const aboutUsImages = [
-  {
-    src: "https://placehold.co/600x400.png",
-    alt: "Paisaje de La Rioja con montañas",
-    hint: "rioja landscape mountains",
-  },
-  {
-    src: "https://placehold.co/600x400.png",
-    alt: "Grupo de turistas en una excursión",
-    hint: "tourist group hiking",
-  },
-  {
-    src: "https://placehold.co/600x400.png",
-    alt: "Vehículo 4x4 en un camino de tierra",
-    hint: "4x4 offroad desert",
-  },
-  {
-    src: "https://placehold.co/600x400.png",
-    alt: "Vicuñas en su hábitat natural",
-    hint: "vicunas andes wildlife",
-  },
-  {
-    src: "https://placehold.co/600x400.png",
-    alt: "Cañón del Talampaya al atardecer",
-    hint: "talampaya canyon sunset",
-  },
-];
 
 const AboutUsPage = () => {
   return (
     <div className="bg-background py-12 md:py-16">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-12 md:mb-16">
-          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Nosotros</h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Te ayudamos a programar tu viaje por el noroeste argentino, para que sea una experiencia inolvidable.
+          <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Go aventura</h1>
+          <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+            Tu puerta de entrada a la aventura en la Región del Bermejo
           </p>
         </header>
 
-        <section className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16">
-          <div className="rounded-lg overflow-hidden shadow-xl h-full min-h-[400px]">
-            <ImageSlider images={aboutUsImages} className="w-full h-full" />
-          </div>
-          <div className="order-first md:order-last">
-            <h2 className="font-headline text-3xl font-semibold text-foreground mb-4">Nuestra Historia</h2>
-            <p className="text-muted-foreground mb-4 leading-relaxed">
-              Go aventura EVyT Leg. 20019, es una empresa familiar que hace 2 años está en el rubro turístico de la provincia de La Rioja. Nos dedicamos a la venta de excursiones, traslados y alojamientos de los principales destinos turísticos de nuestra provincia, como así también a la venta de paquetes turísticos a nivel nacional e internacional.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Nuestra oficina se encuentra en la localidad de Villa Unión, cabecera del Dpto. Cnel. Felipe Varela, a 60km del Parque Nacional Talampaya, y a 35km de Laguna Brava (sitio Ramsar). Como así también nos encontramos en un punto estratégico entre los principales atractivos de las provincias de San Juan y Catamarca, lo que nos permite combinar circuitos con estas provincias.
-            </p>
-          </div>
+        <section className="mb-12 md:mb-16">
+            <div className="grid md:grid-cols-5 gap-8 lg:gap-12 items-center">
+                 <div className="md:col-span-2">
+                    <Image 
+                        src="https://placehold.co/600x800.png"
+                        alt="Paisaje de aventura en La Rioja"
+                        width={600}
+                        height={800}
+                        className="rounded-lg shadow-xl object-cover aspect-[3/4]"
+                        data-ai-hint="canyon landscape riojas"
+                    />
+                 </div>
+                 <div className="md:col-span-3 text-muted-foreground leading-relaxed space-y-4">
+                    <p className="text-lg">
+                      Somos <strong className="font-semibold text-foreground">Go aventura</strong> (Agencia de Viajes- Leg. 20019), un emprendimiento familiar apasionado por brindar experiencias auténticas y memorables en Villa Unión, La Rioja. Nos dedicamos a ofrecerte no solo un viaje, sino una aventura inolvidable, combinando comodidad, seguridad y emoción en cada servicio que brindamos.
+                    </p>
+                    <Card className="bg-muted/50">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-3 font-headline text-2xl">
+                          <Target className="h-8 w-8 text-primary" />
+                          Nuestra Misión
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p>
+                          Queremos que tu visita a nuestra región sea más que un simple recorrido turístico: buscamos que te sumerjas en la cultura, los paisajes y la esencia de este destino único. Nos esforzamos en proporcionar alojamientos confortables, excursiones emocionantes y traslados seguros para que disfrutes sin preocupaciones.
+                        </p>
+                      </CardContent>
+                    </Card>
+                 </div>
+            </div>
         </section>
 
         <section className="mb-12 md:mb-16">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div className="p-6 bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <Target className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="font-headline text-2xl font-semibold text-foreground mb-2">Nuestra Misión</h3>
-              <p className="text-sm text-muted-foreground">
-                Nuestra misión es ayudar a nuestros clientes a planificar y reservar sus vacaciones soñadas. Somos una empresa comprometida con nuestros clientes, con la calidad de nuestros servicios y con el desarrollo turístico de nuestra provincia.
-              </p>
+            <div className="text-center mb-10">
+                 <h2 className="font-headline text-3xl font-semibold text-foreground">¿Qué ofrecemos?</h2>
             </div>
-            <div className="p-6 bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="font-headline text-2xl font-semibold text-foreground mb-2">Nuestro Equipo</h3>
-              <p className="text-sm text-muted-foreground">
-                Somos un equipo de profesionales apasionados por los viajes y el turismo, que trabajamos con dedicación y compromiso para brindarte la mejor experiencia.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8 text-left">
+                <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full flex-shrink-0">
+                        <Mountain className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-lg text-foreground mb-1">Excursiones en 4x4</h3>
+                        <p className="text-sm text-muted-foreground">Explora paisajes inaccesibles y maravíllate con la belleza natural de la región, acompañado por nuestros guías expertos.</p>
+                    </div>
+                </div>
+                 <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full flex-shrink-0">
+                        <BedDouble className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-lg text-foreground mb-1">Alojamiento</h3>
+                        <p className="text-sm text-muted-foreground">Espacios diseñados para tu comodidad, garantizando un descanso reparador después de un día de exploración.</p>
+                    </div>
+                </div>
+                 <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full flex-shrink-0">
+                        <Car className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-lg text-foreground mb-1">Transfers</h3>
+                        <p className="text-sm text-muted-foreground">Te llevamos a donde necesites con un servicio de traslado seguro y confiable.</p>
+                    </div>
+                </div>
             </div>
-            <div className="p-6 bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="font-headline text-2xl font-semibold text-foreground mb-2">Nuestros Valores</h3>
-              <div className="text-sm text-muted-foreground space-y-1">
-                 <p>Pasión, Compromiso, Calidad, Confianza y Responsabilidad.</p>
-                 <p>Leg. 20019 - <Link href="https://www.argentina.gob.ar/servicio/consultar-agencias-de-viajes" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">Legajo Habilitante</Link></p>
-              </div>
-            </div>
+        </section>
+        
+        <section className="bg-secondary p-8 md:p-12 rounded-lg shadow-md text-center">
+            <ShieldCheck className="h-12 w-12 text-secondary-foreground mx-auto mb-4" />
+          <h2 className="font-headline text-3xl font-semibold text-secondary-foreground mb-4">Nuestra Promesa</h2>
+          <p className="text-secondary-foreground mb-6 max-w-2xl mx-auto">
+            En Go aventura, trabajamos día a día para mejorar y ampliar nuestros servicios, asegurándonos de que vivas una experiencia sin igual en Villa Unión y sus alrededores. Cada detalle de tu viaje importa, y estamos aquí para que disfrutes cada momento al máximo.
+          </p>
+          <div className="text-secondary-foreground font-semibold">
+              <p>🌍 Déjanos ser tu guía en esta emocionante travesía. ¡Te esperamos con los brazos abiertos para explorar juntos!</p>
           </div>
         </section>
 
-        <section className="text-center bg-secondary p-8 md:p-12 rounded-lg shadow-md">
-          <h2 className="font-headline text-3xl font-semibold text-secondary-foreground mb-4">¿Estás listo para tu próxima aventura?</h2>
-          <p className="text-secondary-foreground mb-6 max-w-xl mx-auto">
-            Contactate con nosotros para que podamos ayudarte a planificar tu viaje.
-          </p>
-          <WhatsAppCtaButton
-            predefinedText="Hola Go aventura, ¡estoy listo para mi próxima aventura!"
-            buttonText="Contactanos"
-            size="lg"
-            className="text-lg"
-          />
-        </section>
       </div>
     </div>
   );
