@@ -25,17 +25,18 @@ const AboutUsPage = () => {
 					</p>
 				</header>
 
-				<section className="mb-12 md:mb-16 ">
-					<div className="grid md:grid-cols-5 gap-8 lg:gap-12 items-center">
-						<div className="md:col-span-5 text-muted-foreground leading-relaxed space-y-4">
-							<Image
-								src="/nosotros.png"
-								alt="Paisaje de aventura en La Rioja"
-								width={400}
-								height={200}
-								className="rounded-lg shadow-xl object-cover"
-								data-ai-hint="canyon landscape riojas"
-							/>
+				<section className="mb-12 md:mb-16">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="relative aspect-[4/3] rounded-lg shadow-xl overflow-hidden">
+              <Image
+                src="/nosotros.png"
+                alt="Paisaje de aventura en La Rioja"
+                fill
+                className="object-cover"
+                data-ai-hint="canyon landscape riojas"
+              />
+            </div>
+						<div className="text-muted-foreground leading-relaxed space-y-6">
 							<div>
 								<p className="text-lg">
 									Somos{" "}
@@ -52,7 +53,7 @@ const AboutUsPage = () => {
 									brindamos.
 								</p>
 							</div>
-							<Card className="bg-muted/50">
+							<Card className="bg-card/80">
 								<CardHeader>
 									<CardTitle className="flex items-center gap-3 font-headline text-2xl">
 										<Target className="h-8 w-8 text-primary" />
