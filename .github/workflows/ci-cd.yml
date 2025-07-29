@@ -30,7 +30,7 @@ jobs:
           push: true
           tags: ejgallegos/goaventura:latest # Reemplaza con tu usuario y nombre de repo
 
-deploy:
+  deploy:
     needs: build_and_push
     runs-on: ubuntu-latest
     steps:
