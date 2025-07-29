@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from 'lucide-react';
 import NavLink from './nav-link';
+import { ThemeToggle } from '../theme-toggle';
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -58,7 +59,7 @@ export default function Header() {
         </NavigationMenu>
 
         <div className="hidden lg:flex items-center gap-2">
-            {/* ThemeToggle removed */}
+            <ThemeToggle />
         </div>
 
         {/* Mobile Navigation */}
@@ -88,6 +89,7 @@ export default function Header() {
                   className="h-7 w-auto hidden dark:block" 
                 />
               </Link>
+               <ThemeToggle />
             </div>
             <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]">
               <ul className="flex flex-col space-y-1 flex-grow">
