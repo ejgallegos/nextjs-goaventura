@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from 'lucide-react';
-import { ThemeToggle } from "@/components/theme-toggle";
 import NavLink from './nav-link';
 
 const navLinks = [
@@ -59,7 +58,7 @@ export default function Header() {
         </NavigationMenu>
 
         <div className="hidden lg:flex items-center gap-2">
-            <ThemeToggle />
+            {/* ThemeToggle removed */}
         </div>
 
         {/* Mobile Navigation */}
@@ -106,12 +105,6 @@ export default function Header() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto border-t pt-4 space-y-2 px-2">
-                 <div className="flex justify-between items-center px-1">
-                    <span className="text-base font-medium text-foreground">Cambiar Tema</span>
-                    <ThemeToggle />
-                  </div>
-              </div>
             </nav>
           </SheetContent>
         </Sheet>
