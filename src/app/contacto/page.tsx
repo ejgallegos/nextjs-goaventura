@@ -13,22 +13,22 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone, MessageSquare } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
-// Removed Metadata import as it's not used in client components this way
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "El nombre debe tener al menos 2 caracteres." }),
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
   subject: z.string().min(5, { message: "El asunto debe tener al menos 5 caracteres." }),
   message: z.string().min(10, { message: "El mensaje debe tener al menos 10 caracteres." }),
-  recaptcha: z.string().optional(),
+  recaptchaToken: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const ContactPage = () => {
   const { toast } = useToast();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -36,14 +36,26 @@ const ContactPage = () => {
       email: '',
       subject: '',
       message: '',
-      recaptcha: '',
     }
   });
 
   const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
-    // In a real app, you would send this data to a backend API for verification
-    console.log('Form data:', data);
-    console.log('reCAPTCHA token:', data.recaptcha);
+    if (!executeRecaptcha) {
+        console.error("reCAPTCHA not loaded");
+        toast({
+            title: "Error",
+            description: "No se pudo verificar reCAPTCHA. Inténtalo de nuevo.",
+            variant: "destructive",
+        });
+        return;
+    }
+    
+    const token = await executeRecaptcha('contact_form');
+    
+    // In a real app, you would send this data AND the token to a backend API for verification
+    const dataWithToken = { ...data, recaptchaToken: token };
+    console.log('Form data with token:', dataWithToken);
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
@@ -150,21 +162,6 @@ const ContactPage = () => {
 											</FormItem>
 										)}
 									/>
-                  <FormField
-                    control={form.control}
-                    name="recaptcha"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <ReCAPTCHA
-                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                            onChange={field.onChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 									<Button
 										type="submit"
 										size="lg"

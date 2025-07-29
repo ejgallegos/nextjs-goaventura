@@ -6,6 +6,7 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { ThemeProvider } from '@/components/theme-provider';
 import GoogleAnalytics from '@/components/google-analytics';
+import { RecaptchaProvider } from './recaptcha-provider';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
@@ -108,12 +109,14 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-          <Header />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-          <Toaster />
+          <RecaptchaProvider>
+            <Header />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </RecaptchaProvider>
         </ThemeProvider>
       </body>
     </html>
