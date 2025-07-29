@@ -22,7 +22,7 @@ const contactFormSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
   subject: z.string().min(5, { message: "El asunto debe tener al menos 5 caracteres." }),
   message: z.string().min(10, { message: "El mensaje debe tener al menos 10 caracteres." }),
-  recaptcha: z.string().min(1, { message: "Por favor, completa el reCAPTCHA." }),
+  recaptcha: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
