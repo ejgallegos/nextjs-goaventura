@@ -13,6 +13,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone, MessageSquare } from 'lucide-react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 // Removed Metadata import as it's not used in client components this way
 
@@ -21,6 +22,7 @@ const contactFormSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
   subject: z.string().min(5, { message: "El asunto debe tener al menos 5 caracteres." }),
   message: z.string().min(10, { message: "El mensaje debe tener al menos 10 caracteres." }),
+  recaptcha: z.string().min(1, { message: "Por favor, completa el reCAPTCHA." }),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -34,19 +36,21 @@ const ContactPage = () => {
       email: '',
       subject: '',
       message: '',
+      recaptcha: '',
     }
   });
 
   const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
-    // In a real app, you would send this data to a backend API
-    console.log(data);
+    // In a real app, you would send this data to a backend API for verification
+    console.log('Form data:', data);
+    console.log('reCAPTCHA token:', data.recaptcha);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     toast({
       title: "Mensaje Enviado",
       description: "Gracias por contactarnos. Te responderemos pronto.",
-      variant: "default", // 'default' as it's not an error
+      variant: "default",
     });
     form.reset(); // Reset form after successful submission
   };
@@ -146,6 +150,21 @@ const ContactPage = () => {
 											</FormItem>
 										)}
 									/>
+                  <FormField
+                    control={form.control}
+                    name="recaptcha"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <ReCAPTCHA
+                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 									<Button
 										type="submit"
 										size="lg"
