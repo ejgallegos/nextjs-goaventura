@@ -123,31 +123,10 @@ const Footer = () => {
 						<div className="flex space-x-4 mb-4">
 							<Link
 								href="#"
-								aria-label="Facebook"
-								className="text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
-							>
-								<Facebook size={24} />
-							</Link>
-							<Link
-								href="#"
 								aria-label="Instagram"
 								className="text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
 							>
 								<Instagram size={24} />
-							</Link>
-							<Link
-								href="#"
-								aria-label="Twitter"
-								className="text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
-							>
-								<Twitter size={24} />
-							</Link>
-							<Link
-								href="#"
-								aria-label="YouTube"
-								className="text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
-							>
-								<Youtube size={24} />
 							</Link>
 						</div>
 					</div>
