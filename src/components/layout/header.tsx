@@ -70,7 +70,7 @@ export default function Header() {
               <span className="sr-only">Abrir menú</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0">
+          <SheetContent side="right" className="w-full max-w-xs sm:max-w-sm p-0 flex flex-col">
             <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
             <div className="flex justify-between items-center p-4 border-b">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
@@ -89,10 +89,9 @@ export default function Header() {
                   className="h-7 w-auto hidden dark:block" 
                 />
               </Link>
-               <ThemeToggle />
             </div>
-            <nav className="py-4 px-2 flex flex-col h-[calc(100vh-130px)]">
-              <ul className="flex flex-col space-y-1 flex-grow">
+            <nav className="py-4 px-2 flex-grow">
+              <ul className="flex flex-col space-y-1">
                 {navLinks.map((link) => (
                   <li key={link.label}>
                     <Link
@@ -108,6 +107,11 @@ export default function Header() {
                 ))}
               </ul>
             </nav>
+            <div className="mt-auto p-4 border-t">
+              <div className="flex justify-center">
+                <ThemeToggle />
+              </div>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
