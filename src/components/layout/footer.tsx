@@ -122,8 +122,10 @@ const Footer = () => {
 						</h3>
 						<div className="flex space-x-4 mb-4">
 							<Link
-								href="#"
+								href="https://www.instagram.com/goaventura.ok"
 								aria-label="Instagram"
+                                target="_blank" 
+                                rel="noopener noreferrer"
 								className="text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
 							>
 								<Instagram size={24} />
