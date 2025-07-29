@@ -27,9 +27,14 @@ const Footer = () => {
 						</p>
 						<div className="text-xs text-sidebar-foreground/70 mt-2">
 							<p>Leg. 20019</p>
-                            <Link href="https://www.argentina.gob.ar/servicio/consultar-agencias-de-viajes" target="_blank" rel="noopener noreferrer" className="hover:text-sidebar-primary transition-colors underline">
-                                Legajo Habilitante
-                            </Link>
+							<Link
+								href="https://www.agenciasdeviajes.ar/agencias/S7D8sTXk?preview=true"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="hover:text-sidebar-primary transition-colors underline"
+							>
+								Legajo Habilitante
+							</Link>
 						</div>
 					</div>
 
@@ -124,8 +129,8 @@ const Footer = () => {
 							<Link
 								href="https://www.instagram.com/goaventura.ok"
 								aria-label="Instagram"
-                                target="_blank" 
-                                rel="noopener noreferrer"
+								target="_blank"
+								rel="noopener noreferrer"
 								className="text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
 							>
 								<Instagram size={24} />
