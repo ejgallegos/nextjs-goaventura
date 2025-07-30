@@ -3,6 +3,7 @@ version: "3.7"
 services:
   goaventura:
     image: ejgallegos/goaventura:latest
+    container_name: goaventura-container
     networks:
       - "traefik-net"
     restart: always
