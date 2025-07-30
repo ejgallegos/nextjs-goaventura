@@ -42,7 +42,5 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 5636
           script: |
-            docker pull ejgallegos/goaventura:latest
-            docker stop goaventura-container || true
-            docker rm goaventura-container || true
-            docker run -d -p 3003:3000 --name goaventura-container --restart always ejgallegos/goaventura:latest
+            docker-compose -f goaventura.yml pull
+            docker-compose -f goaventura.yml up -d
