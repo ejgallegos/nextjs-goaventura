@@ -42,4 +42,4 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 5636
           script: |
-            docker-compose -f /root/goaventura/goaventura.yml up -d
+            docker compose -f /root/goaventura/goaventura.yml up -d
