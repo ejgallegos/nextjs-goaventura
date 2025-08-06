@@ -5,8 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { ThemeProvider } from '@/components/theme-provider';
-import GoogleAnalytics from '@/components/google-analytics';
 import { RecaptchaProvider } from './recaptcha-provider';
+import Script from 'next/script';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
@@ -81,8 +81,7 @@ export default function RootLayout({
     },
     openingHours: 'Mo,Tu,We,Th,Fr,Sa,Su 08:00-22:00', // Example, adjust as needed
     sameAs: [
-      // "https://www.facebook.com/goaventura", // Add your social media links
-      // "https://www.instagram.com/goaventura"
+      "https://www.instagram.com/goaventura.ok"
     ],
     priceRange: '$$',
   };
@@ -98,11 +97,20 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        
+        {/* Google tag (gtag.js) */}
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-XXEKVSC46X"></Script>
+        <Script id="google-analytics">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-XXEKVSC46X');
+          `}
+        </Script>
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-        )}
         <ThemeProvider
             attribute="class"
             defaultTheme="light"
