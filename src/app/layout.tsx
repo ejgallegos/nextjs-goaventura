@@ -7,6 +7,21 @@ import Footer from '@/components/layout/footer';
 import { ThemeProvider } from '@/components/theme-provider';
 import { RecaptchaProvider } from './recaptcha-provider';
 import Script from 'next/script';
+import { Roboto, Montserrat } from 'next/font/google';
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-roboto',
+  display: 'swap',
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['700', '800'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 
@@ -87,7 +102,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning className={`${roboto.variable} ${montserrat.variable}`}>
       <head>
         <script
           type="application/ld+json"
