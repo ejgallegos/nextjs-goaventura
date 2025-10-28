@@ -128,7 +128,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning className={`${roboto.variable} ${montserrat.variable}`}>
        <head>
-         <link rel="preload" href="/slider/slider-0.png" as="image" />
+        <link rel="preload" href="/slider/slider-0.png" as="image" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -136,11 +136,10 @@ export default function RootLayout({
         
         {/* Google tag (gtag.js) */}
         <Script 
-          strategy="beforeInteractive" 
-          async 
+          strategy="afterInteractive" 
           src="https://www.googletagmanager.com/gtag/js?id=G-XXEKVSC46X"
         />
-        <Script id="google-analytics" strategy="beforeInteractive">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
