@@ -117,6 +117,14 @@ const Footer = () => {
 									Política de Cookies
 								</Link>
 							</li>
+              <li>
+								<Link
+									href="/faq"
+									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
+								>
+									Preguntas Frecuentes
+								</Link>
+							</li>
 						</ul>
 					</div>
 

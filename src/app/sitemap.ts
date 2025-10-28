@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/promociones',
     '/blog',
     '/contacto',
+    '/faq',
     '/ai/enhance-summary',
     '/legal/terminos-y-condiciones',
     '/legal/politica-de-privacidad',

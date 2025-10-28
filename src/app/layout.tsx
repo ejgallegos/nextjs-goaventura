@@ -103,11 +103,32 @@ export default function RootLayout({
 		openingHours: "Mo,Tu,We,Th,Fr,Sa,Su 24:00", 
     sameAs: ["https://www.instagram.com/goaventura.ok"],
 		priceRange: "$$",
+    makesOffer: [
+      {
+        "@type": "Offer",
+        "name": "Excursiones en 4x4",
+        "description": "Explora paisajes únicos como Laguna Brava y el Cañón del Triásico con nuestros guías expertos.",
+        "url": `${siteUrl}/viajes?filter=Excursion`
+      },
+      {
+        "@type": "Offer",
+        "name": "Transfers Privados",
+        "description": "Servicios de traslado seguros y confiables desde y hacia aeropuertos o puntos de interés.",
+        "url": `${siteUrl}/viajes?filter=Transfer`
+      },
+      {
+        "@type": "Offer",
+        "name": "Alojamientos",
+        "description": "Gestionamos y recomendamos los mejores alojamientos para asegurar tu confort.",
+        "url": `${siteUrl}/alojamientos`
+      }
+    ],
   };
 
   return (
     <html lang="es" suppressHydrationWarning className={`${roboto.variable} ${montserrat.variable}`}>
-      <head>
+       <head>
+         <link rel="preload" href="/slider/slider-0.png" as="image" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

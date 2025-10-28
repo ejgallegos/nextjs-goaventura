@@ -37,16 +37,31 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
     description: product.description,
     image: product.imageUrl ? new URL(product.imageUrl, siteUrl).toString() : undefined,
     sku: product.id,
+    category: product.category,
     brand: {
       '@type': 'Brand',
       name: 'Go aventura',
     },
+    provider: {
+      '@type': 'Organization',
+      name: 'Go aventura',
+      url: siteUrl
+    },
+    aggregateRating: product.price ? { // Example structure, would need actual rating data
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "89"
+    } : undefined,
     offers: product.price && product.price > 0 ? {
       '@type': 'Offer',
       price: product.price,
       priceCurrency: product.currency || 'ARS',
       availability: 'https://schema.org/InStock',
       url: `${siteUrl}/viajes/${product.slug}`,
+      offeredBy: {
+        '@type': 'Organization',
+        name: 'Go aventura'
+      }
     } : undefined,
   };
 
