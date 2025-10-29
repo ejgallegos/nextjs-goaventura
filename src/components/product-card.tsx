@@ -14,8 +14,11 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const productPageUrl = `/viajes/${product.slug}`;
-  const whatsappText = `Hola, me interesa ${product.category === 'Excursion' ? 'la excursión' : 'el transfer'} "${product.name}".`;
+  const isPromotion = product.category === 'Promocion';
+  // If slug starts with '/', it's an internal link for promotions
+  const productPageUrl = product.slug.startsWith('/') ? product.slug : `/viajes/${product.slug}`;
+  const whatsappText = `Hola, me interesa ${isPromotion ? 'la promoción' : (product.category === 'Excursion' ? 'la excursión' : 'el transfer')} "${product.name}".`;
+  const detailsButtonText = isPromotion ? "Ver Paquete" : "Ver Detalles";
 
   return (
     <Card className="flex flex-col overflow-hidden h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg">
@@ -57,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <CardFooter className="p-4 flex flex-col sm:flex-row justify-between items-center gap-2 border-t">
         <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
           <Link href={productPageUrl}>
-            Ver Detalles <ArrowRight className="ml-2 h-4 w-4" />
+            {detailsButtonText} <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
         <WhatsAppCtaButton 

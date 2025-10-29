@@ -6,6 +6,7 @@ import ProductCard from '@/components/product-card';
 import type { Product } from '@/lib/types';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+// The 'products' prop now contains both products and promotions formatted as Product
 export default function ViajesList({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState('all');
 
@@ -20,22 +21,23 @@ export default function ViajesList({ products }: { products: Product[] }) {
 
   return (
     <>
-      <title>Nuestros Viajes | Go Aventura</title>
+      <title>Nuestros Viajes y Promociones | Go Aventura</title>
       <div className="bg-background py-12 md:py-16">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <header className="text-center mb-10 md:mb-12">
-            <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Todos Nuestros Viajes</h1>
+            <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">Nuestros Viajes y Promociones</h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Aquí encontrarás todas las aventuras que ofrecemos, desde emocionantes excursiones hasta cómodos transfers.
+              Aquí encontrarás todas las aventuras que ofrecemos, desde emocionantes excursiones y transfers hasta paquetes promocionales.
             </p>
           </header>
 
           <div className="flex justify-center mb-10">
-            <Tabs defaultValue="all" onValueChange={(value) => setFilter(value)} className="w-full max-w-sm">
-              <TabsList className="grid w-full grid-cols-3">
+            <Tabs defaultValue="all" onValueChange={(value) => setFilter(value)} className="w-full max-w-md">
+              <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="all">Todos</TabsTrigger>
                 <TabsTrigger value="Excursion">Excursiones</TabsTrigger>
                 <TabsTrigger value="Transfer">Transfers</TabsTrigger>
+                <TabsTrigger value="Promocion">Promociones</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
