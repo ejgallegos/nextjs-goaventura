@@ -125,6 +125,8 @@ export default function RootLayout({
     ],
   };
 
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
   return (
     <html lang="es" suppressHydrationWarning className={`${roboto.variable} ${montserrat.variable}`}>
        <head>
@@ -134,20 +136,22 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         
-        {/* Google tag (gtag.js) */}
-        <Script 
-          strategy="afterInteractive" 
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXEKVSC46X"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-XXEKVSC46X');
-          `}
-        </Script>
+        {gaMeasurementId && (
+          <>
+            <Script 
+              strategy="afterInteractive" 
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaMeasurementId}');
+              `}
+            </Script>
+          </>
+        )}
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
         <ThemeProvider
