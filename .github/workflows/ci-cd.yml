@@ -44,4 +44,5 @@ jobs:
           script: |
             docker stop goaventura-container || true
             docker rm goaventura-container || true
+            docker rmi ejgallegos/goaventura:latest || true
             docker compose -f /root/goaventura/goaventura.yml up -d
