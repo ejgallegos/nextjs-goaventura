@@ -1,0 +1,350 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    =============================================================================
+    // Helper Functions
+    =============================================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             request.auth.token.role == 'admin';
+    }
+    
+    function isEditor() {
+      return isAuthenticated() && 
+             (request.auth.token.role == 'admin' || request.auth.token.role == 'editor');
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidTimestamp() {
+      return request.time == request.time;
+    }
+    
+    function isValidEmail(email) {
+      return email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+    }
+    
+    function isValidText(text) {
+      return text.size() > 0 && text.size() <= 1000;
+    }
+    
+    function isValidName(name) {
+      return name.size() >= 2 && name.size() <= 100;
+    }
+    
+    function isValidPhone(phone) {
+      return phone.matches('^\\+?[0-9\\s\\-\\(\\)]+$') && phone.size() <= 20;
+    }
+    
+    function isValidMessage(message) {
+      return message.size() >= 10 && message.size() <= 2000;
+    }
+    
+    function isValidContent(content) {
+      return content.size() >= 50 && content.size() <= 50000;
+    }
+    
+    function isValidSlug(slug) {
+      return slug.matches('^[a-z0-9-]+$') && slug.size() <= 100;
+    }
+    
+    function isValidStatus(status) {
+      return status in ['draft', 'published', 'archived'];
+    }
+    
+    function isValidCategory(category) {
+      return category in ['Excursion', 'Transfer', 'Promocion', 'Alojamiento'];
+    }
+    
+    function noMaliciousContent(text) {
+      return !text.matches('.*<script.*>.*</script>.*') &&
+             !text.matches('.*javascript:.*') &&
+             !text.matches('.*on\\w+\\s*=.*');
+    }
+    
+    =============================================================================
+    // Collection: users
+    =============================================================================
+    match /users/{userId} {
+      // Users can only read their own profile
+      allow read: if isOwner(userId);
+      
+      // Admins can read all users
+      allow read: if isAdmin();
+      
+      // Users can update their own profile with restrictions
+      allow update: if isOwner(userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['displayName', 'email', 'photoURL', 'phoneNumber', 'preferences']) &&
+                       noMaliciousContent(request.resource.data.displayName) &&
+                       noMaliciousContent(request.resource.data.phoneNumber);
+      
+      // Admins can update any user
+      allow update: if isAdmin();
+      
+      // Only admins can delete users
+      allow delete: if isAdmin();
+      
+      // Only admins can create users (typically created by Firebase Auth)
+      allow create: if isAdmin();
+    }
+    
+    =============================================================================
+    // Collection: blogPosts
+    =============================================================================
+    match /blogPosts/{postId} {
+      // Anyone can read published posts
+      allow read: if resource.data.status == 'published';
+      
+      // Authenticated users can read published and draft posts
+      allow read: if isAuthenticated() && 
+                     (resource.data.status == 'published' || 
+                      resource.data.status == 'draft');
+      
+      // Editors and admins can read all posts
+      allow read: if isEditor();
+      
+      // Only editors and admins can create posts
+      allow create: if isEditor() &&
+                       isValidName(request.resource.data.title) &&
+                       isValidSlug(request.resource.data.slug) &&
+                       isValidText(request.resource.data.excerpt) &&
+                       isValidContent(request.resource.data.content) &&
+                       isValidName(request.resource.data.author) &&
+                       isValidStatus(request.resource.data.status) &&
+                       noMaliciousContent(request.resource.data.title) &&
+                       noMaliciousContent(request.resource.data.content) &&
+                       request.resource.data.tags is list &&
+                       request.resource.data.tags.size() <= 10;
+      
+      // Only editors and admins can update posts
+      allow update: if isEditor() &&
+                       (isValidName(request.resource.data.title) || request.resource.data.title == resource.data.title) &&
+                       (isValidSlug(request.resource.data.slug) || request.resource.data.slug == resource.data.slug) &&
+                       (isValidText(request.resource.data.excerpt) || request.resource.data.excerpt == resource.data.excerpt) &&
+                       (isValidContent(request.resource.data.content) || request.resource.data.content == resource.data.content) &&
+                       (isValidName(request.resource.data.author) || request.resource.data.author == resource.data.author) &&
+                       (isValidStatus(request.resource.data.status) || request.resource.data.status == resource.data.status) &&
+                       noMaliciousContent(request.resource.data.title) &&
+                       noMaliciousContent(request.resource.data.content);
+      
+      // Only admins can delete posts
+      allow delete: if isAdmin();
+    }
+    
+    =============================================================================
+    // Collection: products
+    =============================================================================
+    match /products/{productId} {
+      // Anyone can read published products
+      allow read: if resource.data.status == 'published';
+      
+      // Editors and admins can read all products
+      allow read: if isEditor();
+      
+      // Only editors and admins can create products
+      allow create: if isEditor() &&
+                       isValidName(request.resource.data.name) &&
+                       isValidSlug(request.resource.data.slug) &&
+                       isValidText(request.resource.data.shortDescription) &&
+                       isValidContent(request.resource.data.description) &&
+                       isValidCategory(request.resource.data.category) &&
+                       request.resource.data.price is number &&
+                       request.resource.data.price >= 0 &&
+                       noMaliciousContent(request.resource.data.name) &&
+                       noMaliciousContent(request.resource.data.description);
+      
+      // Only editors and admins can update products
+      allow update: if isEditor() &&
+                       (isValidName(request.resource.data.name) || request.resource.data.name == resource.data.name) &&
+                       (isValidSlug(request.resource.data.slug) || request.resource.data.slug == resource.data.slug) &&
+                       (isValidText(request.resource.data.shortDescription) || request.resource.data.shortDescription == resource.data.shortDescription) &&
+                       (isValidContent(request.resource.data.description) || request.resource.data.description == resource.data.description) &&
+                       (isValidCategory(request.resource.data.category) || request.resource.data.category == resource.data.category) &&
+                       (request.resource.data.price is number && request.resource.data.price >= 0 || request.resource.data.price == resource.data.price) &&
+                       noMaliciousContent(request.resource.data.name) &&
+                       noMaliciousContent(request.resource.data.description);
+      
+      // Only admins can delete products
+      allow delete: if isAdmin();
+    }
+    
+    =============================================================================
+    // Collection: slides
+    =============================================================================
+    match /slides/{slideId} {
+      // Anyone can read published slides
+      allow read: if resource.data.status == 'published';
+      
+      // Editors and admins can read all slides
+      allow read: if isEditor();
+      
+      // Only editors and admins can create slides
+      allow create: if isEditor() &&
+                       isValidName(request.resource.data.title) &&
+                       isValidText(request.resource.data.subtitle) &&
+                       isValidStatus(request.resource.data.status) &&
+                       noMaliciousContent(request.resource.data.title) &&
+                       noMaliciousContent(request.resource.data.subtitle) &&
+                       request.resource.data.buttonLink is string &&
+                       request.resource.data.buttonLink.size() <= 500;
+      
+      // Only editors and admins can update slides
+      allow update: if isEditor() &&
+                       (isValidName(request.resource.data.title) || request.resource.data.title == resource.data.title) &&
+                       (isValidText(request.resource.data.subtitle) || request.resource.data.subtitle == resource.data.subtitle) &&
+                       (isValidStatus(request.resource.data.status) || request.resource.data.status == resource.data.status) &&
+                       noMaliciousContent(request.resource.data.title) &&
+                       noMaliciousContent(request.resource.data.subtitle);
+      
+      // Only admins can delete slides
+      allow delete: if isAdmin();
+    }
+    
+    =============================================================================
+    // Collection: contacts
+    =============================================================================
+    match /contacts/{contactId} {
+      // Anyone can create a contact submission
+      allow create: if isValidName(request.resource.data.name) &&
+                       isValidEmail(request.resource.data.email) &&
+                       isValidText(request.resource.data.subject) &&
+                       isValidMessage(request.resource.data.message) &&
+                       noMaliciousContent(request.resource.data.name) &&
+                       noMaliciousContent(request.resource.data.message) &&
+                       request.resource.data.hasOnly(['name', 'email', 'phone', 'subject', 'message', 'createdAt']);
+      
+      // Only admins can read contact submissions
+      allow read: if isAdmin();
+      
+      // Only admins can delete contact submissions
+      allow delete: if isAdmin();
+      
+      // No updates allowed - create once, read/delete only
+      allow update: if false;
+    }
+    
+    =============================================================================
+    // Collection: bookings
+    =============================================================================
+    match /bookings/{bookingId} {
+      // Users can only read their own bookings
+      allow read: if isOwner(resource.data.userId);
+      
+      // Admins can read all bookings
+      allow read: if isAdmin();
+      
+      // Users can create their own bookings
+      allow create: if isOwner(request.resource.data.userId) &&
+                       isValidName(request.resource.data.customerName) &&
+                       isValidEmail(request.resource.data.customerEmail) &&
+                       isValidPhone(request.resource.data.customerPhone) &&
+                       noMaliciousContent(request.resource.data.customerName) &&
+                       request.resource.data.totalAmount is number &&
+                       request.resource.data.totalAmount > 0 &&
+                       request.resource.data.status in ['pending', 'confirmed', 'cancelled', 'completed'];
+      
+      // Users can update limited fields in their bookings
+      allow update: if isOwner(resource.data.userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['status', 'notes']) &&
+                       request.resource.data.status in ['pending', 'cancelled'];
+      
+      // Admins can update any booking
+      allow update: if isAdmin();
+      
+      // Only admins can delete bookings
+      allow delete: if isAdmin();
+    }
+    
+    =============================================================================
+    // Collection: reviews
+    =============================================================================
+    match /reviews/{reviewId} {
+      // Anyone can read approved reviews
+      allow read: if resource.data.status == 'approved';
+      
+      // Users can read their own reviews
+      allow read: if isOwner(resource.data.userId);
+      
+      // Admins can read all reviews
+      allow read: if isAdmin();
+      
+      // Users can create reviews for their own bookings
+      allow create: if isAuthenticated() &&
+                       isOwner(request.resource.data.userId) &&
+                       isValidName(request.resource.data.userName) &&
+                       isValidText(request.resource.data.title) &&
+                       isValidMessage(request.resource.data.content) &&
+                       request.resource.data.rating is number &&
+                       request.resource.data.rating >= 1 && request.resource.data.rating <= 5 &&
+                       noMaliciousContent(request.resource.data.title) &&
+                       noMaliciousContent(request.resource.data.content) &&
+                       request.resource.data.status == 'pending';
+      
+      // Users can only update limited fields in their reviews
+      allow update: if isOwner(resource.resource.data.userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['title', 'content', 'rating']) &&
+                       isValidText(request.resource.data.title) &&
+                       isValidMessage(request.resource.data.content) &&
+                       request.resource.data.rating is number &&
+                       request.resource.data.rating >= 1 && request.resource.data.rating <= 5 &&
+                       noMaliciousContent(request.resource.data.title) &&
+                       noMaliciousContent(request.resource.data.content);
+      
+      // Admins can update any review
+      allow update: if isAdmin();
+      
+      // Only admins can delete reviews
+      allow delete: if isAdmin();
+    }
+    
+    =============================================================================
+    // Collection: settings
+    =============================================================================
+    match /settings/{settingId} {
+      // Only admins can read settings
+      allow read: if isAdmin();
+      
+      // Only admins can create settings
+      allow create: if isAdmin();
+      
+      // Only admins can update settings
+      allow update: if isAdmin();
+      
+      // Only admins can delete settings
+      allow delete: if isAdmin();
+    }
+    
+    =============================================================================
+    // Collection: analytics
+    =============================================================================
+    match /analytics/{analyticsId} {
+      // Only admins can read analytics
+      allow read: if isAdmin();
+      
+      // Only system processes can create analytics entries
+      allow create: if isAdmin() &&
+                       isValidTimestamp() &&
+                       request.resource.data.hasOnly(['eventType', 'userId', 'sessionId', 'url', 'userAgent', 'timestamp', 'metadata']);
+      
+      // No updates or deletes allowed for analytics
+      allow update, delete: if false;
+    }
+    
+    =============================================================================
+    // Deny all other operations
+    =============================================================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

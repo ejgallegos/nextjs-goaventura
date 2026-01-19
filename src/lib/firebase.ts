@@ -1,19 +1,37 @@
 
-// Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration - client side only
+// Use environment variables for sensitive data
 const firebaseConfig = {
-  "projectId": "goaventura-web",
-  "appId": "1:172319170728:web:854211790cb334dd2fa29d",
-  "storageBucket": "goaventura-web.firebasestorage.app",
-  "apiKey": "AIzaSyB1W3UhchQeohnlBTuAd_YAjJlPOyOI96w",
-  "authDomain": "goaventura-web.firebaseapp.com",
-  "measurementId": "",
-  "messagingSenderId": "172319170728"
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || process.env.FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 };
+
+// Validate required Firebase configuration
+const requiredConfigVars = [
+  'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
+  'NEXT_PUBLIC_FIREBASE_APP_ID',
+  'NEXT_PUBLIC_FIREBASE_API_KEY'
+];
+
+const missingConfig = requiredConfigVars.filter(varName => !process.env[varName]);
+
+if (missingConfig.length > 0 && process.env.NODE_ENV === 'production') {
+  throw new Error(`Missing required Firebase configuration: ${missingConfig.join(', ')}`);
+}
+
+// Provide fallback for development only
+if (!firebaseConfig.projectId) {
+  console.warn('Firebase project ID not found. Using fallback for development.');
+  firebaseConfig.projectId = 'goaventura-web';
+}
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

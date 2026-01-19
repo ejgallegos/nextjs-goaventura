@@ -1,0 +1,13 @@
+[1;33m[WARN][0m Target URL http://localhost:9002 might not be reachable
+[0;34m[INFO][0m Testing Security Headers
+[0;31m[FAIL][0m X-Content-Type-Options header missing or incorrect. Found: 
+[0;31m[FAIL][0m X-Frame-Options header missing or incorrect. Found: 
+[0;31m[FAIL][0m X-XSS-Protection header missing or incorrect. Found: 
+[0;31m[FAIL][0m Referrer-Policy header missing or incorrect. Found: 
+[0;31m[FAIL][0m Strict-Transport-Security header missing or incorrect. Found: 
+[0;31m[FAIL][0m Content-Security-Policy header missing or incorrect. Found: 
+[0;34m[INFO][0m Testing XSS Protection
+[0;34m[INFO][0m Testing XSS payload: <script>alert('XSS')</script>
+[0;34m[INFO][0m Testing: XSS in search parameter
+[0;31m[FAIL][0m XSS in search parameter - Status 000 (Expected: 400)
+[1;33m[WARN][0m XSS payload might not be properly handled

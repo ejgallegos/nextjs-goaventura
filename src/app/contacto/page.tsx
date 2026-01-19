@@ -50,21 +50,41 @@ const ContactPage = () => {
         return;
     }
     
-    const token = await executeRecaptcha('contact_form');
-    
-    // In a real app, you would send this data AND the token to a backend API for verification
-    const dataWithToken = { ...data, recaptchaToken: token };
-    console.log('Form data with token:', dataWithToken);
+    try {
+      const token = await executeRecaptcha('contact_form');
+      
+      // Send data to secure API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          recaptchaToken: token,
+        }),
+      });
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Mensaje Enviado",
-      description: "Gracias por contactarnos. Te responderemos pronto.",
-      variant: "default",
-    });
-    form.reset(); // Reset form after successful submission
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+
+      toast({
+        title: "Mensaje Enviado",
+        description: "Gracias por contactarnos. Te responderemos pronto.",
+        variant: "default",
+      });
+      form.reset(); // Reset form after successful submission
+    } catch (error: any) {
+      console.error('Contact form error:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Ocurrió un error al enviar el mensaje. Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

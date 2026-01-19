@@ -85,6 +85,12 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
             slug: generateSlug(`${originalTrip.name} (Copia)`),
             status: 'draft',
             isFeatured: false,
+            description: originalTrip.description || '',
+            imageUrl: originalTrip.imageUrl || '',
+            imageHint: originalTrip.imageHint || '',
+            category: originalTrip.category || 'Excursion',
+            tags: originalTrip.tags || [],
+            imageGallery: originalTrip.imageGallery || [],
         };
 
         const updatedTrips = [...allTrips, newTrip];

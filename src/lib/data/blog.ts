@@ -32,6 +32,7 @@ No importa cuál sea tu estilo de viaje, el verano 2024 tiene un destino perfect
     imageUrl: 'https://placehold.co/800x450.png',
     imageHint: 'summer travel collage',
     tags: ['verano', 'destinos', 'viajes', 'vacaciones'],
+    status: 'published',
   },
   {
     id: 'blog002',
@@ -43,19 +44,17 @@ No importa cuál sea tu estilo de viaje, el verano 2024 tiene un destino perfect
     content: `
 Viajar como mochilero es una experiencia transformadora, pero requiere cierta preparación. Aquí tienes algunos consejos:
 
-1.  **Empaca ligero:** Lleva solo lo esencial.
-2.  **Investiga tu destino:** Conoce la cultura, moneda y transporte.
-3.  **Sé flexible:** Los planes pueden cambiar, ¡disfruta la espontaneidad!
-4.  **Presupuesto:** Lleva un control de tus gastos.
-5.  **Seguro de viaje:** Imprescindible para cualquier imprevisto.
-6.  **Alojamiento:** Hostales son una excelente opción para conocer gente.
-7.  **Comunicación:** Aprende algunas frases básicas del idioma local.
-8.  **Seguridad:** Cuida tus pertenencias y mantente alerta.
-9.  **Documentación:** Pasaporte, visas y copias de seguridad.
-10. **¡Disfruta!** Abre tu mente y vive cada momento.
+1. **Empaca ligero:** Lleva solo lo esencial.
+2. **Investiga tu destino:** Conoce la cultura, moneda y transporte.
+3. **Sé flexible:** Los planes pueden cambiar, ¡disfruta la espontaneidad!
+4. **Presupuesto:** Lleva un control de tus gastos.
+5. **Seguro de viaje:** Imprescindible para cualquier imprevisto.
+
+Viajar con mochilero te enseñará a valorar la libertad y la simplicidad de la vida.
     `,
     imageUrl: 'https://placehold.co/800x450.png',
-    imageHint: 'backpacker looking map',
-    tags: ['mochilero', 'consejos', 'aventura', 'viaje económico'],
+    imageHint: 'backpacking travel',
+    tags: ['viajes', 'consejos', 'mochilero', 'aventura'],
+    status: 'published',
   },
 ];

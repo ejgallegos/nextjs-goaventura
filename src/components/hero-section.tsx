@@ -11,6 +11,7 @@ import { Skeleton } from './ui/skeleton';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
+import { SafeHTML } from '@/components/ui/safe-html';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -66,10 +67,11 @@ const HeroSection = () => {
                         </div>
                         <div className="absolute inset-0 bg-foreground/30"></div>
                          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                            <h1
+                            <SafeHTML
+                                html={slide.title}
+                                tagName="h1"
                                 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]"
-                                dangerouslySetInnerHTML={{ __html: slide.title }}
-                            ></h1>
+                            />
                             {slide.subtitle && (
                                 <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-white opacity-90 hidden sm:block [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
                                     {slide.subtitle}

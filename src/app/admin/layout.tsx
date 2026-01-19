@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { authenticateRequest, UserRole } from '@/lib/auth-rbac';
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function AdminLayout({
   children,
@@ -16,11 +19,22 @@ export default function AdminLayout({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setIsAuth(true);
+        try {
+          // For now, any authenticated user gets admin access
+          // TODO: Implement proper role verification when Firebase Admin is configured
+          if (user.email) {
+            setIsAuth(true);
+          } else {
+            setIsAuth(false);
+          }
+        } catch (error) {
+          console.error('Error verifying permissions:', error);
+          setIsAuth(false); // Don't redirect, just show error
+        }
       } else {
-        router.replace('/login');
+        setIsAuth(false); // Don't redirect, just show login required
       }
       setIsLoading(false);
     });
@@ -29,10 +43,26 @@ export default function AdminLayout({
     return () => unsubscribe();
   }, [router]);
 
-  if (isLoading || !isAuth) {
+  if (isLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <p>Cargando...</p>
+      </div>
+    );
+  }
+
+  if (!isAuth) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center flex-col gap-4">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-2">Acceso Denegado</h2>
+          <p className="text-muted-foreground mb-4">
+            Necesitas iniciar sesión para acceder al panel de administración.
+          </p>
+          <Button asChild>
+            <Link href="/login">Iniciar Sesión</Link>
+          </Button>
+        </div>
       </div>
     );
   }

@@ -1,0 +1,50 @@
+[0;34m[INFO][0m Testing Security Headers
+[0;32m[PASS][0m X-Content-Type-Options header present:  nosniff
+[0;32m[PASS][0m X-Frame-Options header present:  DENY
+[0;32m[PASS][0m X-XSS-Protection header present:  1; mode=block
+[0;32m[PASS][0m Referrer-Policy header present:  strict-origin-when-cross-origin
+[0;31m[FAIL][0m Strict-Transport-Security header missing or incorrect. Found: 
+[0;31m[FAIL][0m Content-Security-Policy header missing or incorrect. Found: 
+[0;34m[INFO][0m Testing XSS Protection
+[0;34m[INFO][0m Testing XSS payload: <script>alert('XSS')</script>
+[0;34m[INFO][0m Testing: XSS in search parameter
+[0;31m[FAIL][0m XSS in search parameter - Status 404 (Expected: 400)
+[1;33m[WARN][0m XSS payload might not be properly handled
+[0;32m[PASS][0m XSS payload in contact form blocked
+[0;34m[INFO][0m Testing XSS payload: javascript:alert('XSS')
+[0;34m[INFO][0m Testing: XSS in search parameter
+[0;31m[FAIL][0m XSS in search parameter - Status 404 (Expected: 400)
+[1;33m[WARN][0m XSS payload might not be properly handled
+[0;32m[PASS][0m XSS payload in contact form blocked
+[0;34m[INFO][0m Testing XSS payload: <img src=x onerror=alert('XSS')>
+[0;34m[INFO][0m Testing: XSS in search parameter
+[0;31m[FAIL][0m XSS in search parameter - Status 000 (Expected: 400)
+[1;33m[WARN][0m XSS payload might not be properly handled
+[0;32m[PASS][0m XSS payload in contact form blocked
+[0;34m[INFO][0m Testing XSS payload: <svg onload=alert('XSS')>
+[0;34m[INFO][0m Testing: XSS in search parameter
+[0;31m[FAIL][0m XSS in search parameter - Status 000 (Expected: 400)
+[1;33m[WARN][0m XSS payload might not be properly handled
+[0;32m[PASS][0m XSS payload in contact form blocked
+[0;34m[INFO][0m Testing XSS payload: '"><script>alert('XSS')</script>
+[0;34m[INFO][0m Testing: XSS in search parameter
+[0;31m[FAIL][0m XSS in search parameter - Status 404 (Expected: 400)
+[1;33m[WARN][0m XSS payload might not be properly handled
+[1;33m[WARN][0m Contact form might not filter XSS properly
+[0;34m[INFO][0m Testing SQL Injection Protection
+[0;34m[INFO][0m Testing SQL injection payload: '; DROP TABLE users; --
+[1;33m[WARN][0m Potential SQL injection vulnerability
+[0;34m[INFO][0m Testing SQL injection payload: OR '1'='1
+[1;33m[WARN][0m Potential SQL injection vulnerability
+[0;34m[INFO][0m Testing SQL injection payload: UNION SELECT * FROM users --
+[1;33m[WARN][0m Potential SQL injection vulnerability
+[0;34m[INFO][0m Testing SQL injection payload: '; INSERT INTO users VALUES('hacker','pass'); --
+[1;33m[WARN][0m Potential SQL injection vulnerability
+[0;34m[INFO][0m Testing SQL injection payload: ' OR 1=1 --
+[1;33m[WARN][0m Potential SQL injection vulnerability
+[0;34m[INFO][0m Testing Rate Limiting
+[0;32m[PASS][0m Rate limiting activated after 1 requests (Status: 429)
+[0;34m[INFO][0m Testing CORS Configuration
+[1;33m[WARN][0m CORS might allow unauthorized origins
+[0;32m[PASS][0m CORS allows legitimate origins
+[0;34m[INFO][0m Testing Authentication

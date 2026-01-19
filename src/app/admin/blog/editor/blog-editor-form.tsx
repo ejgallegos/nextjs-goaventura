@@ -32,6 +32,7 @@ import { BlogPost } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, X } from 'lucide-react';
 import { getBlogPosts, saveBlogPosts } from '@/lib/data/blog-posts';
+import { validateFile, allowedImageTypes, maxImageSize } from '@/lib/security';
 
 const blogSchema = z.object({
   title: z.string().min(3, 'El título debe tener al menos 3 caracteres.'),
@@ -159,6 +160,21 @@ export default function BlogEditorForm() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file before processing
+      const validation = validateFile(file, {
+        maxSize: maxImageSize,
+        allowedTypes: allowedImageTypes
+      });
+      
+      if (!validation.valid) {
+        toast({
+          title: "Error de archivo",
+          description: validation.error,
+          variant: "destructive"
+        });
+        return;
+      }
+      
       const reader = new FileReader();
       reader.onloadend = () => {
         form.setValue('imageUrl', reader.result as string);

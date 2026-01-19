@@ -8,6 +8,7 @@ import { HeroSlide } from "@/lib/types"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 import Image from "next/image"
+import { SafeHTML } from "@/components/ui/safe-html"
 
 export const columns: ColumnDef<HeroSlide>[] = [
   {
@@ -78,8 +79,11 @@ export const columns: ColumnDef<HeroSlide>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium" dangerouslySetInnerHTML={{ __html: row.getValue("title")}}>
-          </span>
+          <SafeHTML
+            html={row.getValue("title")}
+            tagName="span"
+            className="max-w-[500px] truncate font-medium"
+          />
         </div>
       )
     },

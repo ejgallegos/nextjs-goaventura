@@ -1,0 +1,278 @@
+rules_version = '2';
+service firebase.storage {
+  =============================================================================
+  // Helper Functions
+  =============================================================================
+  
+  function isAuthenticated() {
+    return request.auth != null;
+  }
+  
+  function isAdmin() {
+    return isAuthenticated() && 
+           request.auth.token.role == 'admin';
+  }
+  
+  function isEditor() {
+    return isAuthenticated() && 
+           (request.auth.token.role == 'admin' || request.auth.token.role == 'editor');
+  }
+  
+  function isOwner(userId) {
+    return isAuthenticated() && request.auth.uid == userId;
+  }
+  
+  function isValidImageFile() {
+    return resource.contentType.matches('image/.*') &&
+           resource.contentType in ['image/jpeg', 'image/png', 'image/webp', 'image/gif'] &&
+           resource.size < 5 * 1024 * 1024; // 5MB
+  }
+  
+  function isValidDocumentFile() {
+    return resource.contentType == 'application/pdf' &&
+           resource.size < 10 * 1024 * 1024; // 10MB
+  }
+  
+  function isValidPublicFileName() {
+    return resource.name.matches('^[a-zA-Z0-9._-]+$') &&
+           resource.name.size() <= 255;
+  }
+  
+  function isValidPrivateFileName() {
+    return resource.name.matches('^[a-zA-Z0-9._-]+$') &&
+           resource.name.size() <= 255;
+  }
+  
+  function noMaliciousFileName() {
+    return !resource.name.matches('.*\\.exe$') &&
+           !resource.name.matches('.*\\.bat$') &&
+           !resource.name.matches('.*\\.cmd$') &&
+           !resource.name.matches('.*\\.php$') &&
+           !resource.name.matches('.*\\.js$') &&
+           !resource.name.matches('.*\\.html$') &&
+           !resource.name.matches('.*\\.htm$') &&
+           !resource.name.matches('.*\\.sh$') &&
+           !resource.name.matches('.*\\.py$') &&
+           !resource.name.matches('.*\\.pl$') &&
+           !resource.name.matches('.*\\.rb$') &&
+           !resource.name.matches('.*\\.cgi$');
+  }
+  
+  =============================================================================
+  // Public Storage - Readable by anyone
+  =============================================================================
+  
+  match /b/{bucket}/o/public/{allPaths=**} {
+    // Anyone can read public files
+    allow read: if true;
+    
+    // Only editors and admins can upload public files
+    allow write: if (isEditor() || isAdmin()) &&
+                     isValidPublicFileName() &&
+                     noMaliciousFileName() &&
+                     (isValidImageFile() || isValidDocumentFile()) &&
+                     resource.metadata.hasOnly(['contentType', 'cacheControl', 'customMetadata']);
+  }
+  
+  =============================================================================
+  // Product Images
+  =============================================================================
+  
+  match /b/{bucket}/o/products/{productId}/{allPaths=**} {
+    // Anyone can read product images
+    allow read: if true;
+    
+    // Only editors and admins can upload product images
+    allow write: if (isEditor() || isAdmin()) &&
+                     isValidImageFile() &&
+                     noMaliciousFileName();
+  }
+  
+  =============================================================================
+  // Blog Post Images
+  =============================================================================
+  
+  match /b/{bucket}/o/blog/{postId}/{allPaths=**} {
+    // Anyone can read blog images
+    allow read: if true;
+    
+    // Only editors and admins can upload blog images
+    allow write: if (isEditor() || isAdmin()) &&
+                     isValidImageFile() &&
+                     noMaliciousFileName();
+  }
+  
+  =============================================================================
+  // User Profile Pictures
+  =============================================================================
+  
+  match /b/{bucket}/o/users/{userId}/profile/{allPaths=**} {
+    // Anyone can read profile pictures
+    allow read: if true;
+    
+    // Users can only upload their own profile pictures
+    allow write: if isOwner(userId) &&
+                     isValidImageFile() &&
+                     noMaliciousFileName() &&
+                     resource.size < 2 * 1024 * 1024; // 2MB for profile pics
+  }
+  
+  =============================================================================
+  // User Bookings (Private)
+  =============================================================================
+  
+  match /b/{bucket}/o/users/{userId}/bookings/{bookingId}/{allPaths=**} {
+    // Only the user can read their booking documents
+    allow read: if isOwner(userId);
+    
+    // Only the user can upload their booking documents
+    allow write: if isOwner(userId) &&
+                     isValidDocumentFile() &&
+                     noMaliciousFileName() &&
+                     isValidPrivateFileName();
+    
+    // Admins can also access booking documents
+    allow read, write: if isAdmin();
+  }
+  
+  =============================================================================
+  // Admin Uploads (Private)
+  =============================================================================
+  
+  match /b/{bucket}/o/admin/{allPaths=**} {
+    // Only admins can access admin files
+    allow read, write: if isAdmin() &&
+                           noMaliciousFileName() &&
+                           (isValidImageFile() || isValidDocumentFile());
+  }
+  
+  =============================================================================
+  // Contact Form Attachments
+  =============================================================================
+  
+  match /b/{bucket}/o/contacts/{contactId}/{allPaths=**} {
+    // Only admins can read contact attachments
+    allow read: if isAdmin();
+    
+    // Anyone can upload contact form attachments (with restrictions)
+    allow write: if isValidDocumentFile() &&
+                     noMaliciousFileName() &&
+                     resource.size < 5 * 1024 * 1024 && // 5MB limit
+                     isValidPrivateFileName();
+    
+    // Contact files are read-only after upload
+    allow update, delete: if false;
+  }
+  
+  =============================================================================
+  // Slideshow Images
+  =============================================================================
+  
+  match /b/{bucket}/o/slides/{slideId}/{allPaths=**} {
+    // Anyone can read slideshow images
+    allow read: if true;
+    
+    // Only editors and admins can manage slideshow images
+    allow write: if (isEditor() || isAdmin()) &&
+                     isValidImageFile() &&
+                     noMaliciousFileName();
+  }
+  
+  =============================================================================
+  // Temporary Uploads (with expiration)
+  =============================================================================
+  
+  match /b/{bucket}/o/temp/{userId}/{allPaths=**} {
+    // Only the user can access their temp files
+    allow read, write: if isOwner(userId) &&
+                           isValidImageFile() &&
+                           noMaliciousFileName() &&
+                           resource.metadata.hasOnly(['contentType', 'cacheControl', 'customMetadata', 'expires']);
+    
+    // Temp files should have expiration metadata
+    allow write: if resource.metadata.expires is timestamp &&
+                     resource.metadata.expires > request.time;
+  }
+  
+  =============================================================================
+  // Analytics Reports (Admin Only)
+  =============================================================================
+  
+  match /b/{bucket}/o/reports/{reportId}/{allPaths=**} {
+    // Only admins can access reports
+    allow read, write: if isAdmin() &&
+                           noMaliciousFileName() &&
+                           (isValidDocumentFile() || isValidImageFile());
+  }
+  
+  =============================================================================
+  // Backup Files (Admin Only)
+  =============================================================================
+  
+  match /b/{bucket}/o/backups/{allPaths=**} {
+    // Only admins can access backups
+    allow read, write: if isAdmin() &&
+                           noMaliciousFileName();
+  }
+  
+  =============================================================================
+  // User Generated Content
+  =============================================================================
+  
+  match /b/{bucket}/o/ugc/{userId}/{allPaths=**} {
+    // Anyone can read UGC files (if user has approved content)
+    allow read: if true;
+    
+    // Only the user can upload their own UGC
+    allow write: if isOwner(userId) &&
+                     isValidImageFile() &&
+                     noMaliciousFileName() &&
+                     resource.size < 3 * 1024 * 1024; // 3MB for UGC
+  }
+  
+  =============================================================================
+  // Review Attachments
+  =============================================================================
+  
+  match /b/{bucket}/o/reviews/{reviewId}/{allPaths=**} {
+    // Anyone can read review attachments (for approved reviews)
+    allow read: if true;
+    
+    // Only editors and admins can upload review attachments
+    allow write: if (isEditor() || isAdmin()) &&
+                     isValidImageFile() &&
+                     noMaliciousFileName() &&
+                     resource.size < 2 * 1024 * 1024; // 2MB for review images
+  }
+  
+  =============================================================================
+  // System Files (Admin Only)
+  =============================================================================
+  
+  match /b/{bucket}/o/system/{allPaths=**} {
+    // Only admins can access system files
+    allow read, write: if isAdmin() &&
+                           noMaliciousFileName();
+  }
+  
+  =============================================================================
+  // API Response Caching
+  =============================================================================
+  
+  match /b/{bucket}/o/cache/{allPaths=**} {
+    // Anyone can read cached files
+    allow read: if true;
+    
+    // Only admins can write cached files
+    allow write: if isAdmin() &&
+                           noMaliciousFileName();
+  }
+  
+  =============================================================================
+  // Deny all other access
+  =============================================================================
+  
+  match /b/{bucket}/o/{allPaths=**} {
+    allow read, write: if false;
+  }
+}
