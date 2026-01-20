@@ -50,7 +50,7 @@ jobs:
              MOCK_FIREBASE=true
              FIREBASE_PROJECT_ID=goaventura-web
              FIREBASE_CLIENT_EMAIL: service-account@goaventura-web.iam.gserviceaccount.com
-             FIREBASE_PRIVATE_KEY=PLACEHOLDER_KEY
+              FIREBASE_PRIVATE_KEY: PLACEHOLDER_KEY
   deploy:
     needs: build_and_push
     runs-on: ubuntu-latest
