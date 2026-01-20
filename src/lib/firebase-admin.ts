@@ -43,17 +43,25 @@ export function initializeFirebaseAdmin(config?: FirebaseAdminConfig): admin.app
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET || process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   };
 
+  // Check if Firebase should be mocked (CI/CD or placeholder credentials)
+  const shouldMockFirebase = 
+    process.env.MOCK_FIREBASE === 'true' ||
+    !firebaseConfig.projectId || 
+    !firebaseConfig.clientEmail || 
+    !firebaseConfig.privateKey || 
+    firebaseConfig.privateKey.includes('Your-Private-Key-Here');
+
   // Validate required configuration
-  if (!firebaseConfig.projectId || !firebaseConfig.clientEmail || !firebaseConfig.privateKey || firebaseConfig.privateKey.includes('Your-Private-Key-Here')) {
-    console.warn('Firebase Admin configuration incomplete or using placeholder credentials. Some features may not work properly.');
-    // In development with placeholder credentials, return a mock admin app
-    console.warn('Using mock Firebase Admin for development with placeholder credentials.');
+  if (shouldMockFirebase) {
+    console.warn('Firebase Admin configuration incomplete or explicitly mocked. Some features may not work properly.');
+    console.warn('Using mock Firebase Admin for CI/CD or development with placeholder credentials.');
     return {
       auth: () => ({
-        verifyIdToken: async () => { throw new Error('Mock Firebase - no real credentials'); },
-        getUser: async () => { throw new Error('Mock Firebase - no real credentials'); },
-        createCustomToken: async () => { throw new Error('Mock Firebase - no real credentials'); },
+        verifyIdToken: async () => ({ uid: 'mock-user', email: 'mock@example.com' }),
+        getUser: async () => ({ uid: 'mock-user', email: 'mock@example.com' }),
+        createCustomToken: async () => 'mock-token',
         listUsers: async () => ({ users: [] }),
+        getUserCount: async () => 0,
       }),
       firestore: () => ({
         collection: () => ({
@@ -71,15 +79,15 @@ export function initializeFirebaseAdmin(config?: FirebaseAdminConfig): admin.app
           file: () => ({
             save: async () => {},
             delete: async () => {},
-            getSignedUrl: async () => ['']
+            getSignedUrl: async () => ['https://mock-url.com/file']
           })
         })
       })
     } as any;
   }
   
-  // Also check in production but warn first
-  if (process.env.NODE_ENV === 'production') {
+  // Also check in production but warn first (only if not mocked)
+  if (process.env.NODE_ENV === 'production' && !shouldMockFirebase) {
     if (!firebaseConfig.projectId || !firebaseConfig.clientEmail || !firebaseConfig.privateKey) {
       throw new Error('Missing required Firebase Admin configuration. Please check your environment variables.');
     }

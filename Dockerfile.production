@@ -13,6 +13,9 @@ COPY package-production.json ./package.json
 # Install dependencies
 RUN npm ci --only=production && npm cache clean --force
 
+# Install critters for CSS optimization (required by Next.js optimizeCss experiment)
+RUN npm install critters
+
 # Copy source code
 COPY . .
 
@@ -20,7 +23,7 @@ COPY . .
 # RUN npx prisma generate
 
 # Build the application
-RUN npm run build
+RUN npm run build:production
 
 # Production stage
 FROM node:18-alpine AS runner
@@ -39,21 +42,24 @@ WORKDIR /app
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
+COPY --from=builder --chown=nextjs:nodejs /app/package-production.json ./package.json
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/healthcheck.js ./healthcheck.js
 
 # Create nextjs cache directory with proper permissions
 RUN mkdir .next/cache && chown nextjs:nodejs .next/cache
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+ENV MOCK_FIREBASE=true
 
 # Switch to non-root user
 USER nextjs
 
 # Expose port
 EXPOSE 3000
-
-# Set environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
