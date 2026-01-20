@@ -201,20 +201,28 @@ export default function TripEditorForm() {
                     tags: productTags,
                     // Reset featuredOrder if not featured anymore
                     featuredOrder: values.isFeatured ? values.featuredOrder : undefined,
+                    status: values.status || 'draft',
                 };
             }
-            return trip;
+            return {
+                ...trip,
+                status: trip.status || 'draft',
+            };
         });
     } else {
-        const newTrip: Product = {
+        const newTrip: Product & { status: string } = {
             id: `prod_${Date.now()}`,
             slug: generateSlug(values.name),
             ...values,
             tags: productTags,
             imageUrl: values.imageUrl || 'https://placehold.co/600x400.png',
             featuredOrder: values.isFeatured ? values.featuredOrder : undefined,
+            status: values.status || 'draft',
         };
-        updatedTrips = [...allTrips, newTrip];
+        updatedTrips = [...allTrips.map(trip => ({
+            ...trip,
+            status: trip.status || 'draft',
+        })), newTrip];
     }
     
     await saveProducts(updatedTrips); // UPDATED

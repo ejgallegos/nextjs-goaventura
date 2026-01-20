@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getAdminApp from '@/lib/firebase-admin';
+import { getFirebaseAdmin } from '@/lib/firebase-admin';
 import { UserRole, Permission, ROLE_PERMISSIONS } from '@/lib/auth-rbac';
 import { createSecureResponse } from '@/lib/security-production';
 import { authenticateRequest } from '@/lib/auth-production';
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     const db = adminApp.firestore();
 
     // Check if user exists in Firebase Auth
@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     const db = adminApp.firestore();
 
     // Get user from Firestore
@@ -174,7 +174,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     const db = adminApp.firestore();
 
     // Get user from Firestore
@@ -263,7 +263,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     const db = adminApp.firestore();
 
     // Get user from Firestore
@@ -317,7 +317,7 @@ export async function PATCH(request: NextRequest) {
       return createSecureResponse({ error: auth.error }, auth.status || 401);
     }
 
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     const db = adminApp.firestore();
 
     const { searchParams } = new URL(request.url);

@@ -200,20 +200,28 @@ export default function BlogEditorForm() {
                     ...values,
                     slug: generateSlug(values.title), // Update slug if title changes
                     tags: postTags,
+                    status: values.status || 'draft',
                 };
             }
-            return post;
+            return {
+                ...post,
+                status: post.status || 'draft',
+            };
         });
     } else {
-        const newPost: BlogPost = {
+        const newPost: BlogPost & { status: string } = {
             id: `blog_${Date.now()}`,
             slug: generateSlug(values.title),
             date: new Date().toISOString(),
             ...values,
             tags: postTags,
             imageUrl: values.imageUrl || 'https://placehold.co/800x450.png',
+            status: values.status || 'draft',
         };
-        updatedPosts = [...allPosts, newPost];
+        updatedPosts = [...allPosts.map(post => ({
+            ...post,
+            status: post.status || 'draft',
+        })), newPost];
     }
     
     await saveBlogPosts(updatedPosts);

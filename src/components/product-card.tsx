@@ -14,7 +14,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const isPromotion = product.category === 'Promocion';
+  const isPromotion = (product.category as any) === 'Promocion';
   // If slug starts with '/', it's an internal link for promotions
   const productPageUrl = product.slug.startsWith('/') ? product.slug : `/viajes/${product.slug}`;
   const whatsappText = `Hola, me interesa ${isPromotion ? 'la promoción' : (product.category === 'Excursion' ? 'la excursión' : 'el transfer')} "${product.name}".`;

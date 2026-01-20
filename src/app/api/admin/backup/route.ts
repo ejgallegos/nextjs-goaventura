@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getAdminApp from '@/lib/firebase-admin';
+import { getFirebaseAdmin } from '@/lib/firebase-admin';
 import { createSecureResponse } from '@/lib/security-production';
 import { logger } from '@/lib/logger';
 
@@ -231,7 +231,7 @@ async function startBackupJob(jobId: string) {
   logger.info('Starting backup execution', { jobId });
 
   try {
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     const db = adminApp.firestore();
     const backup: any = {
       metadata: {
@@ -317,7 +317,7 @@ async function startBackupJob(jobId: string) {
 
 // Delete backup file from storage
 async function deleteBackupFile(fileUrl: string) {
-  const adminApp = getAdminApp();
+  const adminApp = getFirebaseAdmin();
   
   // Extract file path from URL
   const url = new URL(fileUrl);
@@ -334,7 +334,7 @@ async function deleteBackupFile(fileUrl: string) {
 }
 
 // Cleanup old backups (run daily)
-export async function cleanupOldBackups() {
+async function cleanupOldBackups() {
   const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days
   const now = Date.now();
   
@@ -362,7 +362,7 @@ export async function cleanupOldBackups() {
 // Health check for backup system
 export async function PATCH() {
   try {
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     
     // Test Firebase Storage access
     const testFile = adminApp.storage().bucket().file('backups/health_check');

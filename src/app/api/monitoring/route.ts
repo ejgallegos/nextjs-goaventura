@@ -1,27 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { logger, logAuth, logSecurity } from '@/lib/logger';
 import { createSecureResponse } from '@/lib/security-production';
-import getAdminApp from '@/lib/firebase-admin';
+import { getFirebaseAdmin } from '@/lib/firebase-admin';
 
 // Performance monitoring middleware
-export function withPerformanceMonitoring<T extends any[], R>(
+function withPerformanceMonitoring<T extends any[], R>(
   handler: (req: NextRequest, ...args: T) => Promise<R>,
   operationName: string
 ) {
   return async (req: NextRequest, ...args: T): Promise<R> => {
     const startTime = Date.now();
     const requestId = Math.random().toString(36).substr(2, 9);
-    
-    // Add request ID to headers for tracking
-    const modifiedRequest = new Request(req, {
-      headers: new Headers(req.headers)
-    });
-    modifiedRequest.headers.set('x-request-id', requestId);
 
     try {
       logger.request(req.method, req.url, undefined, getClientIP(req), req.headers.get('user-agent') || undefined);
       
-      const result = await handler(modifiedRequest, ...args);
+      const result = await handler(req, ...args);
       
       const duration = Date.now() - startTime;
       logger.performance(operationName, duration, {
@@ -46,7 +40,7 @@ export function withPerformanceMonitoring<T extends any[], R>(
 }
 
 // Security monitoring middleware
-export function withSecurityMonitoring<T extends any[], R>(
+function withSecurityMonitoring<T extends any[], R>(
   handler: (req: NextRequest, ...args: T) => Promise<R>,
   resource: string,
   action: string
@@ -88,7 +82,7 @@ export function withSecurityMonitoring<T extends any[], R>(
 // Rate limiting middleware
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
-export function withRateLimit(
+function withRateLimit(
   maxRequests: number = 100,
   windowMs: number = 15 * 60 * 1000 // 15 minutes
 ) {
@@ -125,7 +119,7 @@ export function withRateLimit(
               retryAfter: Math.ceil((current.resetTime - now) / 1000)
             },
             429
-          );
+          ) as R;
         }
 
         current.count++;
@@ -251,7 +245,6 @@ export async function DELETE(request: NextRequest) {
 function getClientIP(request: NextRequest): string {
   return request.headers.get('x-forwarded-for') ||
          request.headers.get('x-real-ip') ||
-         request.ip ||
          'unknown';
 }
 
@@ -285,7 +278,7 @@ function isSuspiciousRequest(request: NextRequest, ip: string, userAgent: string
 async function checkDatabaseHealth(): Promise<{ status: string; latency?: number }> {
   try {
     const startTime = Date.now();
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     await adminApp.firestore().collection('_health').limit(1).get();
     const latency = Date.now() - startTime;
     
@@ -299,8 +292,9 @@ async function checkDatabaseHealth(): Promise<{ status: string; latency?: number
 async function checkFirebaseHealth(): Promise<{ status: string; latency?: number }> {
   try {
     const startTime = Date.now();
-    const adminApp = getAdminApp();
-    await adminApp.auth().getUserCount();
+    const adminApp = getFirebaseAdmin();
+    // Test Firebase Auth by getting a small list of users
+    await adminApp.auth().listUsers(1);
     const latency = Date.now() - startTime;
     
     return { status: 'healthy', latency };

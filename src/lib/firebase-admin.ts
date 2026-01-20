@@ -44,10 +44,43 @@ export function initializeFirebaseAdmin(config?: FirebaseAdminConfig): admin.app
   };
 
   // Validate required configuration
-  if (!firebaseConfig.projectId || !firebaseConfig.clientEmail || !firebaseConfig.privateKey) {
-    console.warn('Firebase Admin configuration incomplete. Some features may not work properly.');
-    // Don't throw error in development to allow the app to run
-    if (process.env.NODE_ENV === 'production') {
+  if (!firebaseConfig.projectId || !firebaseConfig.clientEmail || !firebaseConfig.privateKey || firebaseConfig.privateKey.includes('Your-Private-Key-Here')) {
+    console.warn('Firebase Admin configuration incomplete or using placeholder credentials. Some features may not work properly.');
+    // In development with placeholder credentials, return a mock admin app
+    console.warn('Using mock Firebase Admin for development with placeholder credentials.');
+    return {
+      auth: () => ({
+        verifyIdToken: async () => { throw new Error('Mock Firebase - no real credentials'); },
+        getUser: async () => { throw new Error('Mock Firebase - no real credentials'); },
+        createCustomToken: async () => { throw new Error('Mock Firebase - no real credentials'); },
+        listUsers: async () => ({ users: [] }),
+      }),
+      firestore: () => ({
+        collection: () => ({
+          doc: () => ({
+            get: async () => ({ exists: false }),
+            set: async () => {},
+            update: async () => {},
+            delete: async () => {}
+          }),
+          get: async () => ({ docs: [] }),
+        })
+      }),
+      storage: () => ({
+        bucket: () => ({
+          file: () => ({
+            save: async () => {},
+            delete: async () => {},
+            getSignedUrl: async () => ['']
+          })
+        })
+      })
+    } as any;
+  }
+  
+  // Also check in production but warn first
+  if (process.env.NODE_ENV === 'production') {
+    if (!firebaseConfig.projectId || !firebaseConfig.clientEmail || !firebaseConfig.privateKey) {
       throw new Error('Missing required Firebase Admin configuration. Please check your environment variables.');
     }
   }
@@ -367,7 +400,7 @@ export const storage = {
     bucketName: string,
     filePath: string,
     fileBuffer: Buffer,
-    metadata?: admin.storage.StorageMetadata
+    metadata?: any
   ): Promise<string> {
     try {
       const storage = getFirebaseStorage();

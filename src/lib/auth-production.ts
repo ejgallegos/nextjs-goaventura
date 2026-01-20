@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/firebase';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
-import getAdminApp from '@/lib/firebase-admin';
+import { getFirebaseAdmin } from '@/lib/firebase-admin';
 import { UserRole, Permission, ROLE_PERMISSIONS } from './auth-rbac';
 
 // Re-export Permission for API routes
@@ -33,7 +33,7 @@ export async function authenticateRequest(request: NextRequest): Promise<{
     const token = authHeader.substring(7);
     
     // Verify ID token with Firebase Admin
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     const decodedToken = await adminApp.auth()!.verifyIdToken(token);
     
     // Check if email is verified
@@ -132,7 +132,7 @@ export async function requireRole(
 
 export async function createUserSession(user: any, customClaims: any = {}) {
   try {
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     
     // Set custom claims
     await adminApp.auth()!.setCustomUserClaims(user.uid, {
@@ -162,7 +162,7 @@ export async function createUserSession(user: any, customClaims: any = {}) {
 
 export async function revokeUserSession(uid: string) {
   try {
-    const adminApp = getAdminApp();
+    const adminApp = getFirebaseAdmin();
     
     // Revoke all tokens
     await adminApp.auth()!.revokeRefreshTokens(uid);

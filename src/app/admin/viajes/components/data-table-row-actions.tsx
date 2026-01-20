@@ -73,12 +73,12 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
     router.push(`/admin/viajes/editor?slug=${slug}`);
   };
 
-  const handleCopy = async () => {
+   const handleCopy = async () => {
     try {
         const allTrips = await getProducts();
-        const originalTrip = row.original;
-
-        const newTrip: Product = {
+        const originalTrip = row.original as unknown as Product;
+        
+        const newTrip: Product & { status: string } = {
             ...originalTrip,
             id: `prod_${Date.now()}`,
             name: `${originalTrip.name} (Copia)`,
@@ -93,7 +93,10 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
             imageGallery: originalTrip.imageGallery || [],
         };
 
-        const updatedTrips = [...allTrips, newTrip];
+        const updatedTrips = [...allTrips.map(trip => ({
+            ...trip,
+            status: trip.status || 'draft',
+        })), newTrip];
         await saveProducts(updatedTrips);
 
         toast({
