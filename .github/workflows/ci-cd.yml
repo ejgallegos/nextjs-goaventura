@@ -1,4 +1,4 @@
-name: CI/CD GoAventura Web
+name: CI/CD GoAventura
 
 on:
   push:
@@ -48,9 +48,9 @@ jobs:
            build-args: |
              NODE_ENV=production
              MOCK_FIREBASE=true
-              FIREBASE_PROJECT_ID=goaventura-web
-              FIREBASE_CLIENT_EMAIL: service-account@goaventura-web.iam.gserviceaccount.com
-              FIREBASE_PRIVATE_KEY=PLACEHOLDER_KEY
+             FIREBASE_PROJECT_ID=goaventura-web
+             FIREBASE_CLIENT_EMAIL: service-account@goaventura-web.iam.gserviceaccount.com
+             FIREBASE_PRIVATE_KEY=PLACEHOLDER_KEY
   deploy:
     needs: build_and_push
     runs-on: ubuntu-latest
