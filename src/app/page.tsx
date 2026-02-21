@@ -163,7 +163,7 @@ export default function Home() {
               </CardContent>
               <CardFooter className="p-6 pt-0 flex justify-center">
                 <Button size="lg" asChild variant="default">
-                  <Link href={featuredAccommodation.buttonLink} target="_blank" rel="noopener noreferrer">
+                  <Link href={featuredAccommodation.buttonLink}>
                     {featuredAccommodation.buttonText} <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
@@ -228,13 +228,6 @@ export default function Home() {
             </p>
           </div>
           {renderFeaturedAccommodation()}
-          <div className="mt-8 text-center">
-            <Button size="lg" asChild variant="outline">
-              <Link href="/alojamientos">
-                Ver Todos los Alojamientos <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
         </div>
       </section>
 
