@@ -1,183 +1,170 @@
-# GoAventura Development Guidelines for AI Agents
+# Guías de Desarrollo GoAventura para Agentes de IA
 
-This document provides comprehensive guidelines for AI agents working on the GoAventura project to ensure consistency, security, and quality across all development work.
+Este documento proporciona guías para agentes de IA que trabajan en el proyecto GoAventura.
 
-## 1. Build/Test Commands
+## 1. Comandos de Build/Test
 
-### Development
+### Desarrollo
 ```bash
-npm run dev                    # Start development server on port 9002 with Turbopack
-npm run genkit:dev            # Start Genkit AI development server
-npm run genkit:watch          # Start Genkit with file watching
+npm run dev                    # Iniciar servidor dev en puerto 9002 con Turbopack
+npm run genkit:dev            # Iniciar servidor de desarrollo Genkit AI
+npm run genkit:watch          # Genkit con monitoreo de archivos
 ```
 
-### Building & Production
+### Building y Producción
 ```bash
-npm run build                 # Build production bundle
-npm run start                  # Start production server
-npm run typecheck             # Run TypeScript type checking
-npm run lint                   # Run ESLint validation
-npm run security-test          # Run security tests (requires server running)
+npm run build                 # Build de producción
+npm run start                 # Iniciar servidor de producción
+npm run typecheck             # Verificación de tipos TypeScript
+npm run lint                  # Validación ESLint
+npm run security-test http://localhost:9002  # Auditoría seguridad (requiere servidor)
+npm audit --audit-level=moderate             # Verificar vulnerabilidades
 ```
 
-### Testing Commands
-```bash
-npm run security-test http://localhost:9002  # Full security audit
-npm audit --audit-level=moderate             # Check for vulnerabilities
-```
+**Siempre ejecutar** `npm run typecheck` y `npm run lint` antes de hacer commit.
 
-**Always run** `npm run typecheck` and `npm run lint` before committing code.
+## 2. Estándares de Código
 
-## 2. Code Style Guidelines
+### TypeScript
+- Usar **TypeScript strict** (habilitado en tsconfig.json)
+- Definir interfaces para objetos complejos (ver `src/lib/types.ts`)
+- Usar anotaciones de tipo para parámetros y retornos
+- Preferir `const` sobre `let`
+- Usar `null` para valores faltantes, no `undefined`
 
-### TypeScript Standards
-- Use **strict TypeScript** configuration (already enabled in tsconfig.json)
-- Always define interfaces for complex objects (see `src/lib/types.ts`)
-- Use proper type annotations for function parameters and return values
-- Prefer `const` over `let` when possible
-- Use `null` for missing values, not `undefined`
+### Componentes React
+- Usar componentes funcionales con React hooks
+- Usar `React.forwardRef` para componentes que necesitan ref forwarding
+- Definir props con interfaces TypeScript
+- Usar utilería `cn()` para combinar classNames (de `src/lib/utils.ts`)
 
-### React Component Patterns
-- Use functional components with React hooks
-- Follow the existing component structure from `src/components/ui/`
-- Use `React.forwardRef` for components that need ref forwarding
-- Implement proper TypeScript interfaces for props
-- Use `cn()` utility for className merging (from `src/lib/utils.ts`)
+### Convenciones de Nombres
+- **Archivos**: kebab-case (`hero-section.tsx`), camelCase (`security.ts`)
+- **Componentes**: PascalCase (`HeroSection`)
+- **Funciones**: camelCase (`sanitizeString`)
+- **Interfaces**: PascalCase (`Product`, `BlogPost`)
+- **Constantes**: SCREAMING_SNAKE_CASE para vars de entorno
 
-### Naming Conventions
-- **Files**: kebab-case for components (`hero-section.tsx`), camelCase for utilities (`security.ts`)
-- **Components**: PascalCase (`HeroSection`, `ProductCard`)
-- **Functions**: camelCase (`sanitizeString`, `validateFile`)
-- **Constants**: SCREAMING_SNAKE_CASE for environment variables, camelCase for module constants
-- **Interfaces**: PascalCase with descriptive names (`Product`, `BlogPost`)
-
-### File Organization Examples
-```
-src/
-├── components/
-│   ├── ui/           # Reusable UI components
-│   ├── layout/       # Layout-specific components
-│   └── icons/        # Icon components
-├── lib/
-│   ├── security.ts   # Security utilities
-│   ├── types.ts      # TypeScript interfaces
-│   └── utils.ts      # General utilities
-├── app/
-│   ├── api/          # API routes
-│   ├── admin/        # Admin pages
-│   └── (routes)/     # Public routes
-```
-
-## 3. Import/Export Rules
-
-### Import Organization
-1. **External libraries** (React, Next.js, third-party)
-2. **Internal modules** (`@/lib/`, `@/components/`)
-3. **Relative imports** (`./`, `../`)
+## 3. Reglas de Import/Export
 
 ```typescript
-// ✅ Correct import order
+// Orden: External → Internal (@/) → Relative
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { contactFormSchema, sanitizeUserInput } from '@/lib/security';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from './product-card';
+
+// Usar imports absolutos con prefijo @/
+// Default export solo para componente principal
+export default function HeroSection() { }
+export const sanitizeString = (input: string): string => { };
 ```
 
-### Import Path Rules
-- **Use absolute imports** with `@/` prefix for internal modules
-- **Never use relative imports** for modules outside the same directory
-- **Consolidate related imports** from the same module
+### Optimización de Imports (Vercel)
+- **Evitar barrel files**: Importar directamente, no de archivos índice
+- Importar iconos de ruta específica: `import Check from 'lucide-react/dist/esm/icons/check'`
+- Usar `next/dynamic` para componentes pesados
 
+## 4. Optimización de Rendimiento
+
+### Eliminar Waterfalls (CRÍTICO)
 ```typescript
-// ✅ Use absolute imports
-import { sanitizeString, sanitizeHTML } from '@/lib/security';
+// ❌ Secuencial: 3 await secuenciales
+const user = await fetchUser()
+const posts = await fetchPosts()
+const comments = await fetchComments()
 
-// ❌ Avoid relative imports for different directories
-import { sanitizeString } from '../../../lib/security';
+// ✅ Paralelo: Promise.all() para operaciones independientes
+const [user, posts, comments] = await Promise.all([
+  fetchUser(),
+  fetchPosts(),
+  fetchComments()
+])
+
+// ✅ Defer await: mover await solo donde se necesita
+async function handleRequest(userId: string, skipProcessing: boolean) {
+  if (skipProcessing) return { skipped: true }
+  const userData = await fetchUserData(userId) // Solo aquí
+  return processUserData(userData)
+}
 ```
 
-### Export Patterns
-- Use named exports for utilities and multiple exports
-- Use default export only for main component or functionality
-- Group related exports together
+### Componentes Server (RSC)
+- Usar `React.cache()` para deduplicar dentro de una	request
+- Estructurar componentes para fetching paralelo
+- Usar `after()` para operaciones no-bloqueantes
 
+### Re-render Optimization
+- **Estado derivado**: Calcular durante render, no en useEffect
 ```typescript
-// ✅ Named exports for utilities
-export const sanitizeString = (input: string): string => { /* ... */ };
-export const sanitizeHTML = (html: string): string => { /* ... */ };
+// ❌
+const [fullName, setFullName] = useState('')
+useEffect(() => { setFullName(firstName + ' ' + lastName) }, [firstName, lastName])
 
-// ✅ Default export for main component
-export default function HeroSection() { /* ... */ }
+// ✅
+const fullName = firstName + ' ' + lastName
 ```
 
-## 4. Error Handling Patterns
-
-### Try-Catch Structure
+- **Functional setState**: Usar función para actualizar estado
 ```typescript
-// ✅ Proper error handling with logging
+// ✅ Estable, sin stale closures
+setItems(curr => [...curr, ...newItems])
+```
+
+- **useMemo**: Solo para expresiones complejas, no primitivas simples
+
+### Suspense y Rendering
+- Usar `<Suspense>` para mostrar UI mientras carga data
+- Usar ternary `? :` en lugar de `&&` para evitar renderizar "0"
+- Usar `useTransition` para estados de carga
+
+```tsx
+// ✅ Suspense para streaming
+function Page() {
+  return (
+    <div>
+      <Header />
+      <Suspense fallback={<Skeleton />}>
+        <DataDisplay />
+      </Suspense>
+      <Footer />
+    </div>
+  )
+}
+```
+
+## 5. Manejo de Errores
+
+```typescript
 export async function processRequest(data: any) {
   try {
     const result = await someAsyncOperation(data);
     return { success: true, data: result };
   } catch (error) {
     console.error('Operation failed:', error);
-    
     if (error instanceof ZodError) {
-      return { 
-        success: false, 
-        error: 'Validation failed', 
-        details: error.errors.map(e => e.message) 
-      };
+      return { success: false, error: 'Validation failed', details: error.errors };
     }
-    
-    return { 
-      success: false, 
-      error: 'Internal server error' 
-    };
+    return { success: false, error: 'Internal server error' };
   }
 }
 ```
 
-### API Error Responses
-- Always use appropriate HTTP status codes
-- Include error messages in JSON format
-- Sanitize error messages for production
-- Log detailed errors server-side only
+- Usar códigos de estado HTTP apropiados
+- Sanitizar mensajes de error para producción
+- Usar español para errores visibles al usuario
+
+## 6. Estructura de Componentes
 
 ```typescript
-// ✅ API error response pattern
-return NextResponse.json(
-  { error: 'Validation failed', details: error.errors },
-  { status: 400, headers: getSecurityHeaders() }
-);
-```
-
-### User-Friendly Error Messages
-- Display Spanish error messages for user-facing errors
-- Use technical error messages for development logs
-- Never expose sensitive information in error messages
-
-## 5. Component Guidelines
-
-### Component Structure
-```typescript
-// ✅ Standard component structure
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-
 interface ComponentProps {
   className?: string;
   children: React.ReactNode;
-  // ... other props
 }
 
-export default function Component({ 
-  className, 
-  children, 
-  ...props 
-}: ComponentProps) {
-  const [state, setState] = useState();
+export default function Component({ className, children, ...props }: ComponentProps) {
+  const [state, setState] = useState<string>('');
 
   return (
     <div className={cn('base-styles', className)} {...props}>
@@ -187,28 +174,9 @@ export default function Component({
 }
 ```
 
-### Props Guidelines
-- Use TypeScript interfaces for all props
-- Make optional props truly optional with `?`
-- Provide default values where appropriate
-- Use proper prop types for all props
+## 7. Rutas API
 
-### Hooks Usage
-- Use hooks from `src/hooks/` for reusable logic
-- Follow React hooks rules strictly
-- Use `useCallback` and `useMemo` for performance optimization
-- Custom hooks should be prefixed with `use-`
-
-### Component File Naming
-- **UI Components**: kebab-case (`button.tsx`, `input.tsx`)
-- **Page Components**: kebab-case (`hero-section.tsx`, `product-card.tsx`)
-- **Layout Components**: kebab-case (`header.tsx`, `footer.tsx`)
-
-## 6. Database/API Patterns
-
-### API Route Structure
 ```typescript
-// ✅ Standard API route pattern
 import { NextRequest, NextResponse } from 'next/server';
 import { sanitizeUserInput, getSecurityHeaders } from '@/lib/security';
 
@@ -216,223 +184,90 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const sanitizedData = sanitizeUserInput(body);
-    
-    // Validation and processing
     const result = await processData(sanitizedData);
-    
-    return NextResponse.json(
-      { success: true, data: result },
-      { status: 200, headers: getSecurityHeaders() }
-    );
+    return NextResponse.json({ success: true, data: result }, { headers: getSecurityHeaders() });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500, headers: getSecurityHeaders() }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500, headers: getSecurityHeaders() });
   }
 }
 
 export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      ...getSecurityHeaders(),
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    }
-  });
+  return new NextResponse(null, { status: 200, headers: { ...getSecurityHeaders(), 'Access-Control-Allow-Methods': 'POST, OPTIONS' } });
 }
 ```
 
-### Async/Await Patterns
-- Always use `async/await` for asynchronous operations
-- Handle promises properly with try-catch blocks
-- Use proper error boundaries
-- Implement proper timeout handling
+## 8. Mejores Prácticas de Seguridad
 
-### Data Fetching
-- Use the existing security patterns for all data operations
-- Implement proper caching strategies
-- Use rate limiting for API endpoints
-- Validate all incoming data with Zod schemas
+- **Siempre sanitizar input** usando funciones de `src/lib/security.ts`
+- Usar esquemas Zod para validación
+- Nunca confiar solo en validación del cliente
+- Usar `getSecurityHeaders()` para todas las respuestas API
+- Validar tipos de archivo con `validateFile()` de `src/lib/security.ts`
+- Implementar rate limiting para endpoints API
 
-## 7. Security Best Practices
+## 9. Estructura de Directorios
 
-### Input Validation
-- **Always sanitize user input** using functions from `src/lib/security.ts`
-- Use Zod schemas for validation (patterns already defined)
-- Never trust client-side validation only
-- Implement server-side validation for all API endpoints
-
-```typescript
-// ✅ Input validation pattern
-const validatedData = contactFormSchema.parse(sanitizedData);
-```
-
-### Authentication & Authorization
-- Use JWT tokens for authentication
-- Implement proper session management
-- Use environment variables for secrets
-- Never expose sensitive data in client-side code
-
-### Security Headers
-- Always use `getSecurityHeaders()` for API responses
-- CSP is already configured in middleware
-- Security headers are enforced in next.config.ts
-
-### File Upload Security
-- Validate file types using `validateFile()` from `src/lib/security.ts`
-- Check file sizes and dimensions
-- Never allow executable file uploads
-- Use secure file storage practices
-
-### Rate Limiting
-- Implement rate limiting for all API endpoints
-- Use the middleware patterns already established
-- Log rate limit violations for monitoring
-
-## 8. File Organization
-
-### Directory Structure
 ```
 src/
-├── app/                  # Next.js App Router
-│   ├── api/             # API routes
-│   ├── admin/           # Admin pages
-│   ├── (routes)/        # Public routes with layouts
-│   └── globals.css      # Global styles
-├── components/          # React components
-│   ├── ui/             # Reusable UI components
-│   ├── layout/         # Layout components
-│   └── icons/          # Icon components
-├── lib/                # Utilities and configurations
-│   ├── security.ts     # Security utilities
-│   ├── types.ts        # TypeScript interfaces
-│   ├── utils.ts        # General utilities
-│   └── data/           # Static data files
-├── hooks/              # Custom React hooks
-├── ai/                 # Genkit AI functionality
-└── middleware.ts       # Next.js middleware
+├── app/              # Next.js App Router (api/, admin/, (routes)/)
+├── components/       # Componentes React (ui/, layout/, icons/)
+├── lib/              # Utilerías (security.ts, types.ts, utils.ts, data/)
+├── hooks/            # React hooks personalizados
+└── ai/               # Funcionalidad Genkit AI
 ```
 
-### File Naming Rules
-- **Components**: kebab-case with `.tsx` extension
-- **Utilities**: camelCase with `.ts` extension
-- **Types**: camelCase with `.ts` extension
-- **API Routes**: `route.ts` in appropriate directory
-- **Pages**: `page.tsx` for page components
-- **Layouts**: `layout.tsx` for layout components
+### Nombres de Archivos
+- **Componentes**: kebab-case `.tsx` (`button.tsx`)
+- **Utilerías/Types**: camelCase `.ts` (`security.ts`)
+- **Rutas API**: `route.ts`
+- **Páginas**: `page.tsx`
+- **Layouts**: `layout.tsx`
 
-### Module Boundaries
-- Keep components focused on single responsibilities
-- Separate business logic from UI components
-- Use the `lib/` directory for shared utilities
-- Place type definitions in `lib/types.ts`
+## 10. Pre-commit Checklist
 
-## 9. Performance Guidelines
-
-### Optimization Techniques
-- Use Next.js Image optimization for all images
-- Implement proper lazy loading for components
-- Use React.memo for expensive components
-- Optimize bundle size with dynamic imports
-
-```typescript
-// ✅ Dynamic import example
-const AdminDashboard = dynamic(() => import('./admin-dashboard'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false
-});
+```bash
+npm run typecheck    # Compilación TypeScript
+npm run lint         # Estilo de código
+npm run build        # Verificar build
 ```
 
-### Bundle Analysis
-- Use `npm run build` to analyze bundle size
-- Check bundle analyzer output for large dependencies
-- Remove unused dependencies
-- Optimize imports to reduce bundle size
+## 11. Auditoría UI/UX
 
-### Lazy Loading Patterns
-- Use Next.js dynamic imports for admin components
-- Implement code splitting for large features
-- Use React.lazy() for route-based code splitting
-- Load non-critical features on demand
+### Web Interface Guidelines
+- Usar skill `web-design-guidelines` para auditar componentes
+- Revisar: accesibilidad, estados focus, formularios, animaciones, tipografía
+- Reglas clave:
+  - Botones icono necesitan `aria-label`
+  - Controles formulario necesitan `<label>` o `aria-label`
+  - Elementos interactivos necesitan keyboard handlers
+  - Usar `<button>` para acciones, `<a>`/`<Link>` para navegación
+  - Imágenes necesitan `alt` y dimensiones explícitas
+  - Respetar `prefers-reduced-motion`
+  - Estados hover/focus visibles
+  - No usar `outline: none` sin replacements
 
-### Caching Strategies
-- Implement proper HTTP caching headers
-- Use Next.js built-in caching for static assets
-- Cache database queries where appropriate
-- Use client-side caching for frequently accessed data
-
-## 10. Git Workflow
-
-### Commit Message Format
+### Comandos de Auditoría
+```bash
+# Auditar componentes específicos
+npx skills add https://github.com/vercel-labs/agent-skills --skill web-design-guidelines
+# Luego ejecutar revisión manual usando las guidelines
 ```
-type(scope): description
 
-Examples:
+## 12. Git Workflow
+
+```
+type(scope): descripción
+
+Ejemplos:
 feat(auth): add JWT token validation
 fix(security): implement XSS protection in contact form
-refactor(components): extract button variants to separate file
-docs(agents): update development guidelines
 ```
 
-### Commit Types
-- `feat`: New feature
-- `fix`: Bug fix
-- `refactor`: Code refactoring
-- `docs`: Documentation changes
-- `style`: Code style changes
-- `test`: Adding or updating tests
-- `chore`: Build process or dependency changes
-
-### Branching Strategy
-- **main**: Production-ready code
-- **develop**: Integration branch
-- **feature/***: Feature development
-- **fix/***: Bug fixes
-- **hotfix/***: Critical production fixes
-
-### PR Guidelines
-- Ensure all tests pass before creating PR
-- Include clear description of changes
-- Reference relevant issues in PR description
-- Keep PRs focused and reasonably sized
-- Request review from at least one team member
-
-### Pre-commit Requirements
-Always run these commands before committing:
-```bash
-npm run typecheck    # Ensure TypeScript compilation
-npm run lint         # Check code style
-npm run build        # Verify build process
-```
-
-## Additional Guidelines
-
-### Environment Variables
-- Never commit `.env` files
-- Use proper environment variable naming conventions
-- Document all required environment variables
-- Use `.env.example` for template
-
-### Documentation
-- Update documentation when changing APIs
-- Include examples for complex functionality
-- Document security considerations
-- Keep README files current
-
-### Testing Strategy
-- Run security tests before deployment
-- Test all API endpoints with proper validation
-- Verify error handling works correctly
-- Test file upload security
-
-### Monitoring & Logging
-- Use existing security logging patterns
-- Log important events without exposing sensitive data
-- Monitor performance in production
-- Set up alerts for security events
+- Tipos de commit: `feat`, `fix`, `refactor`, `docs`, `style`, `test`, `chore`
 
 ---
 
-**Important**: Always review existing code patterns before implementing new features. The security-first approach is critical for this project. When in doubt, refer to `src/lib/security.ts` for proper security patterns.
+**Importante**: 
+- Revisar patrones de código existentes antes de implementar nuevas características
+- Referirse a `src/lib/security.ts` para patrones de seguridad
+- Aplicar reglas de rendimiento de Vercel para optimizar React/Next.js

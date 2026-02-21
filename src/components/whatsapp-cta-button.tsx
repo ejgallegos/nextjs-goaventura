@@ -1,8 +1,7 @@
 
 "use client";
 
-import Link from 'next/link';
-import { Button, type ButtonProps } from '@/components/ui/button';
+import { Button, buttonVariants, type ButtonProps } from '@/components/ui/button';
 import { WHATSAPP_NUMBER, WHATSAPP_API_BASE_URL } from '@/lib/constants';
 import { WhatsAppIcon } from './icons/whatsapp-icon';
 import { trackWhatsappClick } from '@/lib/data/statistics';
@@ -42,12 +41,16 @@ const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
   };
 
   return (
-    <Button asChild variant={variant} size={size} className={className} {...props} onClick={handleClick}>
-      <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-        {showIcon && <WhatsAppIcon className="mr-2 h-5 w-5" />}
-        {buttonText}
-      </Link>
-    </Button>
+    <a 
+      href={whatsappUrl} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className={buttonVariants({ variant, size, className })}
+      onClick={handleClick}
+    >
+      {showIcon && <WhatsAppIcon className="mr-2 h-5 w-5" />}
+      {buttonText}
+    </a>
   );
 };
 
