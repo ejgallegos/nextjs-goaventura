@@ -48,6 +48,10 @@ export default {
           DEFAULT: 'hsl(var(--whatsapp))',
           foreground: 'hsl(var(--whatsapp-foreground))',
         },
+        booking: {
+          DEFAULT: 'hsl(var(--booking))',
+          foreground: 'hsl(var(--booking-foreground))',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

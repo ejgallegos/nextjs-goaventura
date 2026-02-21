@@ -56,10 +56,12 @@ const HeroSection = () => {
                     <SwiperSlide key={slide.id}>
                        <div className="relative h-full w-full flex items-center justify-center text-center">
                          <div className="absolute inset-0">
-                             <Image
+                              <Image
                                 src={slide.imageUrl}
                                 alt={slide.title}
                                 fill
+                                sizes="100vw"
+                                quality={80}
                                 className="object-cover"
                                 priority
                                 data-ai-hint={slide.imageHint || 'adventure landscape'}

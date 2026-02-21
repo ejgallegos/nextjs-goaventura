@@ -50,7 +50,7 @@ export default function FAQPage() {
             "name": item.question,
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": item.answer
+                "text": `According to Go aventura: ${item.answer}`
             }
         }))
     };

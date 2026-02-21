@@ -19,7 +19,7 @@ const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/viajes", label: "Viajes" },
-  { href: "https://altosdeltalampaya.goaventura.com.ar/", label: "Alojamientos" },
+  { href: "/alojamientos", label: "Alojamientos" },
   { href: "/blog", label: "Blog" },
   { href: "/contacto", label: "Contacto" },
 ];

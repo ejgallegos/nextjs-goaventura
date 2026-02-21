@@ -41,6 +41,9 @@ code, pre {
     --whatsapp: 145 63% 49%; /* #25d366 */
     --whatsapp-foreground: 0 0% 100%;
 
+    --booking: 216 100% 30%; /* #003580 */
+    --booking-foreground: 0 0% 100%;
+
     /* Sidebar specific colors (consistent dark sidebar) */
     --sidebar-background: 238 48% 21%; /* #1C1E4F */
     --sidebar-foreground: 220 33% 97%;   /* #F2F4F7 */
@@ -85,6 +88,9 @@ code, pre {
 
     --whatsapp: 145 63% 49%;
     --whatsapp-foreground: 0 0% 100%;
+
+    --booking: 216 100% 50%;
+    --booking-foreground: 0 0% 100%;
 
     /* Sidebar specific colors for dark mode (same as light mode for consistent dark sidebar) */
     --sidebar-background: 238 48% 21%; /* #1C1E4F */

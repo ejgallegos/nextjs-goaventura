@@ -10,10 +10,10 @@ const jsonFilePath = path.resolve(process.cwd(), 'public/data/featured-accommoda
 const mockData: FeaturedAccommodation = {
     title: "Altos del Talampaya",
     description: "Disfruta de una estadía inolvidable en nuestras cabañas con vistas impresionantes al Parque Nacional Talampaya. Comodidad, naturaleza y aventura te esperan.",
-    imageUrl: "https://placehold.co/800x450.png",
+    imageUrl: "/images/alojamientos/loft-centro-1.jpg",
     imageHint: "cabin mountains talampaya",
-    buttonText: "Explorar Alojamientos",
-    buttonLink: "http://altosdeltalampaya.goaventura.com.ar/"
+    buttonText: "Ver Alojamientos",
+    buttonLink: "/alojamientos"
 };
 
 async function initializeJsonFile() {

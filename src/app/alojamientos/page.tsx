@@ -1,89 +1,158 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { BedDouble, ExternalLink } from 'lucide-react';
+import { accommodations } from '@/lib/data/accommodations';
 import ImageSlider from '@/components/image-slider';
+import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
+import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: 'Alojamientos',
-  description: 'Encuentra el alojamiento perfecto para tu viaje. Colaboramos con los mejores proveedores.',
+  title: 'Alojamientos - Altos del Talampaya',
+  description:
+    'Encuentra el alojamiento perfecto en Villa Unión. Loft Centro, Casa y Casa II. Excelentes opciones para tu estadía en La Rioja.',
 };
 
-const accommodationImages = [
-  {
-    src: "https://placehold.co/600x300.png",
-    alt: "Hotel moderno con piscina",
-    hint: "modern hotel pool",
-  },
-  {
-    src: "https://placehold.co/600x300.png",
-    alt: "Apartamento acogedor con vistas a la ciudad",
-    hint: "cozy apartment city view",
-  },
-  {
-    src: "https://placehold.co/600x300.png",
-    alt: "Cabaña rústica en el bosque",
-    hint: "rustic cabin forest",
-  },
-  {
-    src: "https://placehold.co/600x300.png",
-    alt: "Lobby de hotel de lujo",
-    hint: "luxury hotel lobby",
-  },
-  {
-    src: "https://placehold.co/600x300.png",
-    alt: "Habitación de hotel con cama grande",
-    hint: "hotel room king bed",
-  },
-];
-
 const AlojamientosPage = () => {
-  const externalAccommodationLink = "#"; // Replace with actual external link or subdomain
-
   return (
-    <div className="bg-background py-12 md:py-16">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <BedDouble className="h-16 w-16 text-primary mx-auto mb-6" />
-        <h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground mb-6">Encuentra tu Alojamiento Ideal</h1>
-        <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-          Para ofrecerte la mejor selección y precios en alojamientos, colaboramos con plataformas especializadas.
-          Haz clic en el botón de abajo para explorar una amplia gama de hoteles, apartamentos y más.
-        </p>
-        
-        <div className="max-w-md mx-auto bg-card p-8 rounded-lg shadow-xl">
-            <div className="rounded-lg overflow-hidden mb-6 aspect-video">
-                <ImageSlider images={accommodationImages} className="w-full h-full" />
-            </div>
-          <p className="text-muted-foreground mb-6">
-            Serás redirigido a nuestro portal de alojamientos asociado para completar tu búsqueda y reserva.
-          </p>
-          <Button size="lg" asChild className="bg-accent hover:bg-accent/90 text-accent-foreground w-full text-lg">
-            <Link href={externalAccommodationLink} target="_blank" rel="noopener noreferrer">
-              Buscar Alojamientos <ExternalLink className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
+		<div className="bg-background py-12 md:py-16">
+			<div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="text-center mb-12">
+					<h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground mb-4">
+						Altos del Talampaya
+					</h1>
+					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Descubre nuestra selección de
+						alojamientos y elige el que mejor se adapte a tus
+						necesidades. Te invitamos a conocernos y ponerte en
+						contacto con nuestro equipo para que podamos ayudarte a
+						planificar tu próxima estancia. Sumérgete en una
+						experiencia única en Villa Unión del Talampaya, ubicada
+						en el corazón de la Provincia de La Rioja, Argentina.
+						¡Te esperamos para que disfrutes de un viaje
+						inolvidable!
+					</p>
+				</div>
 
-        <div className="mt-12 pt-8 border-t">
-            <h2 className="font-headline text-2xl font-semibold text-foreground mb-4">¿Por qué reservar con nuestros partners?</h2>
-            <div className="grid md:grid-cols-3 gap-6 text-left">
-                <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <h3 className="font-semibold text-primary mb-1">Amplia Selección</h3>
-                    <p className="text-sm text-muted-foreground">Accede a miles de opciones en todo el mundo.</p>
-                </div>
-                <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <h3 className="font-semibold text-primary mb-1">Mejores Precios</h3>
-                    <p className="text-sm text-muted-foreground">Ofertas competitivas y descuentos exclusivos.</p>
-                </div>
-                <div className="p-4 bg-card rounded-lg shadow-sm">
-                    <h3 className="font-semibold text-primary mb-1">Reservas Seguras</h3>
-                    <p className="text-sm text-muted-foreground">Proceso de reserva confiable y protegido.</p>
-                </div>
-            </div>
-        </div>
+				<div className="grid gap-12">
+					{accommodations.map((accommodation) => (
+						<div
+							key={accommodation.id}
+							className="bg-card rounded-xl overflow-hidden shadow-lg"
+						>
+							<div className="grid md:grid-cols-2 gap-0">
+								<div className="aspect-[4/3] md:aspect-auto">
+									<ImageSlider
+										images={accommodation.images}
+										className="w-full h-full"
+									/>
+								</div>
 
-      </div>
-    </div>
+								<div className="p-6 md:p-8 flex flex-col">
+									<Link
+										href={`/alojamientos/${accommodation.slug}`}
+										className="group"
+									>
+										<h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+											{accommodation.name}
+										</h2>
+									</Link>
+
+									<div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+										<span>{accommodation.location}</span>
+										<span>•</span>
+										<span>{accommodation.capacity}</span>
+										{accommodation.bedrooms > 0 && (
+											<>
+												<span>•</span>
+												<span>
+													{accommodation.bedrooms} hab
+												</span>
+											</>
+										)}
+										{accommodation.bathrooms > 0 && (
+											<>
+												<span>•</span>
+												<span>
+													{accommodation.bathrooms}{" "}
+													baño
+													{accommodation.bathrooms > 1
+														? "s"
+														: ""}
+												</span>
+											</>
+										)}
+									</div>
+
+									<p className="text-muted-foreground mb-2 flex-grow">
+										{accommodation.description}
+									</p>
+
+									<Link
+										href={`/alojamientos/${accommodation.slug}`}
+										className="text-primary font-medium mb-6 hover:underline flex items-center gap-1"
+									>
+										Ver todos los detalles{" "}
+										<ArrowRight className="h-4 w-4" />
+									</Link>
+
+									<div className="mb-6">
+										<h3 className="font-semibold text-sm text-foreground mb-3">
+											Servicios:
+										</h3>
+										<div className="flex flex-wrap gap-2">
+											{accommodation.services.map(
+												(service) => (
+													<span
+														key={service}
+														className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-primary/10 text-primary"
+													>
+														{service}
+													</span>
+												),
+											)}
+										</div>
+									</div>
+
+									<div className="flex flex-col sm:flex-row gap-3">
+										<WhatsAppCtaButton
+											predefinedText={`Hola, me interesa el alojamiento ${accommodation.name}. ¿Qué disponibilidad tienen?`}
+											buttonText="Consultar por WhatsApp"
+											phoneNumber={accommodation.whatsapp}
+											variant="whatsapp"
+											size="lg"
+											className="flex-1"
+										/>
+										{accommodation.booking && (
+											<a
+												href={accommodation.booking}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-booking text-booking-foreground hover:bg-booking/90 h-11 px-8"
+											>
+												Reservar en Booking
+											</a>
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+
+				<div className="mt-16 text-center">
+					<p className="text-muted-foreground mb-4">
+						¿Necesitás más información? Nuestro equipo está
+						disponible para ayudarte.
+					</p>
+					<WhatsAppCtaButton
+						predefinedText="Hola, necesito información sobre los alojamientos en Villa Unión."
+						buttonText="Chatear con nosotros"
+						variant="outline"
+						size="lg"
+					/>
+				</div>
+			</div>
+		</div>
   );
 };
 

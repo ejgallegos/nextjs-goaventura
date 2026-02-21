@@ -222,12 +222,19 @@ export default function Home() {
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 lg:mb-12">
             <BedDouble className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">Alojamientos Destacados</h2>
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">Alojamientos en Villa Unión</h2>
             <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Descansa en lugares únicos. Te presentamos una opción excepcional cerca del Parque Nacional Talampaya.
+              Descansa en lugares únicos. Loft, casas y departamentos cerca del Parque Nacional Talampaya.
             </p>
           </div>
           {renderFeaturedAccommodation()}
+          <div className="mt-8 text-center">
+            <Button size="lg" asChild variant="outline">
+              <Link href="/alojamientos">
+                Ver Todos los Alojamientos <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 

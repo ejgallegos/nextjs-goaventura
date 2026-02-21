@@ -29,6 +29,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             alt={`Imagen de ${product.name}`}
             width={600}
             height={400}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            quality={75}
             className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
             data-ai-hint={product.imageHint}
           />
