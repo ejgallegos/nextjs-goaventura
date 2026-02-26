@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "cc-skill-security-review": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "96a0bcef7833f772be215b742ec7239031212dbc992bf94cfebe84b4caf375fe"
+    },
     "responsive-design": {
       "source": "wshobson/agents",
       "sourceType": "github",

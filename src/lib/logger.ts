@@ -26,7 +26,10 @@ class Logger {
   private isDevelopment = process.env.NODE_ENV === 'development';
   private logLevel = process.env.LOG_LEVEL || 'info';
   private logs: LogEntry[] = [];
-  private maxLogs = 1000; // Keep last 1000 logs in memory
+  private maxLogs = 1000;
+  private maxAgeMs = 60 * 60 * 1000; // 1 hour max age for logs
+  private lastCleanup = Date.now();
+  private readonly CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
   private shouldLog(level: string): boolean {
     const levels = ['debug', 'info', 'warn', 'error'];
@@ -52,6 +55,15 @@ class Logger {
 
   private log(entry: LogEntry) {
     if (!this.shouldLog(entry.level)) return;
+
+    // Periodic cleanup based on age
+    const now = Date.now();
+    if (now - this.lastCleanup > this.CLEANUP_INTERVAL) {
+      this.logs = this.logs.filter(log => 
+        now - new Date(log.timestamp).getTime() < this.maxAgeMs
+      );
+      this.lastCleanup = now;
+    }
 
     // Add to memory logs
     this.logs.push(entry);

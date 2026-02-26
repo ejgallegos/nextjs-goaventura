@@ -4,6 +4,9 @@ import { SecurityMiddleware } from '@/lib/middleware/security-middleware';
 
 // Enhanced rate limiting with security logging
 const rateLimit = new Map();
+let lastCleanup = Date.now();
+const CLEANUP_INTERVAL = 5 * 60 * 1000; // Cleanup every 5 minutes
+const MAX_ENTRIES = 10000; // Maximum number of IP entries
 
 interface RateLimitEntry {
   count: number;
@@ -11,15 +14,19 @@ interface RateLimitEntry {
 }
 
 // Security headers configuration
+const isProduction = process.env.NODE_ENV === 'production';
+
 const securityHeaders = {
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google.com https://www.gstatic.com",
+    isProduction 
+      ? "script-src 'self' 'nonce-{nonce}' 'strict-dynamic'"
+      : "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google.com https://www.gstatic.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",
     "connect-src 'self' https://*.firebaseio.com https://*.googleapis.com ws://*.firebaseio.com wss://*.firebaseio.com",
-    "frame-src 'self' https://www.google.com",
+    isProduction ? "frame-src 'none'" : "frame-src 'self' https://www.google.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -40,7 +47,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
   'http://localhost:9002'
 ];
 
-// Rate limiting middleware
+// Rate limiting middleware with automatic cleanup
 function rateLimitMiddleware(request: NextRequest): NextResponse | null {
   const ip = request.headers.get('x-forwarded-for') || 
             request.headers.get('x-real-ip') || 
@@ -48,6 +55,23 @@ function rateLimitMiddleware(request: NextRequest): NextResponse | null {
   const now = Date.now();
   const windowMs = parseInt(process.env.API_WINDOW_MS || '900000'); // 15 minutes
   const maxRequests = parseInt(process.env.API_RATE_LIMIT || '100');
+
+  // Periodic cleanup to prevent memory growth
+  if (now - lastCleanup > CLEANUP_INTERVAL || rateLimit.size > MAX_ENTRIES) {
+    for (const [key, value] of rateLimit.entries()) {
+      if (now > value.resetTime) {
+        rateLimit.delete(key);
+      }
+    }
+    lastCleanup = now;
+    // Emergency cleanup if still too many entries
+    if (rateLimit.size > MAX_ENTRIES) {
+      const entries = Array.from(rateLimit.entries());
+      entries.sort((a, b) => a[1].resetTime - b[1].resetTime);
+      const toDelete = entries.slice(0, entries.length - MAX_ENTRIES / 2);
+      toDelete.forEach(([key]) => rateLimit.delete(key));
+    }
+  }
 
   const entry = rateLimit.get(ip) as RateLimitEntry | undefined;
   
@@ -122,9 +146,9 @@ export default async function middleware(request: NextRequest) {
     // Apply CORS headers
     SecurityMiddleware.corsHandler(request, response);
 
-    // CSP headers for API routes
+    // CSP headers for API routes (stricter for API)
     if (request.nextUrl.pathname.startsWith('/api/')) {
-      response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'none'; frame-ancestors 'none';");
+      response.headers.set('Content-Security-Policy', "default-src 'self'; object-src 'none'; frame-ancestors 'none';");
     }
 
     return response;

@@ -1,8 +1,16 @@
 import { SecurityConfig } from '@/lib/types/security';
 
+function getRequiredEnv(key: string, fallback: string): string {
+  const value = process.env[key] || fallback;
+  if (!process.env[key] && process.env.NODE_ENV === 'production') {
+    console.error(`SECURITY WARNING: ${key} not set in production environment!`);
+  }
+  return value;
+}
+
 export const SECURITY_CONFIG: SecurityConfig = {
   jwt: {
-    secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production',
+    secret: getRequiredEnv('JWT_SECRET', ''),
     expiresIn: process.env.JWT_EXPIRES_IN || '1h',
     refreshExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || '7d',
     algorithm: 'HS256'
@@ -40,8 +48,8 @@ export const SECURITY_CONFIG: SecurityConfig = {
     requireToken: process.env.NODE_ENV === 'production'
   },
   session: {
-    secret: process.env.NEXTAUTH_SECRET || 'your-session-secret-change-in-production',
-    maxAge: parseInt(process.env.SESSION_MAX_AGE || '86400000'), // 24 hours
+    secret: getRequiredEnv('NEXTAUTH_SECRET', ''),
+    maxAge: parseInt(process.env.SESSION_MAX_AGE || '86400000'),
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: 'strict' as const

@@ -3,8 +3,23 @@ import { SecurityEvent } from '@/lib/types/security';
 export class SecurityLogger {
   private static events: SecurityEvent[] = [];
   private static maxEvents = 1000;
+  private static maxAgeMs = 60 * 60 * 1000; // 1 hour max age
+  private static lastCleanup = Date.now();
+  private static readonly CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutes
+
+  private static cleanupEvents(): void {
+    const now = Date.now();
+    if (now - this.lastCleanup > this.CLEANUP_INTERVAL) {
+      this.events = this.events.filter(event => 
+        now - event.timestamp.getTime() < this.maxAgeMs
+      );
+      this.lastCleanup = now;
+    }
+  }
 
   static async log(event: Omit<SecurityEvent, 'timestamp'>): Promise<void> {
+    this.cleanupEvents();
+    
     const securityEvent: SecurityEvent = {
       ...event,
       timestamp: new Date()

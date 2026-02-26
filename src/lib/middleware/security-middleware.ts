@@ -4,10 +4,32 @@ import { SecurityLogger } from '@/lib/monitoring/security-logger';
 import { getClientIP } from '@/lib/security';
 
 export class SecurityMiddleware {
-  // Rate limiting with Map for development, Redis for production
   private static rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+  private static lastCleanup = Date.now();
+  private static readonly CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutes
+  private static readonly MAX_ENTRIES = 10000;
+
+  private static cleanupRateLimitStore(): void {
+    const now = Date.now();
+    if (now - this.lastCleanup > this.CLEANUP_INTERVAL || this.rateLimitStore.size > this.MAX_ENTRIES) {
+      for (const [key, value] of this.rateLimitStore.entries()) {
+        if (now > value.resetTime) {
+          this.rateLimitStore.delete(key);
+        }
+      }
+      this.lastCleanup = now;
+      if (this.rateLimitStore.size > this.MAX_ENTRIES) {
+        const entries = Array.from(this.rateLimitStore.entries());
+        entries.sort((a, b) => a[1].resetTime - b[1].resetTime);
+        const toDelete = entries.slice(0, entries.length - this.MAX_ENTRIES / 2);
+        toDelete.forEach(([key]) => this.rateLimitStore.delete(key));
+      }
+    }
+  }
 
   static async rateLimit(request: NextRequest): Promise<NextResponse | null> {
+    this.cleanupRateLimitStore();
+    
     const ip = getClientIP(request);
     const now = Date.now();
     const config = SECURITY_CONFIG.rateLimit;
