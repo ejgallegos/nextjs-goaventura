@@ -135,38 +135,16 @@ function withRateLimit(
   };
 }
 
-// Health check endpoint with monitoring
+// Health check endpoint - lightweight for static pages
 export async function GET(request: NextRequest) {
   try {
-    const startTime = Date.now();
-    
-    // Basic health checks
-    const health = {
+    return createSecureResponse({
       status: 'healthy',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
-      version: process.env.npm_package_version || '2.0.0',
-      environment: process.env.NODE_ENV,
-      memory: process.memoryUsage(),
-      checks: {
-        database: await checkDatabaseHealth(),
-        firebase: await checkFirebaseHealth(),
-        rateLimit: checkRateLimitHealth()
-      },
-      performance: {
-        responseTime: 0,
-        logCount: logger.getLogs().length
-      }
-    };
-
-    health.performance.responseTime = Date.now() - startTime;
-
-    logger.info('Health check completed', health);
-
-    return createSecureResponse(health);
+      environment: process.env.NODE_ENV
+    });
   } catch (error) {
-    logger.error('Health check failed', error as Error);
-    
     return createSecureResponse({
       status: 'unhealthy',
       timestamp: new Date().toISOString(),

@@ -45,15 +45,24 @@ RUN adduser --system --uid 1001 nextjs
 
 WORKDIR /app
 
+# Prevenir archivos core y heap dumps
+RUN echo "ulimit -c 0" > /etc/profile.d/disable-coredumps.sh && \
+    echo "ulimit -d $(ulimit -H -d)" >> /etc/profile.d/disable-coredumps.sh
+
 # Copiar archivos necesarios del build
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Limpiar archivos innecesarios del build
+RUN rm -rf /app/.next/cache /app/.next/babel-loader 2>/dev/null || true
+
 # Variables de entorno
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
+ENV NODE_OPTIONS="--max-old-space-size=512"
+ENV TMPDIR="/var/tmp"
 
 # Cambiar a usuario no-root
 USER nextjs
@@ -61,5 +70,5 @@ USER nextjs
 # Exponer puerto
 EXPOSE 3000
 
-# Iniciar la aplicación
-CMD ["node", "server.js"]
+# Iniciar con dumb-init para manejar señales correctamente
+CMD ["dumb-init", "node", "server.js"]

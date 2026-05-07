@@ -26,10 +26,10 @@ class Logger {
   private isDevelopment = process.env.NODE_ENV === 'development';
   private logLevel = process.env.LOG_LEVEL || 'info';
   private logs: LogEntry[] = [];
-  private maxLogs = 1000;
-  private maxAgeMs = 60 * 60 * 1000; // 1 hour max age for logs
+  private maxLogs = process.env.NODE_ENV === 'production' ? 100 : 1000;
+  private maxAgeMs = 15 * 60 * 1000; // 15 minutes max age for logs in production
   private lastCleanup = Date.now();
-  private readonly CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutes
+  private readonly CLEANUP_INTERVAL = 1 * 60 * 1000; // 1 minute cleanup interval
 
   private shouldLog(level: string): boolean {
     const levels = ['debug', 'info', 'warn', 'error'];
