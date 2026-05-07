@@ -1,10 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { accommodations } from '@/lib/data/accommodations';
-import ImageSlider from '@/components/image-slider';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
-import { ArrowRight, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { MapPin } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Alojamientos - Altos del Talampaya',
@@ -30,106 +29,74 @@ const AlojamientosPage = () => {
 				</div>
 			</div>
 
-			{/* Alojamientos List */}
+			{/* Alojamientos Grid */}
 			<div className="container max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 md:py-12">
-				<div className="space-y-8 md:space-y-12">
+				{/* Grid de cards pequeñas */}
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
 					{accommodations.map((accommodation) => (
-						<div
+						<Link
 							key={accommodation.id}
-							className="bg-card rounded-xl overflow-hidden shadow-lg border"
+							href={`/alojamientos/${accommodation.slug}`}
+							className="group bg-card rounded-xl overflow-hidden shadow-md border hover:shadow-lg transition-shadow"
 						>
-							{/* Mobile: Image on top, Desktop: Image on left */}
-							<div className="flex flex-col md:flex-row">
-								{/* Image */}
-								<div className="relative w-full md:w-1/2 h-56 sm:h-64 md:h-auto md:min-h-[400px]">
-									<ImageSlider
-										images={accommodation.images}
-										className="absolute inset-0"
+							{/* Image */}
+							<div className="relative aspect-[4/3] bg-muted">
+								{accommodation.images[0] && (
+									<Image
+										src={accommodation.images[0].src}
+										alt={accommodation.images[0].alt}
+										fill
+										sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+										className="object-cover"
 									/>
+								)}
+							</div>
+
+							{/* Content */}
+							<div className="p-4">
+								<h2 className="font-headline text-lg md:text-xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors line-clamp-1">
+									{accommodation.name}
+								</h2>
+
+								<div className="flex items-center gap-1 text-xs text-muted-foreground mb-2">
+									<MapPin className="h-3 w-3 flex-shrink-0" />
+									<span className="line-clamp-1">{accommodation.location}</span>
 								</div>
 
-								{/* Content */}
-								<div className="p-5 sm:p-6 md:p-8 flex flex-col flex-1">
-									<Link
-										href={`/alojamientos/${accommodation.slug}`}
-										className="group"
-									>
-										<h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-											{accommodation.name}
-										</h2>
-									</Link>
+								<div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-muted-foreground mb-3">
+									<span>{accommodation.capacity}</span>
+									{accommodation.bedrooms > 0 && (
+										<>
+											<span>•</span>
+											<span>{accommodation.bedrooms} hab</span>
+										</>
+									)}
+									{accommodation.bathrooms > 0 && (
+										<>
+											<span>•</span>
+											<span>{accommodation.bathrooms} baño{accommodation.bathrooms > 1 ? 's' : ''}</span>
+										</>
+									)}
+								</div>
 
-									<div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground mb-4">
-										<span className="flex items-center gap-1">
-											<MapPin className="h-3.5 w-3.5" />
-											{accommodation.location}
+								{/* Services */}
+								<div className="flex flex-wrap gap-1.5">
+									{accommodation.services.slice(0, 4).map((service) => (
+										<span
+											key={service}
+											className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-primary/10 text-primary"
+										>
+											{service}
 										</span>
-										<span>•</span>
-										<span>{accommodation.capacity}</span>
-										{accommodation.bedrooms > 0 && (
-											<>
-												<span>•</span>
-												<span>{accommodation.bedrooms} hab</span>
-											</>
-										)}
-										{accommodation.bathrooms > 0 && (
-											<>
-												<span>•</span>
-												<span>{accommodation.bathrooms} baño{accommodation.bathrooms > 1 ? 's' : ''}</span>
-											</>
-										)}
-									</div>
-
-									<p className="text-sm text-muted-foreground mb-6 line-clamp-3">
-										{accommodation.description}
-									</p>
-
-									{/* Services */}
-									<div className="mb-6">
-										<h3 className="font-semibold text-sm text-foreground mb-3">
-											Servicios:
-										</h3>
-										<div className="flex flex-wrap gap-2">
-											{accommodation.services.slice(0, 6).map((service) => (
-												<span
-													key={service}
-													className="inline-flex items-center px-2.5 py-1 rounded-full text-xs bg-primary/10 text-primary"
-												>
-													{service}
-												</span>
-											))}
-											{accommodation.services.length > 6 && (
-												<span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs bg-muted text-muted-foreground">
-													+{accommodation.services.length - 6}
-												</span>
-											)}
-										</div>
-									</div>
-
-									{/* Actions */}
-									<div className="flex flex-col sm:flex-row gap-3 mt-auto">
-										<WhatsAppCtaButton
-											predefinedText={`Hola, me interesa el alojamiento ${accommodation.name}. ¿Qué disponibilidad tienen?`}
-											buttonText="Consultar por WhatsApp"
-											phoneNumber={accommodation.whatsapp}
-											variant="whatsapp"
-											size="lg"
-											className="w-full sm:flex-1"
-										/>
-										{accommodation.booking && (
-											<a
-												href={accommodation.booking}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-booking text-booking-foreground hover:bg-booking/90 h-11 px-6 w-full sm:w-auto sm:flex-1"
-											>
-												Reservar en Booking
-											</a>
-										)}
-									</div>
+									))}
+									{accommodation.services.length > 4 && (
+										<span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-muted text-muted-foreground">
+											+{accommodation.services.length - 4}
+										</span>
+									)}
 								</div>
 							</div>
-						</div>
+						</Link>
 					))}
 				</div>
 

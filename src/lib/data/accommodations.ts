@@ -44,7 +44,7 @@ Estás a pasos de los principales restaurantes, comercios y atractivos de Villa 
 El departamento cuenta con todas las comodidades que necesitás para una estadía placentera: aire acondicionado para el calor riojano, calefacción para las noches frescas, y cochera privada para tu vehículo.
 
 👨‍👩‍👧 **Ideal para Compartir**
-Perfecto para matrimonios, amigos o compañeros de trabajo que desean descansar juntos. Espacio  distribuidos para mayor comfort.
+Perfecto para matrimonios, amigos o compañeros de trabajo que desean descansar juntos. Espacio distribuido para mayor confort.
 
 📶 **Conectado Siempre**
 WiFi de alta velocidad para que estés conectado con tus seres queridos o trabajes remotamente si es necesario.
@@ -126,13 +126,13 @@ WiFi de alta velocidad para que estés conectado con tus seres queridos o trabaj
     description:
       'Casa completa con 3 habitaciones, ideal para familias o grupos. Disfrutá de un hermoso patio con jardín y impresionantes vistas a la montaña.',
     longDescription: `
-🌄 **Vistas Spectaculares**
+🌄 **Vistas Espectaculares**
 Despertá cada mañana con una vista increíble de las montañas riojanas. Nuestro jardín te invita a relajarte y conectar con la naturaleza.
 
 👨‍👩‍👧‍👦 **Espacio para Toda la Familia**
 Con 3 habitaciones y 2 baños, hay lugar para todos. La sala de estar es el punto de encuentro perfecto para compartir momentos en familia.
 
-🍳 **Cocina Completa**
+🍳 **Cocina Equipada**
 Cocina-comedor totalmente equipada con todo lo que necesitás: hornalla, horno, heladera, vajilla y utensilios. Prepará tus comidas favoritas.
 
 🌳 **Jardín y Exterior**
@@ -161,7 +161,7 @@ A solo minutos del centro de Villa Unión y en la entrada de la ciudad, fácil a
       '📺 TV',
       '🚗 Cochera',
       '🌳 Jardín',
-      '🏔️ Vistas a la Montaña',
+      '🏔️ Vistas a la montaña',
       '🛋️ Sala de Estar',
       '🍳 Cocina Equipada',
     ],
@@ -230,7 +230,7 @@ Tu vehículo seguro y protegido. Entrada independiente para mayor privacidad y t
 Aire acondicionado frío/calor para cualquier época del año. La Rioja tiene veranos intensos y noches frescas... estás preparado para todo.
 
 📍 **Ubicación Perfecta**
-Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, supermarkets y attractions turísticos.
+Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, supermarkets y atracciones turísticas.
     `,
     shortDescription:
       'Casa acogedora para dos personas. Cocina completa y cochera privada.',
