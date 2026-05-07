@@ -2,6 +2,51 @@ import type { BlogPost } from '@/lib/types';
 
 export const mockBlogPosts: BlogPost[] = [
   {
+    id: 'blog003',
+    slug: 'la-rioja-campus-tour-turismo-provincial',
+    title: 'La Rioja lanza Campus Tour: una plataforma gratuita y con certificación para transformar el turismo provincial',
+    date: '2026-05-05T10:00:00Z',
+    author: 'Secretaría de Turismo - Gobierno de La Rioja',
+    excerpt: 'El Gobierno de La Rioja lanzó Campus Tour, una innovadora plataforma digital gratuita con certificación oficial para fortalecer la profesionalización del sector turístico provincial.',
+    content: `
+## Una nueva herramienta para acompañar el crecimiento del sector
+
+El Gobierno de La Rioja continúa consolidando una política pública activa en materia de turismo, sumando nuevas herramientas que amplían oportunidades de formación y desarrollo en todo el territorio. En este marco, lanzó **Campus Tour**, una innovadora plataforma digital gratuita, accesible y con certificación oficial, que fortalece la profesionalización del sector y promueve un crecimiento con inclusión.
+
+En este contexto, la Provincia marca una diferencia clara frente al escenario nacional, al sostener una agenda propia con inversión sostenida en capacitación y desarrollo del capital humano, acercando soluciones concretas a trabajadores, emprendedores y prestadores turísticos.
+
+## Oferta disponible
+
+Campus Tour inicia con una oferta de **8 capacitaciones virtuales**, y prevê la incorporación progresiva de nuevos cursos en los próximos meses, en función de las necesidades y demandas del sector turístico, garantizando una propuesta dinámica y en constante actualización.
+
+La plataforma está dirigida a:
+- Prestadores turísticos
+- Estudiantes
+- Entrepreneurs
+- Trabajadores del sector público
+- Toda persona interesada en formarse en turismo
+
+Su modalidad flexible y autogestionable permite capacitarse desde cualquier lugar y en el momento que cada usuario lo desee, favoreciendo la inclusión y la democratización del conocimiento.
+
+## Cómo acceder
+
+Para acceder, los interesados deben ingresar a **turismo.larioja.gob.ar/campustur**, registrarse y comenzar a explorar la oferta de cursos disponibles. Al finalizar cada capacitación, se otorga una certificación oficial.
+
+## Una apuesta por la formación continua
+
+De esta manera, el Gobierno de La Rioja consolida una agenda que apuesta a la formación continua, el fortalecimiento de las economías regionales y la generación de oportunidades en todo el territorio, asumiendo un rol activo frente a un escenario nacional donde se han reducido o eliminado instancias de capacitación en materia turística.
+
+Este esfuerzo se complementa con la expansión de la conectividad en todo el territorio y una red de puntos digitales que permiten que estas oportunidades lleguen de manera concreta a cada rincón de la provincia.
+
+---
+**Fuente:** [Secretaría de Turismo - Gobierno de La Rioja](https://turismo.larioja.gob.ar/novedades/la-rioja-lanza-campus-tour-una-plataforma-gratuita-y-con-certificacion-para-transformar-el-turismo-provincial/)
+    `,
+    imageUrl: '/images/blog/campus-tour.jpg',
+    imageHint: 'campus tour la rioja turismo',
+    tags: ['turismo', 'capacitación', 'la rioja', 'formación', 'turismo provincial'],
+    status: 'published',
+  },
+  {
     id: 'blog001',
     slug: 'mejores-destinos-verano-2024',
     title: 'Los Mejores Destinos para Visitar en el Verano 2024',
