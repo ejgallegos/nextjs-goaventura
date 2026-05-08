@@ -137,7 +137,7 @@ export function ShortsFeed() {
       <div className="hidden lg:flex lg:flex-row h-full min-h-[calc(100vh-57px)]">
         {/* Left Panel - Hero or Video */}
         <div className="w-full lg:w-1/2 lg:h-screen lg:sticky lg:top-0 lg:flex lg:flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-          {selectedVideo ? (
+          {selectedVideo && !isMobile ? (
             <div className="relative flex-1 flex flex-col">
               <button
                 onClick={() => setSelectedVideo(null)}
