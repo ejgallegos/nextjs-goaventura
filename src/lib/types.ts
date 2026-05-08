@@ -81,3 +81,64 @@ export interface Promotion {
   accommodationImageUrl?: string;
   accommodationImageHint?: string;
 }
+
+// YouTube Shorts types
+export interface YouTubeVideo {
+  id: string;
+  videoId: string;
+  title: string;
+  description?: string;
+  thumbnailUrl: string;
+  channelTitle: string;
+  publishedAt: string;
+  duration?: string;
+  category: string;
+  tags?: string[];
+}
+
+export interface ShortsCache {
+  lastUpdated: string;
+  videos: YouTubeVideo[];
+  categories: Record<string, YouTubeVideo[]>;
+}
+
+export type CategorySlug =
+  | 'talampaya'
+  | 'laguna-brava'
+  | 'vinchina'
+  | 'villa-union'
+  | 'villa-castelli'
+  | 'chilecito'
+  | 'triasico'
+  | 'corona-del-inca'
+  | 'cuesta-miranda'
+  | 'aventura-4x4'
+  | 'naturaleza';
+
+export const VALID_CATEGORIES: CategorySlug[] = [
+  'talampaya',
+  'laguna-brava',
+  'vinchina',
+  'villa-union',
+  'villa-castelli',
+  'chilecito',
+  'triasico',
+  'corona-del-inca',
+  'cuesta-miranda',
+  'aventura-4x4',
+  'naturaleza',
+];
+
+export const CATEGORY_LABELS: Record<CategorySlug, string> = {
+  'talampaya': 'Talampaya',
+  'laguna-brava': 'Laguna Brava',
+  'vinchina': 'Vinchina',
+  'villa-union': 'Villa Unión',
+  'villa-castelli': 'Villa Castelli',
+  'chilecito': 'Chilecito',
+  'triasico': 'Triásico',
+  'corona-del-inca': 'Corona del Inca',
+  'cuesta-miranda': 'Cuesta de Miranda',
+  'aventura-4x4': 'Aventura 4x4',
+  'naturaleza': 'Naturaleza',
+};

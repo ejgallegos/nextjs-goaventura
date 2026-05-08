@@ -14,6 +14,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { Menu } from 'lucide-react';
 import NavLink from './nav-link';
 import { ThemeToggle } from '../theme-toggle';
+import { YouTubeShortsLogo } from '../shorts/youtube-shorts-logo';
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -22,6 +23,7 @@ const navLinks = [
   { href: "/alojamientos", label: "Alojamientos" },
   { href: "/blog", label: "Blog" },
   { href: "/contacto", label: "Contacto" },
+  { href: "/shorts", label: "Shorts", icon: YouTubeShortsLogo },
 ];
 
 export default function Header() {
@@ -52,7 +54,7 @@ export default function Header() {
           <NavigationMenuList>
             {navLinks.map((link) => (
               <NavigationMenuItem key={link.label}>
-                <NavLink href={link.href} label={link.label} />
+                <NavLink href={link.href} label={link.label} icon={link.icon} />
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>
@@ -98,9 +100,10 @@ export default function Header() {
                       href={link.href}
                       target={link.href.startsWith('http') ? '_blank' : undefined}
                       rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="block rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
+                      className="flex items-center gap-3 rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
                       onClick={() => setMobileMenuOpen(false)}
                     >
+                      {link.icon && <link.icon className="w-5 h-5" />}
                       {link.label}
                     </Link>
                   </li>
