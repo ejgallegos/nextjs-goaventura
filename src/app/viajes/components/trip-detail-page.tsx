@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
+import ProductPageTracker from '@/components/accommodation-page-tracker';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, User, DollarSign, Tag, Info } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -71,6 +72,11 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
 
   return (
     <>
+      <ProductPageTracker
+        productId={product.id}
+        productName={product.name}
+        productType={product.category === 'Transfer' ? 'transfer' : 'excursion'}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -136,6 +142,7 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
                   className="w-full text-lg"
                   productId={product.id}
                   productName={product.name}
+                  productType={product.category === 'Transfer' ? 'transfer' : 'excursion'}
                 />
               </div>
 

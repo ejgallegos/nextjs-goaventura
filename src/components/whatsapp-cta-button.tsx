@@ -13,6 +13,7 @@ interface WhatsAppCtaButtonProps extends Omit<ButtonProps, 'asChild' | 'href'> {
   showIcon?: boolean;
   productId?: string;
   productName?: string;
+  productType?: 'accommodation' | 'excursion' | 'transfer';
 }
 
 const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
@@ -25,18 +26,30 @@ const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
   className,
   productId,
   productName,
+  productType = "accommodation",
   ...props
 }) => {
   const encodedText = encodeURIComponent(predefinedText);
   const whatsappUrl = `${WHATSAPP_API_BASE_URL}${phoneNumber}?text=${encodedText}`;
 
   const handleClick = () => {
+    // Track internal statistics
     if (productId && productName) {
         const clickedKey = `clicked-whatsapp-${productId}`;
         if (!localStorage.getItem(clickedKey)) {
             trackWhatsappClick(productId, productName);
             localStorage.setItem(clickedKey, 'true');
         }
+    }
+
+    // Track Google Analytics 4 event
+    if (typeof window !== "undefined" && typeof window.gtag !== "undefined" && productId && productName) {
+      window.gtag("event", "whatsapp_click", {
+        product_id: productId,
+        product_name: productName,
+        product_type: productType,
+        page_location: window.location.href,
+      });
     }
   };
 

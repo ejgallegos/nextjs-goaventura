@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import AccommodationGallery from '@/components/accommodation-gallery';
+import AccommodationPageTracker from '@/components/accommodation-page-tracker';
 import { accommodations, getAccommodationBySlug } from '@/lib/data/accommodations';
 import { ArrowLeft, MapPin, Users, BedDouble, Bath, CheckCircle, Car, Wifi, Tv, Flame, Snowflake, UtensilsCrossed, Landmark } from 'lucide-react';
 
@@ -60,6 +61,12 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
 
   return (
     <div className="min-h-screen bg-background">
+      <AccommodationPageTracker
+        productId={accommodation.id}
+        productName={accommodation.name}
+        productType="accommodation"
+      />
+      
       {/* Hero Section */}
       <div className="relative h-[35vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh]">
         <Image
@@ -207,6 +214,9 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
                     variant="whatsapp"
                     size="lg"
                     className="w-full min-h-[48px]"
+                    productId={accommodation.id}
+                    productName={accommodation.name}
+                    productType="accommodation"
                   />
 
                   {accommodation.booking && (
