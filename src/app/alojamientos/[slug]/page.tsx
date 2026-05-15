@@ -7,6 +7,7 @@ import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import AccommodationGallery from '@/components/accommodation-gallery';
 import AccommodationPageTracker from '@/components/accommodation-page-tracker';
 import { accommodations, getAccommodationBySlug } from '@/lib/data/accommodations';
+import AwinBookingBanner from '@/components/awin-booking-banner';
 import { ArrowLeft, MapPin, Users, BedDouble, Bath, CheckCircle, Car, Wifi, Tv, Flame, Snowflake, UtensilsCrossed, Landmark } from 'lucide-react';
 
 interface AccommodationPageProps {
@@ -274,6 +275,19 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
                   </div>
                 </div>
               )}
+
+              {/* Banner Booking.com via Awin */}
+              <div className="flex flex-col items-center gap-3">
+                <AwinBookingBanner />
+                <a
+                  href="https://tidd.ly/4nGXFth"
+                  target="_blank"
+                  rel="sponsored"
+                  className="text-xs text-muted-foreground hover:text-primary underline transition-colors"
+                >
+                  Conocé tu alojamiento más cercano
+                </a>
+              </div>
             </div>
           </div>
         </div>

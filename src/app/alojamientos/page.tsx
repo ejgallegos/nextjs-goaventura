@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { accommodations } from '@/lib/data/accommodations';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
+import AwinBookingBanner from '@/components/awin-booking-banner';
 import { MapPin } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -101,16 +102,31 @@ const AlojamientosPage = () => {
 				</div>
 
 				{/* Contact CTA */}
-				<div className="mt-12 md:mt-16 text-center bg-muted rounded-xl p-8">
-					<p className="text-muted-foreground mb-4">
-						¿Necesitás más información?
-					</p>
-					<WhatsAppCtaButton
-						predefinedText="Hola, necesito información sobre los alojamientos en Villa Unión."
-						buttonText="Chatear con nosotros"
-						variant="outline"
-						size="lg"
-					/>
+				<div className="mt-12 md:mt-16 bg-muted rounded-xl p-8">
+					<div className="flex flex-col md:flex-row items-center justify-between gap-6">
+						<div className="text-center md:text-left">
+							<p className="text-muted-foreground mb-4">
+								¿Necesitás más información?
+							</p>
+							<WhatsAppCtaButton
+								predefinedText="Hola, necesito información sobre los alojamientos en Villa Unión."
+								buttonText="Chatear con nosotros"
+								variant="outline"
+								size="lg"
+							/>
+						</div>
+						<div className="shrink-0 flex flex-col items-center gap-3">
+							<AwinBookingBanner />
+							<a
+								href="https://tidd.ly/4nGXFth"
+								target="_blank"
+								rel="sponsored"
+								className="text-xs text-muted-foreground hover:text-primary underline transition-colors"
+							>
+								Conocé tu alojamiento más cercano
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

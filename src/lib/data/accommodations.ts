@@ -70,7 +70,7 @@ WiFi de alta velocidad para que estés conectado con tus seres queridos o trabaj
       '🚗 Cochera',
     ],
     whatsapp: '5493825526275',
-    booking: 'https://www.booking.com/hotel/ar/loft-centro-villa-union.en.html?aid=1623356&no_rooms=1&group_adults=2',
+    booking: 'https://tidd.ly/4uUundd',
     images: [
       { src: '/images/alojamientos/loft-centro-1.jpg', alt: 'Loft Centro - Sala principal', hint: 'loft centro sala' },
       { src: '/images/alojamientos/loft-centro-2.jpg', alt: 'Loft Centro - Habitación cómoda', hint: 'loft centro habitacion' },
@@ -166,7 +166,7 @@ A solo minutos del centro de Villa Unión y en la entrada de la ciudad, fácil a
       '🍳 Cocina Equipada',
     ],
     whatsapp: '5493825575566',
-    booking: 'https://www.booking.com/hotel/ar/la-hacienda-villa-union.en.html?aid=1623356&no_rooms=1&group_adults=2',
+    booking: 'https://tidd.ly/49wMqOc',
     images: [
       { src: '/images/alojamientos/casa-1.jpg', alt: 'Casa - Exterior con patio', hint: 'casa exterior patio' },
       { src: '/images/alojamientos/casa-2.jpg', alt: 'Casa - Sala de estar', hint: 'casa interior sala' },
@@ -257,6 +257,7 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
       '🧊 Heladera',
     ],
     whatsapp: '5493825410538',
+    booking: 'https://tidd.ly/4deXvWC',
     images: [
       { src: '/images/alojamientos/casa-ii-1.jpg', alt: 'Casa II - Fachada', hint: 'casa ii exterior' },
       { src: '/images/alojamientos/casa-ii-2.jpg', alt: 'Casa II - Interior acogedor', hint: 'casa ii interior' },
