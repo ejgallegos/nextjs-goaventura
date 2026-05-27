@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
   if (url.startsWith('/api/')) {
     // Remove information leakage
     response.headers.delete('x-powered-by');
-    response.headers.set('Server', 'GoAventura API');
+    response.headers.set('Server', 'Go Aventura API');
     
     // API-specific CSP
     response.headers.set('Content-Security-Policy', "default-src 'none'; connect-src 'self'");

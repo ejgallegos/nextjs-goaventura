@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Integration test for GoAventura Admin User Management System
+ * Integration test for Go Aventura Admin User Management System
  * 
  * This script tests the complete admin user creation and management flow.
  * Run this script to verify your setup is working correctly.
@@ -23,7 +23,7 @@ class AdminSystemTester {
   private createdUserId?: string;
 
   async runAllTests(): Promise<void> {
-    console.log('🧪 Starting GoAventura Admin System Integration Tests\n');
+    console.log('🧪 Starting Go Aventura Admin System Integration Tests\n');
     
     try {
       await this.testFirebaseConnection();

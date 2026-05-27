@@ -1,4 +1,4 @@
-name: CI/CD GoAventura
+name: CI/CD Go Aventura
 
 on:
   push:

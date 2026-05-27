@@ -1,4 +1,4 @@
-# robots.txt for GoAventura
+# robots.txt for Go Aventura
 # https://goaventura.com.ar
 
 User-agent: *

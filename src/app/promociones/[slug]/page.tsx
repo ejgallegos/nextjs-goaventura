@@ -46,7 +46,7 @@ export default function PromotionDetailPage() {
 
   return (
     <>
-    <title>{promotion.title} | Go aventura</title>
+    <title>{promotion.title} | Go Aventura</title>
       <div className="bg-background">
         <div className="container max-w-7xl mx-auto py-8 sm:py-12 px-4">
            <div className="mb-6 text-sm">

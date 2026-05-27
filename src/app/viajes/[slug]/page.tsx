@@ -39,7 +39,7 @@ export default function TripDetailPage() {
 
   return (
     <>
-      <title>{product.name} | Go aventura</title>
+      <title>{product.name} | Go Aventura</title>
       <TripDetailPageContent product={product} />
     </>
   );

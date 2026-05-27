@@ -6,7 +6,7 @@ import { ArrowLeft, FileText } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones',
-  description: 'Lee los términos y condiciones de uso de los servicios de Go aventura.',
+  description: 'Lee los términos y condiciones de uso de los servicios de Go Aventura.',
 };
 
 export default function TerminosPage() {
@@ -25,9 +25,9 @@ export default function TerminosPage() {
 
 				<div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground">
 					<p>
-						Bienvenido a Go aventura. Estos términos y condiciones
+						Bienvenido a Go Aventura. Estos términos y condiciones
 						describen las reglas y regulaciones para el uso del
-						sitio web y los servicios de Go aventura (EVyT Leg.
+						sitio web y los servicios de Go Aventura (EVyT Leg.
 						20019,{" "}
 						<Link
 							href="https://www.agenciasdeviajes.ar/agencias/S7D8sTXk?preview=true"
@@ -116,11 +116,11 @@ export default function TerminosPage() {
 
 					<h2>7. Propiedad Intelectual</h2>
 					<p>
-						A menos que se indique lo contrario, Go aventura y/o sus
+						A menos que se indique lo contrario, Go Aventura y/o sus
 						licenciantes poseen los derechos de propiedad
 						intelectual de todo el material en este sitio web. No
 						debe republicar, vender, alquilar, reproducir o
-						redistribuir contenido de Go aventura sin consentimiento
+						redistribuir contenido de Go Aventura sin consentimiento
 						previo.
 					</p>
 

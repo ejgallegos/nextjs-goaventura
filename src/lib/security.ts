@@ -269,6 +269,17 @@ export const contactFormSchema = z.object({
   consent: z.boolean().refine((val: boolean) => val === true, 'Debe aceptar los términos y condiciones')
 });
 
+export const contactAdvisorSchema = z.object({
+  nombre: nameSchema,
+  apellido: nameSchema,
+  telefono: phoneSchema,
+  consulta: messageSchema,
+  productId: z.string().min(1, 'ID de producto requerido'),
+  productName: z.string().min(1, 'Nombre de producto requerido'),
+  productType: z.enum(['excursion', 'transfer', 'accommodation', 'alojamiento']),
+  pageUrl: z.string().max(2048),
+});
+
 export const loginFormSchema = z.object({
   email: emailSchema,
   password: z.string().min(6, 'Mínimo 6 caracteres'),

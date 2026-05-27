@@ -1,4 +1,4 @@
-# Dockerfile Production Optimizado para GoAventura
+# Dockerfile Production Optimizado para Go Aventura
 # Build stage - instalación de todas las dependencias para build
 FROM node:20-alpine AS deps
 

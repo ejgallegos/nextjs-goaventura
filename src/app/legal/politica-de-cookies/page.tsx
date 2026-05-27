@@ -5,7 +5,7 @@ import { ArrowLeft, Cookie } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Política de Cookies',
-  description: 'Información sobre el uso de cookies en el sitio web de Go aventura.',
+  description: 'Información sobre el uso de cookies en el sitio web de Go Aventura.',
 };
 
 export default function PoliticaCookiesPage() {

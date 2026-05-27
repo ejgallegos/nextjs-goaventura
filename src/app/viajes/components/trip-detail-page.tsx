@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
+import ContactAdvisorButton from '@/components/contact-advisor-button';
 import ProductPageTracker from '@/components/accommodation-page-tracker';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, User, DollarSign, Tag, Info } from 'lucide-react';
@@ -41,11 +42,11 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
     category: product.category,
     brand: {
       '@type': 'Brand',
-      name: 'Go aventura',
+      name: 'Go Aventura',
     },
     provider: {
       '@type': 'Organization',
-      name: 'Go aventura',
+      name: 'Go Aventura',
       url: siteUrl
     },
     aggregateRating: product.price ? { // Example structure, would need actual rating data
@@ -61,7 +62,7 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
       url: `${siteUrl}/viajes/${product.slug}`,
       offeredBy: {
         '@type': 'Organization',
-        name: 'Go aventura'
+        name: 'Go Aventura'
       }
     } : undefined,
   };
@@ -134,12 +135,17 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
                 )}
               </div>
               
-              <div className="pt-4">
+              <div className="pt-4 space-y-3">
                 <WhatsAppCtaButton 
                   predefinedText={whatsappText} 
                   buttonText="Consultar Disponibilidad" 
                   size="lg" 
                   className="w-full text-lg"
+                  productId={product.id}
+                  productName={product.name}
+                  productType={product.category === 'Transfer' ? 'transfer' : 'excursion'}
+                />
+                <ContactAdvisorButton
                   productId={product.id}
                   productName={product.name}
                   productType={product.category === 'Transfer' ? 'transfer' : 'excursion'}

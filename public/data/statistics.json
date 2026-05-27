@@ -5,10 +5,66 @@
       "name": "Reserva Provincial Laguna Brava",
       "views": 2,
       "whatsappClicks": 0
+    },
+    "altos-del-talampaya-casa": {
+      "id": "altos-del-talampaya-casa",
+      "name": "Altos del Talampaya Casa",
+      "views": 0,
+      "whatsappClicks": 1,
+      "viewsByDate": {},
+      "whatsappClicksByDate": {
+        "2026-05-27": 1
+      }
+    },
+    "exc002": {
+      "id": "exc002",
+      "name": "Parque Nacional Talampaya",
+      "views": 2,
+      "whatsappClicks": 1,
+      "viewsByDate": {
+        "2026-05-27": 2
+      },
+      "whatsappClicksByDate": {
+        "2026-05-27": 1
+      }
+    },
+    "promo_1759865900529": {
+      "id": "promo_1759865900529",
+      "name": "Atardecer Místico en el Cañón del Triásico: Conexión y Bienestar en la Naturaleza",
+      "views": 0,
+      "whatsappClicks": 1,
+      "viewsByDate": {},
+      "whatsappClicksByDate": {
+        "2026-05-27": 1
+      }
+    },
+    "exc003": {
+      "id": "exc003",
+      "name": "Cañon del Triasico",
+      "views": 1,
+      "whatsappClicks": 0,
+      "asesorClicks": 1,
+      "viewsByDate": {
+        "2026-05-27": 1
+      },
+      "whatsappClicksByDate": {},
+      "asesorClicksByDate": {
+        "2026-05-27": 1
+      }
     }
   },
   "summary": {
-    "totalViews": 2,
-    "totalWhatsappClicks": 0
+    "totalViews": 5,
+    "totalWhatsappClicks": 3,
+    "whatsappClicksByDate": {
+      "2026-05-27": 3
+    },
+    "viewsByDate": {
+      "2026-05-27": 3
+    },
+    "totalAsesorClicks": 1,
+    "asesorClicksByDate": {
+      "2026-05-27": 1
+    }
   }
 }

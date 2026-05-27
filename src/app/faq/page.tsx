@@ -10,7 +10,7 @@ import { HelpCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Preguntas Frecuentes',
-  description: 'Encuentra respuestas a las preguntas más comunes sobre nuestros servicios, reservas y excursiones en Go aventura.',
+  description: 'Encuentra respuestas a las preguntas más comunes sobre nuestros servicios, reservas y excursiones en Go Aventura.',
 };
 
 const faqData = [
@@ -50,7 +50,7 @@ export default function FAQPage() {
             "name": item.question,
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": `According to Go aventura: ${item.answer}`
+                "text": `According to Go Aventura: ${item.answer}`
             }
         }))
     };

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # =============================================================================
-# GoAventura Admin Setup Script
+# Go Aventura Admin Setup Script
 # =============================================================================
 
 set -e
 
-echo "🚀 GoAventura - Setup Administrativo"
+echo "🚀 Go Aventura - Setup Administrativo"
 echo "========================================"
 
 # Check if server is running
@@ -67,7 +67,7 @@ create_admin_user() {
                     -d '{
                         "uid": "'$USER_EMAIL'",
                         "email": "'$USER_EMAIL'",
-                        "displayName": "Admin GoAventura",
+                        "displayName": "Admin Go Aventura",
                         "photoURL": "https://ui-avatars.com/avatar/'$USER_EMAIL'.jpg",
                         "role": "admin",
                         "permissions": ["read_content", "write_content", "delete_content", "manage_users", "view_analytics", "view_site_settings"],
@@ -79,7 +79,7 @@ create_admin_user() {
                 
                 ADMIN_CREATE_RESPONSE=$(curl -s -w "%HTTP%{http_code}" -o "%HTTP_SIZE}" \
                     -H "Content-Type: application/json" \
-                    -d '{"email":"'$USER_EMAIL'", "displayName":"Admin GoAventura"}' \
+                    -d '{"email":"'$USER_EMAIL'", "displayName":"Admin Go Aventura"}' \
                     "https://identitytoolkit.googleapis.com/google.identitytoolkit.v1.TokenService" \
                     "$ID_TOKEN" 2>/dev/null
                 
@@ -153,7 +153,7 @@ verify_admin_access() {
 
 # Main execution function
 main() {
-    echo "🎯 GoAventura - Setup Administrativo"
+    echo "🎯 Go Aventura - Setup Administrativo"
     echo "========================================"
     
     # Check prerequisites

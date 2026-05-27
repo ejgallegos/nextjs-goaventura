@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Initial Admin Setup Script for GoAventura
+ * Initial Admin Setup Script for Go Aventura
  * 
- * This script creates the first admin user for the GoAventura project.
+ * This script creates the first admin user for the Go Aventura project.
  * It should be run once during initial setup or when you need to create
  * a new admin user from the command line.
  * 
@@ -85,7 +85,7 @@ function displaySuccessResult(user: any, requiresAction?: string): void {
 // Main setup function
 async function setupInitialAdmin(): Promise<void> {
   try {
-    console.log('🚀 Starting GoAventura Admin Setup\n');
+    console.log('🚀 Starting Go Aventura Admin Setup\n');
     
     // Validate environment
     validateEnvironment();

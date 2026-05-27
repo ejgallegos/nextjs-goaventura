@@ -75,21 +75,21 @@ export default function LoginPage() {
 
   return (
     <>
-      <title>Iniciar Sesión | Admin Go aventura</title>
+      <title>Iniciar Sesión | Admin Go Aventura</title>
       <div className="flex min-h-screen items-center justify-center bg-muted p-4">
         <Card className="w-full max-w-sm shadow-2xl">
           <CardHeader className="text-center">
               <Link href="/" className="mb-4 inline-block">
                 <Image
                   src="/logo-white.png"
-                  alt="Go aventura Logo"
+                  alt="Go Aventura Logo"
                   width={183}
                   height={40}
                   className="h-10 w-auto mx-auto dark:hidden"
                 />
                  <Image
                   src="/logo.png"
-                  alt="Go aventura Logo"
+                  alt="Go Aventura Logo"
                   width={183}
                   height={40}
                   className="h-10 w-auto mx-auto hidden dark:block"

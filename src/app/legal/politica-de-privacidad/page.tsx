@@ -5,7 +5,7 @@ import { ArrowLeft, ShieldCheck } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad',
-  description: 'Conoce cómo Go aventura recopila, usa y protege tu información personal de acuerdo con la Ley 25.326 de Argentina.',
+  description: 'Conoce cómo Go Aventura recopila, usa y protege tu información personal de acuerdo con la Ley 25.326 de Argentina.',
 };
 
 export default function PoliticaPrivacidadPage() {
@@ -19,10 +19,10 @@ export default function PoliticaPrivacidadPage() {
         </header>
 
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-headline prose-headings:text-foreground">
-          <p>En Go aventura (EVyT Leg. 20019), accesible desde https://goaventura.com.ar, la privacidad de nuestros visitantes es una de nuestras principales prioridades. Este documento de Política de Privacidad contiene los tipos de información que son recopilados y registrados por Go aventura y cómo los usamos, en cumplimiento con la Ley de Protección de Datos Personales N° 25.326 de la República Argentina.</p>
+          <p>En Go Aventura (EVyT Leg. 20019), accesible desde https://goaventura.com.ar, la privacidad de nuestros visitantes es una de nuestras principales prioridades. Este documento de Política de Privacidad contiene los tipos de información que son recopilados y registrados por Go Aventura y cómo los usamos, en cumplimiento con la Ley de Protección de Datos Personales N° 25.326 de la República Argentina.</p>
 
           <h2>1. Responsable de la Base de Datos</h2>
-          <p>Go aventura, con domicilio en Joaquín V. González 125, Villa Unión, La Rioja, Argentina, es el responsable de las bases de datos con la información personal recopilada a través de este sitio web.</p>
+          <p>Go Aventura, con domicilio en Joaquín V. González 125, Villa Unión, La Rioja, Argentina, es el responsable de las bases de datos con la información personal recopilada a través de este sitio web.</p>
 
           <h2>2. Información que Recopilamos</h2>
           <p>Recopilamos información personal que usted nos proporciona voluntariamente al contactarnos, solicitar un presupuesto, suscribirse a nuestro boletín o contratar nuestros servicios. Esta información puede incluir, entre otros:</p>
@@ -53,7 +53,7 @@ export default function PoliticaPrivacidadPage() {
           <p>La AGENCIA DE ACCESO A LA INFORMACIÓN PÚBLICA, en su carácter de Órgano de Control de la Ley N° 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de las normas vigentes en materia de protección de datos personales.</p>
 
           <h2>6. Seguridad de los Datos</h2>
-          <p>Go aventura adopta las medidas técnicas y organizativas necesarias para garantizar la seguridad y confidencialidad de sus datos personales, a fin de evitar su adulteración, pérdida, consulta o tratamiento no autorizado, y que permitan detectar desviaciones de información.</p>
+          <p>Go Aventura adopta las medidas técnicas y organizativas necesarias para garantizar la seguridad y confidencialidad de sus datos personales, a fin de evitar su adulteración, pérdida, consulta o tratamiento no autorizado, y que permitan detectar desviaciones de información.</p>
 
           <h2>7. Cookies</h2>
           <p>Nuestro sitio utiliza cookies para mejorar su experiencia. Para más información, por favor consulte nuestra <Link href="/legal/politica-de-cookies">Política de Cookies</Link>.</p>

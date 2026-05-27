@@ -72,7 +72,7 @@ Sumérgete en la cultura milenaria de Japón visitando Kyoto. Templos ancestrale
 
 ## Conclusión
 
-No importa cuál sea tu estilo de viaje, el verano 2024 tiene un destino perfecto para ti. ¡Empieza a planificar tu aventura con GoAventura!
+No importa cuál sea tu estilo de viaje, el verano 2024 tiene un destino perfecto para ti. ¡Empieza a planificar tu aventura con Go Aventura!
     `,
     imageUrl: 'https://placehold.co/800x450.png',
     imageHint: 'summer travel collage',

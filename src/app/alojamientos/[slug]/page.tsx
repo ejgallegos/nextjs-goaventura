@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
+import ContactAdvisorButton from '@/components/contact-advisor-button';
 import AccommodationGallery from '@/components/accommodation-gallery';
 import AccommodationPageTracker from '@/components/accommodation-page-tracker';
 import { accommodations, getAccommodationBySlug } from '@/lib/data/accommodations';
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: AccommodationPageProps): Prom
   }
 
   return {
-    title: `${accommodation.name} - Alojamiento en Villa Unión | GoAventura`,
+    title: `${accommodation.name} - Alojamiento en Villa Unión | Go Aventura`,
     description: accommodation.description,
   };
 }
@@ -230,6 +231,12 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
                       Reservar en Booking
                     </a>
                   )}
+
+                  <ContactAdvisorButton
+                    productId={accommodation.id}
+                    productName={accommodation.name}
+                    productType="accommodation"
+                  />
                 </div>
 
                 <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t">

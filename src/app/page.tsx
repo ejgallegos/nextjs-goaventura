@@ -235,7 +235,7 @@ export default function Home() {
       <section className="py-12 lg:py-20 bg-muted">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 lg:mb-12">
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">¿Por Qué Elegir Go aventura?</h2>
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-foreground">¿Por Qué Elegir Go Aventura?</h2>
             <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
               Nos dedicamos a crear experiencias de viaje únicas y memorables para ti.
             </p>

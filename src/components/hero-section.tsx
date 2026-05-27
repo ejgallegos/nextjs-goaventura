@@ -105,12 +105,12 @@ const HeroSection = () => {
                          <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
                             Reserva tu próxima{" "}
                             <span className="text-white">
-                                ¡Go aventura!
+                                ¡Go Aventura!
                             </span>
                         </h1>
                          <p className="mt-6 max-w-xl mx-auto text-lg sm:text-xl text-white opacity-90 hidden sm:block [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]">
                             Descubre excursiones emocionantes, transfers confiables y
-                            los mejores alojamientos con Go aventura. Tu viaje soñado
+                            los mejores alojamientos con Go Aventura. Tu viaje soñado
                             comienza aquí.
                         </p>
                       </div>

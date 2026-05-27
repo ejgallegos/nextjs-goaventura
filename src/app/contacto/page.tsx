@@ -90,7 +90,7 @@ const ContactPage = () => {
   return (
 		<>
 			{/* Hack to set title since this is a client component */}
-			<title>Contacto | Go aventura</title>
+			<title>Contacto | Go Aventura</title>
 			<div className="bg-background py-12 md:py-16">
 				<div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<header className="text-center mb-12 md:mb-16">
@@ -210,10 +210,10 @@ const ContactPage = () => {
 									<li className="flex items-center">
 										<Phone className="h-5 w-5 mr-3 text-primary shrink-0" />
 										<Link
-											href="tel:+5495493825405976"
+											href="tel:+5495493825575566"
 											className="hover:text-primary"
 										>
-											+5493825405976
+											+5493825575566
 										</Link>
 									</li>
 									<li className="flex items-center">
@@ -238,7 +238,7 @@ const ContactPage = () => {
 									WhatsApp. ¡Es rápido y fácil!
 								</p>
 								<WhatsAppCtaButton
-									predefinedText="Hola Go aventura, tengo una consulta."
+									predefinedText="Hola Go Aventura, tengo una consulta."
 									buttonText="Chatea con Nosotros en WhatsApp"
 									size="lg"
 									className="w-full"

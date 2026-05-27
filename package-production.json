@@ -1,7 +1,7 @@
 {
   "name": "goaventura",
   "version": "2.0.0",
-  "description": "GoAventura - Agencia de viajes y turismo en Villa Unión del Talampaya",
+  "description": "Go Aventura - Agencia de viajes y turismo en Villa Unión del Talampaya",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -p 9002",

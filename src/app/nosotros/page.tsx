@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
   title: 'Nosotros',
-  description: 'Conoce más sobre Go aventura, nuestra misión, visión y el equipo que hace posibles tus aventuras en La Rioja.',
+  description: 'Conoce más sobre Go Aventura, nuestra misión, visión y el equipo que hace posibles tus aventuras en La Rioja.',
 };
 
 const AboutUsPage = () => {
@@ -17,7 +17,7 @@ const AboutUsPage = () => {
 			<div className="container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 				<header className="text-center mb-12 md:mb-16">
 					<h1 className="font-headline text-4xl sm:text-5xl font-bold text-foreground">
-						Go aventura
+						Go Aventura
 					</h1>
 					<p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
 						Tu puerta de entrada a la aventura en la Región del
@@ -41,7 +41,7 @@ const AboutUsPage = () => {
 								<p className="text-lg">
 									Somos{" "}
 									<strong className="font-semibold text-foreground">
-										Go aventura
+										Go Aventura
 									</strong>{" "}
 									(Agencia de Viajes- Leg. 20019), un
 									emprendimiento familiar apasionado por
@@ -138,7 +138,7 @@ const AboutUsPage = () => {
 						Nuestra Promesa
 					</h2>
 					<p className="text-secondary-foreground mb-6 max-w-2xl mx-auto">
-						En Go aventura, trabajamos día a día para mejorar y
+						En Go Aventura, trabajamos día a día para mejorar y
 						ampliar nuestros servicios, asegurándonos de que vivas
 						una experiencia sin igual en Villa Unión y sus
 						alrededores. Cada detalle de tu viaje importa, y estamos

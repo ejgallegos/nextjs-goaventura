@@ -95,7 +95,7 @@ export function getSecurityHeaders() {
   headers.set('Expires', '0');
 
   // Server Info
-  headers.set('Server', 'GoAventura Secure Server');
+  headers.set('Server', 'Go Aventura Secure Server');
   headers.set('X-Powered-By', 'Next.js');
 
   return headers;

@@ -35,14 +35,14 @@ export default function Header() {
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
-            alt="Go aventura Logo"
+            alt="Go Aventura Logo"
             width={183}
             height={40}
             className="h-15 w-auto dark:hidden"
           />
           <Image
             src="/logo-white.png"
-            alt="Go aventura Logo"
+            alt="Go Aventura Logo"
             width={183}
             height={40}
             className="h-15 w-auto hidden dark:block"
@@ -78,14 +78,14 @@ export default function Header() {
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
                  <Image
                   src="/logo.png"
-                  alt="Go aventura Logo"
+                  alt="Go Aventura Logo"
                   width={128} 
                   height={28} 
                   className="h-7 w-auto dark:hidden" 
                 />
                  <Image
                   src="/logo-white.png"
-                  alt="Go aventura Logo"
+                  alt="Go Aventura Logo"
                   width={128} 
                   height={28} 
                   className="h-7 w-auto hidden dark:block" 

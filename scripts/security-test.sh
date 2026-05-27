@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Security Testing Script for GoAventura Project
+# Security Testing Script for Go Aventura Project
 # This script performs comprehensive security tests on the application
 
 set -e
@@ -435,7 +435,7 @@ check_dependencies() {
 
 # Main execution
 main() {
-    echo -e "${BLUE}🔒 GoAventura Security Testing Tool${NC}"
+    echo -e "${BLUE}🔒 Go Aventura Security Testing Tool${NC}"
     echo -e "Target URL: $TARGET_URL"
     echo -e "Report file: $REPORT_FILE"
     echo -e "Timestamp: $TIMESTAMP"
@@ -470,7 +470,7 @@ usage() {
     echo "  $0 http://localhost:9002"
     echo "  $0 https://goaventura.com.ar"
     echo
-    echo "This script performs comprehensive security tests on the GoAventura application."
+    echo "This script performs comprehensive security tests on the Go Aventura application."
     echo "Make sure the target application is running before executing the tests."
 }
 

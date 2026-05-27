@@ -65,7 +65,7 @@ export default function BlogPostPage() {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Go aventura',
+      name: 'Go Aventura',
       logo: {
         '@type': 'ImageObject',
         url: `${siteUrl}/logo.png`,
@@ -77,7 +77,7 @@ export default function BlogPostPage() {
 
   return (
     <>
-      <title>{post.title} | Go aventura</title>
+      <title>{post.title} | Go Aventura</title>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

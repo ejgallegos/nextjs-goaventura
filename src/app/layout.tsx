@@ -29,27 +29,27 @@ export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
 	title: {
 		default:
-			"Go aventura - Tu Agencia de Viajes en Villa Unión del Talampaya",
-		template: "%s | Go aventura",
+			"Go Aventura - Tu Agencia de Viajes en Villa Unión del Talampaya",
+		template: "%s | Go Aventura",
 	},
 	description:
-		"Reserva tu próxima aventura con Go aventura. Excursiones, transfers, y alojamientos en Villa Unión del Talampaya",
+		"Reserva tu próxima aventura con Go Aventura. Excursiones, transfers, y alojamientos en Villa Unión del Talampaya",
 	openGraph: {
 		title: {
 			default:
-				"Go aventura - Tu Agencia de Viajes en Villa Unión del Talampaya",
-			template: "%s | Go aventura",
+				"Go Aventura - Tu Agencia de Viajes en Villa Unión del Talampaya",
+			template: "%s | Go Aventura",
 		},
 		description:
-			"Reserva tu próxima aventura con Go aventura. Excursiones, transfers, y alojamientos en Villa Unión del Talampaya",
+			"Reserva tu próxima aventura con Go Aventura. Excursiones, transfers, y alojamientos en Villa Unión del Talampaya",
 		url: siteUrl,
-		siteName: "Go aventura",
+		siteName: "Go Aventura",
 		images: [
 			{
 				url: "/logo-goaventura.png", // Replace with your actual OG image path
 				width: 1200,
 				height: 630,
-				alt: "Go aventura - Agencia de Viajes en Villa Unión del Talampaya",
+				alt: "Go Aventura - Agencia de Viajes en Villa Unión del Talampaya",
 			},
 		],
 		locale: "es_AR",
@@ -68,9 +68,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Go aventura - Tu Agencia de Viajes en Villa Unión del Talampaya",
+		title: "Go Aventura - Tu Agencia de Viajes en Villa Unión del Talampaya",
 		description:
-			"Reserva tu próxima aventura con Go aventura: excursiones, transfers y más.",
+			"Reserva tu próxima aventura con Go Aventura: excursiones, transfers y más.",
 		// creator: '@goaventura_twitter', // Replace with your Twitter handle
 		images: ["/logo-goaventura.png"], // Replace with your actual OG image path
 	},
@@ -84,13 +84,13 @@ export default function RootLayout({
   const jsonLd = {
 		"@context": "https://schema.org",
 		"@type": "TravelAgency",
-		name: "Go aventura",
+		name: "Go Aventura",
 		description:
 			"Agencia de viajes y turismo en Villa Unión del Talampaya, especializada en excursiones, transfers y alojamientos en la Pcia. de La Rioja",
 		url: siteUrl,
 		logo: `${siteUrl}/logo.png`,
 		image: `${siteUrl}/logo-goaventura.png`,
-		telephone: "+5493825405976",
+		telephone: "+5493825575566",
 		email: "info@goaventura.com.ar",
 		address: {
 			"@type": "PostalAddress",

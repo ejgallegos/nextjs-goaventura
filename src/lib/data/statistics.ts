@@ -9,8 +9,10 @@ export interface ProductStat {
     name: string;
     views: number;
     whatsappClicks: number;
+    asesorClicks: number;
     viewsByDate: { [date: string]: number };
     whatsappClicksByDate: { [date: string]: number };
+    asesorClicksByDate: { [date: string]: number };
 }
 
 export interface StatisticsData {
@@ -20,8 +22,10 @@ export interface StatisticsData {
     summary: {
         totalViews: number;
         totalWhatsappClicks: number;
+        totalAsesorClicks: number;
         viewsByDate: { [date: string]: number };
         whatsappClicksByDate: { [date: string]: number };
+        asesorClicksByDate: { [date: string]: number };
     }
 }
 
@@ -32,8 +36,10 @@ const initialData: StatisticsData = {
     summary: {
         totalViews: 0,
         totalWhatsappClicks: 0,
+        totalAsesorClicks: 0,
         viewsByDate: {},
-        whatsappClicksByDate: {}
+        whatsappClicksByDate: {},
+        asesorClicksByDate: {}
     }
 };
 
@@ -91,8 +97,10 @@ export async function trackView(productId: string, productName: string) {
                 name: productName, 
                 views: 0, 
                 whatsappClicks: 0,
+                asesorClicks: 0,
                 viewsByDate: {},
-                whatsappClicksByDate: {}
+                whatsappClicksByDate: {},
+                asesorClicksByDate: {}
             };
         }
         stats.products[productId].name = productName; // Update name in case it changes
@@ -101,6 +109,7 @@ export async function trackView(productId: string, productName: string) {
 
         // Summary
         stats.summary.totalViews = (stats.summary.totalViews || 0) + 1;
+        if (!stats.summary.viewsByDate) stats.summary.viewsByDate = {};
         stats.summary.viewsByDate[today] = (stats.summary.viewsByDate[today] || 0) + 1;
         
         await saveStatistics(stats);
@@ -121,8 +130,10 @@ export async function trackWhatsappClick(productId: string, productName: string)
                 name: productName, 
                 views: 0, 
                 whatsappClicks: 0,
+                asesorClicks: 0,
                 viewsByDate: {},
-                whatsappClicksByDate: {}
+                whatsappClicksByDate: {},
+                asesorClicksByDate: {}
             };
         }
         stats.products[productId].name = productName;
@@ -131,10 +142,44 @@ export async function trackWhatsappClick(productId: string, productName: string)
 
         // Summary
         stats.summary.totalWhatsappClicks = (stats.summary.totalWhatsappClicks || 0) + 1;
+        if (!stats.summary.whatsappClicksByDate) stats.summary.whatsappClicksByDate = {};
         stats.summary.whatsappClicksByDate[today] = (stats.summary.whatsappClicksByDate[today] || 0) + 1;
 
         await saveStatistics(stats);
     } catch (error) {
         console.error(`Failed to track WhatsApp click for product ${productId}:`, error);
+    }
+}
+
+export async function trackAsesorClick(productId: string, productName: string, productType?: string) {
+     try {
+        const stats = await getStatistics();
+        const today = getTodayString();
+
+        // Product specific
+        if (!stats.products[productId]) {
+             stats.products[productId] = { 
+                id: productId, 
+                name: productName, 
+                views: 0, 
+                whatsappClicks: 0,
+                asesorClicks: 0,
+                viewsByDate: {},
+                whatsappClicksByDate: {},
+                asesorClicksByDate: {}
+            };
+        }
+        stats.products[productId].name = productName;
+        stats.products[productId].asesorClicks = (stats.products[productId].asesorClicks || 0) + 1;
+        stats.products[productId].asesorClicksByDate[today] = (stats.products[productId].asesorClicksByDate[today] || 0) + 1;
+
+        // Summary
+        stats.summary.totalAsesorClicks = (stats.summary.totalAsesorClicks || 0) + 1;
+        if (!stats.summary.asesorClicksByDate) stats.summary.asesorClicksByDate = {};
+        stats.summary.asesorClicksByDate[today] = (stats.summary.asesorClicksByDate[today] || 0) + 1;
+
+        await saveStatistics(stats);
+    } catch (error) {
+        console.error(`Failed to track asesor click for product ${productId}:`, error);
     }
 }
