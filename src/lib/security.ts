@@ -278,6 +278,17 @@ export const contactAdvisorSchema = z.object({
   productName: z.string().min(1, 'Nombre de producto requerido'),
   productType: z.enum(['excursion', 'transfer', 'accommodation', 'alojamiento']),
   pageUrl: z.string().max(2048),
+  cliente: z.literal('prospecto').optional(),
+});
+
+export const guestRegistrationSchema = z.object({
+  nombre: nameSchema,
+  telefono: phoneSchema,
+  slug: slugSchema,
+  cliente: z.literal('inquilino').optional(),
+  consent: z.literal(true, {
+    errorMap: () => ({ message: 'Debés aceptar recibir información para registrarte' }),
+  }),
 });
 
 export const loginFormSchema = z.object({

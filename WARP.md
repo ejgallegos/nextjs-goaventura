@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is a Next.js 15 travel agency website for "Go aventura" built with TypeScript, React 18, and Tailwind CSS. The site features excursions, transfers, accommodations, blog posts, and promotions for a tourism business in Villa Unión del Talampaya, La Rioja, Argentina.
+This is a Next.js 15 travel agency website for "Go Aventura" built with TypeScript, React 18, and Tailwind CSS. The site features excursions, transfers, accommodations, blog posts, and promotions for a tourism business in Villa Unión del Talampaya, La Rioja, Argentina.
 
 ## Development Commands
 
