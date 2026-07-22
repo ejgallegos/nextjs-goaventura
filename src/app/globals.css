@@ -36,7 +36,7 @@ code, pre {
     --input: 212 25% 89%; /* Lighter than muted */
     --ring: 239 28% 42%; /* #5B5D9A */
 
-    --radius: 0.5rem; /* Added for rounded corners */
+    --radius: 1rem; /* Aumentado para un look más premium y moderno */
 
     --whatsapp: 145 63% 49%; /* #25d366 */
     --whatsapp-foreground: 0 0% 100%;
@@ -84,7 +84,7 @@ code, pre {
     --input: 239 28% 32%;
     --ring: 212 25% 64%;
 
-    --radius: 0.5rem; /* Added for rounded corners */
+    --radius: 1rem;
 
     --whatsapp: 145 63% 49%;
     --whatsapp-foreground: 0 0% 100%;
@@ -109,6 +109,15 @@ code, pre {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground selection:bg-primary/30;
+  }
+
+  /* Utilidades Premium */
+  .glass {
+    @apply bg-white/70 dark:bg-black/50 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
   }
 }

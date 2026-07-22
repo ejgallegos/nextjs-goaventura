@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
@@ -6,6 +5,7 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { ThemeProvider } from '@/components/theme-provider';
 import { RecaptchaProvider } from './recaptcha-provider';
+import FloatingWhatsApp from '@/components/floating-whatsapp';
 import Script from 'next/script';
 import { Roboto, Montserrat } from 'next/font/google';
 
@@ -148,7 +148,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="font-body antialiased flex flex-col min-h-screen">
+      <body className="font-body antialiased flex flex-col min-h-screen relative">
         <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -161,6 +161,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <FloatingWhatsApp />
             <Toaster />
           </RecaptchaProvider>
         </ThemeProvider>
