@@ -3,133 +3,113 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { accommodations } from '@/lib/data/accommodations';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
-import AwinBookingBanner from '@/components/awin-booking-banner';
-import { MapPin } from 'lucide-react';
+import { MapPin, BedDouble, Users, Bath, ArrowDown } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Alojamientos - Altos del Talampaya',
-  description:
-    'Encuentra el alojamiento perfecto en Villa Unión. Loft Centro, Casa y Casa II. Excelentes opciones para tu estadía en La Rioja.',
+  title: 'Alojamientos en Villa Unión',
+  description: 'Loft, casas y departamentos cerca del Parque Nacional Talampaya. La mejor ubicación para tu estadía en La Rioja.',
 };
 
 const AlojamientosPage = () => {
   return (
-		<div className="bg-background">
-			{/* Header */}
-			<div className="bg-muted py-10 md:py-16">
-				<div className="container max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-					<div className="text-center">
-						<h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-							Altos del Talampaya
-						</h1>
-						<p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
-							Descubre nuestra selección de alojamientos y elige el que mejor se adapte a tus necesidades. 
-							Te esperamos en Villa Unión, La Rioja.
-						</p>
-					</div>
-				</div>
-			</div>
+    <div className="bg-background">
+      <section className="grid min-h-[30rem] bg-secondary lg:grid-cols-2">
+        <div className="relative order-1 min-h-64 sm:min-h-80 lg:order-2 lg:min-h-[34rem]">
+          <Image
+            src="/slider/canon.png"
+            alt="Viajeros junto a las formaciones rojizas del paisaje riojano"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover object-[center_62%]"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 to-transparent" />
+          <p className="absolute bottom-5 left-5 text-sm font-medium text-white sm:left-8">Paisajes de La Rioja</p>
+        </div>
+        <div className="order-2 flex items-center lg:order-1">
+          <div className="w-full max-w-xl px-5 py-12 sm:px-8 sm:py-16 lg:ml-auto lg:px-12 xl:px-16">
+            <p className="mb-5 text-sm font-semibold text-accent">Alojamientos en Villa Unión</p>
+            <h1 className="max-w-[12ch] font-headline text-[clamp(2.6rem,5vw,4.8rem)] font-extrabold leading-[1.06] tracking-tight text-foreground">
+              Tu descanso empieza acá.
+            </h1>
+            <p className="mt-6 max-w-[50ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
+              Elegí entre {accommodations.length} alojamientos en Villa Unión para volver a descansar después de explorar la región.
+            </p>
+            <a href="#opciones" className="mt-8 inline-flex min-h-12 items-center gap-2 border-b-2 border-accent pb-1 text-sm font-semibold text-foreground hover:text-accent">
+              Conocer los alojamientos <ArrowDown className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
 
-			{/* Alojamientos Grid */}
-			<div className="container max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 md:py-12">
-				{/* Grid de cards pequeñas */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-					{accommodations.map((accommodation) => (
-						<Link
-							key={accommodation.id}
-							href={`/alojamientos/${accommodation.slug}`}
-							className="group bg-card rounded-xl overflow-hidden shadow-md border hover:shadow-lg transition-shadow"
-						>
-							{/* Image */}
-							<div className="relative aspect-[4/3] bg-muted">
-								{accommodation.images[0] && (
-									<Image
-										src={accommodation.images[0].src}
-										alt={accommodation.images[0].alt}
-										fill
-										sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-										className="object-cover"
-									/>
-								)}
-							</div>
+      <section id="opciones" className="section-container scroll-mt-20 py-14 md:py-20">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-5 md:mb-10">
+          <h2 className="font-headline text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Encontrá tu lugar</h2>
+          <p className="text-sm text-muted-foreground">{accommodations.length} opciones para descansar en Villa Unión</p>
+        </div>
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
+          {accommodations.map((acc) => (
+            <Link
+              key={acc.id}
+              href={`/alojamientos/${acc.slug}`}
+              className="group block min-w-0"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-secondary">
+                {acc.images[0] && (
+                  <Image
+                    src={acc.images[0].src}
+                    alt={acc.images[0].alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                )}
+              </div>
+              <div className="space-y-3 pt-5">
+                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                  <h3 className="min-w-0 max-w-[25ch] font-headline text-xl font-bold leading-tight text-foreground group-hover:text-accent sm:text-2xl">
+                    {acc.name}
+                  </h3>
+                  <span className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground">
+                    <Users className="h-4 w-4 text-accent" aria-hidden="true" />
+                    {acc.capacity}
+                  </span>
+                </div>
+                <div className="flex items-start gap-1 text-sm text-muted-foreground">
+                  <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span className="min-w-0 break-words">{acc.location}</span>
+                </div>
+                <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
+                  <span className="inline-flex items-center gap-2">
+                    <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
+                    {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
+                    {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
+                  </span>
+                </div>
+                <p className="pt-1 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">Ver alojamiento</p>
+              </div>
+            </Link>
+          ))}
+        </div>
 
-							{/* Content */}
-							<div className="p-4">
-								<h2 className="font-headline text-lg md:text-xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors line-clamp-1">
-									{accommodation.name}
-								</h2>
-
-								<div className="flex items-center gap-1 text-xs text-muted-foreground mb-2">
-									<MapPin className="h-3 w-3 flex-shrink-0" />
-									<span className="line-clamp-1">{accommodation.location}</span>
-								</div>
-
-								<div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-muted-foreground mb-3">
-									<span>{accommodation.capacity}</span>
-									{accommodation.bedrooms > 0 && (
-										<>
-											<span>•</span>
-											<span>{accommodation.bedrooms} hab</span>
-										</>
-									)}
-									{accommodation.bathrooms > 0 && (
-										<>
-											<span>•</span>
-											<span>{accommodation.bathrooms} baño{accommodation.bathrooms > 1 ? 's' : ''}</span>
-										</>
-									)}
-								</div>
-
-								{/* Services */}
-								<div className="flex flex-wrap gap-1.5">
-									{accommodation.services.slice(0, 4).map((service) => (
-										<span
-											key={service}
-											className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-primary/10 text-primary"
-										>
-											{service}
-										</span>
-									))}
-									{accommodation.services.length > 4 && (
-										<span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-muted text-muted-foreground">
-											+{accommodation.services.length - 4}
-										</span>
-									)}
-								</div>
-							</div>
-						</Link>
-					))}
-				</div>
-
-				{/* Contact CTA */}
-				<div className="mt-12 md:mt-16 bg-muted rounded-xl p-8">
-					<div className="flex flex-col md:flex-row items-center justify-between gap-6">
-						<div className="text-center md:text-left">
-							<p className="text-muted-foreground mb-4">
-								¿Necesitás más información?
-							</p>
-							<WhatsAppCtaButton
-								predefinedText="Hola, necesito información sobre los alojamientos en Villa Unión."
-								buttonText="Chatear con nosotros"
-								variant="outline"
-								size="lg"
-							/>
-						</div>
-						<div className="shrink-0 flex flex-col items-center gap-3">
-							<AwinBookingBanner />
-							<a
-								href="https://tidd.ly/4nGXFth"
-								target="_blank"
-								rel="sponsored"
-								className="text-xs text-muted-foreground hover:text-primary underline transition-colors"
-							>
-								Conocé tu alojamiento más cercano
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 md:flex-row md:items-center">
+          <div>
+            <p className="font-headline text-xl font-semibold text-foreground">¿No sabés cuál elegir?</p>
+            <p className="mt-1 text-base text-muted-foreground">Contanos cuántas personas viajan y te ayudamos a encontrar lugar.</p>
+          </div>
+          <WhatsAppCtaButton
+            predefinedText="Hola, necesito información sobre los alojamientos en Villa Unión."
+            buttonText="Consultar por WhatsApp"
+            variant="whatsapp"
+            className="min-h-12"
+          />
+        </div>
+      </section>
+    </div>
   );
 };
 

@@ -4,23 +4,18 @@ import { ShortsFeed } from '@/components/shorts/shorts-feed';
 import { VideoSkeleton } from '@/components/shorts/video-skeleton';
 
 export const metadata: Metadata = {
-  title: 'Shorts Turísticos de La Rioja - Go Aventura',
-  description: 'Descubre los mejores shorts turísticos de La Rioja Argentina. Videos cortos de destinos como Talampaya, Laguna Brava, Famatina y más.',
+  title: 'Shorts de La Rioja',
+  description: 'Descubre los mejores shorts turísticos de La Rioja. Videos cortos de Talampaya, Laguna Brava, Famatina y más.',
   openGraph: {
-    title: 'Shorts Turísticos de La Rioja - Go Aventura',
+    title: 'Shorts de La Rioja — Go Aventura',
     description: 'Descubre los mejores shorts turísticos de La Rioja Argentina.',
     type: 'website',
     url: '/shorts',
     siteName: 'Go Aventura',
     locale: 'es_AR',
   },
-  alternates: {
-    canonical: '/shorts',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  alternates: { canonical: '/shorts' },
+  robots: { index: true, follow: true },
 };
 
 export default function ShortsPage() {

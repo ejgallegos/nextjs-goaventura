@@ -1,160 +1,110 @@
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { Instagram, Facebook, Twitter, Youtube } from 'lucide-react';
+import { Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-		<footer className="bg-sidebar text-sidebar-foreground border-t border-sidebar-border">
-			<div className="container max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-				<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-					{/* Logo and About */}
-					<div className="md:col-span-1 lg:col-span-1">
-						<Link href="/" className="inline-block mb-4">
-							<Image
-								src="/logo-white.png"
-								alt="Go Aventura Logo"
-								width={183}
-								height={40}
-								className="h-15 w-auto"
-							/>
-						</Link>
-						<p className="text-sm text-sidebar-foreground/80">
-							Tu agencia de viajes de confianza. Exploramos el
-							mundo contigo.
-						</p>
-						<div className="text-xs text-sidebar-foreground/70 mt-2">
-							<p>Leg. 20019</p>
-							<Link
-								href="https://www.agenciasdeviajes.ar/agencias/S7D8sTXk?preview=true"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="hover:text-sidebar-primary transition-colors underline"
-							>
-								Legajo Habilitante
-							</Link>
-						</div>
-					</div>
+    <footer className="bg-secondary text-foreground">
+      <div className="section-container py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+          {/* Brand */}
+          <div className="lg:col-span-5 space-y-4">
+            <Link href="/" className="inline-block">
+              <Image src="/logo.png" alt="Go Aventura" width={140} height={31} className="h-8 w-auto dark:hidden" />
+              <Image src="/logo-white.png" alt="" width={140} height={31} className="hidden h-8 w-auto dark:block" aria-hidden="true" />
+            </Link>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+              Excursiones en 4x4, transfers y alojamientos premium en Villa Unión del Talampaya. La Rioja te espera.
+            </p>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.instagram.com/goaventura.ok"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-background/70 hover:bg-background transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Leg. 20019 ·{' '}
+              <Link href="https://www.agenciasdeviajes.ar/agencias/S7D8sTXk?preview=true" target="_blank" rel="noopener noreferrer" className="hover:text-primary underline">
+                Legajo Habilitante
+              </Link>
+            </p>
+          </div>
 
-					{/* Quick Links */}
-					<div>
-						<h3 className="text-lg font-headline font-medium text-sidebar-primary mb-4">
-							Enlaces Rápidos
-						</h3>
-						<ul className="space-y-2">
-							<li>
-								<Link
-									href="/nosotros"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Nosotros
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/viajes"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Viajes
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/alojamientos"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Alojamientos
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/blog"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Blog
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/contacto"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Contacto
-								</Link>
-							</li>
-						</ul>
-					</div>
+          {/* Nav */}
+          <div className="lg:col-span-2">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Navegación</h3>
+            <ul className="space-y-2.5">
+              {[
+                { href: '/viajes', label: 'Viajes' },
+                { href: '/alojamientos', label: 'Alojamientos' },
+                { href: '/shorts', label: 'Shorts' },
+                { href: '/nosotros', label: 'Nosotros' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-					{/* Legal */}
-					<div>
-						<h3 className="text-lg font-headline font-medium text-sidebar-primary mb-4">
-							Legal
-						</h3>
-						<ul className="space-y-2">
-							<li>
-								<Link
-									href="/legal/terminos-y-condiciones"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Términos y Condiciones
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/legal/politica-de-privacidad"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Política de Privacidad
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/legal/politica-de-cookies"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Política de Cookies
-								</Link>
-							</li>
+          {/* Legal */}
+          <div className="lg:col-span-2">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Legal</h3>
+            <ul className="space-y-2.5">
+              {[
+                { href: '/faq', label: 'FAQ' },
+                { href: '/legal/terminos-y-condiciones', label: 'Términos' },
+                { href: '/legal/politica-de-privacidad', label: 'Privacidad' },
+                { href: '/legal/politica-de-cookies', label: 'Cookies' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="lg:col-span-3">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Contacto</h3>
+            <ul className="space-y-3">
               <li>
-								<Link
-									href="/faq"
-									className="text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
-								>
-									Preguntas Frecuentes
-								</Link>
-							</li>
-						</ul>
-					</div>
+                <a href="tel:+5493825575566" className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Phone className="h-4 w-4 text-accent" />
+                  +549 3825 575566
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@goaventura.com.ar" className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Mail className="h-4 w-4 text-accent" />
+                  info@goaventura.com.ar
+                </a>
+              </li>
+              <li>
+                <span className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                  <MapPin className="h-4 w-4 text-accent" />
+                  Villa Unión, La Rioja
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-					{/* Contact & Social */}
-					<div>
-						<h3 className="text-lg font-headline font-medium text-sidebar-primary mb-4">
-							Síguenos
-						</h3>
-						<div className="flex space-x-4 mb-4">
-							<Link
-								href="https://www.instagram.com/goaventura.ok"
-								aria-label="Instagram"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
-							>
-								<Instagram size={24} />
-							</Link>
-						</div>
-					</div>
-				</div>
-
-				<div className="mt-12 border-t border-sidebar-border/50 pt-8 text-center">
-					<p className="text-sm text-sidebar-foreground/80">
-						&copy; {currentYear} Go Aventura. Todos los derechos
-						reservados.
-					</p>
-				</div>
-			</div>
-		</footer>
+      <div className="border-t border-border">
+        <div className="section-container py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <p>© {currentYear} Go Aventura. Todos los derechos reservados.</p>
+          <p>Diseñado con pasión para amantes de la aventura</p>
+        </div>
+      </div>
+    </footer>
   );
 };
 

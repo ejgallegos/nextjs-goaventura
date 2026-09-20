@@ -8,155 +8,112 @@ import ContactAdvisorButton from '@/components/contact-advisor-button';
 import AccommodationGallery from '@/components/accommodation-gallery';
 import AccommodationPageTracker from '@/components/accommodation-page-tracker';
 import { accommodations, getAccommodationBySlug } from '@/lib/data/accommodations';
-import AwinBookingBanner from '@/components/awin-booking-banner';
-import { ArrowLeft, MapPin, Users, BedDouble, Bath, CheckCircle, Car, Wifi, Tv, Flame, Snowflake, UtensilsCrossed, Landmark } from 'lucide-react';
+import { ArrowLeft, MapPin, Users, BedDouble, Bath, CheckCircle, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
 
 interface AccommodationPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return accommodations.map((accommodation) => ({
-    slug: accommodation.slug,
-  }));
+  return accommodations.map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({ params }: AccommodationPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const accommodation = getAccommodationBySlug(slug);
-
-  if (!accommodation) {
-    return {
-      title: 'Alojamiento no encontrado',
-    };
-  }
-
+  const acc = getAccommodationBySlug(slug);
+  if (!acc) return { title: 'Alojamiento no encontrado' };
   return {
-    title: `${accommodation.name} - Alojamiento en Villa Unión | Go Aventura`,
-    description: accommodation.description,
+    title: `${acc.name} — Alojamiento en Villa Unión`,
+    description: acc.description,
+    openGraph: {
+      title: `${acc.name} — Go Aventura`,
+      description: acc.tagline,
+      images: acc.images.slice(0, 3).map(i => ({ url: i.src, width: 1200, height: 630, alt: i.alt })),
+    },
   };
 }
-
-const serviceIcons: Record<string, React.ReactNode> = {
-  '🛁': <Bath className="h-5 w-5" />,
-  '🛏️': <BedDouble className="h-5 w-5" />,
-  '🔥': <Flame className="h-5 w-5" />,
-  '❄️': <Snowflake className="h-5 w-5" />,
-  '📶': <Wifi className="h-5 w-5" />,
-  '📺': <Tv className="h-5 w-5" />,
-  '🚗': <Car className="h-5 w-5" />,
-  '🍳': <UtensilsCrossed className="h-5 w-5" />,
-  '🏔️': <Landmark className="h-5 w-5" />,
-};
 
 export default async function AccommodationPage({ params }: AccommodationPageProps) {
   const { slug } = await params;
   const accommodation = getAccommodationBySlug(slug);
+  if (!accommodation) notFound();
 
-  if (!accommodation) {
-    notFound();
-  }
+  const others = accommodations.filter((a) => a.id !== accommodation.id);
+  const descriptionSections = accommodation.longDescription.trim().split(/\n\s*\n/).map((block) => {
+    const [heading, ...paragraphs] = block.trim().split('\n').filter(Boolean);
+    return { heading: heading.replace(/\*\*/g, '').replace(/^[\p{Extended_Pictographic}\uFE0F\s]+/u, ''), body: paragraphs.join(' ') };
+  });
 
-  const otherAccommodations = accommodations.filter((a) => a.id !== accommodation.id);
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LodgingBusiness',
+    name: accommodation.name,
+    description: accommodation.description,
+    image: accommodation.images.map(i => i.src),
+    address: { '@type': 'PostalAddress', addressLocality: 'Villa Unión', addressRegion: 'La Rioja', addressCountry: 'AR' },
+    ...(accommodation.coordinates ? {
+      geo: { '@type': 'GeoCoordinates', latitude: accommodation.coordinates.lat, longitude: accommodation.coordinates.lng },
+    } : {}),
+    numberOfRooms: accommodation.bedrooms,
+  };
 
   return (
     <div className="min-h-screen bg-background">
-      <AccommodationPageTracker
-        productId={accommodation.id}
-        productName={accommodation.name}
-        productType="accommodation"
-      />
-      
-      {/* Hero Section */}
-      <div className="relative h-[35vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh]">
-        <Image
-          src={accommodation.images[0].src}
-          alt={accommodation.images[0].alt}
-          fill
-          sizes="100vw"
-          quality={80}
-          className="object-cover"
-          priority
-          data-ai-hint={accommodation.images[0].hint}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        <div className="absolute inset-0 bg-black/30" />
-        
-        <div className="absolute top-3 left-3 md:top-4 md:left-4">
-          <Button variant="ghost" asChild className="bg-background/80 backdrop-blur-sm hover:bg-background/90 text-foreground text-sm md:text-base min-h-[44px] min-w-[44px]">
-            <Link href="/alojamientos">
-              <ArrowLeft className="mr-1 md:mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Volver a Alojamientos</span>
-              <span className="sm:hidden">Volver</span>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <AccommodationPageTracker productId={accommodation.id} productName={accommodation.name} productType="accommodation" />
+
+      {/* Hero */}
+      <section className="relative min-h-[28rem] md:h-[55vh] lg:h-[65vh]">
+        <Image src={accommodation.images[0].src} alt={accommodation.images[0].alt} fill sizes="100vw" quality={85} className="object-cover" priority />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10">
+          <Button variant="ghost" asChild className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-0">
+            <Link href="/alojamientos" aria-label="Ver todos los alojamientos">
+              <ArrowLeft className="mr-1 h-4 w-4" />
+              <span>Todos los alojamientos</span>
             </Link>
           </Button>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 container max-w-7xl mx-auto px-3 md:px-4 pb-6 md:pb-8">
-          <div className="text-white">
-            <div className="flex items-center gap-2 text-xs md:text-sm text-primary-foreground/80 mb-1 md:mb-2">
-              <MapPin className="h-3 w-3 md:h-4 md:w-4 shrink-0" />
-              <span className="font-medium">{accommodation.location}</span>
-            </div>
-            <h1 className="font-headline text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 md:mb-2 leading-tight">
-              {accommodation.name}
-            </h1>
-            <p className="text-sm md:text-lg lg:text-xl text-primary-foreground/90 max-w-2xl line-clamp-2">
-              {accommodation.tagline}
-            </p>
+        <div className="absolute bottom-0 left-0 right-0 section-container pb-8 md:pb-10">
+          <div className="flex items-center gap-2 text-sm text-white/90 mb-3">
+            <MapPin className="h-4 w-4" />
+            {accommodation.location}
           </div>
+          <h1 className="max-w-[18ch] font-headline text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">{accommodation.name}</h1>
+          <p className="mt-3 max-w-2xl text-base text-white/90 md:text-lg">{accommodation.tagline}</p>
+          <a href="#reservar" className="mt-6 inline-flex min-h-11 items-center border-b-2 border-white pb-1 text-sm font-semibold text-white lg:hidden">
+            Consultar disponibilidad
+          </a>
         </div>
-      </div>
+      </section>
 
-      <div className="container max-w-7xl mx-auto px-3 md:px-4 py-6 md:py-10 lg:py-12">
-        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6 md:space-y-8">
-            {/* Quick Info */}
-            <div className="flex flex-wrap gap-2 md:gap-4">
-              <div className="flex items-center gap-2 bg-card px-3 py-2 rounded-lg text-xs md:text-sm min-h-[44px]">
-                <Users className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
-                <span className="font-medium whitespace-nowrap">{accommodation.capacity}</span>
-              </div>
-              <div className="flex items-center gap-2 bg-card px-3 py-2 rounded-lg text-xs md:text-sm min-h-[44px]">
-                <BedDouble className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
-                <span className="font-medium whitespace-nowrap">{accommodation.bedrooms} {accommodation.bedrooms === 1 ? 'hab.' : 'hab.'}</span>
-              </div>
-              <div className="flex items-center gap-2 bg-card px-3 py-2 rounded-lg text-xs md:text-sm min-h-[44px]">
-                <Bath className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
-                <span className="font-medium whitespace-nowrap">{accommodation.bathrooms} {accommodation.bathrooms === 1 ? 'baño' : 'baños'}</span>
-              </div>
+      <div className="section-container py-10 md:py-14">
+        <div className="grid lg:grid-cols-3 gap-10 lg:gap-14">
+          {/* Main */}
+          <div className="lg:col-span-2 space-y-10">
+            {/* Quick info */}
+            <div className="flex flex-wrap gap-x-6 gap-y-3 border-b border-border pb-6">
+              {[
+                { icon: Users, label: accommodation.capacity },
+                { icon: BedDouble, label: `${accommodation.bedrooms} hab` },
+                { icon: Bath, label: `${accommodation.bathrooms} baño${accommodation.bathrooms > 1 ? 's' : ''}` },
+              ].map((item, i) => (
+                <div key={i} className="inline-flex items-center gap-2 text-sm font-medium">
+                  <item.icon className="h-4 w-4 text-accent" />
+                  {item.label}
+                </div>
+              ))}
             </div>
 
             {/* Description */}
-            <div className="prose prose-lg max-w-none">
-              <h2 className="font-headline text-xl md:text-2xl font-bold text-foreground mb-3 md:mb-4">
-                ✨ Sobre el alojamiento
-              </h2>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                {accommodation.description}
-              </p>
-              <div className="mt-4 md:mt-6 space-y-2 md:space-y-3">
-                {accommodation.longDescription.split('\n').filter(line => line.trim()).map((line, index) => (
-                  <p key={index} className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            {/* Highlights */}
-            <div>
-              <h2 className="font-headline text-xl md:text-2xl font-bold text-foreground mb-3 md:mb-4">
-                🌟 Lo que te va a encantar
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-                {accommodation.highlights.map((highlight, index) => (
-                  <div key={index} className="flex items-start gap-2 md:gap-3 bg-card p-3 md:p-4 rounded-lg">
-                    <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-500 shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base font-medium">{highlight}</span>
+            <div className="max-w-[70ch]">
+              <h2 className="font-headline text-2xl font-bold text-foreground mb-4">Sobre este alojamiento</h2>
+              <p className="text-base text-muted-foreground leading-relaxed mb-7">{accommodation.description}</p>
+              <div className="space-y-6">
+                {descriptionSections.map((section) => (
+                  <div key={section.heading}>
+                    <h3 className="font-headline text-lg font-semibold text-foreground">{section.heading}</h3>
+                    <p className="mt-2 text-base text-muted-foreground leading-relaxed">{section.body}</p>
                   </div>
                 ))}
               </div>
@@ -164,137 +121,77 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
 
             {/* Services */}
             <div>
-              <h2 className="font-headline text-xl md:text-2xl font-bold text-foreground mb-3 md:mb-4">
-                🛎️ Servicios incluidos
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
-                {accommodation.services.map((service, index) => (
-                  <div key={index} className="flex items-center gap-2 md:gap-3 bg-muted/50 p-2 md:p-3 rounded-lg">
-                    {serviceIcons[service.charAt(0)] || <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />}
-                    <span className="text-xs md:text-sm">{service}</span>
+              <h2 className="font-headline text-2xl font-bold text-foreground mb-4">Servicios incluidos</h2>
+              <div className="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
+                {accommodation.services.map((s, i) => (
+                  <div key={i} className="flex items-center gap-3 border-b border-border py-3 text-sm text-foreground">
+                    <CheckCircle className="h-4 w-4 text-accent shrink-0" aria-hidden="true" />
+                    <span>{s.replace(/^[^\w\s]+\s*/, '')}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Map */}
-            <div>
-              <h2 className="font-headline text-xl md:text-2xl font-bold text-foreground mb-3 md:mb-4">
-                📍 Ubicación
-              </h2>
-              <div className="bg-muted rounded-lg overflow-hidden h-48 md:h-64 lg:h-80">
-                <iframe
-                  src={accommodation.mapUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={`Mapa de ${accommodation.name}`}
-                />
-              </div>
-            </div>
-
             {/* Gallery */}
             <AccommodationGallery images={accommodation.images} />
+
+            {/* Map */}
+            <div>
+              <h2 className="font-headline text-2xl font-bold text-foreground mb-4">Ubicación</h2>
+              <div className="rounded-2xl overflow-hidden h-64 md:h-80 bg-secondary/30">
+                <iframe src={accommodation.mapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title={`Mapa de ${accommodation.name}`} />
+              </div>
+            </div>
           </div>
 
-          {/* Sidebar - Booking */}
+          {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-20 space-y-4 md:space-y-6">
-              <div className="bg-card rounded-xl p-4 md:p-6 shadow-lg border">
-                <h3 className="font-headline text-lg md:text-xl font-bold text-foreground mb-3 md:mb-4">
-                  📅 Reservar {accommodation.name}
-                </h3>
-                
-                <div className="space-y-3 md:space-y-4">
-                  <WhatsAppCtaButton
-                    predefinedText={`Hola! Me interesa el alojamiento "${accommodation.name}". ¿Qué disponibilidad tienen para las fechas que me interesan?`}
-                    buttonText="Consultar por WhatsApp"
-                    phoneNumber={accommodation.whatsapp}
-                    variant="whatsapp"
-                    size="lg"
-                    className="w-full min-h-[48px]"
-                    productId={accommodation.id}
-                    productName={accommodation.name}
-                    productType="accommodation"
-                  />
-
-                  {accommodation.booking && (
-                    <a
-                      href={accommodation.booking}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 w-full whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-booking text-booking-foreground hover:bg-booking/90 h-12 px-4 md:px-8 min-h-[48px]"
-                    >
-                      Reservar en Booking
-                    </a>
-                  )}
-
-                  <ContactAdvisorButton
-                    productId={accommodation.id}
-                    productName={accommodation.name}
-                    productType="accommodation"
-                  />
-                </div>
-
-                <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t">
-                  <p className="text-xs md:text-sm text-muted-foreground text-center">
-                    🕐 Respondemos en menos de 24hs
-                  </p>
+            <div className="sticky top-20 space-y-6">
+              {/* Booking */}
+              <div id="reservar" className="scroll-mt-24 space-y-4 rounded-xl border border-border bg-secondary p-6">
+                <h3 className="font-headline text-lg font-bold text-foreground">Reservar</h3>
+                <WhatsAppCtaButton
+                  predefinedText={`Hola! Me interesa "${accommodation.name}". ¿Qué disponibilidad tienen?`}
+                  buttonText="Consultar por WhatsApp"
+                  phoneNumber={accommodation.whatsapp}
+                  variant="whatsapp"
+                  size="lg"
+                  className="w-full"
+                  productId={accommodation.id}
+                  productName={accommodation.name}
+                  productType="accommodation"
+                />
+                {accommodation.booking && (
+                  <a href={accommodation.booking} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-booking text-booking-foreground hover:bg-booking/90 h-12 px-4 text-sm font-semibold transition-colors">
+                    Reservar en Booking
+                  </a>
+                )}
+                <ContactAdvisorButton productId={accommodation.id} productName={accommodation.name} productType="accommodation" />
+                <div className="pt-3 border-t space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground"><Clock className="h-3.5 w-3.5 text-green-500" /> Respondemos en menos de 24hs</div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="h-3.5 w-3.5 text-green-500" /> Reserva segura</div>
                 </div>
               </div>
 
-              {/* Other Accommodations */}
-              {otherAccommodations.length > 0 && (
-                <div className="bg-card rounded-xl p-4 md:p-6 shadow-lg border">
-                  <h3 className="font-headline text-base md:text-lg font-bold text-foreground mb-3 md:mb-4">
-                    🏠 Otros alojamientos
-                  </h3>
-                  <div className="space-y-3 md:space-y-4">
-                    {otherAccommodations.map((other) => (
-                      <Link
-                        key={other.id}
-                        href={`/alojamientos/${other.slug}`}
-                        className="flex gap-2 md:gap-3 group"
-                      >
-                        <div className="relative w-16 h-12 md:w-20 md:h-16 rounded-lg overflow-hidden shrink-0 bg-muted">
-                          <Image
-                            src={other.images[0].src}
-                            alt={other.name}
-                            fill
-                            sizes="80px"
-                            className="object-cover group-hover:scale-105 transition-transform"
-                            data-ai-hint={other.images[0].hint}
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-sm md:text-base text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                            {other.name}
-                          </h4>
-                          <p className="text-[10px] md:text-xs text-muted-foreground">
-                            {other.capacity}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
+              {/* Others */}
+              {others.length > 0 && (
+                <div className="rounded-2xl border p-5 space-y-3">
+                  <h3 className="font-headline text-base font-bold text-foreground">Otros alojamientos</h3>
+                  {others.map((other) => (
+                    <Link key={other.id} href={`/alojamientos/${other.slug}`} className="flex gap-3 group items-center rounded-xl p-2 hover:bg-secondary/50 transition-colors">
+                      <div className="relative w-14 h-12 rounded-lg overflow-hidden shrink-0 bg-secondary">
+                        <Image src={other.images[0].src} alt={other.name} fill sizes="60px" className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate group-hover:text-accent transition-colors">{other.name}</p>
+                        <p className="text-xs text-muted-foreground">{other.capacity}</p>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                    </Link>
+                  ))}
                 </div>
               )}
 
-              {/* Banner Booking.com via Awin */}
-              <div className="flex flex-col items-center gap-3">
-                <AwinBookingBanner />
-                <a
-                  href="https://tidd.ly/4nGXFth"
-                  target="_blank"
-                  rel="sponsored"
-                  className="text-xs text-muted-foreground hover:text-primary underline transition-colors"
-                >
-                  Conocé tu alojamiento más cercano
-                </a>
-              </div>
             </div>
           </div>
         </div>

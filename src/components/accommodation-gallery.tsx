@@ -9,8 +9,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface AccommodationImage {
   src: string;
@@ -69,10 +68,12 @@ export default function AccommodationGallery({ images }: AccommodationGalleryPro
         
         <div className="grid grid-cols-2 gap-4">
           {currentImages.map((image, index) => (
-            <div
-              key={index}
-              className="relative aspect-square rounded-lg overflow-hidden bg-muted cursor-pointer group"
+            <button
+              key={image.src}
+              type="button"
+              className="relative aspect-square rounded-lg overflow-hidden bg-muted cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               onClick={() => openLightbox(index)}
+              aria-label={`Ampliar foto ${startIndex + index + 1} de ${images.length}: ${image.alt}`}
             >
               <Image
                 src={image.src}
@@ -84,7 +85,7 @@ export default function AccommodationGallery({ images }: AccommodationGalleryPro
                 data-ai-hint={image.hint}
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-            </div>
+            </button>
           ))}
         </div>
 
@@ -95,6 +96,7 @@ export default function AccommodationGallery({ images }: AccommodationGalleryPro
               size="icon"
               onClick={goToPreviousPage}
               disabled={currentPage === 1}
+              aria-label="Ver página anterior de fotos"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -106,6 +108,7 @@ export default function AccommodationGallery({ images }: AccommodationGalleryPro
               size="icon"
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
+              aria-label="Ver página siguiente de fotos"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -114,19 +117,11 @@ export default function AccommodationGallery({ images }: AccommodationGalleryPro
       </div>
 
       <Dialog open={selectedImageIndex !== null} onOpenChange={closeLightbox}>
-        <DialogContent className="max-w-4xl w-full h-[90vh] p-0 bg-black/95 border-none">
-          <DialogHeader className="absolute top-0 left-0 right-0 z-10 flex flex-row items-center justify-between p-4 bg-gradient-to-b from-black/60 to-transparent">
-            <DialogTitle className="text-white text-sm md:text-base">
+        <DialogContent className="max-w-4xl w-full h-[90vh] p-0 bg-black/95 border-none [&>button]:z-20 [&>button]:text-white [&>button]:hover:bg-white/20 [&>button]:focus-visible:ring-white">
+          <DialogHeader className="absolute top-0 left-0 right-0 z-10 p-4 pr-14 bg-gradient-to-b from-black/60 to-transparent">
+            <DialogTitle className="text-white text-sm md:text-base text-left">
               {selectedImageIndex !== null ? images[selectedImageIndex].alt : ''}
             </DialogTitle>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={closeLightbox}
-              className="text-white hover:bg-white/20"
-            >
-              <X className="h-5 w-5" />
-            </Button>
           </DialogHeader>
           
           {selectedImageIndex !== null && (
@@ -136,6 +131,7 @@ export default function AccommodationGallery({ images }: AccommodationGalleryPro
                 size="icon"
                 onClick={goToPreviousInLightbox}
                 disabled={selectedImageIndex === 0}
+                aria-label="Ver foto anterior"
                 className="absolute left-4 z-10 text-white hover:bg-white/20 h-12 w-12"
               >
                 <ChevronLeft className="h-8 w-8" />
@@ -156,6 +152,7 @@ export default function AccommodationGallery({ images }: AccommodationGalleryPro
                 size="icon"
                 onClick={goToNextInLightbox}
                 disabled={selectedImageIndex === images.length - 1}
+                aria-label="Ver foto siguiente"
                 className="absolute right-4 z-10 text-white hover:bg-white/20 h-12 w-12"
               >
                 <ChevronRight className="h-8 w-8" />

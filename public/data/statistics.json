@@ -51,16 +51,29 @@
       "asesorClicksByDate": {
         "2026-05-27": 1
       }
+    },
+    "prod_1753623247904": {
+      "id": "prod_1753623247904",
+      "name": "Laguna Brava Reserva Provincial",
+      "views": 1,
+      "whatsappClicks": 0,
+      "asesorClicks": 0,
+      "viewsByDate": {
+        "2026-09-18": 1
+      },
+      "whatsappClicksByDate": {},
+      "asesorClicksByDate": {}
     }
   },
   "summary": {
-    "totalViews": 5,
+    "totalViews": 6,
     "totalWhatsappClicks": 3,
     "whatsappClicksByDate": {
       "2026-05-27": 3
     },
     "viewsByDate": {
-      "2026-05-27": 3
+      "2026-05-27": 3,
+      "2026-09-18": 1
     },
     "totalAsesorClicks": 1,
     "asesorClicksByDate": {

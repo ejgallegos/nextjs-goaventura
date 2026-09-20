@@ -1,3 +1,5 @@
+import { WHATSAPP_NUMBER } from '@/lib/constants';
+
 export interface AccommodationImage {
   src: string;
   alt: string;
@@ -14,7 +16,7 @@ export interface Accommodation {
   shortDescription: string;
   location: string;
   mapUrl: string;
-  coordinates: {
+  coordinates?: {
     lat: number;
     lng: number;
   };
@@ -70,7 +72,7 @@ WiFi de alta velocidad para que estés conectado con tus seres queridos o trabaj
       '🚗 Cochera',
     ],
     whatsapp: '5493825526275',
-    booking: 'https://tidd.ly/4uUundd',
+    booking: 'https://www.booking.com/hotel/ar/loft-centro-villa-union.es-ar.html',
     images: [
       { src: '/images/alojamientos/loft-centro-1.jpg', alt: 'Loft Centro - Sala principal', hint: 'loft centro sala' },
       { src: '/images/alojamientos/loft-centro-2.jpg', alt: 'Loft Centro - Habitación cómoda', hint: 'loft centro habitacion' },
@@ -166,7 +168,7 @@ A solo minutos del centro de Villa Unión y en la entrada de la ciudad, fácil a
       '🍳 Cocina Equipada',
     ],
     whatsapp: '5493825575566',
-    booking: 'https://tidd.ly/49wMqOc',
+    booking: 'https://www.booking.com/hotel/ar/la-hacienda-villa-union.es-ar.html',
     images: [
       { src: '/images/alojamientos/casa-1.jpg', alt: 'Casa - Exterior con patio', hint: 'casa exterior patio' },
       { src: '/images/alojamientos/casa-2.jpg', alt: 'Casa - Sala de estar', hint: 'casa interior sala' },
@@ -257,7 +259,7 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
       '🧊 Heladera',
     ],
     whatsapp: '5493825410538',
-    booking: 'https://tidd.ly/4deXvWC',
+    booking: 'https://www.booking.com/hotel/ar/altos-del-talampaya-ii.es-ar.html',
     images: [
       { src: '/images/alojamientos/casa-ii-1.jpg', alt: 'Casa II - Fachada', hint: 'casa ii exterior' },
       { src: '/images/alojamientos/casa-ii-2.jpg', alt: 'Casa II - Interior acogedor', hint: 'casa ii interior' },
@@ -280,6 +282,70 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
       '🍳 Cocina con horno y microondas',
       '📍 Cerca del centro',
       '❄️ Aire acondicionado y calefacción',
+    ],
+  },
+  {
+    id: 'casa-altos-del-talampaya-iii',
+    slug: 'casa-altos-del-talampaya-iii',
+    name: 'Casa Altos del Talampaya III',
+    tagline: 'Una casa completa para descansar en Villa Unión',
+    description:
+      'Casa completa en Villa Unión para hasta 4 personas, con 2 dormitorios, cocina, aire acondicionado, Wi-Fi y estacionamiento privado gratuito. Se admiten mascotas.',
+    longDescription: `
+🏠 Tu espacio en Villa Unión
+Disfrutá de una casa para vos y tu grupo, con espacios para descansar y compartir después de recorrer la región.
+
+🍳 Cocina y estar
+Prepará tus comidas en la cocina y compartí el día en el comedor y la sala de estar. La casa cuenta con TV de pantalla plana.
+
+🚗 Comodidades para tu viaje
+Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito en el alojamiento. Se admiten mascotas.
+    `,
+    shortDescription:
+      'Casa completa para 4 personas con 2 dormitorios, cocina y estacionamiento privado.',
+    location: 'Verne Costa, Villa Unión, La Rioja',
+    mapUrl: 'https://www.google.com/maps?q=Verne+Costa%2C+Villa+Uni%C3%B3n%2C+La+Rioja&z=16&output=embed',
+    capacity: '4 personas',
+    bedrooms: 2,
+    bathrooms: 1,
+    services: [
+      '🛏️ 2 Dormitorios',
+      '🍳 Cocina',
+      '❄️ Aire Acondicionado',
+      '📶 Wi-Fi gratis',
+      '📺 TV de pantalla plana',
+      '🚗 Estacionamiento privado gratuito',
+      '🐾 Se admiten mascotas',
+    ],
+    whatsapp: WHATSAPP_NUMBER,
+    booking: 'https://www.booking.com/hotel/ar/casa-del-talampaya-iii.es-ar.html',
+    images: [
+      { src: '/images/alojamientos/casa-iii-1.jpg', alt: 'Fachada de Casa Altos del Talampaya III y entrada al estacionamiento', hint: 'fachada casa' },
+      { src: '/images/alojamientos/casa-iii-2.jpg', alt: 'Fachada y cochera de la casa', hint: 'fachada cochera' },
+      { src: '/images/alojamientos/casa-iii-3.jpg', alt: 'Frente de la casa visto desde la calle', hint: 'frente casa' },
+      { src: '/images/alojamientos/casa-iii-4.jpg', alt: 'Patio de la casa visto desde la galería', hint: 'patio galeria' },
+      { src: '/images/alojamientos/casa-iii-5.jpg', alt: 'Sala de estar con TV y cocina integrada', hint: 'sala cocina' },
+      { src: '/images/alojamientos/casa-iii-6.jpg', alt: 'Vista amplia de la sala de estar y la cocina', hint: 'sala estar' },
+      { src: '/images/alojamientos/casa-iii-7.jpg', alt: 'Sala de estar con sillones y aire acondicionado', hint: 'sala aire acondicionado' },
+      { src: '/images/alojamientos/casa-iii-8.jpg', alt: 'Cocina integrada con comedor', hint: 'cocina comedor' },
+      { src: '/images/alojamientos/casa-iii-9.jpg', alt: 'Mesa de comedor junto a la cocina', hint: 'comedor cocina' },
+      { src: '/images/alojamientos/casa-iii-10.jpg', alt: 'Mesa de comedor y mesada de cocina', hint: 'comedor mesada' },
+      { src: '/images/alojamientos/casa-iii-11.jpg', alt: 'Cocina y comedor vistos desde el estar', hint: 'cocina comedor' },
+      { src: '/images/alojamientos/casa-iii-12.jpg', alt: 'Comedor con acceso a los dormitorios', hint: 'comedor dormitorios' },
+      { src: '/images/alojamientos/casa-iii-13.jpg', alt: 'Dormitorio con dos camas y aire acondicionado', hint: 'dormitorio camas' },
+      { src: '/images/alojamientos/casa-iii-14.jpg', alt: 'Otra vista del dormitorio con dos camas', hint: 'dormitorio camas' },
+      { src: '/images/alojamientos/casa-iii-15.jpg', alt: 'Dormitorio con cama doble y aire acondicionado', hint: 'dormitorio cama doble' },
+      { src: '/images/alojamientos/casa-iii-16.jpg', alt: 'Dormitorio con cama doble junto a la ventana', hint: 'dormitorio cama doble' },
+      { src: '/images/alojamientos/casa-iii-17.jpg', alt: 'Baño con ducha e inodoro', hint: 'baño ducha' },
+      { src: '/images/alojamientos/casa-iii-18.jpg', alt: 'Baño con ducha y lavatorio', hint: 'baño lavatorio' },
+      { src: '/images/alojamientos/casa-iii-19.jpg', alt: 'Vista exterior del frente y acceso a la casa', hint: 'exterior casa' },
+    ],
+    highlights: [
+      '🏠 Casa completa para 4 personas',
+      '🛏️ 2 dormitorios',
+      '🚗 Estacionamiento privado gratuito',
+      '📶 Wi-Fi gratis',
+      '🐾 Se admiten mascotas',
     ],
   },
 ];
