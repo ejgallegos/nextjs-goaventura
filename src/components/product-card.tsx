@@ -6,11 +6,11 @@ import WhatsAppCtaButton from './whatsapp-cta-button';
 import { ArrowRight, User } from 'lucide-react';
 
 interface ProductCardProps {
-  product: Product;
+  product: Product | (Omit<Product, 'category'> & { category: 'Promocion' });
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const isPromotion = (product.category as any) === 'Promocion';
+  const isPromotion = product.category === 'Promocion';
   const productPageUrl = product.slug.startsWith('/') ? product.slug : `/viajes/${product.slug}`;
   const whatsappText = `Hola, me interesa ${isPromotion ? 'la promoción' : product.category === 'Excursion' ? 'la excursión' : 'el transfer'} "${product.name}".`;
 
@@ -63,6 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className="min-h-11 min-w-0 w-full"
           productId={product.id}
           productName={product.name}
+          productType={isPromotion ? 'promotion' : product.category === 'Transfer' ? 'transfer' : 'excursion'}
         />
       </div>
     </div>

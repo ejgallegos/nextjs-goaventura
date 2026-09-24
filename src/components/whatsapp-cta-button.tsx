@@ -1,10 +1,11 @@
 
 "use client";
 
-import { Button, buttonVariants, type ButtonProps } from '@/components/ui/button';
+import { buttonVariants, type ButtonProps } from '@/components/ui/button';
 import { WHATSAPP_NUMBER, WHATSAPP_API_BASE_URL } from '@/lib/constants';
 import { WhatsAppIcon } from './icons/whatsapp-icon';
 import { trackWhatsappClick } from '@/lib/data/statistics';
+import { trackAnalyticsEvent } from '@/lib/analytics';
 
 interface WhatsAppCtaButtonProps extends Omit<ButtonProps, 'asChild' | 'href'> {
   phoneNumber?: string;
@@ -13,7 +14,7 @@ interface WhatsAppCtaButtonProps extends Omit<ButtonProps, 'asChild' | 'href'> {
   showIcon?: boolean;
   productId?: string;
   productName?: string;
-  productType?: 'accommodation' | 'excursion' | 'transfer';
+  productType?: 'accommodation' | 'excursion' | 'transfer' | 'promotion' | 'general';
 }
 
 const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
@@ -26,31 +27,28 @@ const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
   className,
   productId,
   productName,
-  productType = "accommodation",
-  ...props
+  productType = "general",
 }) => {
   const encodedText = encodeURIComponent(predefinedText);
   const whatsappUrl = `${WHATSAPP_API_BASE_URL}${phoneNumber}?text=${encodedText}`;
 
   const handleClick = () => {
-    // Track internal statistics
     if (productId && productName) {
+      let shouldTrack = true;
+      try {
         const clickedKey = `clicked-whatsapp-${productId}`;
-        if (!localStorage.getItem(clickedKey)) {
-            trackWhatsappClick(productId, productName);
-            localStorage.setItem(clickedKey, 'true');
-        }
+        shouldTrack = !window.localStorage.getItem(clickedKey);
+        if (shouldTrack) window.localStorage.setItem(clickedKey, 'true');
+      } catch {
+        // Storage may be unavailable; track the inquiry without blocking WhatsApp.
+      }
+      if (shouldTrack) void trackWhatsappClick(productId, productName).catch(() => undefined);
     }
 
-    // Track Google Analytics 4 event
-    if (typeof window !== "undefined" && typeof window.gtag !== "undefined" && productId && productName) {
-      window.gtag("event", "whatsapp_click", {
-        product_id: productId,
-        product_name: productName,
-        product_type: productType,
-        page_location: window.location.href,
-      });
-    }
+    trackAnalyticsEvent('whatsapp_click', {
+      ...(productId ? { product_id: productId } : {}),
+      product_type: productType,
+    });
   };
 
   return (

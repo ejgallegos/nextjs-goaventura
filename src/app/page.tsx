@@ -1,258 +1,227 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import HeroSection from '@/components/hero-section';
-import ProductCard from '@/components/product-card';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { ArrowRight, BedDouble, Play, ChevronRight, ShieldCheck, CreditCard, Clock, Tag } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import type { Product, FeaturedAccommodation, Promotion } from '@/lib/types';
-import { getProducts } from '@/lib/data/products';
-import { getFeaturedAccommodation } from '@/lib/data/featured-accommodation';
-import { getPromotions } from '@/lib/data/promotions';
-import { testimonials } from '@/lib/data/testimonials';
+import Link from 'next/link';
+import { ArrowRight, BedDouble, Bath, MapPin, Play, ShieldCheck, Users } from 'lucide-react';
 import { accommodations } from '@/lib/data/accommodations';
-import { Skeleton } from '@/components/ui/skeleton';
+import { getFeaturedAccommodation } from '@/lib/data/featured-accommodation';
+import { getProducts } from '@/lib/data/products';
+import { getPromotions } from '@/lib/data/promotions';
+import type { FeaturedAccommodation, Product, Promotion, Testimonial } from '@/lib/types';
+import { testimonials } from '@/lib/data/testimonials';
+import ProductCard from '@/components/product-card';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import TestimonialSlider from '@/components/testimonial-slider';
-import { FloatingWhatsApp } from '@/components/floating-whatsapp';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+
+type PromotionProduct = Omit<Product, 'category'> & { category: 'Promocion' };
+
+function toPromotionProduct(promotion: Promotion): PromotionProduct {
+  return {
+    id: promotion.id,
+    name: promotion.title,
+    slug: `/promociones/${promotion.slug}`,
+    description: promotion.description,
+    shortDescription: promotion.description,
+    imageUrl: promotion.imageUrl,
+    imageHint: promotion.imageHint,
+    category: 'Promocion',
+    price: promotion.price,
+    currency: promotion.currency,
+    status: promotion.status,
+    isFeatured: promotion.isFeatured,
+  };
+}
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
   const [featuredAccommodation, setFeaturedAccommodation] = useState<FeaturedAccommodation | null>(null);
   const [promotions, setPromotions] = useState<Promotion[] | null>(null);
+  const [dataError, setDataError] = useState(false);
 
   useEffect(() => {
+    let active = true;
     const fetchData = async () => {
-      const [allProducts, accommodationData, allPromotions] = await Promise.all([
-        getProducts(),
-        getFeaturedAccommodation(),
-        getPromotions(),
-      ]);
-      const featured = allProducts
-        .filter(p => p.isFeatured && p.status === 'published')
-        .sort((a, b) => {
-          if (a.featuredOrder === undefined && b.featuredOrder === undefined) return 0;
-          if (a.featuredOrder === undefined) return 1;
-          if (b.featuredOrder === undefined) return -1;
-          return a.featuredOrder - b.featuredOrder;
-        });
-      setFeaturedProducts(featured);
-      setFeaturedAccommodation(accommodationData);
-      setPromotions(allPromotions.filter(p => p.status === 'published'));
+      try {
+        const [allProducts, accommodationData, allPromotions] = await Promise.all([
+          getProducts(),
+          getFeaturedAccommodation(),
+          getPromotions(),
+        ]);
+        if (!active) return;
+        const featured = allProducts
+          .filter((product) => product.isFeatured && product.status === 'published')
+          .sort((a, b) => (a.featuredOrder ?? Number.MAX_SAFE_INTEGER) - (b.featuredOrder ?? Number.MAX_SAFE_INTEGER));
+        setFeaturedProducts(featured);
+        setFeaturedAccommodation(accommodationData);
+        setPromotions(allPromotions.filter((promotion) => promotion.status === 'published'));
+      } catch {
+        if (!active) return;
+        setFeaturedProducts([]);
+        setFeaturedAccommodation(null);
+        setPromotions([]);
+        setDataError(true);
+      }
     };
-    fetchData();
+    void fetchData();
+    return () => { active = false; };
   }, []);
+
+  const topProducts = featuredProducts ?? [];
+  const topPromotion = (promotions ?? []).slice(0, 1).map(toPromotionProduct);
+  const complementaryOffers = topPromotion.length > 0
+    ? [...topProducts.slice(0, 2), ...topPromotion]
+    : topProducts.slice(0, 3);
+  const heroImage = accommodations[0]?.images[0];
 
   return (
     <div className="flex flex-col">
-      <HeroSection />
-
-      {/* ====== SERVICES ====== */}
-      <section className="section-padding bg-background">
-        <div className="section-container">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
-            <div>
-              <span className="section-label">Experiencias</span>
-              <h2 className="section-title">Descubrí lo que tenemos para vos</h2>
-              <p className="section-description">
-                Excursiones y transfers para recorrer La Rioja a tu manera.
-              </p>
+      <section className="relative isolate overflow-hidden bg-slate-950 text-white" aria-labelledby="home-heading">
+        {heroImage && (
+          <Image
+            src={heroImage.src}
+            alt={heroImage.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="-z-20 object-cover object-center"
+          />
+        )}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/20" />
+        <div className="section-container flex min-h-[34rem] items-center py-16 sm:min-h-[39rem] lg:min-h-[42rem]">
+          <div className="max-w-2xl py-8">
+            <p className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-white/80">
+              <MapPin className="h-4 w-4" aria-hidden="true" /> Villa Unión, La Rioja
+            </p>
+            <h1 id="home-heading" className="max-w-[13ch] font-headline text-4xl font-extrabold leading-[1.04] tracking-tight text-balance sm:text-6xl lg:text-7xl">
+              Tu estadía empieza cerca de todo.
+            </h1>
+            <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-white/85 sm:text-lg">
+              Elegí tu alojamiento en Villa Unión y descubrí Talampaya, la Cuesta de Miranda y los paisajes de La Rioja a tu ritmo.
+            </p>
+            <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+              <Button asChild size="lg" className="min-h-12 rounded-xl bg-white px-6 text-slate-950 hover:bg-white/90">
+                <Link href="/alojamientos">Ver alojamientos <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
+              </Button>
+              <WhatsAppCtaButton
+                predefinedText="Hola, quiero consultar disponibilidad de alojamientos en Villa Unión."
+                buttonText="Consultar disponibilidad"
+                variant="outline"
+                size="lg"
+                className="min-h-12 border-white/60 bg-white/10 px-6 text-white hover:bg-white/20 hover:text-white"
+              />
             </div>
-            <Button variant="ghost" asChild className="mt-4 sm:mt-0 text-accent hover:text-accent/80">
-              <Link href="/viajes">
-                Ver todos <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts === null
-              ? Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="space-y-3">
-                    <Skeleton className="aspect-[4/3] w-full rounded-2xl" />
-                    <Skeleton className="h-5 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                  </div>
-                ))
-              : featuredProducts.length === 0
-              ? (
-                  <p className="text-center col-span-full py-16 text-muted-foreground">
-                    Próximamente nuevas experiencias.
-                  </p>
-                )
-              : featuredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-
           </div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background/30 to-transparent" />
       </section>
 
-      {/* ====== PROMOTIONS ====== */}
-      <section className="section-padding bg-secondary/40" aria-labelledby="promotions-heading">
+      <section className="section-padding bg-background" aria-labelledby="stays-heading">
         <div className="section-container">
-          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 id="promotions-heading" className="section-title">Promociones de viajes</h2>
-              <p className="section-description">Paquetes y experiencias para aprovechar tu viaje por La Rioja.</p>
+              <span className="section-label">Alojamientos en Villa Unión</span>
+              <h2 id="stays-heading" className="section-title">Encontrá tu lugar para descansar</h2>
+              <p className="section-description">Lofts, casas y departamentos para hacer base cerca de Talampaya.</p>
             </div>
-            <Link href="/promociones" className="inline-flex min-h-11 items-center self-start border-b-2 border-accent text-sm font-semibold text-accent hover:text-foreground sm:self-auto">
-              Ver todas las promociones
+            <Link href="/alojamientos" className="inline-flex min-h-11 items-center gap-2 self-start border-b-2 border-accent text-sm font-semibold text-accent hover:text-foreground sm:self-auto">
+              Ver todos los alojamientos <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
 
-          {promotions === null ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:gap-8" aria-label="Cargando promociones">
-              {[0, 1].map((item) => <Skeleton key={item} className="aspect-[16/10] w-full rounded-2xl" />)}
-            </div>
-          ) : promotions.length > 0 ? (
-            <div className="grid gap-8 md:grid-cols-2 lg:gap-10">
-              {promotions.map((promo) => (
-                <article key={promo.id} className="flex min-w-0 flex-col">
-                  <Link href={`/promociones/${promo.slug}`} className="group block overflow-hidden rounded-2xl focus-visible:ring-offset-secondary">
-                    <div className="relative aspect-[16/10] bg-background">
-                      <Image
-                        src={promo.imageUrl}
-                        alt={promo.title}
-                        fill
-                        sizes="(max-width: 767px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                      />
-                    </div>
-                  </Link>
-                  <div className="flex flex-1 flex-col border-b border-border pb-5 pt-5">
-                    <h3 className="font-headline text-xl font-bold leading-tight text-foreground sm:text-2xl">{promo.title}</h3>
-                    <p className="mb-5 mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground sm:text-base">{promo.description}</p>
-                    <Link href={`/promociones/${promo.slug}`} className="mt-auto inline-flex min-h-11 items-center self-start border-b-2 border-accent text-sm font-semibold text-accent hover:text-foreground">
-                      Ver promoción <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <p className="border-t border-border py-8 text-muted-foreground">Por ahora no hay promociones disponibles. Podés explorar nuestras excursiones y transfers.</p>
-          )}
-        </div>
-      </section>
-
-      {/* ====== ACCOMMODATION ====== */}
-      <section className="section-padding bg-background">
-        <div className="section-container">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
-            <div>
-              <span className="section-label">Alojamientos</span>
-              <h2 className="section-title">Tu base en Villa Unión</h2>
-              <p className="section-description">
-                Loft, casas y departamentos cerca del Parque Nacional Talampaya.
-              </p>
-            </div>
-            <Button variant="ghost" asChild className="mt-4 sm:mt-0 text-accent hover:text-accent/80">
-              <Link href="/alojamientos">
-                Ver todos <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-
-          {featuredAccommodation === null ? (
-            <Skeleton className="aspect-[16/9] w-full rounded-2xl" />
-          ) : (
-            <div className="grid md:grid-cols-5 gap-0 rounded-3xl overflow-hidden bg-card border">
-              <div className="md:col-span-3 relative aspect-[4/3] md:aspect-auto md:min-h-[420px]">
-                <Image
-                  src={featuredAccommodation.imageUrl}
-                  alt={featuredAccommodation.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 60vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="md:col-span-2 p-8 md:p-10 lg:p-12 flex flex-col justify-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 mb-5">
-                  <BedDouble className="h-6 w-6 text-accent" />
+          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
+            {accommodations.slice(0, 4).map((accommodation) => (
+              <Link key={accommodation.id} href={`/alojamientos/${accommodation.slug}`} className="group min-w-0 rounded-2xl focus-visible:outline-none">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
+                  <Image
+                    src={accommodation.images[0].src}
+                    alt={accommodation.images[0].alt}
+                    fill
+                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+                  />
                 </div>
-                <h3 className="font-headline text-2xl lg:text-3xl font-bold text-foreground mb-3">
-                  {featuredAccommodation.title}
-                </h3>
-                <p className="text-muted-foreground mb-8 leading-relaxed">
-                  {featuredAccommodation.description}
-                </p>
-                <Button asChild className="btn-primary self-start">
-                  <Link href={featuredAccommodation.buttonLink}>
-                    {featuredAccommodation.buttonText}
-                    <ArrowRight className="ml-1 h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          )}
-
-          <div className="mt-8 grid grid-cols-1 gap-x-7 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-            {accommodations.map((acc) => (
-              <Link
-                key={acc.slug}
-                href={`/alojamientos/${acc.slug}`}
-                className="group flex min-h-16 items-center gap-3 border-b border-border py-2 hover:border-accent"
-              >
-                <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-secondary">
-                  <Image src={acc.images[0].src} alt="" fill sizes="48px" className="object-cover" />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold leading-tight text-foreground group-hover:text-accent">{acc.name}</span>
-                  <span className="mt-1 block text-xs text-muted-foreground">{acc.capacity}</span>
-                </span>
-                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-accent" aria-hidden="true" />
+                <div className="pt-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="min-w-0 font-headline text-lg font-bold leading-tight text-foreground group-hover:text-accent">{accommodation.name}</h3>
+                    <span className="inline-flex shrink-0 items-center gap-1 text-xs text-muted-foreground"><Users className="h-4 w-4" aria-hidden="true" />{accommodation.capacity}</span>
+                  </div>
+                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{accommodation.shortDescription}</p>
+                </div>
               </Link>
             ))}
           </div>
+
+          <div className="mt-12 grid min-w-0 overflow-hidden rounded-3xl border border-border bg-secondary/50 md:grid-cols-2">
+            <div className="relative aspect-[4/3] min-w-0 md:aspect-auto md:min-h-[21rem]">
+              {featuredAccommodation ? (
+                <Image src={featuredAccommodation.imageUrl} alt={featuredAccommodation.title} fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
+              ) : heroImage ? (
+                <Image src={heroImage.src} alt={heroImage.alt} fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
+              ) : null}
+            </div>
+            <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-12">
+              <span className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-accent"><BedDouble className="h-4 w-4" aria-hidden="true" /> Alojamiento destacado</span>
+              <h3 className="font-headline text-2xl font-bold text-foreground sm:text-3xl">{featuredAccommodation?.title ?? 'Alojamiento en Villa Unión'}</h3>
+              <p className="mt-4 max-w-[55ch] text-base leading-relaxed text-muted-foreground">
+                {featuredAccommodation?.description ?? 'Conocé nuestras opciones de alojamiento y encontrá la estadía que mejor se adapta a tu viaje.'}
+              </p>
+              <Button asChild className="mt-6 min-h-11 self-start rounded-xl">
+                <Link href={featuredAccommodation?.buttonLink || '/alojamientos'}>{featuredAccommodation?.buttonText || 'Ver alojamientos'} <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ====== SHORTS ====== */}
+      <section className="section-padding bg-secondary/40" aria-labelledby="complement-heading">
+        <div className="section-container">
+          <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <span className="section-label">Después de elegir dónde dormir</span>
+              <h2 id="complement-heading" className="section-title">Completá tu estadía</h2>
+              <p className="section-description">Sumá una excursión, un transfer o una promoción para recorrer la región.</p>
+            </div>
+            <Link href="/viajes" className="inline-flex min-h-11 items-center gap-2 self-start border-b-2 border-accent text-sm font-semibold text-accent hover:text-foreground sm:self-auto">
+              Ver excursiones y viajes <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+          {featuredProducts === null || promotions === null ? (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-label="Cargando experiencias complementarias">
+              {[0, 1, 2].map((item) => <Skeleton key={item} className="aspect-[3/2] rounded-2xl" />)}
+            </div>
+          ) : complementaryOffers.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {complementaryOffers.map((product) => <ProductCard key={`${product.category}-${product.id}`} product={product} />)}
+            </div>
+          ) : (
+            <p role="status" className="border-t border-border py-8 text-muted-foreground">
+              {dataError ? 'No pudimos cargar las experiencias en este momento. Podés verlas en la sección de viajes.' : 'Próximamente vas a encontrar excursiones, transfers y promociones para completar tu estadía.'}
+            </p>
+          )}
+        </div>
+      </section>
+
       <section className="section-padding bg-background">
         <div className="section-container">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10">
-                  <Play className="h-5 w-5 fill-accent text-accent" />
-                </div>
-                <span className="section-label mb-0">Shorts Turísticos</span>
-              </div>
-              <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground text-balance">
-                Mirá La Rioja en segundos
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-lg">
-                Talampaya, Laguna Brava, la Cuesta de Miranda y más. Videos cortos que te van a hacer querer venir.
-              </p>
-              <Button asChild className="btn-primary">
-                <Link href="/shorts">
-                  Ver Shorts
-                  <Play className="ml-1 h-4 w-4 fill-current" />
-                </Link>
-              </Button>
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="space-y-5">
+              <span className="section-label">Shorts turísticos</span>
+              <h2 className="section-title">Mirá La Rioja en segundos</h2>
+              <p className="max-w-[52ch] text-base leading-relaxed text-muted-foreground sm:text-lg">Talampaya, Laguna Brava, la Cuesta de Miranda y más. Videos cortos para inspirar tu próxima estadía.</p>
+              <Button asChild className="min-h-11 rounded-xl"><Link href="/shorts">Ver Shorts <Play className="ml-2 h-4 w-4 fill-current" aria-hidden="true" /></Link></Button>
             </div>
-
-            {/* Preview */}
             <div className="grid grid-cols-3 gap-3">
               {[
                 { label: 'Talampaya', emoji: '🏜️' },
                 { label: 'Laguna Brava', emoji: '🏔️' },
                 { label: 'Cuesta Miranda', emoji: '🛣️' },
               ].map((item) => (
-                <Link
-                  key={item.label}
-                  href="/shorts"
-                  className="group relative aspect-[9/14] rounded-2xl overflow-hidden bg-foreground/5 hover:bg-foreground/10 transition-colors"
-                >
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center">
-                    <span className="text-4xl">{item.emoji}</span>
-                    <span className="text-xs font-medium text-muted-foreground group-hover:text-accent transition-colors">
-                      {item.label}
-                    </span>
-                  </div>
+                <Link key={item.label} href="/shorts" className="group flex aspect-[9/14] min-w-0 flex-col items-center justify-center gap-3 rounded-2xl bg-secondary p-2 text-center transition-colors hover:bg-secondary/70">
+                  <span className="text-4xl" aria-hidden="true">{item.emoji}</span>
+                  <span className="text-xs font-medium text-muted-foreground group-hover:text-accent">{item.label}</span>
                 </Link>
               ))}
             </div>
@@ -260,29 +229,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ====== TESTIMONIALS ====== */}
       <section className="section-padding bg-secondary/30">
         <div className="section-container">
-          <div className="text-center mb-12">
+          <div className="mb-10 text-center">
             <span className="section-label">Testimonios</span>
             <h2 className="section-title">Lo que dicen nuestros viajeros</h2>
           </div>
-          <TestimonialSlider testimonials={testimonials} />
+          <TestimonialSlider testimonials={testimonials as Testimonial[]} />
         </div>
       </section>
 
-      {/* ====== WHY US ====== */}
       <section className="section-padding bg-background">
         <div className="section-container">
-          <div className="text-center mb-14">
+          <div className="mb-12 text-center">
             <span className="section-label">Por qué Go Aventura</span>
             <h2 className="section-title">La Rioja es nuestra casa</h2>
-            <p className="section-description mx-auto">
-              Somos locales, conocemos cada rincón y nos importa que tu experiencia sea perfecta.
-            </p>
+            <p className="section-description mx-auto">Somos locales, conocemos cada rincón y nos importa que tu experiencia sea perfecta.</p>
           </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { icon: '🏔️', title: 'Guías expertos locales', desc: 'Conocemos cada rincón de La Rioja. Te llevamos a los lugares que no vas a encontrar en ninguna guía.' },
               { icon: '🚗', title: 'Vehículos preparados', desc: '4x4 en perfecto estado, seguros y conductores profesionales. Tu seguridad no es negociable.' },
@@ -290,55 +254,38 @@ export default function Home() {
               { icon: '💳', title: 'Todos los medios de pago', desc: 'Efectivo, transferencia, Mercado Pago y tarjetas. Elegí la opción que más te convenga.' },
               { icon: '📞', title: 'Soporte 24/7', desc: 'Estamos disponibles por WhatsApp antes, durante y después de tu viaje.' },
               { icon: '✨', title: 'Experiencias únicas', desc: 'No somos un catálogo genérico. Creamos experiencias a medida para cada visitante.' },
-            ].map((item, i) => (
-              <div key={i} className="text-center space-y-4">
-                <span className="text-4xl">{item.icon}</span>
+            ].map((item) => (
+              <article key={item.title} className="space-y-3 text-center">
+                <span className="text-4xl" aria-hidden="true">{item.icon}</span>
                 <h3 className="font-headline text-lg font-semibold text-foreground">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{item.desc}</p>
-              </div>
+                <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ====== TRUST + CTA ====== */}
       <section className="section-padding bg-secondary/30">
         <div className="section-container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+          <div className="mb-12 grid grid-cols-2 gap-6 md:grid-cols-4">
             {[
               { icon: ShieldCheck, label: 'Reserva protegida' },
-              { icon: CreditCard, label: 'Todos los medios de pago' },
-              { icon: Clock, label: 'Atención 24/7' },
-              { icon: Tag, label: 'Mejor precio garantizado' },
+              { icon: Users, label: 'Atención personalizada' },
+              { icon: MapPin, label: 'Guías locales' },
+              { icon: Bath, label: 'Alojamiento confortable' },
             ].map((item) => (
               <div key={item.label} className="flex flex-col items-center gap-3 text-center">
-                <item.icon className="h-8 w-8 text-accent" />
+                <item.icon className="h-8 w-8 text-accent" aria-hidden="true" />
                 <p className="text-sm font-medium text-foreground">{item.label}</p>
               </div>
             ))}
           </div>
-
-          {/* CTA */}
-          <div className="rounded-3xl border border-border bg-secondary p-10 text-center md:p-14 lg:p-20">
-            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
-              ¿Listo para tu próxima aventura?
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto mb-8 text-lg">
-              Reservá y asegurá tu lugar. Respondemos en menos de 24 horas.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <WhatsAppCtaButton
-                predefinedText="Hola! Quiero consultar sobre los servicios de Go Aventura."
-                buttonText="Consultar por WhatsApp"
-                size="lg"
-                className="!bg-primary !text-primary-foreground hover:!bg-primary/90 min-h-[48px] px-8"
-              />
-              <Button size="lg" variant="outline" asChild className="border-foreground/40 bg-transparent text-foreground hover:bg-background hover:text-foreground min-h-[48px] px-8">
-                <Link href="/viajes">
-                  Explorar Viajes
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
+          <div className="rounded-3xl border border-border bg-background p-7 text-center sm:p-12 lg:p-16">
+            <h2 className="font-headline text-3xl font-bold text-foreground sm:text-4xl">¿Listo para tu próxima estadía?</h2>
+            <p className="mx-auto mb-7 mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">Elegí dónde descansar y te ayudamos a planear el resto del viaje.</p>
+            <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+              <Button asChild size="lg" className="min-h-12 rounded-xl"><Link href="/alojamientos">Ver alojamientos</Link></Button>
+              <WhatsAppCtaButton predefinedText="Hola, quiero consultar sobre alojamientos en Villa Unión." buttonText="Consultar por WhatsApp" size="lg" className="min-h-12 px-6" />
             </div>
           </div>
         </div>
