@@ -13,8 +13,8 @@ import { WhatsAppIcon } from '@/components/icons/whatsapp-icon';
 
 const navLinks = [
   { href: "/", label: "Inicio" },
-  { href: "/viajes", label: "Viajes" },
   { href: "/alojamientos", label: "Alojamientos" },
+  { href: "/viajes", label: "Excursiones y viajes" },
   { href: "/shorts", label: "Shorts" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/contacto", label: "Contacto" },
@@ -78,7 +78,7 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors',
+                'relative flex min-h-11 items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors',
                 isActive(link.href)
                   ? 'text-primary bg-primary/10'
                   : 'text-foreground/75 hover:text-foreground hover:bg-muted'
@@ -95,7 +95,7 @@ export default function Header() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-foreground/75 hover:text-primary transition-colors"
+            className="inline-flex min-h-11 items-center gap-2 text-sm text-foreground/75 hover:text-primary transition-colors"
           >
             <WhatsAppIcon className="h-4 w-4" />
             <span>Contacto</span>
@@ -127,7 +127,7 @@ export default function Header() {
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        'flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors',
+                        'flex min-h-12 items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors',
                         isActive(link.href)
                           ? 'bg-accent/10 text-accent'
                           : 'text-foreground/70 hover:bg-muted hover:text-foreground'

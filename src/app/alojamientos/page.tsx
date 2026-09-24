@@ -16,15 +16,15 @@ const AlojamientosPage = () => {
       <section className="grid min-h-[30rem] bg-secondary lg:grid-cols-2">
         <div className="relative order-1 min-h-64 sm:min-h-80 lg:order-2 lg:min-h-[34rem]">
           <Image
-            src="/slider/canon.png"
-            alt="Viajeros junto a las formaciones rojizas del paisaje riojano"
+            src={accommodations[0].images[0].src}
+            alt={accommodations[0].images[0].alt}
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover object-[center_62%]"
           />
           <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 to-transparent" />
-          <p className="absolute bottom-5 left-5 text-sm font-medium text-white sm:left-8">Paisajes de La Rioja</p>
+          <p className="absolute bottom-5 left-5 text-sm font-medium text-white sm:left-8">Alojamiento en Villa Unión</p>
         </div>
         <div className="order-2 flex items-center lg:order-1">
           <div className="w-full max-w-xl px-5 py-12 sm:px-8 sm:py-16 lg:ml-auto lg:px-12 xl:px-16">
@@ -33,10 +33,10 @@ const AlojamientosPage = () => {
               Tu descanso empieza acá.
             </h1>
             <p className="mt-6 max-w-[50ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Elegí entre {accommodations.length} alojamientos en Villa Unión para volver a descansar después de explorar la región.
+              Elegí entre {accommodations.length} alojamientos en Villa Unión y encontrá tu base para recorrer la región.
             </p>
             <a href="#opciones" className="mt-8 inline-flex min-h-12 items-center gap-2 border-b-2 border-accent pb-1 text-sm font-semibold text-foreground hover:text-accent">
-              Conocer los alojamientos <ArrowDown className="h-4 w-4" aria-hidden="true" />
+              Ver opciones disponibles <ArrowDown className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
         </div>

@@ -42,13 +42,15 @@ const Footer = () => {
             <h3 className="mb-4 text-sm font-semibold text-foreground">Navegación</h3>
             <ul className="space-y-2.5">
               {[
-                { href: '/viajes', label: 'Viajes' },
+                { href: '/', label: 'Inicio' },
                 { href: '/alojamientos', label: 'Alojamientos' },
+                { href: '/viajes', label: 'Excursiones y viajes' },
                 { href: '/shorts', label: 'Shorts' },
                 { href: '/nosotros', label: 'Nosotros' },
+                { href: '/contacto', label: 'Contacto' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link>
+                  <Link href={link.href} className="inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-primary transition-colors">{link.label}</Link>
                 </li>
               ))}
             </ul>
