@@ -6,8 +6,12 @@ import { Button } from '@/components/ui/button';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import ContactAdvisorButton from '@/components/contact-advisor-button';
 import AccommodationGallery from '@/components/accommodation-gallery';
+import AccommodationExperienceCard from '@/components/accommodation-experience-card';
+import BookingCtaLink from '@/components/booking-cta-link';
 import AccommodationPageTracker from '@/components/accommodation-page-tracker';
 import { accommodations, getAccommodationBySlug } from '@/lib/data/accommodations';
+import { getProducts } from '@/lib/data/products';
+import { getPromotions } from '@/lib/data/promotions';
 import { ArrowLeft, MapPin, Users, BedDouble, Bath, CheckCircle, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
 
 interface AccommodationPageProps {
@@ -39,6 +43,30 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
   if (!accommodation) notFound();
 
   const others = accommodations.filter((a) => a.id !== accommodation.id);
+  const [allProducts, allPromotions] = await Promise.all([
+    getProducts().catch(() => []),
+    getPromotions().catch(() => []),
+  ]);
+  const crossSellItems = [
+    ...allProducts.filter((product) => product.status === 'published').map((product) => ({
+      id: product.id,
+      type: product.category === 'Transfer' ? 'transfer' as const : 'excursion' as const,
+      href: `/viajes/${product.slug}`,
+      title: product.name,
+      description: product.shortDescription || product.description,
+      imageUrl: product.imageUrl,
+      imageAlt: `Paisaje de ${product.name}`,
+    })),
+    ...allPromotions.filter((promotion) => promotion.status === 'published').map((promotion) => ({
+      id: promotion.id,
+      type: 'promotion' as const,
+      href: `/promociones/${promotion.slug}`,
+      title: promotion.title,
+      description: promotion.description,
+      imageUrl: promotion.imageUrl,
+      imageAlt: `Imagen de ${promotion.title}`,
+    })),
+  ].slice(0, 2);
   const descriptionSections = accommodation.longDescription.trim().split(/\n\s*\n/).map((block) => {
     const [heading, ...paragraphs] = block.trim().split('\n').filter(Boolean);
     return { heading: heading.replace(/\*\*/g, '').replace(/^[\p{Extended_Pictographic}\uFE0F\s]+/u, ''), body: paragraphs.join(' ') };
@@ -60,7 +88,7 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
   return (
     <div className="min-h-screen bg-background">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <AccommodationPageTracker productId={accommodation.id} productName={accommodation.name} productType="accommodation" />
+      <AccommodationPageTracker productId={accommodation.id} productType="accommodation" />
 
       {/* Hero */}
       <section className="relative min-h-[28rem] md:h-[55vh] lg:h-[65vh]">
@@ -162,9 +190,13 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
                   productType="accommodation"
                 />
                 {accommodation.booking && (
-                  <a href={accommodation.booking} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-booking text-booking-foreground hover:bg-booking/90 h-12 px-4 text-sm font-semibold transition-colors">
+                  <BookingCtaLink
+                    href={accommodation.booking}
+                    productId={accommodation.id}
+                    className="inline-flex min-h-12 items-center justify-center gap-2 w-full rounded-xl bg-booking text-booking-foreground hover:bg-booking/90 px-4 text-sm font-semibold transition-colors"
+                  >
                     Reservar en Booking
-                  </a>
+                  </BookingCtaLink>
                 )}
                 <ContactAdvisorButton productId={accommodation.id} productName={accommodation.name} productType="accommodation" />
                 <div className="pt-3 border-t space-y-1.5">
@@ -172,6 +204,29 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
                   <div className="flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="h-3.5 w-3.5 text-green-500" /> Reserva segura</div>
                 </div>
               </div>
+
+              <section aria-labelledby="complete-stay-heading" className="rounded-2xl border border-border p-4">
+                <h3 id="complete-stay-heading" className="font-headline text-base font-bold text-foreground">Completá tu estadía</h3>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">Experiencias y promociones para disfrutar la región.</p>
+                {crossSellItems.length > 0 ? (
+                  <div className="mt-3 divide-y divide-border">
+                    {crossSellItems.map((item) => (
+                      <AccommodationExperienceCard
+                        key={`${item.type}-${item.id}`}
+                        productId={item.id}
+                        productType={item.type}
+                        href={item.href}
+                        title={item.title}
+                        description={item.description}
+                        imageUrl={item.imageUrl}
+                        imageAlt={item.imageAlt}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p role="status" className="mt-3 border-t border-border pt-3 text-sm text-muted-foreground">Todavía no hay experiencias publicadas para completar esta estadía.</p>
+                )}
+              </section>
 
               {/* Others */}
               {others.length > 0 && (
