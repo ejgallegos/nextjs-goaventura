@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface HomeHeroSlide {
   id: string;
@@ -11,6 +12,7 @@ export interface HomeHeroSlide {
   description: string;
   image: string;
   imageAlt: string;
+  href: string;
 }
 
 interface HomeHeroSliderProps {
@@ -24,6 +26,11 @@ export default function HomeHeroSlider({ slides, statusMessage }: HomeHeroSlider
   if (slides.length === 0) return null;
 
   const activeSlide = slides[activeIndex] ?? slides[0];
+  const ctaLabel = activeSlide.type === 'Alojamiento'
+    ? 'Ver alojamiento'
+    : activeSlide.type === 'Experiencia'
+      ? 'Ver experiencia'
+      : 'Ver promoción';
   const showPrevious = () => setActiveIndex((index) => (index - 1 + slides.length) % slides.length);
   const showNext = () => setActiveIndex((index) => (index + 1) % slides.length);
 
@@ -66,6 +73,12 @@ export default function HomeHeroSlider({ slides, statusMessage }: HomeHeroSlider
             <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-[#EAF2F8]/90 sm:text-lg">
               {activeSlide.description}
             </p>
+            <Link
+              href={activeSlide.href}
+              className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#C9DCE8] px-5 font-semibold text-[#1D2D44] transition-colors hover:bg-[#EAF2F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] motion-reduce:transition-none"
+            >
+              {ctaLabel} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
 
           <div className="mt-9 flex flex-wrap items-center gap-3">

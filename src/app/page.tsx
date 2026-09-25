@@ -88,6 +88,7 @@ export default function Home() {
       description: accommodation.tagline || accommodation.shortDescription,
       image: accommodation.images[0].src,
       imageAlt: accommodation.images[0].alt,
+      href: `/alojamientos/${accommodation.slug}`,
     }));
   const publishedExperienceSlides: HomeHeroSlide[] = [
     ...(publishedProducts ?? []).map((product) => ({
@@ -97,6 +98,7 @@ export default function Home() {
       description: product.shortDescription || product.description,
       image: product.imageUrl,
       imageAlt: `Imagen de ${product.name}`,
+      href: product.slug.startsWith('/') ? product.slug : `/viajes/${product.slug}`,
     })),
     ...(promotions ?? []).map((promotion) => ({
       id: `promotion-${promotion.id}`,
@@ -105,6 +107,7 @@ export default function Home() {
       description: promotion.description,
       image: promotion.imageUrl,
       imageAlt: `Imagen de ${promotion.title}`,
+      href: `/promociones/${promotion.slug}`,
     })),
   ];
   const heroSlides = staySlides.flatMap((stay, index) => {
