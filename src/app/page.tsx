@@ -7,7 +7,7 @@ import { ArrowRight, Bath, Car, CreditCard, Headset, MapPin, MessageCircle, Moun
 import { accommodations } from '@/lib/data/accommodations';
 import { getProducts } from '@/lib/data/products';
 import { getPromotions } from '@/lib/data/promotions';
-import type { Product, Promotion, ShortsCache, Testimonial } from '@/lib/types';
+import type { Product, Promotion, Testimonial } from '@/lib/types';
 import { testimonials } from '@/lib/data/testimonials';
 import ProductCard from '@/components/product-card';
 import HomeHeroSlider, { type HomeHeroSlide } from '@/components/home-hero-slider';
@@ -17,6 +17,26 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type PromotionProduct = Omit<Product, 'category'> & { category: 'Promocion' };
+type ShortTeaserVideo = {
+  id: string;
+  title: string;
+  category: string;
+  thumbnailUrl: string;
+};
+
+function isShortTeaserVideo(value: unknown): value is ShortTeaserVideo {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+
+  const video = value as Record<string, unknown>;
+  return typeof video.id === 'string'
+    && video.id.trim().length > 0
+    && typeof video.title === 'string'
+    && video.title.trim().length > 0
+    && typeof video.category === 'string'
+    && video.category.trim().length > 0
+    && typeof video.thumbnailUrl === 'string'
+    && video.thumbnailUrl.trim().length > 0;
+}
 
 const shortTeaserLocations = [
   { category: 'talampaya', label: 'Talampaya', titleSearch: 'talampaya' },
@@ -61,7 +81,7 @@ export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
   const [publishedProducts, setPublishedProducts] = useState<Product[] | null>(null);
   const [promotions, setPromotions] = useState<Promotion[] | null>(null);
-  const [shortVideos, setShortVideos] = useState<ShortsCache['videos'] | null>(null);
+  const [shortVideos, setShortVideos] = useState<ShortTeaserVideo[] | null>(null);
   const [dataError, setDataError] = useState(false);
 
   useEffect(() => {
@@ -92,8 +112,14 @@ export default function Home() {
       try {
         const response = await fetch('/data/shorts.json');
         if (!response.ok) throw new Error('Shorts data unavailable');
-        const shortsCache = await response.json() as ShortsCache;
-        if (active) setShortVideos(Array.isArray(shortsCache.videos) ? shortsCache.videos : []);
+        const shortsCache = await response.json() as unknown;
+        if (typeof shortsCache !== 'object' || shortsCache === null || Array.isArray(shortsCache)) {
+          if (active) setShortVideos([]);
+          return;
+        }
+
+        const videos = (shortsCache as { videos?: unknown }).videos;
+        if (active) setShortVideos(Array.isArray(videos) ? videos.filter(isShortTeaserVideo) : []);
       } catch {
         if (active) setShortVideos([]);
       }
