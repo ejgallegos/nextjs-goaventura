@@ -31,8 +31,8 @@ const institutionalHeroSlide: HomeHeroSlide = {
   type: 'Institucional',
   title: 'Primero elegí dónde quedarte.',
   description: 'Después, viví La Rioja. En Go Aventura encontrás alojamientos y, como complemento, viajes y experiencias para recorrer la región.',
-  image: '/images/alojamientos/casa-altos-i-interior-patio.jpg',
-  imageAlt: 'Ambiente interior de un alojamiento con salida al jardín',
+  image: '/images/alojamientos/casa-altos-i-pileta-1.jpg',
+  imageAlt: 'Pileta exterior de Casa Altos del Talampaya I',
 };
 
 function toPromotionProduct(promotion: Promotion): PromotionProduct {
