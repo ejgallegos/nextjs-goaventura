@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
-import ContactAdvisorButton from '@/components/contact-advisor-button';
 import AccommodationGallery from '@/components/accommodation-gallery';
 import AccommodationExperienceCard from '@/components/accommodation-experience-card';
 import BookingCtaLink from '@/components/booking-cta-link';
@@ -201,7 +200,6 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
                     Reservar en Booking
                   </BookingCtaLink>
                 )}
-                <ContactAdvisorButton productId={accommodation.id} productName={accommodation.name} productType="accommodation" />
                 <div className="pt-3 border-t space-y-1.5">
                   <div className="flex items-center gap-2 text-xs text-muted-foreground"><Clock className="h-3.5 w-3.5 text-green-500" /> Respondemos en menos de 24hs</div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="h-3.5 w-3.5 text-green-500" /> Reserva segura</div>

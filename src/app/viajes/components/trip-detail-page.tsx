@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
-import ContactAdvisorButton from '@/components/contact-advisor-button';
 import ProductPageTracker from '@/components/accommodation-page-tracker';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, User, DollarSign, Tag, Info } from 'lucide-react';
@@ -141,11 +140,6 @@ export default function TripDetailPageContent({ product }: TripDetailPageContent
                   buttonText="Consultar Disponibilidad" 
                   size="lg" 
                   className="w-full text-lg"
-                  productId={product.id}
-                  productName={product.name}
-                  productType={product.category === 'Transfer' ? 'transfer' : 'excursion'}
-                />
-                <ContactAdvisorButton
                   productId={product.id}
                   productName={product.name}
                   productType={product.category === 'Transfer' ? 'transfer' : 'excursion'}
