@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Bath, MapPin, Play, ShieldCheck, Users } from 'lucide-react';
+import { ArrowRight, Bath, Car, CreditCard, Headset, MapPin, MessageCircle, Mountain, Play, ShieldCheck, Sparkles, Users } from 'lucide-react';
 import { accommodations } from '@/lib/data/accommodations';
 import { getProducts } from '@/lib/data/products';
 import { getPromotions } from '@/lib/data/promotions';
-import type { Product, Promotion, Testimonial } from '@/lib/types';
+import type { Product, Promotion, ShortsCache, Testimonial } from '@/lib/types';
 import { testimonials } from '@/lib/data/testimonials';
 import ProductCard from '@/components/product-card';
 import HomeHeroSlider, { type HomeHeroSlide } from '@/components/home-hero-slider';
@@ -17,6 +17,12 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type PromotionProduct = Omit<Product, 'category'> & { category: 'Promocion' };
+
+const shortTeaserLocations = [
+  { category: 'talampaya', label: 'Talampaya', titleSearch: 'talampaya' },
+  { category: 'laguna-brava', label: 'Laguna Brava', titleSearch: 'laguna brava' },
+  { category: 'cuesta-miranda', label: 'Cuesta Miranda', titleSearch: 'cuesta de miranda' },
+] as const;
 
 const heroImageByAccommodationSlug: Record<string, string> = {
   'loft-centro': '/images/alojamientos/loft-centro-2.jpg',
@@ -55,6 +61,7 @@ export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
   const [publishedProducts, setPublishedProducts] = useState<Product[] | null>(null);
   const [promotions, setPromotions] = useState<Promotion[] | null>(null);
+  const [shortVideos, setShortVideos] = useState<ShortsCache['videos'] | null>(null);
   const [dataError, setDataError] = useState(false);
 
   useEffect(() => {
@@ -81,6 +88,17 @@ export default function Home() {
       }
     };
     void fetchData();
+    const fetchShorts = async () => {
+      try {
+        const response = await fetch('/data/shorts.json');
+        if (!response.ok) throw new Error('Shorts data unavailable');
+        const shortsCache = await response.json() as ShortsCache;
+        if (active) setShortVideos(Array.isArray(shortsCache.videos) ? shortsCache.videos : []);
+      } catch {
+        if (active) setShortVideos([]);
+      }
+    };
+    void fetchShorts();
     return () => { active = false; };
   }, []);
 
@@ -89,6 +107,10 @@ export default function Home() {
   const complementaryOffers = topPromotion.length > 0
     ? [...topProducts.slice(0, 2), ...topPromotion]
     : topProducts.slice(0, 3);
+  const shortTeaserVideos = shortTeaserLocations.flatMap(({ category, label, titleSearch }) => {
+    const video = shortVideos?.find((item) => item.category === category && item.title.toLocaleLowerCase().includes(titleSearch));
+    return video ? [{ video, label }] : [];
+  });
   const staySlides: HomeHeroSlide[] = accommodations.flatMap((accommodation) => {
     const selectedImageSrc = heroImageByAccommodationSlug[accommodation.slug];
     const interiorImage = accommodation.images.find((image) => image.src === selectedImageSrc);
@@ -205,16 +227,29 @@ export default function Home() {
               <Button asChild className="min-h-11 rounded-xl"><Link href="/shorts">Ver Shorts <Play className="ml-2 h-4 w-4 fill-current" aria-hidden="true" /></Link></Button>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              {[
-                { label: 'Talampaya', emoji: '🏜️' },
-                { label: 'Laguna Brava', emoji: '🏔️' },
-                { label: 'Cuesta Miranda', emoji: '🛣️' },
-              ].map((item) => (
-                <Link key={item.label} href="/shorts" className="group flex aspect-[9/14] min-w-0 flex-col items-center justify-center gap-3 rounded-2xl bg-secondary p-2 text-center transition-colors hover:bg-secondary/70">
-                  <span className="text-4xl" aria-hidden="true">{item.emoji}</span>
-                  <span className="text-xs font-medium text-muted-foreground group-hover:text-accent">{item.label}</span>
-                </Link>
-              ))}
+              {shortVideos === null ? (
+                [0, 1, 2].map((item) => <Skeleton key={item} className="aspect-[4/3] rounded-xl" />)
+              ) : shortTeaserVideos.length > 0 ? (
+                shortTeaserVideos.map(({ video, label }) => (
+                  <Link key={video.id} href="/shorts" className="group min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-secondary">
+                      <Image
+                        src={video.thumbnailUrl}
+                        alt={`${label}: ${video.title}`}
+                        fill
+                        sizes="(max-width: 1023px) 33vw, 16vw"
+                        unoptimized
+                        className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.03] motion-reduce:transition-none"
+                      />
+                    </div>
+                    <span className="mt-2 block text-center text-xs font-medium text-muted-foreground group-hover:text-accent">{label}</span>
+                  </Link>
+                ))
+              ) : (
+                <p role="status" className="col-span-3 rounded-xl bg-secondary/50 p-4 text-center text-sm text-muted-foreground">
+                  Explorá nuestros videos cortos en Shorts.
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -239,15 +274,17 @@ export default function Home() {
           </div>
           <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: '🏔️', title: 'Guías expertos locales', desc: 'Conocemos cada rincón de La Rioja. Te llevamos a los lugares que no vas a encontrar en ninguna guía.' },
-              { icon: '🚗', title: 'Vehículos preparados', desc: '4x4 en perfecto estado, seguros y conductores profesionales. Tu seguridad no es negociable.' },
-              { icon: '💬', title: 'Atención personalizada', desc: 'Cada viajero es único. Adaptamos cada experiencia a tus gustos, tiempos y necesidades.' },
-              { icon: '💳', title: 'Todos los medios de pago', desc: 'Efectivo, transferencia, Mercado Pago y tarjetas. Elegí la opción que más te convenga.' },
-              { icon: '📞', title: 'Soporte 24/7', desc: 'Estamos disponibles por WhatsApp antes, durante y después de tu viaje.' },
-              { icon: '✨', title: 'Experiencias únicas', desc: 'No somos un catálogo genérico. Creamos experiencias a medida para cada visitante.' },
+              { icon: Mountain, title: 'Guías expertos locales', desc: 'Conocemos cada rincón de La Rioja. Te llevamos a los lugares que no vas a encontrar en ninguna guía.' },
+              { icon: Car, title: 'Vehículos preparados', desc: '4x4 en perfecto estado, seguros y conductores profesionales. Tu seguridad no es negociable.' },
+              { icon: MessageCircle, title: 'Atención personalizada', desc: 'Cada viajero es único. Adaptamos cada experiencia a tus gustos, tiempos y necesidades.' },
+              { icon: CreditCard, title: 'Todos los medios de pago', desc: 'Efectivo, transferencia, Mercado Pago y tarjetas. Elegí la opción que más te convenga.' },
+              { icon: Headset, title: 'Soporte 24/7', desc: 'Estamos disponibles por WhatsApp antes, durante y después de tu viaje.' },
+              { icon: Sparkles, title: 'Experiencias únicas', desc: 'No somos un catálogo genérico. Creamos experiencias a medida para cada visitante.' },
             ].map((item) => (
               <article key={item.title} className="space-y-3 text-center">
-                <span className="text-4xl" aria-hidden="true">{item.icon}</span>
+                <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-accent" aria-hidden="true">
+                  <item.icon className="h-7 w-7" />
+                </span>
                 <h3 className="font-headline text-lg font-semibold text-foreground">{item.title}</h3>
                 <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
               </article>
