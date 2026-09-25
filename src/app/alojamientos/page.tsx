@@ -10,6 +10,15 @@ export const metadata: Metadata = {
   description: 'Loft, casas y departamentos cerca del Parque Nacional Talampaya. La mejor ubicación para tu estadía en La Rioja.',
 };
 
+const isFamilySuitable = (accommodation: (typeof accommodations)[number]) =>
+  /ideal para familias/i.test(accommodation.shortDescription);
+
+const acceptsPets = (accommodation: (typeof accommodations)[number]) =>
+  accommodation.services.some((service) => /se admiten mascotas/i.test(service));
+
+const hasPool = (accommodation: (typeof accommodations)[number]) =>
+  accommodation.images.some((image) => /\bpileta\b/i.test(image.alt));
+
 const AlojamientosPage = () => {
   return (
     <div className="bg-background">
@@ -52,7 +61,7 @@ const AlojamientosPage = () => {
             <Link
               key={acc.id}
               href={`/alojamientos/${acc.slug}`}
-              className="group block min-w-0"
+              className="group block min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
             >
               <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-secondary">
                 {acc.images[0] && (
@@ -61,7 +70,7 @@ const AlojamientosPage = () => {
                     alt={acc.images[0].alt}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    className="object-cover transition-transform duration-300 motion-reduce:transition-none group-hover:scale-[1.03]"
                   />
                 )}
               </div>
@@ -70,15 +79,32 @@ const AlojamientosPage = () => {
                   <h3 className="min-w-0 max-w-[25ch] font-headline text-xl font-bold leading-tight text-foreground group-hover:text-accent sm:text-2xl">
                     {acc.name}
                   </h3>
-                  <span className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground">
-                    <Users className="h-4 w-4 text-accent" aria-hidden="true" />
-                    {acc.capacity}
-                  </span>
                 </div>
                 <div className="flex items-start gap-1 text-sm text-muted-foreground">
                   <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span className="min-w-0 break-words">{acc.location}</span>
                 </div>
+                <ul aria-label={`Características de ${acc.name}`} className="flex flex-wrap gap-2">
+                  <li className="inline-flex min-h-7 items-center gap-1.5 rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                    <Users className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+                    {acc.capacity}
+                  </li>
+                  {isFamilySuitable(acc) && (
+                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                      Ideal para familias
+                    </li>
+                  )}
+                  {acceptsPets(acc) && (
+                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                      Se admiten mascotas
+                    </li>
+                  )}
+                  {hasPool(acc) && (
+                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                      Pileta
+                    </li>
+                  )}
+                </ul>
                 <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
                   <span className="inline-flex items-center gap-2">
