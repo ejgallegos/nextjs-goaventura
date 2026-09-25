@@ -11,23 +11,12 @@ import { getPromotions } from '@/lib/data/promotions';
 import type { FeaturedAccommodation, Product, Promotion, Testimonial } from '@/lib/types';
 import { testimonials } from '@/lib/data/testimonials';
 import ProductCard from '@/components/product-card';
-import StayExperienceSlider, { type StayExperienceSlide } from '@/components/stay-experience-slider';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import TestimonialSlider from '@/components/testimonial-slider';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type PromotionProduct = Omit<Product, 'category'> & { category: 'Promocion' };
-
-interface JourneyOffer {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  href: string;
-  typeLabel: string;
-  accommodationName?: string;
-}
 
 function toPromotionProduct(promotion: Promotion): PromotionProduct {
   return {
@@ -48,7 +37,6 @@ function toPromotionProduct(promotion: Promotion): PromotionProduct {
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
-  const [publishedProducts, setPublishedProducts] = useState<Product[] | null>(null);
   const [featuredAccommodation, setFeaturedAccommodation] = useState<FeaturedAccommodation | null>(null);
   const [promotions, setPromotions] = useState<Promotion[] | null>(null);
   const [dataError, setDataError] = useState(false);
@@ -66,14 +54,12 @@ export default function Home() {
         const featured = allProducts
           .filter((product) => product.isFeatured && product.status === 'published')
           .sort((a, b) => (a.featuredOrder ?? Number.MAX_SAFE_INTEGER) - (b.featuredOrder ?? Number.MAX_SAFE_INTEGER));
-        setPublishedProducts(allProducts.filter((product) => product.status === 'published'));
         setFeaturedProducts(featured);
         setFeaturedAccommodation(accommodationData);
         setPromotions(allPromotions.filter((promotion) => promotion.status === 'published'));
       } catch {
         if (!active) return;
         setFeaturedProducts([]);
-        setPublishedProducts([]);
         setFeaturedAccommodation(null);
         setPromotions([]);
         setDataError(true);
@@ -85,63 +71,9 @@ export default function Home() {
 
   const topProducts = featuredProducts ?? [];
   const topPromotion = (promotions ?? []).slice(0, 1).map(toPromotionProduct);
-  const initialComplementaryOffers = topPromotion.length > 0
+  const complementaryOffers = topPromotion.length > 0
     ? [...topProducts.slice(0, 2), ...topPromotion]
     : topProducts.slice(0, 3);
-  const journeyOffers: JourneyOffer[] = [
-    ...(publishedProducts ?? []).map((product) => ({
-      id: product.id,
-      title: product.name,
-      description: product.shortDescription || product.description,
-      imageUrl: product.imageUrl,
-      href: `/viajes/${product.slug}`,
-      typeLabel: product.category === 'Transfer' ? 'Transfer' : 'Excursión',
-    })),
-    ...(promotions ?? []).map((promotion) => ({
-      id: promotion.id,
-      title: promotion.title,
-      description: promotion.description,
-      imageUrl: promotion.imageUrl,
-      href: `/promociones/${promotion.slug}`,
-      typeLabel: 'Promoción',
-      accommodationName: promotion.accommodationName,
-    })),
-  ];
-  const orderedJourneyOffers = [
-    journeyOffers.find((offer) => offer.typeLabel !== 'Promoción'),
-    journeyOffers.find((offer) => offer.typeLabel === 'Promoción'),
-    ...journeyOffers,
-  ].filter((offer, index, offers): offer is JourneyOffer => Boolean(offer) && offers.findIndex((candidate) => candidate?.id === offer?.id) === index).slice(0, 2);
-  const journeySlides: StayExperienceSlide[] = orderedJourneyOffers.length >= 2
-    ? orderedJourneyOffers.map((offer, index) => {
-      const accommodationName = offer.accommodationName?.trim().toLocaleLowerCase();
-      const linkedAccommodation = accommodationName
-        ? accommodations.find((accommodation) => accommodation.name.toLocaleLowerCase().includes(accommodationName) || accommodationName.includes(accommodation.name.toLocaleLowerCase()))
-        : undefined;
-      const accommodation = linkedAccommodation ?? accommodations[index % accommodations.length];
-      return {
-        id: offer.id,
-        stay: {
-          name: accommodation.name,
-          href: `/alojamientos/${accommodation.slug}`,
-          imageUrl: accommodation.images[0].src,
-          imageAlt: accommodation.images[0].alt,
-        },
-        experience: {
-          title: offer.title,
-          href: offer.href,
-          imageUrl: offer.imageUrl,
-          imageAlt: `Imagen de ${offer.title}`,
-          description: offer.description,
-          typeLabel: offer.typeLabel,
-        },
-      };
-    })
-    : [];
-  const sliderOfferIds = new Set(journeySlides.map((slide) => slide.id));
-  const complementaryOffers = journeySlides.length > 0
-    ? initialComplementaryOffers.filter((offer) => !sliderOfferIds.has(offer.id)).slice(0, 3 - journeySlides.length)
-    : initialComplementaryOffers;
   const heroImage = accommodations[0]?.images[0];
 
   return (
@@ -244,10 +176,6 @@ export default function Home() {
         </div>
       </section>
 
-      {publishedProducts !== null && promotions !== null && journeySlides.length > 0 && (
-        <StayExperienceSlider slides={journeySlides} />
-      )}
-
       <section className="section-padding bg-secondary/40" aria-labelledby="complement-heading">
         <div className="section-container">
           <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -260,7 +188,7 @@ export default function Home() {
               Ver excursiones y viajes <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-          {featuredProducts === null || publishedProducts === null || promotions === null ? (
+          {featuredProducts === null || promotions === null ? (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-label="Cargando experiencias complementarias">
               {[0, 1, 2].map((item) => <Skeleton key={item} className="aspect-[3/2] rounded-2xl" />)}
             </div>
@@ -270,7 +198,7 @@ export default function Home() {
             </div>
           ) : (
             <p role="status" className="border-t border-border py-8 text-muted-foreground">
-              {dataError ? 'No pudimos cargar las experiencias en este momento. Podés verlas en la sección de viajes.' : journeySlides.length > 0 ? 'Ya viste algunas ideas para completar tu estadía. Explorá el catálogo para descubrir más opciones.' : 'Próximamente vas a encontrar excursiones, transfers y promociones para completar tu estadía.'}
+              {dataError ? 'No pudimos cargar las experiencias en este momento. Podés verlas en la sección de viajes.' : 'Próximamente vas a encontrar excursiones, transfers y promociones para completar tu estadía.'}
             </p>
           )}
         </div>
