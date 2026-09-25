@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 export interface HomeHeroSlide {
   id: string;
-  type: 'Alojamiento' | 'Experiencia' | 'Promoción';
+  type: 'Institucional' | 'Alojamiento' | 'Experiencia';
   title: string;
   description: string;
   image: string;
   imageAlt: string;
-  href: string;
+  href?: string;
 }
 
 interface HomeHeroSliderProps {
@@ -22,15 +22,36 @@ interface HomeHeroSliderProps {
 
 export default function HomeHeroSlider({ slides, statusMessage }: HomeHeroSliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(true);
+  const [manuallyPaused, setManuallyPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const autoAdvanceEnabled = slides.length > 1 && !prefersReducedMotion && !manuallyPaused && !isHovered && !isFocused;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    updatePreference();
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
+  }, []);
+
+  useEffect(() => {
+    if (!autoAdvanceEnabled) return;
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % slides.length);
+    }, 6500);
+
+    return () => window.clearInterval(intervalId);
+  }, [autoAdvanceEnabled, slides.length]);
 
   if (slides.length === 0) return null;
 
   const activeSlide = slides[activeIndex] ?? slides[0];
-  const ctaLabel = activeSlide.type === 'Alojamiento'
-    ? 'Ver alojamiento'
-    : activeSlide.type === 'Experiencia'
-      ? 'Ver experiencia'
-      : 'Ver promoción';
+  const ctaLabel = activeSlide.type === 'Alojamiento' ? 'Ver alojamiento' : activeSlide.type === 'Experiencia' ? 'Ver experiencia' : null;
   const showPrevious = () => setActiveIndex((index) => (index - 1 + slides.length) % slides.length);
   const showNext = () => setActiveIndex((index) => (index + 1) % slides.length);
 
@@ -40,6 +61,13 @@ export default function HomeHeroSlider({ slides, statusMessage }: HomeHeroSlider
       aria-label="Alojamientos y experiencias en Villa Unión"
       aria-roledescription="carousel"
       tabIndex={0}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocusCapture={() => setIsFocused(true)}
+      onBlurCapture={(event) => {
+        const nextTarget = event.relatedTarget as Node | null;
+        if (!nextTarget || !event.currentTarget.contains(nextTarget)) setIsFocused(false);
+      }}
       onKeyDown={(event) => {
         if (event.key === 'ArrowLeft') {
           event.preventDefault();
@@ -66,25 +94,38 @@ export default function HomeHeroSlider({ slides, statusMessage }: HomeHeroSlider
           <p className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#C9DCE8]">
             Villa Unión, La Rioja <span aria-hidden="true">·</span> {activeSlide.type}
           </p>
-          <div role="group" aria-roledescription="slide" aria-label={`${activeIndex + 1} de ${slides.length}`} aria-live="polite">
+          <div role="group" aria-roledescription="slide" aria-label={`${activeIndex + 1} de ${slides.length}`} aria-live={autoAdvanceEnabled ? 'off' : 'polite'}>
             <h1 className="max-w-[13ch] font-headline text-4xl font-extrabold leading-[1.04] tracking-tight text-balance sm:text-6xl lg:text-7xl">
               {activeSlide.title}
             </h1>
             <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-[#EAF2F8]/90 sm:text-lg">
               {activeSlide.description}
             </p>
-            <Link
-              href={activeSlide.href}
-              className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#C9DCE8] px-5 font-semibold text-[#1D2D44] transition-colors hover:bg-[#EAF2F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] motion-reduce:transition-none"
-            >
-              {ctaLabel} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            {ctaLabel && activeSlide.href && (
+              <Link
+                href={activeSlide.href}
+                className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#C9DCE8] px-5 font-semibold text-[#1D2D44] transition-colors hover:bg-[#EAF2F8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] motion-reduce:transition-none"
+              >
+                {ctaLabel} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            )}
           </div>
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <span className="mr-1 text-sm font-medium text-[#C9DCE8]" aria-hidden="true">
               {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
             </span>
+            <button
+              type="button"
+              onClick={() => setManuallyPaused((paused) => !paused)}
+              aria-pressed={manuallyPaused || prefersReducedMotion}
+              aria-label={prefersReducedMotion ? 'Avance automático desactivado por preferencia de movimiento reducido' : manuallyPaused ? 'Reanudar avance automático' : 'Pausar avance automático'}
+              disabled={prefersReducedMotion}
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#C9DCE8]/70 bg-[#1D2D44]/45 px-4 text-sm font-semibold text-[#EAF2F8] transition-colors hover:bg-[#3E5C76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] disabled:cursor-not-allowed disabled:opacity-70 motion-reduce:transition-none"
+            >
+              {manuallyPaused || prefersReducedMotion ? <Play className="h-4 w-4" aria-hidden="true" /> : <Pause className="h-4 w-4" aria-hidden="true" />}
+              {prefersReducedMotion ? 'Movimiento reducido' : manuallyPaused ? 'Reanudar' : 'Pausar'}
+            </button>
             <button
               type="button"
               onClick={showPrevious}

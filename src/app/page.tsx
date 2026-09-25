@@ -19,6 +19,22 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 type PromotionProduct = Omit<Product, 'category'> & { category: 'Promocion' };
 
+const heroImageByAccommodationSlug: Record<string, string> = {
+  'loft-centro': '/images/alojamientos/loft-centro-2.jpg',
+  'altos-del-talampaya-casa': '/images/alojamientos/casa-10.jpg',
+  'altos-del-talampaya-casa-ii': '/images/alojamientos/casa-ii-12.jpg',
+  'casa-altos-del-talampaya-iii': '/images/alojamientos/casa-iii-14.jpg',
+};
+
+const institutionalHeroSlide: HomeHeroSlide = {
+  id: 'home-intro',
+  type: 'Institucional',
+  title: 'Primero elegí dónde quedarte.',
+  description: 'Después, viví La Rioja. En Go Aventura encontrás alojamientos y, como complemento, viajes y experiencias para recorrer la región.',
+  image: '/images/alojamientos/casa-altos-i-interior-patio.jpg',
+  imageAlt: 'Ambiente interior de un alojamiento con salida al jardín',
+};
+
 function toPromotionProduct(promotion: Promotion): PromotionProduct {
   return {
     id: promotion.id,
@@ -79,45 +95,39 @@ export default function Home() {
     ? [...topProducts.slice(0, 2), ...topPromotion]
     : topProducts.slice(0, 3);
   const heroImage = accommodations[0]?.images[0];
-  const staySlides: HomeHeroSlide[] = accommodations
-    .filter((accommodation) => accommodation.images[0])
-    .map((accommodation) => ({
+  const staySlides: HomeHeroSlide[] = accommodations.flatMap((accommodation) => {
+    const selectedImageSrc = heroImageByAccommodationSlug[accommodation.slug];
+    const interiorImage = accommodation.images.find((image) => image.src === selectedImageSrc);
+    if (!interiorImage) return [];
+
+    return [{
       id: `stay-${accommodation.id}`,
       type: 'Alojamiento',
       title: accommodation.name,
       description: accommodation.tagline || accommodation.shortDescription,
-      image: accommodation.images[0].src,
-      imageAlt: accommodation.images[0].alt,
+      image: interiorImage.src,
+      imageAlt: interiorImage.alt,
       href: `/alojamientos/${accommodation.slug}`,
-    }));
-  const publishedExperienceSlides: HomeHeroSlide[] = [
-    ...(publishedProducts ?? []).map((product) => ({
+    }];
+  });
+  const publishedExperienceSlides: HomeHeroSlide[] = (publishedProducts ?? []).map((product) => ({
       id: `experience-${product.id}`,
-      type: 'Experiencia' as const,
+      type: 'Experiencia',
       title: product.name,
       description: product.shortDescription || product.description,
       image: product.imageUrl,
       imageAlt: `Imagen de ${product.name}`,
       href: product.slug.startsWith('/') ? product.slug : `/viajes/${product.slug}`,
-    })),
-    ...(promotions ?? []).map((promotion) => ({
-      id: `promotion-${promotion.id}`,
-      type: 'Promoción' as const,
-      title: promotion.title,
-      description: promotion.description,
-      image: promotion.imageUrl,
-      imageAlt: `Imagen de ${promotion.title}`,
-      href: `/promociones/${promotion.slug}`,
-    })),
-  ];
-  const heroSlides = staySlides.flatMap((stay, index) => {
-    const experience = publishedExperienceSlides[index];
+    }));
+  const experiencesForHero = publishedExperienceSlides.slice(0, Math.max(0, staySlides.length - 1));
+  const heroSlides = [institutionalHeroSlide, ...staySlides.flatMap((stay, index) => {
+    const experience = experiencesForHero[index];
     return experience ? [stay, experience] : [stay];
-  });
-  const heroStatusMessage = publishedProducts === null || promotions === null
-    ? 'Cargando experiencias y promociones...'
+  })];
+  const heroStatusMessage = publishedProducts === null
+    ? 'Cargando experiencias...'
     : publishedExperienceSlides.length === 0 && dataError
-      ? 'Las experiencias y promociones no están disponibles en este momento.'
+      ? 'Las experiencias no están disponibles en este momento.'
       : undefined;
 
   return (
