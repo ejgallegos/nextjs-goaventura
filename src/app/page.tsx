@@ -254,11 +254,11 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-3 gap-3">
               {shortVideos === null ? (
-                [0, 1, 2].map((item) => <Skeleton key={item} className="aspect-[4/3] rounded-xl" />)
+                [0, 1, 2].map((item) => <Skeleton key={item} className="aspect-[9/16] rounded-xl" />)
               ) : shortTeaserVideos.length > 0 ? (
                 shortTeaserVideos.map(({ video, label }) => (
                   <Link key={video.id} href="/shorts" className="group min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-secondary">
+                    <div className="relative aspect-[9/16] overflow-hidden rounded-xl bg-secondary">
                       <Image
                         src={video.thumbnailUrl}
                         alt={`${label}: ${video.title}`}
