@@ -43,10 +43,13 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
   if (!accommodation) notFound();
 
   const others = accommodations.filter((a) => a.id !== accommodation.id);
-  const [allProducts, allPromotions] = await Promise.all([
-    getProducts().catch(() => []),
-    getPromotions().catch(() => []),
+  const [productsResult, promotionsResult] = await Promise.allSettled([
+    getProducts(),
+    getPromotions(),
   ]);
+  const allProducts = productsResult.status === 'fulfilled' ? productsResult.value : [];
+  const allPromotions = promotionsResult.status === 'fulfilled' ? promotionsResult.value : [];
+  const crossSellSourcesFailed = productsResult.status === 'rejected' || promotionsResult.status === 'rejected';
   const crossSellItems = [
     ...allProducts.filter((product) => product.status === 'published').map((product) => ({
       id: product.id,
@@ -222,6 +225,20 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
                         imageAlt={item.imageAlt}
                       />
                     ))}
+                  </div>
+                ) : crossSellSourcesFailed ? (
+                  <div role="status" className="mt-3 border-t border-border pt-3">
+                    <p className="text-sm text-muted-foreground">No pudimos mostrar las experiencias por el momento. Consultanos y te ayudamos a completar tu estadía.</p>
+                    <WhatsAppCtaButton
+                      predefinedText={`Hola, quiero consultar qué experiencias y promociones están disponibles para completar mi estadía en ${accommodation.name}.`}
+                      buttonText="Consultar por WhatsApp"
+                      phoneNumber={accommodation.whatsapp}
+                      variant="whatsapp"
+                      className="mt-3 min-h-11 w-full"
+                      productId={accommodation.id}
+                      productName={accommodation.name}
+                      productType="accommodation"
+                    />
                   </div>
                 ) : (
                   <p role="status" className="mt-3 border-t border-border pt-3 text-sm text-muted-foreground">Todavía no hay experiencias publicadas para completar esta estadía.</p>
