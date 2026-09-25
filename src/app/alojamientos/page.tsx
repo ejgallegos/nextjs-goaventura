@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
 import { accommodations } from '@/lib/data/accommodations';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
-import { MapPin, BedDouble, Users, Bath, ArrowDown } from 'lucide-react';
+import AccommodationCapacityList from '@/components/accommodation-capacity-list';
+import { ArrowDown } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Alojamientos en Villa Unión',
@@ -47,54 +47,19 @@ const AlojamientosPage = () => {
           <h2 className="font-headline text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Encontrá tu lugar</h2>
           <p className="text-sm text-muted-foreground">{accommodations.length} opciones para descansar en Villa Unión</p>
         </div>
-        <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
-          {accommodations.map((acc) => (
-            <Link
-              key={acc.id}
-              href={`/alojamientos/${acc.slug}`}
-              className="group block min-w-0"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-secondary">
-                {acc.images[0] && (
-                  <Image
-                    src={acc.images[0].src}
-                    alt={acc.images[0].alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                  />
-                )}
-              </div>
-              <div className="space-y-3 pt-5">
-                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-                  <h3 className="min-w-0 max-w-[25ch] font-headline text-xl font-bold leading-tight text-foreground group-hover:text-accent sm:text-2xl">
-                    {acc.name}
-                  </h3>
-                  <span className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground">
-                    <Users className="h-4 w-4 text-accent" aria-hidden="true" />
-                    {acc.capacity}
-                  </span>
-                </div>
-                <div className="flex items-start gap-1 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0 break-words">{acc.location}</span>
-                </div>
-                <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
-                  <span className="inline-flex items-center gap-2">
-                    <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
-                    {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
-                    {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
-                  </span>
-                </div>
-                <p className="pt-1 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">Ver alojamiento</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <AccommodationCapacityList
+          accommodations={accommodations.map((accommodation) => ({
+            id: accommodation.id,
+            slug: accommodation.slug,
+            name: accommodation.name,
+            capacity: accommodation.capacity,
+            location: accommodation.location,
+            shortDescription: accommodation.shortDescription,
+            bedrooms: accommodation.bedrooms,
+            bathrooms: accommodation.bathrooms,
+            image: accommodation.images[0] ?? null,
+          }))}
+        />
 
         <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 md:flex-row md:items-center">
           <div>
