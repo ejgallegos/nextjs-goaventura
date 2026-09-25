@@ -23,7 +23,7 @@ const heroImageByAccommodationSlug: Record<string, string> = {
   'loft-centro': '/images/alojamientos/loft-centro-2.jpg',
   'altos-del-talampaya-casa': '/images/alojamientos/casa-10.jpg',
   'altos-del-talampaya-casa-ii': '/images/alojamientos/casa-ii-12.jpg',
-  'casa-altos-del-talampaya-iii': '/images/alojamientos/casa-iii-14.jpg',
+  'casa-altos-del-talampaya-iii': '/images/alojamientos/casa-iii-9.jpg',
 };
 
 const institutionalHeroSlide: HomeHeroSlide = {
