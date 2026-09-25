@@ -89,8 +89,8 @@ export default function HomeHeroSlider({ slides, statusMessage }: HomeHeroSlider
       />
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#1D2D44]/95 via-[#1D2D44]/75 to-[#1D2D44]/25" aria-hidden="true" />
 
-      <div className="section-container relative z-20 flex min-h-[34rem] items-center py-16 sm:min-h-[39rem] lg:min-h-[42rem]">
-        <div className="max-w-3xl py-8">
+      <div className="section-container relative z-20 flex min-h-[34rem] flex-col items-start justify-end py-10 sm:min-h-[39rem] sm:py-12 lg:min-h-[42rem] lg:py-14">
+        <div className="max-w-3xl">
           <p className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#C9DCE8]">
             Villa Unión, La Rioja <span aria-hidden="true">·</span> {activeSlide.type}
           </p>
@@ -110,40 +110,40 @@ export default function HomeHeroSlider({ slides, statusMessage }: HomeHeroSlider
               </Link>
             )}
           </div>
+        </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <span className="mr-1 text-sm font-medium text-[#C9DCE8]" aria-hidden="true">
-              {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-            </span>
-            <button
-              type="button"
-              onClick={() => setManuallyPaused((paused) => !paused)}
-              aria-pressed={manuallyPaused || prefersReducedMotion}
-              aria-label={prefersReducedMotion ? 'Avance automático desactivado por preferencia de movimiento reducido' : manuallyPaused ? 'Reanudar avance automático' : 'Pausar avance automático'}
-              disabled={prefersReducedMotion}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#C9DCE8]/70 bg-[#1D2D44]/45 px-4 text-sm font-semibold text-[#EAF2F8] transition-colors hover:bg-[#3E5C76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] disabled:cursor-not-allowed disabled:opacity-70 motion-reduce:transition-none"
-            >
-              {manuallyPaused || prefersReducedMotion ? <Play className="h-4 w-4" aria-hidden="true" /> : <Pause className="h-4 w-4" aria-hidden="true" />}
-              {prefersReducedMotion ? 'Movimiento reducido' : manuallyPaused ? 'Reanudar' : 'Pausar'}
-            </button>
-            <button
-              type="button"
-              onClick={showPrevious}
-              aria-label="Ver contenido anterior"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C9DCE8]/70 bg-[#1D2D44]/45 text-[#EAF2F8] transition-colors hover:bg-[#3E5C76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] motion-reduce:transition-none"
-            >
-              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={showNext}
-              aria-label="Ver contenido siguiente"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C9DCE8]/70 bg-[#1D2D44]/45 text-[#EAF2F8] transition-colors hover:bg-[#3E5C76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] motion-reduce:transition-none"
-            >
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
-            </button>
-            {statusMessage && <p role="status" className="basis-full text-sm text-[#C9DCE8]">{statusMessage}</p>}
-          </div>
+        <div className="mt-10 flex w-full max-w-3xl flex-wrap items-center gap-3 border-t border-[#C9DCE8]/35 pt-5 sm:mt-12 sm:pt-6" role="group" aria-label="Controles del carrusel">
+          <span className="mr-1 text-sm font-medium text-[#C9DCE8]" aria-hidden="true">
+            {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+          </span>
+          <button
+            type="button"
+            onClick={() => setManuallyPaused((paused) => !paused)}
+            aria-pressed={manuallyPaused || prefersReducedMotion}
+            aria-label={prefersReducedMotion ? 'Avance automático desactivado por preferencia de movimiento reducido' : manuallyPaused ? 'Reanudar avance automático' : 'Pausar avance automático'}
+            disabled={prefersReducedMotion}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#C9DCE8]/70 bg-[#1D2D44]/45 px-4 text-sm font-semibold text-[#EAF2F8] transition-colors hover:bg-[#3E5C76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] disabled:cursor-not-allowed disabled:opacity-70 motion-reduce:transition-none"
+          >
+            {manuallyPaused || prefersReducedMotion ? <Play className="h-4 w-4" aria-hidden="true" /> : <Pause className="h-4 w-4" aria-hidden="true" />}
+            {prefersReducedMotion ? 'Movimiento reducido' : manuallyPaused ? 'Reanudar' : 'Pausar'}
+          </button>
+          <button
+            type="button"
+            onClick={showPrevious}
+            aria-label="Ver contenido anterior"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C9DCE8]/70 bg-[#1D2D44]/45 text-[#EAF2F8] transition-colors hover:bg-[#3E5C76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] motion-reduce:transition-none"
+          >
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={showNext}
+            aria-label="Ver contenido siguiente"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#C9DCE8]/70 bg-[#1D2D44]/45 text-[#EAF2F8] transition-colors hover:bg-[#3E5C76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAF2F8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1D2D44] motion-reduce:transition-none"
+          >
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          </button>
+          {statusMessage && <p role="status" className="basis-full text-sm text-[#C9DCE8]">{statusMessage}</p>}
         </div>
       </div>
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-16 bg-gradient-to-t from-[#1D2D44]/30 to-transparent" aria-hidden="true" />
