@@ -3,12 +3,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BedDouble, Bath, MapPin, Play, ShieldCheck, Users } from 'lucide-react';
+import { ArrowRight, Bath, MapPin, Play, ShieldCheck, Users } from 'lucide-react';
 import { accommodations } from '@/lib/data/accommodations';
-import { getFeaturedAccommodation } from '@/lib/data/featured-accommodation';
 import { getProducts } from '@/lib/data/products';
 import { getPromotions } from '@/lib/data/promotions';
-import type { FeaturedAccommodation, Product, Promotion, Testimonial } from '@/lib/types';
+import type { Product, Promotion, Testimonial } from '@/lib/types';
 import { testimonials } from '@/lib/data/testimonials';
 import ProductCard from '@/components/product-card';
 import HomeHeroSlider, { type HomeHeroSlide } from '@/components/home-hero-slider';
@@ -55,7 +54,6 @@ function toPromotionProduct(promotion: Promotion): PromotionProduct {
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
   const [publishedProducts, setPublishedProducts] = useState<Product[] | null>(null);
-  const [featuredAccommodation, setFeaturedAccommodation] = useState<FeaturedAccommodation | null>(null);
   const [promotions, setPromotions] = useState<Promotion[] | null>(null);
   const [dataError, setDataError] = useState(false);
 
@@ -63,9 +61,8 @@ export default function Home() {
     let active = true;
     const fetchData = async () => {
       try {
-        const [allProducts, accommodationData, allPromotions] = await Promise.all([
+        const [allProducts, allPromotions] = await Promise.all([
           getProducts(),
-          getFeaturedAccommodation(),
           getPromotions(),
         ]);
         if (!active) return;
@@ -74,13 +71,11 @@ export default function Home() {
           .sort((a, b) => (a.featuredOrder ?? Number.MAX_SAFE_INTEGER) - (b.featuredOrder ?? Number.MAX_SAFE_INTEGER));
         setPublishedProducts(allProducts.filter((product) => product.status === 'published'));
         setFeaturedProducts(featured);
-        setFeaturedAccommodation(accommodationData);
         setPromotions(allPromotions.filter((promotion) => promotion.status === 'published'));
       } catch {
         if (!active) return;
         setFeaturedProducts([]);
         setPublishedProducts([]);
-        setFeaturedAccommodation(null);
         setPromotions([]);
         setDataError(true);
       }
@@ -94,7 +89,6 @@ export default function Home() {
   const complementaryOffers = topPromotion.length > 0
     ? [...topProducts.slice(0, 2), ...topPromotion]
     : topProducts.slice(0, 3);
-  const heroImage = accommodations[0]?.images[0];
   const staySlides: HomeHeroSlide[] = accommodations.flatMap((accommodation) => {
     const selectedImageSrc = heroImageByAccommodationSlug[accommodation.slug];
     const interiorImage = accommodation.images.find((image) => image.src === selectedImageSrc);
@@ -170,25 +164,6 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-12 grid min-w-0 overflow-hidden rounded-3xl border border-border bg-secondary/50 md:grid-cols-2">
-            <div className="relative aspect-[4/3] min-w-0 md:aspect-auto md:min-h-[21rem]">
-              {featuredAccommodation ? (
-                <Image src={featuredAccommodation.imageUrl} alt={featuredAccommodation.title} fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
-              ) : heroImage ? (
-                <Image src={heroImage.src} alt={heroImage.alt} fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
-              ) : null}
-            </div>
-            <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-12">
-              <span className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-accent"><BedDouble className="h-4 w-4" aria-hidden="true" /> Alojamiento destacado</span>
-              <h3 className="font-headline text-2xl font-bold text-foreground sm:text-3xl">{featuredAccommodation?.title ?? 'Alojamiento en Villa Unión'}</h3>
-              <p className="mt-4 max-w-[55ch] text-base leading-relaxed text-muted-foreground">
-                {featuredAccommodation?.description ?? 'Conocé nuestras opciones de alojamiento y encontrá la estadía que mejor se adapta a tu viaje.'}
-              </p>
-              <Button asChild className="mt-6 min-h-11 self-start rounded-xl">
-                <Link href={featuredAccommodation?.buttonLink || '/alojamientos'}>{featuredAccommodation?.buttonText || 'Ver alojamientos'} <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
-              </Button>
-            </div>
-          </div>
         </div>
       </section>
 
