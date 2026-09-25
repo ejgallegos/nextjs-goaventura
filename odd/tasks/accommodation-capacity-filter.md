@@ -7,7 +7,7 @@ Add an accessible guest-count filter to `/alojamientos` so visitors can find sta
 - Authorized: the accommodations page, a focused client-side catalog/filter component, and this task document.
 - Preserve existing accommodation data, card content/links, responsive catalog layout, metadata, and hero.
 - Do not modify `public/data/shorts.json` or unrelated routes/content.
-- No commit; parent will inspect and create the conventional work-unit commit.
+- Work-unit commit completed: `1c715f2 feat(accommodations): filter stays by guest capacity`.
 - Route: `delegated` — writer trigger is the page plus the new client catalog/filter component (two non-trivial files).
 - Strict TDD: enabled, but no general test runner is registered for this UI behavior. Do not invent RED evidence or tests; perform the listed verification commands.
 - Engram mirror `odd/accommodation-capacity-filter/tasks`: pending/unavailable; local document is source of truth until synchronized.
@@ -28,5 +28,6 @@ Add an accessible guest-count filter to `/alojamientos` so visitors can find sta
 - No general test runner is registered for this UI behavior; strict TDD RED cannot be evidenced without inventing a test harness.
 - Implemented `src/components/accommodation-capacity-list.tsx` with a native guest-count select (1–8), maximum-capacity parsing, polite result count, filtered empty state, and reset controls; existing cards/links and responsive columns are retained with visible focus and reduced-motion handling.
 - Kept route metadata and hero in the Server Component. The page passes only card-rendering fields to the Client Component to avoid serializing full accommodation records.
+- Work-unit commit: `1c715f2 feat(accommodations): filter stays by guest capacity`.
 - Verification: `npm run typecheck` passed after the build generated `.next/types`; the initial concurrent run raced with Next.js build cleanup and failed on missing `.next/types`, then the rerun passed. `npm run lint` passed (repo-wide pre-existing warnings, none reported for the changed files). `npm run build` passed with existing warnings for missing optional `@opentelemetry/exporter-jaeger` and Handlebars `require.extensions`. `git diff --check` passed.
 - Engram mirror `odd/accommodation-capacity-filter/tasks` remains pending; no mirror write was claimed.
