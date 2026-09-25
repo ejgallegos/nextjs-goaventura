@@ -15,12 +15,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const whatsappText = `Hola, me interesa ${isPromotion ? 'la promoción' : product.category === 'Excursion' ? 'la excursión' : 'el transfer'} "${product.name}".`;
 
   return (
-    <article className="flex h-full min-w-0 flex-col rounded-2xl bg-card">
-      <div className="relative isolate aspect-[3/2] w-full rounded-2xl bg-secondary">
+    <article className="flex h-full min-w-0 flex-col rounded-2xl border border-border bg-card shadow-sm transition-shadow duration-200 hover:shadow-md motion-reduce:transition-none">
+      <div className="relative isolate aspect-[16/10] w-full shrink-0 overflow-hidden rounded-t-2xl bg-secondary">
         <Link
           href={productPageUrl}
           aria-label={`Ver detalles de ${product.name}`}
-          className="group absolute inset-0 z-0 block overflow-hidden rounded-2xl focus-visible:z-20"
+          className="group absolute inset-0 z-0 block rounded-t-2xl focus-visible:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-accent"
         >
           <Image
             src={product.imageUrl}
@@ -43,11 +43,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         )}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col space-y-2 pt-4">
+      <div className="flex min-w-0 flex-1 flex-col space-y-2 p-5">
         <Link href={productPageUrl} aria-label={`Ver detalles de ${product.name}`} className="rounded-sm focus-visible:outline-none">
-          <h3 className="line-clamp-2 font-headline text-lg font-semibold text-foreground transition-colors hover:text-accent">{product.name}</h3>
+          <h3 className="line-clamp-2 min-h-[3.5rem] font-headline text-lg font-semibold leading-7 text-foreground transition-colors hover:text-accent">{product.name}</h3>
         </Link>
-        <p className="line-clamp-3 text-sm text-muted-foreground">{product.shortDescription || product.description}</p>
+        <p className="line-clamp-3 min-h-[3.75rem] text-sm leading-5 text-muted-foreground">{product.shortDescription || product.description}</p>
         {product.tags && product.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 pt-1">
             {product.tags.slice(0, 3).map((tag) => (
@@ -57,10 +57,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         )}
       </div>
 
-      <div className="mt-auto grid grid-cols-1 gap-2 border-t pt-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-2 border-t border-border p-5 pt-4 xl:grid-cols-2">
         <Link
           href={productPageUrl}
-          className="inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-xl border px-3 text-center text-sm font-medium transition-colors hover:bg-secondary/50"
+          className="inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-xl border border-border px-3 text-center text-sm font-semibold text-foreground transition-colors hover:bg-secondary/50 focus-visible:outline-none"
         >
           Ver Detalles <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
         </Link>
