@@ -21,13 +21,14 @@ The home page currently leads with a generic hero and travel experiences before 
 - Engram mirror: synced to project topic `odd/accommodation-first/tasks` after confirming the runtime exposes the Engram save tool.
 
 ## Acceptance Criteria
-1. Home opens with a Villa Unión accommodation hero and primary `Ver alojamientos` CTA plus secondary WhatsApp availability CTA; accommodation catalog and featured stay appear before any travel content.
+1. Home opens with a Villa Unión accommodation-first hero; accommodation catalog and featured stay appear before any complementary travel content.
 2. Complementary travel/promotions/transfers appear under `Completá tu estadía`; home shows no more than three complementary experiences/promotions and has honest loading/empty states.
 3. Header desktop/mobile and footer use the exact order: Inicio, Alojamientos, Excursiones y viajes, Shorts, Nosotros, Contacto. Travel remains at `/viajes` with its content intact.
 4. Accommodation catalog/details emphasize stays. Each detail page places compact cross-selling after reservation CTAs, limited to published trips/promotions, with a clear empty state.
 5. Existing travel pages frame products as completing the stay without changing routes or breaking metadata/SEO.
 6. Analytics track accommodation-detail views, Booking clicks, WhatsApp inquiries, and experience clicks from details; send no personal data and no-op safely when analytics is unavailable.
 7. Touched layouts remain usable at 375/768/1024/1440px without horizontal overflow, use correctly sized `next/image`, visible focus, >=44px touch targets, and honor reduced motion.
+8. The main home hero is a wide, accessible editorial slider with accommodation-first ordering and published complementary travel/promotions; slide content is image, type, title, and short text only (plus discreet navigation controls), with no CTA buttons or cards.
 
 ## Tasks
 - [x] AF-01 — Reorder the home page around accommodation-first conversion and bounded complementary offers. Added a Villa Unión accommodation hero, listing-first cards and feature panel, then one complementary section capped at three published offers; loading and failure/empty states are explicit.
@@ -37,12 +38,15 @@ The home page currently leads with a generic hero and travel experiences before 
 - [x] AF-05 — Move Booking click tracking into a Client Component compatible with the Server Component detail route and correct hero image `sizes` to reflect its full viewport width.
 - [x] AF-06 — Redesign shared travel cards with one bordered, rounded surface; contained media; a consistent-height content area; and separate, responsive actions without overlap or clipping.
 - [x] AF-07 — Distinguish a genuinely empty cross-sell catalog from temporary product/promotion source failures while retaining offers from a successful source.
+- [superseded/reverted] AF-08 — Earlier standalone stay/experience slider attempt was reverted; it is not part of the current implementation or acceptance evidence.
+- [x] AF-09 — Replaced the static main home hero with an accommodation-first editorial slider sourced from existing accommodation assets and published experiences/promotions, without changing the home sections that follow.
 
 ## Checks
 - `npm run typecheck`
 - `npm run lint`
 - `npm run build`
 - `git diff --check`
+- Focused lint for `src/app/page.tsx` and the new hero slider component.
 - General unit/integration tests: unavailable (no general test runner/test script in `package.json`).
 - Runtime/browser checks at 375/768/1024/1440px if a local preview can be safely run.
 
@@ -60,6 +64,13 @@ The home page currently leads with a generic hero and travel experiences before 
 - Verification: final `git diff --check`, `npm run typecheck`, and `npm run lint` passed; lint exited 0 with repository warnings, none naming the touched files. No general test runner is configured. The first two `npm run build` attempts failed during `Generating static pages (12/50)` with `Next.js build worker exited with code: 1 and signal: null`; after the RSC correction, the latest `npm run build` passed and generated all 50 static pages. A dev-server attempt for viewport checks failed before startup with `listen EPERM: operation not permitted 0.0.0.0:9002`, so 375/768/1024/1440 browser verification could not run.
 - Delivery: `e419b7a feat(home): prioritize accommodation discovery` and `8a70e5f feat(accommodations): add complementary travel suggestions` preserve the first two verified work units locally. The remaining navigation and positioning work is staged as the final local work unit; no branch has been pushed and no pull request exists.
 - Persistence: the runtime did expose Engram, contrary to the initial handoff assumption; the complete task document was mirrored under `odd/accommodation-first/tasks`.
+- AF-09 scope update: the earlier standalone AF-08 attempt was reverted. The approved slider now replaces the main static hero, contains no slide CTAs/cards, starts with a stay and keeps at least half of slides as accommodation; only keyboard-accessible discreet previous/next controls are interactive. Reuse existing imagery and packages, keep the other home content untouched, and use the established logo palette.
+- Strict TDD remains enabled, but the repository has no general test runner/test script; do not invent RED evidence. Record focused lint/typecheck/build/diff results when observed.
+- Route for AF-09: delegated direct (assigned single writer); task document created/reconciled before source edits. Delivery strategy remains `ask-on-risk`; no commit is authorized for this task.
+- AF-09 starting-state note: the existing `public/data/shorts.json` worktree modification was unrelated to this task and was preserved without edits.
+- AF-09 implementation: `src/components/home-hero-slider.tsx` provides a full-width, no-autoplay slider with only image/type/title/description plus discreet previous/next controls; arrow keys work from the region or controls, focus is visible, targets are 44px, `prefers-reduced-motion` is honored, and image `sizes` is `100vw` with priority reserved for the initial slide. `src/app/page.tsx` now feeds all local accommodation slides first and up to the same number of currently published product/promotion slides, interleaved so the first slide is a stay and stays are at least half; static stay slides remain while offers load or if fetching fails. Remaining home content is unchanged.
+- AF-09 verification: repository `npm run lint` passed (pre-existing warnings elsewhere; no warnings in the touched files); `npm run typecheck` passed; `npm run build` passed and generated all 50 static pages, with existing optional Jaeger/Handlebars build warnings; `git diff --check` passed. Direct `npx eslint <files>` was unavailable because ESLint 9 cannot find an `eslint.config.*`; the project lint script (`next lint`) completed successfully. No general test runner exists, so strict TDD RED evidence is unavailable and was not invented. Visual viewport checks were not run because the local dev server previously failed with `listen EPERM` on port 9002.
+- AF-09 layer correction: moved the hero image to `z-0`, placed the navy overlay and bottom fade above it at `z-10`, and kept all text and controls at `z-20`; removed negative image/overlay z-indexes so the opaque section background cannot conceal the image. Focused `npm run lint -- --file src/components/home-hero-slider.tsx` passed with no warnings/errors; `npm run typecheck`, `npm run build` (50 pages; existing optional Jaeger/Handlebars warnings), and `git diff --check` passed.
 
 ## Next Step
-Review the committed-state-independent diff and perform visual checks at 375/768/1024/1440px when a local browser preview is available.
+AF-09 is complete. Perform visual checks at 375/768/1024/1440px when a local browser preview is available; no commit was made.

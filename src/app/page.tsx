@@ -11,6 +11,7 @@ import { getPromotions } from '@/lib/data/promotions';
 import type { FeaturedAccommodation, Product, Promotion, Testimonial } from '@/lib/types';
 import { testimonials } from '@/lib/data/testimonials';
 import ProductCard from '@/components/product-card';
+import HomeHeroSlider, { type HomeHeroSlide } from '@/components/home-hero-slider';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import TestimonialSlider from '@/components/testimonial-slider';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,7 @@ function toPromotionProduct(promotion: Promotion): PromotionProduct {
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[] | null>(null);
+  const [publishedProducts, setPublishedProducts] = useState<Product[] | null>(null);
   const [featuredAccommodation, setFeaturedAccommodation] = useState<FeaturedAccommodation | null>(null);
   const [promotions, setPromotions] = useState<Promotion[] | null>(null);
   const [dataError, setDataError] = useState(false);
@@ -54,12 +56,14 @@ export default function Home() {
         const featured = allProducts
           .filter((product) => product.isFeatured && product.status === 'published')
           .sort((a, b) => (a.featuredOrder ?? Number.MAX_SAFE_INTEGER) - (b.featuredOrder ?? Number.MAX_SAFE_INTEGER));
+        setPublishedProducts(allProducts.filter((product) => product.status === 'published'));
         setFeaturedProducts(featured);
         setFeaturedAccommodation(accommodationData);
         setPromotions(allPromotions.filter((promotion) => promotion.status === 'published'));
       } catch {
         if (!active) return;
         setFeaturedProducts([]);
+        setPublishedProducts([]);
         setFeaturedAccommodation(null);
         setPromotions([]);
         setDataError(true);
@@ -75,48 +79,47 @@ export default function Home() {
     ? [...topProducts.slice(0, 2), ...topPromotion]
     : topProducts.slice(0, 3);
   const heroImage = accommodations[0]?.images[0];
+  const staySlides: HomeHeroSlide[] = accommodations
+    .filter((accommodation) => accommodation.images[0])
+    .map((accommodation) => ({
+      id: `stay-${accommodation.id}`,
+      type: 'Alojamiento',
+      title: accommodation.name,
+      description: accommodation.tagline || accommodation.shortDescription,
+      image: accommodation.images[0].src,
+      imageAlt: accommodation.images[0].alt,
+    }));
+  const publishedExperienceSlides: HomeHeroSlide[] = [
+    ...(publishedProducts ?? []).map((product) => ({
+      id: `experience-${product.id}`,
+      type: 'Experiencia' as const,
+      title: product.name,
+      description: product.shortDescription || product.description,
+      image: product.imageUrl,
+      imageAlt: `Imagen de ${product.name}`,
+    })),
+    ...(promotions ?? []).map((promotion) => ({
+      id: `promotion-${promotion.id}`,
+      type: 'Promoción' as const,
+      title: promotion.title,
+      description: promotion.description,
+      image: promotion.imageUrl,
+      imageAlt: `Imagen de ${promotion.title}`,
+    })),
+  ];
+  const heroSlides = staySlides.flatMap((stay, index) => {
+    const experience = publishedExperienceSlides[index];
+    return experience ? [stay, experience] : [stay];
+  });
+  const heroStatusMessage = publishedProducts === null || promotions === null
+    ? 'Cargando experiencias y promociones...'
+    : publishedExperienceSlides.length === 0 && dataError
+      ? 'Las experiencias y promociones no están disponibles en este momento.'
+      : undefined;
 
   return (
     <div className="flex flex-col">
-      <section className="relative isolate overflow-hidden bg-slate-950 text-white" aria-labelledby="home-heading">
-        {heroImage && (
-          <Image
-            src={heroImage.src}
-            alt={heroImage.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="-z-20 object-cover object-center"
-          />
-        )}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/20" />
-        <div className="section-container flex min-h-[34rem] items-center py-16 sm:min-h-[39rem] lg:min-h-[42rem]">
-          <div className="max-w-2xl py-8">
-            <p className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-white/80">
-              <MapPin className="h-4 w-4" aria-hidden="true" /> Villa Unión, La Rioja
-            </p>
-            <h1 id="home-heading" className="max-w-[13ch] font-headline text-4xl font-extrabold leading-[1.04] tracking-tight text-balance sm:text-6xl lg:text-7xl">
-              Tu estadía empieza cerca de todo.
-            </h1>
-            <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-white/85 sm:text-lg">
-              Elegí tu alojamiento en Villa Unión y descubrí Talampaya, la Cuesta de Miranda y los paisajes de La Rioja a tu ritmo.
-            </p>
-            <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="min-h-12 rounded-xl bg-white px-6 text-slate-950 hover:bg-white/90">
-                <Link href="/alojamientos">Ver alojamientos <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
-              </Button>
-              <WhatsAppCtaButton
-                predefinedText="Hola, quiero consultar disponibilidad de alojamientos en Villa Unión."
-                buttonText="Consultar disponibilidad"
-                variant="outline"
-                size="lg"
-                className="min-h-12 border-white/60 bg-white/10 px-6 text-white hover:bg-white/20 hover:text-white"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background/30 to-transparent" />
-      </section>
+      <HomeHeroSlider slides={heroSlides} statusMessage={heroStatusMessage} />
 
       <section className="section-padding bg-background" aria-labelledby="stays-heading">
         <div className="section-container">
