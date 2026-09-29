@@ -190,7 +190,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-5">
             {accommodations.map((accommodation) => (
               <Link key={accommodation.id} href={`/alojamientos/${accommodation.slug}`} className="group min-w-0 rounded-2xl focus-visible:outline-none">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
@@ -198,7 +198,7 @@ export default function Home() {
                     src={accommodation.images[0].src}
                     alt={accommodation.images[0].alt}
                     fill
-                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
+                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 20vw"
                     className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
                   />
                 </div>
