@@ -18,14 +18,31 @@ WORKDIR /app
 # Copiar todas las dependencias instaladas
 COPY --from=deps /app/node_modules ./node_modules
 
-# Crear archivo .env con valores válidos para build (modo mock Firebase)
+# Public Firebase configuration is supplied at build time by Compose. These
+# values are public client configuration, not server credentials.
+ARG NEXT_PUBLIC_FIREBASE_PROJECT_ID
+ARG NEXT_PUBLIC_FIREBASE_APP_ID
+ARG NEXT_PUBLIC_FIREBASE_API_KEY
+ARG NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+ARG NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+ARG NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+ARG NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+ARG NEXT_PUBLIC_RECAPTCHA_V3_SITE_KEY
+ARG NEXT_PUBLIC_SITE_URL
+
+ENV NEXT_PUBLIC_FIREBASE_PROJECT_ID=${NEXT_PUBLIC_FIREBASE_PROJECT_ID} \
+    NEXT_PUBLIC_FIREBASE_APP_ID=${NEXT_PUBLIC_FIREBASE_APP_ID} \
+    NEXT_PUBLIC_FIREBASE_API_KEY=${NEXT_PUBLIC_FIREBASE_API_KEY} \
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN} \
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET} \
+    NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID} \
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID} \
+    NEXT_PUBLIC_RECAPTCHA_V3_SITE_KEY=${NEXT_PUBLIC_RECAPTCHA_V3_SITE_KEY} \
+    NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+
+# Use Firebase Admin's existing build-only mock path; no credentials are baked
+# into the image.
 ENV MOCK_FIREBASE=true
-ENV NEXT_PUBLIC_FIREBASE_PROJECT_ID=mock-project
-ENV NEXT_PUBLIC_FIREBASE_APP_ID=1:mock:web:mock
-ENV NEXT_PUBLIC_FIREBASE_API_KEY=mock-api-key
-ENV FIREBASE_PROJECT_ID=mock-project
-ENV FIREBASE_CLIENT_EMAIL=mock@mock.iam.gserviceaccount.com
-ENV FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMOCK_KEY\n-----END PRIVATE KEY-----\n"
 
 # Copiar código fuente
 COPY . .
@@ -55,7 +72,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Limpiar archivos innecesarios del build
-RUN rm -rf /app/.next/cache /app/.next/babel-loader 2>/dev/null || true
+RUN rm -rf /app/.next/cache /app/.next/babel-loader 2>/dev/null || true && \
+    mkdir -p /app/.next/cache/images && \
+    chown -R nextjs:nodejs /app/.next/cache
 
 # Variables de entorno
 ENV NODE_ENV=production

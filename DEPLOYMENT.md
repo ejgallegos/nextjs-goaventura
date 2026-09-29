@@ -80,12 +80,12 @@ npm audit --audit-level=moderate
 
 ### 4. Production Build
 ```bash
-npm run build:production
+npm run build
 ```
 
-### 5. Bundle Analysis (Optional)
+### 5. Start the Production Server
 ```bash
-npm run build:analyze
+npm run start
 ```
 
 ## 🚀 Deployment Options
@@ -113,30 +113,33 @@ vercel --prod
 
 ### Option B: Docker Deployment
 
-1. **Build Docker Image**
+The Docker build requires the public Firebase client configuration because Next.js embeds these `NEXT_PUBLIC_*` values during `next build`. Set the required `NEXT_PUBLIC_FIREBASE_PROJECT_ID`, `NEXT_PUBLIC_FIREBASE_APP_ID`, and `NEXT_PUBLIC_FIREBASE_API_KEY` values in a local `.env.production` file. Optional Firebase client fields, `NEXT_PUBLIC_RECAPTCHA_V3_SITE_KEY`, and `NEXT_PUBLIC_SITE_URL` are forwarded when provided. Keep `.env.production` out of version control and do not put server credentials in Docker build arguments. The file is excluded from the Docker build context; Compose reads it for variable interpolation and supplies only the declared public build args.
+
+Restrict the local configuration file to its owner before building (`chmod 600 .env.production`).
+
+1. **Build and run with Docker Compose**
 ```bash
-docker build -t goaventura:production .
+docker compose --env-file .env.production -f docker-compose.production.yml up -d --build
 ```
 
-2. **Run Container**
+Compose fails with a clear missing-variable error if one of the three required public Firebase settings is absent. Runtime server-side credentials remain in `.env.production` via the Compose `env_file`; they are not passed to the build. Store this file securely on the deployment host and do not commit it.
+
+The container runs as UID/GID `1001:1001` with a read-only root filesystem. Compose mounts only `/app/.next/cache/images` as a writable tmpfs owned by that identity; `/tmp` and `/var/tmp` remain separate temporary mounts. After deploying, verify the image-cache mount with:
+
 ```bash
-docker run -d \
-  --name goaventura \
-  -p 3000:3000 \
-  --env-file .env.local \
-  goaventura:production
+docker compose -f docker-compose.production.yml exec goaventura sh -c 'touch /app/.next/cache/images/.write-check && rm /app/.next/cache/images/.write-check'
 ```
 
 ### Option C: Traditional Server
 
 1. **Build Application**
 ```bash
-npm run build:production
+npm run build
 ```
 
 2. **Start Production Server**
 ```bash
-npm run start:production
+npm run start
 ```
 
 ## 🔒 Security Configuration

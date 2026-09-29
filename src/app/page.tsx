@@ -192,7 +192,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-5">
             {accommodations.map((accommodation) => (
-              <Link key={accommodation.id} href={`/alojamientos/${accommodation.slug}`} className="group min-w-0 rounded-2xl focus-visible:outline-none">
+              <Link key={accommodation.id} href={`/alojamientos/${accommodation.slug}`} className="group min-w-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
                   <Image
                     src={accommodation.images[0].src}
