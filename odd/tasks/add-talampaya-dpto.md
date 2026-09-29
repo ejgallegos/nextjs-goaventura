@@ -8,7 +8,7 @@ Add the Altos del Talampaya apartment as a complete accommodation listing across
 - Confirmed facts: capacity 2; air conditioning, heating, bedding, garage, and Wi-Fi; Villa Unión, La Rioja; coordinates `-29.323099, -68.225492`; Plus Code `MQGF+QR6`; map link `https://maps.app.goo.gl/5xrf25XARQmeipwW6`.
 - No Booking URL, bedroom/bathroom count, pet policy, kitchen, or any unconfirmed amenities. Unknown bedroom/bathroom fields must be omitted in UI and structured data.
 - Keep the 15 curated images and add the two newly approved supplied images 1 and 2 with stable names and accurate Spanish alt text, for a 17-photo set. Do not edit `public/data/shorts.json`.
-- Home catalog must include the new listing; the hero slider maps source photo 1; the detail-page cover maps source photo 2 while catalog cards continue using the existing facade cover.
+- Home catalog must include the new listing. Corrected image roles: source photo 1 is the cover everywhere (home/catalog cards/detail); source photo 7 is the interior home-hero image.
 - Record each implementation and its checks here before its work-unit commit. Engram mirror status must remain truthful.
 
 ## Route and TDD
@@ -19,7 +19,7 @@ Add the Altos del Talampaya apartment as a complete accommodation listing across
 - [x] New accommodation appears on `/alojamientos`, the home accommodation catalog, hero slider, and `/alojamientos/altos-del-talampaya-dpto`.
 - [x] Metadata and sitemap include the new slug; JSON-LD omits unsupported facts.
 - [x] Capacity and verified services are accurate; unavailable bedrooms/bathrooms, pets, Booking, and unsupported amenities are omitted.
-- [x] The 17-photo set has stable names and truthful Spanish alt text; catalog cards use the clean wide facade (source 4).
+- [x] The 17-photo set has stable names and truthful Spanish alt text; current catalog/detail cover is source 1.
 - [x] WhatsApp remains the contact path; no Booking CTA appears for this property.
 - [x] `public/data/shorts.json` remains untouched and unstaged.
 
@@ -55,6 +55,20 @@ Add the Altos del Talampaya apartment as a complete accommodation listing across
 - Strict TDD remains enabled; no general project test runner exists, so RED cannot be evidenced and no test will be invented.
 - Engram mirror status: synchronized under `odd/add-talampaya-dpto/tasks` with post-commit evidence.
 - Initial listing work-unit commit: `385032b feat(accommodations): add talampaya apartment`.
-- Follow-up implementation adds `detailHeroImageSrc`, used only by the detail hero. Catalog cards intentionally continue using `images[0]`; other listings fall back to their first image.
-- Copied source `1.jpeg` to `altos-del-talampaya-dpto-16.jpg` (home hero: facade/garage with parked car) and source `2.jpeg` to `altos-del-talampaya-dpto-17.jpg` (detail hero: brick facade and car beneath the covered garage). Both remain in the full gallery.
+- The prior follow-up temporarily added `detailHeroImageSrc` and mapped source photos 1 and 2 to separate hero surfaces; the correction below removes that field and supersedes those roles.
+- Copied source `1.jpeg` to `altos-del-talampaya-dpto-16.jpg` (now the first gallery image and shared cover) and source `2.jpeg` to `altos-del-talampaya-dpto-17.jpg` (retained in the full gallery).
 - Follow-up verification: `git diff --check` passed; `npm run typecheck` passed after a serial rerun (the first parallel run raced with `next build` recreating `.next/types`); `npm run lint` passed with existing project-wide warnings; `npm run build` passed with existing optional Jaeger exporter and Handlebars warnings.
+
+## Follow-up: corrected Dpto image roles
+- [x] Make supplied source photo 1 (`altos-del-talampaya-dpto-16.jpg`) the first gallery image, so catalog cards, home cards, detail hero, and other first-image consumers use it as the cover.
+- [x] Map source photo 7 (`altos-del-talampaya-dpto-02.jpg`) to the home hero slider; retain all 17 existing gallery assets.
+- [x] Remove redundant `detailHeroImageSrc` data/model and detail-page selection; the first image serves all cover surfaces.
+- [x] Run `git diff --check`, `npm run typecheck`, `npm run lint`, and `npm run build`.
+- [ ] Commit only this correction with `fix(accommodations): correct apartment image roles`.
+- Scope: Dpto image ordering/home hero map/detail cover and this task evidence only; do not modify other accommodations or `public/data/shorts.json`.
+- Strict TDD remains enabled; no general test runner exists, so RED is unavailable and no test will be invented.
+- Source mapping verified by SHA-256: photo 1 matches `-16.jpg` (`8e08f6e4…`), photo 2 matches `-17.jpg` (`764f2f82…`), and photo 7 matches `-02.jpg` (`44ee19b8…`).
+- The source ordering and home map are now corrected: source photo 1 is `images[0]`; source photo 7 is the hero map; the redundant dedicated detail-hero field has been removed. All 17 image entries remain.
+- Verification: `git diff --check`, `npm run typecheck`, `npm run lint`, and `npm run build` passed. Lint/build emit the same pre-existing project warnings noted above. Strict TDD runner limitation remains unchanged; no RED test was invented.
+- Correction commit: pending `fix(accommodations): correct apartment image roles`.
+- Engram mirror: current correction evidence will be saved under `odd/add-talampaya-dpto/tasks`.

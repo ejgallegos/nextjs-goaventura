@@ -40,8 +40,6 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
   const { slug } = await params;
   const accommodation = getAccommodationBySlug(slug);
   if (!accommodation) notFound();
-  const detailHeroImage = accommodation.images.find((image) => image.src === accommodation.detailHeroImageSrc)
-    ?? accommodation.images[0];
 
   const others = accommodations.filter((a) => a.id !== accommodation.id);
   const [productsResult, promotionsResult] = await Promise.allSettled([
@@ -96,7 +94,7 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
 
       {/* Hero */}
       <section className="relative min-h-[28rem] md:h-[55vh] lg:h-[65vh]">
-        <Image src={detailHeroImage.src} alt={detailHeroImage.alt} fill sizes="100vw" quality={85} className="object-cover" priority />
+        <Image src={accommodation.images[0].src} alt={accommodation.images[0].alt} fill sizes="100vw" quality={85} className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
         <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10">
           <Button variant="ghost" asChild className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-0">

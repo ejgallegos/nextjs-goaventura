@@ -49,7 +49,7 @@ const heroImageByAccommodationSlug: Record<string, string> = {
   'altos-del-talampaya-casa': '/images/alojamientos/casa-10.jpg',
   'altos-del-talampaya-casa-ii': '/images/alojamientos/casa-ii-12.jpg',
   'casa-altos-del-talampaya-iii': '/images/alojamientos/casa-iii-9.jpg',
-  'altos-del-talampaya-dpto': '/images/alojamientos/altos-del-talampaya-dpto-16.jpg',
+  'altos-del-talampaya-dpto': '/images/alojamientos/altos-del-talampaya-dpto-02.jpg',
 };
 
 const institutionalHeroSlide: HomeHeroSlide = {

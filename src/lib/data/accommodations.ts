@@ -20,7 +20,6 @@ export interface Accommodation {
     lat: number;
     lng: number;
   };
-  detailHeroImageSrc?: string;
   capacity: string;
   bedrooms?: number;
   bathrooms?: number;
@@ -330,7 +329,6 @@ Dispone de cochera y Wi-Fi.
       lat: -29.323099,
       lng: -68.225492,
     },
-    detailHeroImageSrc: '/images/alojamientos/altos-del-talampaya-dpto-17.jpg',
     capacity: '2 personas',
     services: [
       '❄️ Aire acondicionado',
@@ -341,6 +339,7 @@ Dispone de cochera y Wi-Fi.
     ],
     whatsapp: WHATSAPP_NUMBER,
     images: [
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-16.jpg', alt: 'Fachada y cochera techada con un automóvil estacionado', hint: 'departamento fachada cochera auto' },
       { src: '/images/alojamientos/altos-del-talampaya-dpto-01.jpg', alt: 'Fachada de ladrillo y acceso techado a la propiedad', hint: 'departamento fachada acceso cochera' },
       { src: '/images/alojamientos/altos-del-talampaya-dpto-02.jpg', alt: 'Comedor con mesa y sillas junto al espacio de estar', hint: 'departamento comedor estar' },
       { src: '/images/alojamientos/altos-del-talampaya-dpto-03.jpg', alt: 'Vista frontal de la fachada y la cochera techada', hint: 'departamento fachada cochera' },
@@ -356,7 +355,6 @@ Dispone de cochera y Wi-Fi.
       { src: '/images/alojamientos/altos-del-talampaya-dpto-13.jpg', alt: 'Vista frontal de la cama doble y las mesas de luz', hint: 'departamento dormitorio mesas luz' },
       { src: '/images/alojamientos/altos-del-talampaya-dpto-14.jpg', alt: 'Lavatorio y espejo del baño', hint: 'departamento bano lavatorio espejo' },
       { src: '/images/alojamientos/altos-del-talampaya-dpto-15.jpg', alt: 'Inodoro y bidet en el baño', hint: 'departamento bano inodoro bidet' },
-      { src: '/images/alojamientos/altos-del-talampaya-dpto-16.jpg', alt: 'Fachada y cochera techada con un automóvil estacionado', hint: 'departamento fachada cochera auto' },
       { src: '/images/alojamientos/altos-del-talampaya-dpto-17.jpg', alt: 'Fachada de ladrillo y acceso con un automóvil bajo la cochera techada', hint: 'departamento fachada acceso cochera auto' },
     ],
     highlights: [
