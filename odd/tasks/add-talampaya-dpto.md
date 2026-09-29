@@ -43,6 +43,7 @@ Add the Altos del Talampaya apartment as a complete accommodation listing across
 ## Commit evidence
 - Initial implementation: `385032b feat(accommodations): add talampaya apartment`.
 - Follow-up: `7b3f9d3 feat(accommodations): add garage photos to apartment`.
+- Image-role correction: `15a6d0b fix(accommodations): correct apartment image roles`.
 - Follow-up files: `src/lib/data/accommodations.ts`, `src/app/page.tsx`, `src/app/alojamientos/[slug]/page.tsx`, `odd/tasks/add-talampaya-dpto.md`, and `public/images/alojamientos/altos-del-talampaya-dpto-16.jpg` / `-17.jpg`.
 - Follow-up checks: `git diff --check`, `npm run typecheck`, `npm run lint`, and `npm run build` passed.
 
@@ -64,11 +65,11 @@ Add the Altos del Talampaya apartment as a complete accommodation listing across
 - [x] Map source photo 7 (`altos-del-talampaya-dpto-02.jpg`) to the home hero slider; retain all 17 existing gallery assets.
 - [x] Remove redundant `detailHeroImageSrc` data/model and detail-page selection; the first image serves all cover surfaces.
 - [x] Run `git diff --check`, `npm run typecheck`, `npm run lint`, and `npm run build`.
-- [ ] Commit only this correction with `fix(accommodations): correct apartment image roles`.
+- [x] Commit only this correction with `fix(accommodations): correct apartment image roles` (`15a6d0b`).
 - Scope: Dpto image ordering/home hero map/detail cover and this task evidence only; do not modify other accommodations or `public/data/shorts.json`.
 - Strict TDD remains enabled; no general test runner exists, so RED is unavailable and no test will be invented.
 - Source mapping verified by SHA-256: photo 1 matches `-16.jpg` (`8e08f6e4…`), photo 2 matches `-17.jpg` (`764f2f82…`), and photo 7 matches `-02.jpg` (`44ee19b8…`).
 - The source ordering and home map are now corrected: source photo 1 is `images[0]`; source photo 7 is the hero map; the redundant dedicated detail-hero field has been removed. All 17 image entries remain.
 - Verification: `git diff --check`, `npm run typecheck`, `npm run lint`, and `npm run build` passed. Lint/build emit the same pre-existing project warnings noted above. Strict TDD runner limitation remains unchanged; no RED test was invented.
-- Correction commit: pending `fix(accommodations): correct apartment image roles`.
-- Engram mirror: current correction evidence will be saved under `odd/add-talampaya-dpto/tasks`.
+- Correction commit: `15a6d0b fix(accommodations): correct apartment image roles`.
+- Engram mirror: correction evidence is saved under `odd/add-talampaya-dpto/tasks`.
