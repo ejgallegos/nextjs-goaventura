@@ -330,6 +330,8 @@ Dispone de cochera y Wi-Fi.
       lng: -68.225492,
     },
     capacity: '2 personas',
+    bedrooms: 1,
+    bathrooms: 1,
     services: [
       '❄️ Aire acondicionado',
       '🔥 Calefacción',
