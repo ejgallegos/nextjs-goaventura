@@ -49,6 +49,7 @@ const heroImageByAccommodationSlug: Record<string, string> = {
   'altos-del-talampaya-casa': '/images/alojamientos/casa-10.jpg',
   'altos-del-talampaya-casa-ii': '/images/alojamientos/casa-ii-12.jpg',
   'casa-altos-del-talampaya-iii': '/images/alojamientos/casa-iii-9.jpg',
+  'altos-del-talampaya-dpto': '/images/alojamientos/altos-del-talampaya-dpto-02.jpg',
 };
 
 const institutionalHeroSlide: HomeHeroSlide = {
@@ -190,7 +191,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
-            {accommodations.slice(0, 4).map((accommodation) => (
+            {accommodations.map((accommodation) => (
               <Link key={accommodation.id} href={`/alojamientos/${accommodation.slug}`} className="group min-w-0 rounded-2xl focus-visible:outline-none">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
                   <Image

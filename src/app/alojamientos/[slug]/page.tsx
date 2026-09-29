@@ -84,7 +84,7 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
     ...(accommodation.coordinates ? {
       geo: { '@type': 'GeoCoordinates', latitude: accommodation.coordinates.lat, longitude: accommodation.coordinates.lng },
     } : {}),
-    numberOfRooms: accommodation.bedrooms,
+    ...(accommodation.bedrooms !== undefined ? { numberOfRooms: accommodation.bedrooms } : {}),
   };
 
   return (
@@ -125,8 +125,8 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
             <div className="flex flex-wrap gap-x-6 gap-y-3 border-b border-border pb-6">
               {[
                 { icon: Users, label: accommodation.capacity },
-                { icon: BedDouble, label: `${accommodation.bedrooms} hab` },
-                { icon: Bath, label: `${accommodation.bathrooms} baño${accommodation.bathrooms > 1 ? 's' : ''}` },
+                ...(accommodation.bedrooms !== undefined ? [{ icon: BedDouble, label: `${accommodation.bedrooms} hab` }] : []),
+                ...(accommodation.bathrooms !== undefined ? [{ icon: Bath, label: `${accommodation.bathrooms} baño${accommodation.bathrooms > 1 ? 's' : ''}` }] : []),
               ].map((item, i) => (
                 <div key={i} className="inline-flex items-center gap-2 text-sm font-medium">
                   <item.icon className="h-4 w-4 text-accent" />

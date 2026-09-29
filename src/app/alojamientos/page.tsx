@@ -107,14 +107,18 @@ const AlojamientosPage = () => {
                 </ul>
                 <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
-                  <span className="inline-flex items-center gap-2">
-                    <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
-                    {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
-                    {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
-                  </span>
+                  {acc.bedrooms !== undefined && (
+                    <span className="inline-flex items-center gap-2">
+                      <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
+                      {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
+                    </span>
+                  )}
+                  {acc.bathrooms !== undefined && (
+                    <span className="inline-flex items-center gap-2">
+                      <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
+                      {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
+                    </span>
+                  )}
                 </div>
                 <p className="pt-1 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">Ver alojamiento</p>
               </div>

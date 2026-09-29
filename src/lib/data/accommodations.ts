@@ -21,8 +21,8 @@ export interface Accommodation {
     lng: number;
   };
   capacity: string;
-  bedrooms: number;
-  bathrooms: number;
+  bedrooms?: number;
+  bathrooms?: number;
   services: string[];
   whatsapp: string;
   booking?: string;
@@ -302,6 +302,65 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
       '🚗 Estacionamiento privado gratuito',
       '📶 Wi-Fi gratis',
       '🐾 Se admiten mascotas',
+    ],
+  },
+  {
+    id: 'altos-del-talampaya-dpto',
+    slug: 'altos-del-talampaya-dpto',
+    name: 'Altos del Talampaya - Dpto',
+    tagline: 'Un espacio para dos en Villa Unión',
+    description:
+      'Departamento en Villa Unión para dos personas, con aire acondicionado, calefacción, ropa de cama, cochera y Wi-Fi.',
+    longDescription: `
+🛏️ **Para dos personas**
+Un departamento con capacidad para dos personas, en Villa Unión, La Rioja.
+
+🌡️ **Confort durante la estadía**
+Cuenta con aire acondicionado, calefacción y ropa de cama.
+
+🚗 **Servicios incluidos**
+Dispone de cochera y Wi-Fi.
+    `,
+    shortDescription:
+      'Departamento para dos personas con aire acondicionado, calefacción, ropa de cama, cochera y Wi-Fi.',
+    location: 'Villa Unión, La Rioja',
+    mapUrl: 'https://www.google.com/maps?q=-29.323099,-68.225492&z=17&output=embed&iwloc=near',
+    coordinates: {
+      lat: -29.323099,
+      lng: -68.225492,
+    },
+    capacity: '2 personas',
+    services: [
+      '❄️ Aire acondicionado',
+      '🔥 Calefacción',
+      '🛏️ Ropa de cama',
+      '🚗 Cochera',
+      '📶 Wi-Fi',
+    ],
+    whatsapp: WHATSAPP_NUMBER,
+    images: [
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-01.jpg', alt: 'Fachada de ladrillo y acceso techado a la propiedad', hint: 'departamento fachada acceso cochera' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-02.jpg', alt: 'Comedor con mesa y sillas junto al espacio de estar', hint: 'departamento comedor estar' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-03.jpg', alt: 'Vista frontal de la fachada y la cochera techada', hint: 'departamento fachada cochera' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-04.jpg', alt: 'Mesa de comedor con sillas', hint: 'departamento mesa comedor' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-05.jpg', alt: 'Comedor con mesa y cocina al fondo', hint: 'departamento comedor cocina' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-06.jpg', alt: 'Mesa de comedor y sala de estar con televisor', hint: 'departamento comedor sala televisor' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-07.jpg', alt: 'Sala de estar con sillones y mesa baja', hint: 'departamento sala sillones mesa' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-08.jpg', alt: 'Sofá con almohadones en el área de estar', hint: 'departamento sofa estar' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-09.jpg', alt: 'Sala de estar con sofá, sillones y mesa baja', hint: 'departamento sala sofa sillones' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-10.jpg', alt: 'Mesa baja y sillones en la sala de estar', hint: 'departamento sala mesa sillones' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-11.jpg', alt: 'Dormitorio con cama doble y ropa de cama verde', hint: 'departamento dormitorio cama doble' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-12.jpg', alt: 'Cama doble en dormitorio con aire acondicionado', hint: 'departamento dormitorio aire acondicionado' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-13.jpg', alt: 'Vista frontal de la cama doble y las mesas de luz', hint: 'departamento dormitorio mesas luz' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-14.jpg', alt: 'Lavatorio y espejo del baño', hint: 'departamento bano lavatorio espejo' },
+      { src: '/images/alojamientos/altos-del-talampaya-dpto-15.jpg', alt: 'Inodoro y bidet en el baño', hint: 'departamento bano inodoro bidet' },
+    ],
+    highlights: [
+      '👥 Capacidad para 2 personas',
+      '❄️ Aire acondicionado y calefacción',
+      '🛏️ Ropa de cama',
+      '🚗 Cochera',
+      '📶 Wi-Fi',
     ],
   },
 ];
