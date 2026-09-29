@@ -247,7 +247,7 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
   {
     id: 'casa-altos-del-talampaya-iii',
     slug: 'casa-altos-del-talampaya-iii',
-    name: 'Casa Altos del Talampaya III',
+    name: 'Altos del Talampaya Casa III',
     tagline: 'Una casa completa para descansar en Villa Unión',
     description:
       'Casa completa en Villa Unión para hasta 4 personas, con 2 dormitorios, cocina, aire acondicionado, Wi-Fi y estacionamiento privado gratuito. Se admiten mascotas.',
@@ -280,7 +280,7 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
     whatsapp: WHATSAPP_NUMBER,
     booking: 'https://www.booking.com/hotel/ar/casa-del-talampaya-iii.es-ar.html',
     images: [
-      { src: '/images/alojamientos/casa-iii-1.jpg', alt: 'Fachada principal y acceso vehicular de Casa Altos del Talampaya III', hint: 'casa iii fachada acceso vehicular' },
+      { src: '/images/alojamientos/casa-iii-1.jpg', alt: 'Fachada principal y acceso vehicular de Altos del Talampaya Casa III', hint: 'casa iii fachada acceso vehicular' },
       { src: '/images/alojamientos/casa-iii-4.jpg', alt: 'Vista desde la galería hacia el patio exterior', hint: 'casa iii galeria patio' },
       { src: '/images/alojamientos/casa-iii-5.jpg', alt: 'Sala de estar con sillones, mesa y televisor', hint: 'casa iii sala estar sillones' },
       { src: '/images/alojamientos/casa-iii-6.jpg', alt: 'Espacio de estar con mesa y acceso a la cocina', hint: 'casa iii estar cocina' },
