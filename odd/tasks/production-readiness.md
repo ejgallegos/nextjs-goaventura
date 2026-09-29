@@ -60,4 +60,4 @@ Address the approved production-readiness findings for Docker/Compose, the home 
 
 ## Commit evidence
 
-_Pending; authorized work-unit commits have not yet been created._
+- `94eb8e2` — `fix(production): harden Docker and home accessibility` (Docker/Compose configuration, deployment docs, home focus indicator, and this task record).
