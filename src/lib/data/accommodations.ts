@@ -307,7 +307,7 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
   {
     id: 'altos-del-talampaya-dpto',
     slug: 'altos-del-talampaya-dpto',
-    name: 'Altos del Talampaya - Dpto',
+    name: 'Altos del Talampaya Dpto',
     tagline: 'Un espacio para dos en Villa Unión',
     description:
       'Departamento en Villa Unión para dos personas, con aire acondicionado, calefacción, ropa de cama, cochera y Wi-Fi.',
