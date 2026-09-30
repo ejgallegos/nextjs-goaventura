@@ -126,7 +126,7 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
         await saveProducts(updatedTrips);
 
         // Optimistic UI update
-        table.options.meta?.updateData(row.index, 'isFeatured', !row.original.isFeatured)
+        (table.options.meta as { updateData?: (rowIndex: number, columnId: string, value: unknown) => void } | undefined)?.updateData?.(row.index, 'isFeatured', !row.original.isFeatured)
 
         toast({
             title: "Viaje Actualizado",
@@ -158,7 +158,7 @@ export function DataTableRowActions<TData extends { slug: string; id: string; na
 
         // Optimistic UI update
         const updatedTags = [...(row.original.tags || []), tag];
-        table.options.meta?.updateData(row.index, 'tags', updatedTags);
+        (table.options.meta as { updateData?: (rowIndex: number, columnId: string, value: unknown) => void } | undefined)?.updateData?.(row.index, 'tags', updatedTags);
         
         toast({
             title: "Etiqueta Añadida",

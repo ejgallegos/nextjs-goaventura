@@ -12,8 +12,6 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "security-test": "./scripts/security-test.sh http://localhost:9002",
-    "setup-admin": "ts-node-esm scripts/setup-admin.ts",
-    "test-admin": "ts-node-esm scripts/test-admin-system.ts",
     "clean": "rm -rf .next node_modules",
     "reinstall": "rm -rf node_modules package-lock.json && npm install"
   },
@@ -52,8 +50,6 @@
     "date-fns": "^3.6.0",
     "dompurify": "^3.3.1",
     "dotenv": "^16.5.0",
-    "firebase": "^10.12.2",
-    "firebase-admin": "^12.7.0",
     "genkit": "^1.8.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.475.0",

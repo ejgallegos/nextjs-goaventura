@@ -25,7 +25,6 @@ const securityHeaders = {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://*.firebaseio.com https://*.googleapis.com ws://*.firebaseio.com wss://*.firebaseio.com",
     isProduction ? "frame-src 'none'" : "frame-src 'self' https://www.google.com",
     "object-src 'none'",
     "base-uri 'self'",

@@ -7,7 +7,6 @@ const nextConfig = {
   // Image optimization
   images: {
     domains: [
-      'firebasestorage.googleapis.com',
       'storage.googleapis.com',
       'cdn.goaventura.com.ar',
       'localhost'
@@ -26,20 +25,12 @@ const nextConfig = {
     
     // Optimize server components
     serverComponentsExternalPackages: [
-      'firebase-admin',
-      'firebase',
-      '@firebase/auth',
-      '@firebase/firestore',
-      '@firebase/storage'
     ],
     
     // Bundle size optimizations
     optimizePackageImports: [
       'lucide-react',
       'date-fns',
-      'firebase/auth',
-      'firebase/firestore',
-      'firebase/storage'
     ],
     
     // Enable server actions
@@ -177,11 +168,6 @@ const nextConfig = {
   // Rewrites for proxy and optimization
   async rewrites() {
     return [
-      // Firebase functions proxy
-      {
-        source: '/api/firebase/:path*',
-        destination: 'https://firebase.googleapis.com/:path*',
-      },
       // CDN rewrites
       {
         source: '/cdn/:path*',
@@ -213,24 +199,6 @@ const nextConfig = {
         },
       };
     }
-
-    // Resolve Firebase modules correctly
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'firebase/auth': '@firebase/auth',
-      'firebase/firestore': '@firebase/firestore',
-      'firebase/storage': '@firebase/storage',
-    };
-
-    // Ignore warnings for certain dependencies
-    config.ignoreWarnings = [
-      {
-        module: /node_modules\/firebase\/.*/,
-      },
-      {
-        message: /export .* was not found in/,
-      },
-    ];
 
     // Define plugin for environment variables
     config.plugins.push(

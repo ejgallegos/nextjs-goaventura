@@ -67,7 +67,7 @@ export function DataTableRowActions<TData extends { slug: string; id: string; ti
         );
         await savePromotions(updatedPromos);
 
-        table.options.meta?.updateData(row.index, 'isFeatured', !row.original.isFeatured)
+        (table.options.meta as { updateData?: (rowIndex: number, columnId: string, value: unknown) => void } | undefined)?.updateData?.(row.index, 'isFeatured', !row.original.isFeatured)
 
         toast({
             title: "Promoción Actualizada",

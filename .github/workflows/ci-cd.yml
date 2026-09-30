@@ -45,12 +45,7 @@ jobs:
            file: ./Dockerfile.production
            push: true
            tags: ejgallegos/goaventura:latest # Reemplaza con tu usuario y nombre de repo
-           build-args: |
-             NODE_ENV=production
-             MOCK_FIREBASE=true
-             FIREBASE_PROJECT_ID=goaventura-web
-             FIREBASE_CLIENT_EMAIL: service-account@goaventura-web.iam.gserviceaccount.com
-              FIREBASE_PRIVATE_KEY: "PLACEHOLDER_KEY"
+
   deploy:
     needs: build_and_push
     runs-on: ubuntu-latest

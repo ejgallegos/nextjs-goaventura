@@ -6,7 +6,7 @@ Address the approved production-readiness findings for Docker/Compose, the home 
 
 ## Authorized scope and constraints
 
-- Configure Docker builds to receive public Firebase configuration only through build arguments; fail fast only for the three variables required by `src/lib/firebase.ts`.
+- Configure Docker builds to receive public external service configurationconfiguration only through build arguments; fail fast only for the three variables required by `src/lib/external service configuration.ts`.
 - Exclude `.env.production` from the Docker build context. Never print or commit environment values or credentials.
 - Keep the production container's root filesystem read-only while enabling only the Next.js image optimizer cache path to write, using the runtime UID/GID confirmed from the Dockerfile.
 - Restore a visible keyboard focus indicator on home accommodation cards without changing card layout or behavior.
@@ -16,20 +16,20 @@ Address the approved production-readiness findings for Docker/Compose, the home 
 
 ## Route and TDD
 
-- Route: delegated direct implementation. Mapping trigger: work spans Dockerfile, Compose, ignore rules, deployment docs, Next configuration, Firebase configuration, and home UI.
+- Route: delegated direct implementation. Mapping trigger: work spans Dockerfile, Compose, ignore rules, deployment docs, Next configuration, external service configurationconfiguration, and home UI.
 - Strict TDD: enabled. No general project test runner exists for these configuration/UI changes; RED cannot be evidenced and no test will be invented.
 - Engram mirror: synchronized under `odd/production-readiness/tasks`; update the mirror whenever this document changes.
 
 ## Stable tasks
 
-- [x] PR-01 — Pass required/optional public configuration securely to Docker builds; exclude `.env.production`; document actual scripts and exact Compose invocation. Compose config accepted the local production env file; an isolated missing-required check returned nonzero with the missing Firebase variable name.
+- [x] PR-01 — Pass required/optional public configuration securely to Docker builds; exclude `.env.production`; document actual scripts and exact Compose invocation. Compose config accepted the local production env file; an isolated missing-required check returned nonzero with the missing external service configurationvariable name.
 - [x] PR-02 — Make only the image optimizer cache writable in the read-only runtime using the actual runtime UID/GID; document validation limits. Runtime UID/GID `1001:1001` is the tmpfs owner; actual write verification is documented as a post-deploy command and intentionally not run because deployment/container execution is out of scope.
 - [x] PR-03 — Add a visible `focus-visible` indicator to home accommodation card links. Added accent focus ring with offset; no layout/behavior changes.
 
 ## Acceptance criteria
 
-- Compose rejects missing `NEXT_PUBLIC_FIREBASE_PROJECT_ID`, `NEXT_PUBLIC_FIREBASE_APP_ID`, or `NEXT_PUBLIC_FIREBASE_API_KEY` with a clear error, and forwards optional public settings when supplied.
-- No Firebase values are hardcoded into the Dockerfile; `.env.production` is not included in the Docker build context.
+- Compose rejects missing `external service configuration`, `external service configuration`, or `external service configuration` with a clear error, and forwards optional public settings when supplied.
+- No external service configurationvalues are hardcoded into the Dockerfile; `.env.production` is not included in the Docker build context.
 - Compose syntax/config validation succeeds without printing environment values; image cache is writable by the configured non-root runtime while other filesystem paths remain read-only.
 - Home accommodation card keyboard focus is visibly distinguishable and existing interaction/layout is preserved.
 - Deployment docs name only real package scripts and specify a safe build/run command.
@@ -45,14 +45,14 @@ Address the approved production-readiness findings for Docker/Compose, the home 
 ## Progress and evidence
 
 - Initial inspection: branch `codex/accommodation-first`, clean worktree, `HEAD=4c0a272`; Docker 29.8.1 and Compose 5.3.1 available.
-- Confirmed from `src/lib/firebase.ts` that project ID, app ID, and API key are required; other public Firebase fields are optional.
+- Confirmed from `src/lib/external service configuration.ts` that project ID, app ID, and API key are required; other public external service configurationfields are optional.
 - Confirmed Dockerfile runtime UID/GID is `1001:1001`, root filesystem is configured read-only in Compose, and Next image optimizer writes `.next/cache/images`.
 - Confirmed `.dockerignore` re-includes `.env.production` while Dockerfile uses `COPY . .`; documentation references stale npm script names.
-- Implemented Docker build args for the seven known `NEXT_PUBLIC_FIREBASE_*` values, `NEXT_PUBLIC_RECAPTCHA_V3_SITE_KEY`, and `NEXT_PUBLIC_SITE_URL`; Compose requires only Firebase project ID, app ID, and API key. Removed mock public config and fake Admin credential values from builder environment.
+- Implemented Docker build args for the seven known `external service configuration` values, `NEXT_PUBLIC_RECAPTCHA_V3_SITE_KEY`, and `NEXT_PUBLIC_SITE_URL`; Compose requires only external service configurationproject ID, app ID, and API key. Removed mock public config and fake Admin credential values from builder environment.
 - Removed `.env.production` re-inclusion from `.dockerignore`. Deployment docs now use actual npm scripts and the Compose `--env-file ... up -d --build` command, with owner-only file permissions and public-vs-server config guidance.
 - Added an explicit UID/GID-owned `/app/.next/cache/images` tmpfs while preserving `read_only: true`; documented the post-deployment write probe because no container was started.
 - Added a visible `focus-visible:ring-2` indicator to home accommodation links.
-- `docker compose --env-file .env.production -f docker-compose.production.yml config --quiet`: passed without output; a fully isolated missing-variable check exited 1 naming missing `NEXT_PUBLIC_FIREBASE_PROJECT_ID`.
+- `docker compose --env-file .env.production -f docker-compose.production.yml config --quiet`: passed without output; a fully isolated missing-variable check exited 1 naming missing `external service configuration`.
 - `npm run typecheck`: passed (exit 0).
 - `npm run lint`: passed (exit 0), with 219 warnings reported in unrelated existing source files; no changed source file was named in the warning output.
 - `npm run build`: passed (exit 0), with dependency warnings for missing `@opentelemetry/exporter-jaeger` and Handlebars `require.extensions` webpack support; static pages and route output completed.

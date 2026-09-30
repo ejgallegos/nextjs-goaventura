@@ -1,5 +1,18 @@
-# Firebase Studio
+# GoAventura
 
-This is a NextJS starter in Firebase Studio.
+Sitio web de GoAventura, construido con Next.js y desplegado mediante Docker Compose.
 
-To get started, take a look at src/app/page.tsx.
+## Desarrollo
+
+```bash
+npm install
+npm run dev
+```
+
+## Verificación
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```

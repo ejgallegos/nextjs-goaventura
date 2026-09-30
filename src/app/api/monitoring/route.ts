@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { logger, logAuth, logSecurity } from '@/lib/logger';
 import { createSecureResponse } from '@/lib/security-production';
-import { getFirebaseAdmin } from '@/lib/firebase-admin';
 
 // Performance monitoring middleware
 function withPerformanceMonitoring<T extends any[], R>(
@@ -251,35 +250,6 @@ function isSuspiciousRequest(request: NextRequest, ip: string, userAgent: string
   if (botPatterns.test(userAgent)) return true;
 
   return false;
-}
-
-async function checkDatabaseHealth(): Promise<{ status: string; latency?: number }> {
-  try {
-    const startTime = Date.now();
-    const adminApp = getFirebaseAdmin();
-    await adminApp.firestore().collection('_health').limit(1).get();
-    const latency = Date.now() - startTime;
-    
-    return { status: 'healthy', latency };
-  } catch (error) {
-    logger.error('Database health check failed', error as Error);
-    return { status: 'unhealthy' };
-  }
-}
-
-async function checkFirebaseHealth(): Promise<{ status: string; latency?: number }> {
-  try {
-    const startTime = Date.now();
-    const adminApp = getFirebaseAdmin();
-    // Test Firebase Auth by getting a small list of users
-    await adminApp.auth().listUsers(1);
-    const latency = Date.now() - startTime;
-    
-    return { status: 'healthy', latency };
-  } catch (error) {
-    logger.error('Firebase health check failed', error as Error);
-    return { status: 'unhealthy' };
-  }
 }
 
 function checkRateLimitHealth(): { status: string; entries: number } {
