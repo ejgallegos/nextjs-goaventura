@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 
-interface HomeAccommodationWhatsAppCtaProps {
+interface AccommodationWhatsAppCtaProps {
   accommodationId: string;
   accommodationName: string;
   phoneNumber: string;
@@ -11,11 +11,11 @@ interface HomeAccommodationWhatsAppCtaProps {
 
 const MOBILE_QUERY = '(max-width: 1023px)';
 
-export default function HomeAccommodationWhatsAppCta({
+export default function AccommodationWhatsAppCta({
   accommodationId,
   accommodationName,
   phoneNumber,
-}: HomeAccommodationWhatsAppCtaProps) {
+}: AccommodationWhatsAppCtaProps) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [isNearViewportCenter, setIsNearViewportCenter] = useState(false);
 

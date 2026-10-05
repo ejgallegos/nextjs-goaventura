@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { accommodations } from '@/lib/data/accommodations';
+import AccommodationWhatsAppCta from '@/components/accommodation-whatsapp-cta';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { MapPin, BedDouble, Users, Bath, ArrowDown } from 'lucide-react';
 
@@ -58,71 +59,85 @@ const AlojamientosPage = () => {
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
           {accommodations.map((acc) => (
-            <Link
-              key={acc.id}
-              href={`/alojamientos/${acc.slug}`}
-              className="group block min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-secondary">
-                {acc.images[0] && (
-                  <Image
-                    src={acc.images[0].src}
-                    alt={acc.images[0].alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-300 motion-reduce:transition-none group-hover:scale-[1.03]"
-                  />
-                )}
+            <article key={acc.id} className="min-w-0">
+              <div className="relative">
+                <Link
+                  href={`/alojamientos/${acc.slug}`}
+                  aria-label={`Ver ${acc.name}`}
+                  className="group block min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-secondary">
+                    {acc.images[0] && (
+                      <Image
+                        src={acc.images[0].src}
+                        alt={acc.images[0].alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-300 motion-reduce:transition-none group-hover:scale-[1.03]"
+                      />
+                    )}
+                  </div>
+                </Link>
+                <AccommodationWhatsAppCta
+                  accommodationId={acc.id}
+                  accommodationName={acc.name}
+                  phoneNumber={acc.whatsapp}
+                />
               </div>
-              <div className="space-y-3 pt-5">
-                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-                  <h3 className="min-w-0 max-w-[25ch] font-headline text-xl font-bold leading-tight text-foreground group-hover:text-accent sm:text-2xl">
-                    {acc.name}
-                  </h3>
-                </div>
-                <div className="flex items-start gap-1 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0 break-words">{acc.location}</span>
-                </div>
-                <ul aria-label={`Características de ${acc.name}`} className="flex flex-wrap gap-2">
-                  <li className="inline-flex min-h-7 items-center gap-1.5 rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                    <Users className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                    {acc.capacity}
-                  </li>
-                  {isFamilySuitable(acc) && (
-                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                      Ideal para familias
+              <Link
+                href={`/alojamientos/${acc.slug}`}
+                className="group block min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
+              >
+                <div className="space-y-3 pt-5">
+                  <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                    <h3 className="min-w-0 max-w-[25ch] font-headline text-xl font-bold leading-tight text-foreground group-hover:text-accent sm:text-2xl">
+                      {acc.name}
+                    </h3>
+                  </div>
+                  <div className="flex items-start gap-1 text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    <span className="min-w-0 break-words">{acc.location}</span>
+                  </div>
+                  <ul aria-label={`Características de ${acc.name}`} className="flex flex-wrap gap-2">
+                    <li className="inline-flex min-h-7 items-center gap-1.5 rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                      <Users className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+                      {acc.capacity}
                     </li>
-                  )}
-                  {acceptsPets(acc) && (
-                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                      Se admiten mascotas
-                    </li>
-                  )}
-                  {hasPool(acc) && (
-                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                      Pileta
-                    </li>
-                  )}
-                </ul>
-                <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
-                  {acc.bedrooms !== undefined && (
-                    <span className="inline-flex items-center gap-2">
-                      <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
-                      {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
-                    </span>
-                  )}
-                  {acc.bathrooms !== undefined && (
-                    <span className="inline-flex items-center gap-2">
-                      <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
-                      {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
-                    </span>
-                  )}
+                    {isFamilySuitable(acc) && (
+                      <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                        Ideal para familias
+                      </li>
+                    )}
+                    {acceptsPets(acc) && (
+                      <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                        Se admiten mascotas
+                      </li>
+                    )}
+                    {hasPool(acc) && (
+                      <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                        Pileta
+                      </li>
+                    )}
+                  </ul>
+                  <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
+                    {acc.bedrooms !== undefined && (
+                      <span className="inline-flex items-center gap-2">
+                        <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
+                        {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
+                      </span>
+                    )}
+                    {acc.bathrooms !== undefined && (
+                      <span className="inline-flex items-center gap-2">
+                        <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
+                        {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
+                      </span>
+                    )}
+                  </div>
+                  <p className="pt-1 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">Ver alojamiento</p>
                 </div>
-                <p className="pt-1 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">Ver alojamiento</p>
-              </div>
-            </Link>
+              </Link>
+            </article>
           ))}
         </div>
 

@@ -11,7 +11,7 @@ import type { Product, Promotion, Testimonial } from '@/lib/types';
 import { testimonials } from '@/lib/data/testimonials';
 import ProductCard from '@/components/product-card';
 import HomeHeroSlider, { type HomeHeroSlide } from '@/components/home-hero-slider';
-import HomeAccommodationWhatsAppCta from '@/components/home-accommodation-whatsapp-cta';
+import AccommodationWhatsAppCta from '@/components/accommodation-whatsapp-cta';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import TestimonialSlider from '@/components/testimonial-slider';
 import { Button } from '@/components/ui/button';
@@ -210,7 +210,7 @@ export default function Home() {
                     />
                     </div>
                   </Link>
-                  <HomeAccommodationWhatsAppCta
+                  <AccommodationWhatsAppCta
                     accommodationId={accommodation.id}
                     accommodationName={accommodation.name}
                     phoneNumber={accommodation.whatsapp}
