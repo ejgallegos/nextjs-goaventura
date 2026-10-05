@@ -28,14 +28,14 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://goaventura.com.ar';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Go Aventura — Descubrí Villa Unión del Talampaya",
+    default: "Go Aventura - Descubrí Villa Unión del Talampaya",
     template: "%s — Go Aventura",
   },
   description:
     "Excursiones en 4x4, transfers y alojamientos premium en Villa Unión del Talampaya. Viví La Rioja con los mejores guías locales.",
   openGraph: {
     title: {
-      default: "Go Aventura — Descubrí Villa Unión del Talampaya",
+      default: "Go Aventura - Descubrí Villa Unión del Talampaya",
       template: "%s — Go Aventura",
     },
     description:
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Go Aventura — Descubrí Villa Unión del Talampaya",
+    title: "Go Aventura - Descubrí Villa Unión del Talampaya",
     description:
       "Excursiones, transfers y alojamientos en Villa Unión del Talampaya.",
     images: ["/logo-goaventura.png"],
