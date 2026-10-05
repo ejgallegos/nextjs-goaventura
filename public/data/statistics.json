@@ -63,13 +63,38 @@
       },
       "whatsappClicksByDate": {},
       "asesorClicksByDate": {}
+    },
+    "altos-del-talampaya-dpto": {
+      "id": "altos-del-talampaya-dpto",
+      "name": "Altos del Talampaya Dpto",
+      "views": 0,
+      "whatsappClicks": 1,
+      "asesorClicks": 0,
+      "viewsByDate": {},
+      "whatsappClicksByDate": {
+        "2026-10-05": 1
+      },
+      "asesorClicksByDate": {}
+    },
+    "loft-centro": {
+      "id": "loft-centro",
+      "name": "Loft Centro",
+      "views": 0,
+      "whatsappClicks": 1,
+      "asesorClicks": 0,
+      "viewsByDate": {},
+      "whatsappClicksByDate": {
+        "2026-10-05": 1
+      },
+      "asesorClicksByDate": {}
     }
   },
   "summary": {
     "totalViews": 6,
-    "totalWhatsappClicks": 3,
+    "totalWhatsappClicks": 5,
     "whatsappClicksByDate": {
-      "2026-05-27": 3
+      "2026-05-27": 3,
+      "2026-10-05": 2
     },
     "viewsByDate": {
       "2026-05-27": 3,
