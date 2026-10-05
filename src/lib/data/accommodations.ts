@@ -37,7 +37,7 @@ export const accommodations: Accommodation[] = [
     name: 'Loft Centro',
     tagline: 'Tu refugio perfecto en el corazón de Villa Unión',
     description:
-      'Departamento moderno y acogedor en pleno centro de la ciudad. Ideal para parejas, amigos o compañeros de viaje que buscan comodidad y proximidad a todo.',
+      'Departamento moderno y acogedor para dos personas en pleno centro de la ciudad. Ideal para parejas que buscan comodidad y proximidad a todo.',
     longDescription: `
 🏙️ **Ubicación Imbatible**
 Estás a pasos de los principales restaurantes, comercios y atractivos de Villa Unión. Sin necesidad de auto, podés explorar todo lo que la ciudad ofrece.
@@ -45,21 +45,21 @@ Estás a pasos de los principales restaurantes, comercios y atractivos de Villa 
 🛋️ **Confort Moderno**
 El departamento cuenta con todas las comodidades que necesitás para una estadía placentera: aire acondicionado para el calor riojano, calefacción para las noches frescas, y cochera privada para tu vehículo.
 
-👨‍👩‍👧 **Ideal para Compartir**
-Perfecto para matrimonios, amigos o compañeros de trabajo que desean descansar juntos. Espacio distribuido para mayor confort.
+💑 **Ideal para dos personas**
+Perfecto para parejas que desean descansar juntas. Espacio distribuido para una estadía cómoda.
 
 📶 **Conectado Siempre**
 WiFi de alta velocidad para que estés conectado con tus seres queridos o trabajes remotamente si es necesario.
     `,
     shortDescription:
-      'Departamento en pleno centro de Villa Unión, ideal para parejas y amigos.',
+      'Departamento para dos personas en pleno centro de Villa Unión, ideal para parejas.',
     location: 'Villa Unión, La Rioja',
     mapUrl: 'https://maps.google.com/maps?q=-29.31720449181527,%20-68.22681317352131&t=m&z=17&output=embed&iwloc=near',
     coordinates: {
       lat: -29.31720449181527,
       lng: -68.22681317352131,
     },
-    capacity: '2-4 personas',
+    capacity: '2 personas',
     bedrooms: 1,
     bathrooms: 1,
     services: [
@@ -91,6 +91,7 @@ WiFi de alta velocidad para que estés conectado con tus seres queridos o trabaj
       { src: '/images/alojamientos/loft-centro-34.jpg', alt: 'Dormitorio con cama doble y respaldo', hint: 'loft dormitorio cama doble' },
     ],
     highlights: [
+      '💑 Ideal para 2 personas',
       '📍 En el centro de Villa Unión',
       '🚗 Cochera privada incluida',
       '❄️ Aires acondicionado y calefacción',
@@ -250,10 +251,10 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
     name: 'Altos del Talampaya Casa III',
     tagline: 'Una casa completa para descansar en Villa Unión',
     description:
-      'Casa completa en Villa Unión para 2 personas, con 2 dormitorios, cocina, aire acondicionado, Wi-Fi y estacionamiento privado gratuito. Se admiten mascotas.',
+      'Casa completa en Villa Unión para 2 a 4 personas, con 2 dormitorios, cocina, aire acondicionado, Wi-Fi y estacionamiento privado gratuito. Se admiten mascotas.',
     longDescription: `
 🏠 Tu espacio en Villa Unión
-Disfrutá de una casa para vos y tu grupo, con espacios para descansar y compartir después de recorrer la región.
+Disfrutá de una casa para 2 a 4 personas, con espacios para descansar y compartir después de recorrer la región.
 
 🍳 Cocina y estar
 Prepará tus comidas en la cocina y compartí el día en el comedor y la sala de estar. La casa cuenta con TV de pantalla plana.
@@ -262,10 +263,10 @@ Prepará tus comidas en la cocina y compartí el día en el comedor y la sala de
 Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito en el alojamiento. Se admiten mascotas.
     `,
     shortDescription:
-      'Casa completa para 2 personas con 2 dormitorios, cocina y estacionamiento privado.',
+      'Casa completa para 2 a 4 personas con 2 dormitorios, cocina y estacionamiento privado.',
     location: 'Verne Costa, Villa Unión, La Rioja',
     mapUrl: 'https://www.google.com/maps?q=Verne+Costa%2C+Villa+Uni%C3%B3n%2C+La+Rioja&z=16&output=embed',
-    capacity: '2 personas',
+    capacity: '2-4 personas',
     bedrooms: 2,
     bathrooms: 1,
     services: [
@@ -297,7 +298,7 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
       { src: '/images/alojamientos/casa-iii-19.jpg', alt: 'Vista exterior de la fachada y el acceso', hint: 'casa iii fachada acceso exterior' },
     ],
     highlights: [
-      '🏠 Casa completa para 2 personas',
+      '🏠 Casa completa para 2 a 4 personas',
       '🛏️ 2 dormitorios',
       '🚗 Estacionamiento privado gratuito',
       '📶 Wi-Fi gratis',
