@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { WHATSAPP_NUMBER, WHATSAPP_API_BASE_URL } from '@/lib/constants';
-import { WhatsAppIcon } from '@/components/icons/whatsapp-icon';
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -17,7 +15,6 @@ const navLinks = [
   { href: "/viajes", label: "Excursiones y viajes" },
   { href: "/shorts", label: "Shorts" },
   { href: "/nosotros", label: "Nosotros" },
-  { href: "/contacto", label: "Contacto" },
 ];
 
 export default function Header() {
@@ -36,8 +33,6 @@ export default function Header() {
     if (href === '/') return pathname === '/';
     return pathname.startsWith(href);
   };
-
-  const whatsappUrl = `${WHATSAPP_API_BASE_URL}${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola! Quiero hacer una consulta.')}`;
 
   return (
     <header
@@ -89,19 +84,6 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-3">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 text-sm text-foreground/75 hover:text-primary transition-colors"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            <span>Contacto</span>
-          </a>
-        </div>
-
         {/* Mobile */}
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
           <SheetTrigger asChild className="lg:hidden">
@@ -140,17 +122,6 @@ export default function Header() {
                 ))}
               </ul>
             </nav>
-            <div className="px-3 pb-4">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 rounded-xl bg-accent text-white px-5 py-3.5 font-medium transition-all hover:bg-accent/90 mx-2"
-              >
-                <WhatsAppIcon className="h-5 w-5 shrink-0" />
-                Consultar por WhatsApp
-              </a>
-            </div>
           </SheetContent>
         </Sheet>
       </div>
