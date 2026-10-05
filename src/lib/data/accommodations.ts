@@ -250,7 +250,7 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
     name: 'Altos del Talampaya Casa III',
     tagline: 'Una casa completa para descansar en Villa Unión',
     description:
-      'Casa completa en Villa Unión para hasta 4 personas, con 2 dormitorios, cocina, aire acondicionado, Wi-Fi y estacionamiento privado gratuito. Se admiten mascotas.',
+      'Casa completa en Villa Unión para 2 personas, con 2 dormitorios, cocina, aire acondicionado, Wi-Fi y estacionamiento privado gratuito. Se admiten mascotas.',
     longDescription: `
 🏠 Tu espacio en Villa Unión
 Disfrutá de una casa para vos y tu grupo, con espacios para descansar y compartir después de recorrer la región.
@@ -262,10 +262,10 @@ Prepará tus comidas en la cocina y compartí el día en el comedor y la sala de
 Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito en el alojamiento. Se admiten mascotas.
     `,
     shortDescription:
-      'Casa completa para 4 personas con 2 dormitorios, cocina y estacionamiento privado.',
+      'Casa completa para 2 personas con 2 dormitorios, cocina y estacionamiento privado.',
     location: 'Verne Costa, Villa Unión, La Rioja',
     mapUrl: 'https://www.google.com/maps?q=Verne+Costa%2C+Villa+Uni%C3%B3n%2C+La+Rioja&z=16&output=embed',
-    capacity: '4 personas',
+    capacity: '2 personas',
     bedrooms: 2,
     bathrooms: 1,
     services: [
@@ -277,7 +277,7 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
       '🚗 Estacionamiento privado gratuito',
       '🐾 Se admiten mascotas',
     ],
-    whatsapp: WHATSAPP_NUMBER,
+    whatsapp: '5493825526275',
     booking: 'https://www.booking.com/hotel/ar/casa-del-talampaya-iii.es-ar.html',
     images: [
       { src: '/images/alojamientos/casa-iii-1.jpg', alt: 'Fachada principal y acceso vehicular de Altos del Talampaya Casa III', hint: 'casa iii fachada acceso vehicular' },
@@ -297,7 +297,7 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
       { src: '/images/alojamientos/casa-iii-19.jpg', alt: 'Vista exterior de la fachada y el acceso', hint: 'casa iii fachada acceso exterior' },
     ],
     highlights: [
-      '🏠 Casa completa para 4 personas',
+      '🏠 Casa completa para 2 personas',
       '🛏️ 2 dormitorios',
       '🚗 Estacionamiento privado gratuito',
       '📶 Wi-Fi gratis',
