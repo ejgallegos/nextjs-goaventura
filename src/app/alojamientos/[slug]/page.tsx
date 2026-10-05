@@ -111,9 +111,16 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
           </div>
           <h1 className="max-w-[18ch] font-headline text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">{accommodation.name}</h1>
           <p className="mt-3 max-w-2xl text-base text-white/90 md:text-lg">{accommodation.tagline}</p>
-          <a href="#reservar" className="mt-6 inline-flex min-h-11 items-center border-b-2 border-white pb-1 text-sm font-semibold text-white lg:hidden">
-            Consultar disponibilidad
-          </a>
+          <WhatsAppCtaButton
+            predefinedText={`Hola! Me interesa "${accommodation.name}". ¿Qué disponibilidad tienen?`}
+            buttonText="Consultar por WhatsApp"
+            phoneNumber={accommodation.whatsapp}
+            variant="whatsapp"
+            className="mt-6 min-h-11 rounded-xl px-4 text-sm font-semibold shadow-lg shadow-black/20 hover:bg-whatsapp/90 focus-visible:ring-white lg:hidden"
+            productId={accommodation.id}
+            productName={accommodation.name}
+            productType="accommodation"
+          />
         </div>
       </section>
 
