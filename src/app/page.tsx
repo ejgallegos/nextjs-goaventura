@@ -11,6 +11,7 @@ import type { Product, Promotion, Testimonial } from '@/lib/types';
 import { testimonials } from '@/lib/data/testimonials';
 import ProductCard from '@/components/product-card';
 import HomeHeroSlider, { type HomeHeroSlide } from '@/components/home-hero-slider';
+import HomeAccommodationWhatsAppCta from '@/components/home-accommodation-whatsapp-cta';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import TestimonialSlider from '@/components/testimonial-slider';
 import { Button } from '@/components/ui/button';
@@ -209,16 +210,10 @@ export default function Home() {
                     />
                     </div>
                   </Link>
-                  <WhatsAppCtaButton
+                  <HomeAccommodationWhatsAppCta
+                    accommodationId={accommodation.id}
+                    accommodationName={accommodation.name}
                     phoneNumber={accommodation.whatsapp}
-                    predefinedText={`Hola, quiero consultar por ${accommodation.name}.`}
-                    buttonText=""
-                    ariaLabel={`Consultar ${accommodation.name} por WhatsApp`}
-                    size="icon"
-                    className="absolute bottom-3 right-3 z-10 size-11 rounded-xl p-0 shadow-lg shadow-black/30 ring-1 ring-black/15 transition-transform hover:-translate-y-0.5"
-                    productId={accommodation.id}
-                    productName={accommodation.name}
-                    productType="accommodation"
                   />
                 </div>
                 <Link href={`/alojamientos/${accommodation.slug}`} className="group block min-w-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4">
