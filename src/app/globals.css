@@ -188,6 +188,24 @@ code, pre {
   50% { transform: translateY(-8px); }
 }
 
+@keyframes accommodationWhatsappPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--whatsapp) / 0), 0 10px 15px -3px rgb(0 0 0 / 0.3);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 0.5rem hsl(var(--whatsapp) / 0.28), 0 12px 18px -3px rgb(0 0 0 / 0.35);
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 1023px) {
+  .accommodation-whatsapp-pulse {
+    animation: accommodationWhatsappPulse 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

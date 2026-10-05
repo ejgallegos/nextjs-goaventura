@@ -49,8 +49,7 @@ export default function AccommodationWhatsAppCta({
     };
   }, []);
 
-  const mobileRevealClass = isNearViewportCenter ? 'w-36 lg:w-11' : 'w-11';
-  const textVisibilityClass = isNearViewportCenter ? 'opacity-100 lg:opacity-0' : 'opacity-0';
+  const mobilePulseClass = isNearViewportCenter ? 'accommodation-whatsapp-pulse' : '';
 
   return (
     <div ref={buttonRef} className="absolute bottom-3 right-3 z-10">
@@ -60,8 +59,8 @@ export default function AccommodationWhatsAppCta({
         buttonText="Contactar"
         ariaLabel={`Consultar ${accommodationName} por WhatsApp`}
         size="icon"
-        className={`group relative size-11 ${mobileRevealClass} overflow-hidden rounded-xl p-0 shadow-lg shadow-black/30 ring-1 ring-black/15 transition-[width,transform,box-shadow] duration-300 ease-out motion-reduce:transition-none hover:-translate-y-0.5 lg:hover:w-36 focus-visible:w-36 lg:focus-visible:w-36 [&>svg]:absolute [&>svg]:left-3 [&>svg]:top-3`}
-        textClassName={`absolute left-11 top-1/2 -translate-y-1/2 whitespace-nowrap text-sm ${textVisibilityClass} transition-opacity duration-200 ease-out motion-reduce:transition-none group-focus-visible:opacity-100 lg:group-hover:opacity-100`}
+        className={`group relative size-11 ${mobilePulseClass} overflow-hidden rounded-xl p-0 shadow-lg shadow-black/30 ring-1 ring-black/15 transition-[width,transform,box-shadow] duration-300 ease-out motion-reduce:transition-none hover:-translate-y-0.5 lg:hover:w-36 focus-visible:w-36 [&>svg]:absolute [&>svg]:left-3 [&>svg]:top-3`}
+        textClassName="absolute left-11 top-1/2 hidden -translate-y-1/2 whitespace-nowrap text-sm opacity-0 transition-opacity duration-200 ease-out motion-reduce:transition-none lg:block lg:group-hover:opacity-100 lg:group-focus-visible:opacity-100"
         productId={accommodationId}
         productName={accommodationName}
         productType="accommodation"
