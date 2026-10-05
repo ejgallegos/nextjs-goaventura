@@ -193,8 +193,13 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-5">
             {accommodations.map((accommodation) => (
               <article key={accommodation.id} className="min-w-0">
-                <Link href={`/alojamientos/${accommodation.slug}`} className="group block min-w-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
+                <div className="relative">
+                  <Link
+                    href={`/alojamientos/${accommodation.slug}`}
+                    aria-label={`Ver ${accommodation.name}`}
+                    className="group block min-w-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
+                  >
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary">
                     <Image
                       src={accommodation.images[0].src}
                       alt={accommodation.images[0].alt}
@@ -202,7 +207,20 @@ export default function Home() {
                       sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 20vw"
                       className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
                     />
-                  </div>
+                    </div>
+                  </Link>
+                  <WhatsAppCtaButton
+                    phoneNumber={accommodation.whatsapp}
+                    predefinedText={`Hola, quiero consultar por ${accommodation.name}.`}
+                    buttonText="WhatsApp"
+                    size="default"
+                    className="absolute bottom-3 right-3 z-10 min-h-11 rounded-xl border-2 border-white/90 px-3 text-xs shadow-lg shadow-black/25 ring-1 ring-black/15 sm:text-sm"
+                    productId={accommodation.id}
+                    productName={accommodation.name}
+                    productType="accommodation"
+                  />
+                </div>
+                <Link href={`/alojamientos/${accommodation.slug}`} className="group block min-w-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4">
                   <div className="pt-4">
                     <div className="flex items-start justify-between gap-3">
                       <h3 className="min-w-0 font-headline text-lg font-bold leading-tight text-foreground group-hover:text-accent">{accommodation.name}</h3>
@@ -211,16 +229,6 @@ export default function Home() {
                     <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{accommodation.shortDescription}</p>
                   </div>
                 </Link>
-                <WhatsAppCtaButton
-                  phoneNumber={accommodation.whatsapp}
-                  predefinedText={`Hola, quiero consultar por ${accommodation.name}.`}
-                  buttonText="WhatsApp"
-                  size="default"
-                  className="mt-4 min-h-11 w-full px-2 text-xs sm:text-sm lg:px-1 xl:px-2"
-                  productId={accommodation.id}
-                  productName={accommodation.name}
-                  productType="accommodation"
-                />
               </article>
             ))}
           </div>
