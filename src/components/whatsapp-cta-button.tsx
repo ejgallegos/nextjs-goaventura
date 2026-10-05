@@ -12,6 +12,7 @@ interface WhatsAppCtaButtonProps extends Omit<ButtonProps, 'asChild' | 'href'> {
   predefinedText: string;
   buttonText?: string;
   showIcon?: boolean;
+  ariaLabel?: string;
   productId?: string;
   productName?: string;
   productType?: 'accommodation' | 'excursion' | 'transfer' | 'promotion' | 'general';
@@ -22,6 +23,7 @@ const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
   predefinedText,
   buttonText = "Consultar por WhatsApp",
   showIcon = true,
+  ariaLabel,
   variant = "whatsapp",
   size = "default",
   className,
@@ -51,16 +53,20 @@ const WhatsAppCtaButton: React.FC<WhatsAppCtaButtonProps> = ({
     });
   };
 
+  const hasVisibleText = buttonText.trim().length > 0;
+  const accessibleLabel = ariaLabel ?? (hasVisibleText ? undefined : 'Consultar por WhatsApp');
+
   return (
     <a 
       href={whatsappUrl} 
       target="_blank" 
       rel="noopener noreferrer"
       className={buttonVariants({ variant, size, className })}
+      aria-label={accessibleLabel}
       onClick={handleClick}
     >
-      {showIcon && <WhatsAppIcon className="mr-2 h-5 w-5" />}
-      {buttonText}
+      {showIcon && <WhatsAppIcon className={hasVisibleText ? "mr-2 h-5 w-5" : "h-5 w-5"} />}
+      {hasVisibleText ? buttonText : null}
     </a>
   );
 };

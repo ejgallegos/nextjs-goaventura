@@ -212,9 +212,10 @@ export default function Home() {
                   <WhatsAppCtaButton
                     phoneNumber={accommodation.whatsapp}
                     predefinedText={`Hola, quiero consultar por ${accommodation.name}.`}
-                    buttonText="WhatsApp"
-                    size="default"
-                    className="absolute bottom-3 right-3 z-10 min-h-11 rounded-xl border-2 border-white/90 px-3 text-xs shadow-lg shadow-black/25 ring-1 ring-black/15 sm:text-sm"
+                    buttonText=""
+                    ariaLabel={`Consultar ${accommodation.name} por WhatsApp`}
+                    size="icon"
+                    className="absolute bottom-3 right-3 z-10 size-11 rounded-xl p-0 shadow-lg shadow-black/30 ring-1 ring-black/15 transition-transform hover:-translate-y-0.5"
                     productId={accommodation.id}
                     productName={accommodation.name}
                     productType="accommodation"
