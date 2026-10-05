@@ -93,13 +93,10 @@ export default function Header() {
           </SheetTrigger>
           <SheetContent side="right" className="w-full max-w-sm border-l-0 p-0 bg-background">
             <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
-            <div className="flex items-center justify-between p-5 border-b">
+            <div className="flex items-center p-5 border-b">
               <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                 <Image src="/logo.png" alt="Go Aventura" width={120} height={27} className="h-7 w-auto" />
               </Link>
-              <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} aria-label="Cerrar">
-                <X className="h-5 w-5" />
-              </Button>
             </div>
             <nav className="py-3 px-3">
               <ul className="space-y-0.5">
