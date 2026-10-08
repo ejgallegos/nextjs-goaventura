@@ -80,12 +80,12 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 
 ### Fase 1 — Base técnica y PostgreSQL
 
-- [ ] `AV-100` Agregar Drizzle, PostgreSQL y Vitest.
-- [ ] `AV-101` Crear configuración server-only de base de datos.
-- [ ] `AV-102` Agregar PostgreSQL, healthcheck, red interna y volumen persistente a Compose.
-- [ ] `AV-103` Documentar variables de entorno sin secretos.
-- [ ] `AV-104` Crear un comando reproducible de migración.
-- [ ] `AV-105` Verificar arranque, healthcheck y persistencia después de reinicio.
+- [x] `AV-100` Agregar Drizzle, PostgreSQL y Vitest.
+- [x] `AV-101` Crear configuración server-only de base de datos.
+- [x] `AV-102` Agregar PostgreSQL, healthcheck, red interna y volumen persistente a Compose.
+- [x] `AV-103` Documentar variables de entorno sin secretos (requiere force-add de `.env.example` porque la regla actual lo ignora).
+- [x] `AV-104` Crear un comando reproducible de migración.
+- [x] `AV-105` Verificar arranque, healthcheck y persistencia después de reinicio.
 
 ### Fase 2 — Modelo de datos
 
@@ -204,10 +204,11 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 | Fase | Estado | Evidencia | Próximo paso |
 | --- | --- | --- | --- |
 | 0 — Preparación | Completa | Rama creada; checklist `a141fce`; RDD `passive` | Iniciar la base técnica |
-| 1 — Base técnica | Pendiente | — | Implementar `AV-100` a `AV-105` |
+| 1 — Base técnica | Completa | `postgres:16-alpine` inició saludable; un marcador persistió después de `docker compose restart postgres`; la imagen `goaventura-db-migrate:local` se construyó y aplicó correctamente las migraciones versionadas; se eliminaron el contenedor, red, volumen y archivo de entorno temporales. Además, `typecheck`, `lint`, tests sin archivos, Compose config con perfil `tools`, `db:generate` convergente y `git diff --check` correctos | Registrar el commit y comenzar la fase 2 |
 
 ## Registro de commits
 
 | Unidad | Commit | Verificación | Rollback |
 | --- | --- | --- | --- |
 | Fase 0 — Preparación | `a141fce` | `typecheck`, `lint` y `git diff --check` correctos | Revertir `a141fce` |
+| Fase 1 — Base técnica | Sin commit | Ruta `delegated`; excepción test-first: configuración/fundación sin RED conductual significativo; `npm run typecheck` ✅; `npm run lint` ✅ (warnings preexistentes); `npm test -- --run` ✅ (sin archivos, `passWithNoTests`); `npm run db:generate` ✅ y convergente (0 tablas, solo `drizzle/meta/_journal.json`); imagen `db-migrate` ✅; `npm run db:migrate` ✅ contra PostgreSQL temporal; `docker compose --profile tools ... config --quiet` ✅; `git diff --check` ✅; PostgreSQL saludable y persistencia tras reinicio ✅ | Revertir los archivos de la fase 1; aproximadamente 4.933 líneas añadidas/eliminadas (incluye lockfile) |

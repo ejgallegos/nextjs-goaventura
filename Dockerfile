@@ -30,6 +30,20 @@ COPY . .
 # Build de producción
 RUN npm run build
 
+# Migration target reuses the dependency layer already downloaded for the
+# production build. Runtime migration execution performs no package install.
+FROM deps AS db-migrate
+
+WORKDIR /app
+
+COPY drizzle.config.ts ./
+COPY src/lib/db/schema.ts ./src/lib/db/schema.ts
+COPY drizzle ./drizzle
+
+ENV NODE_ENV=production
+
+CMD ["npm", "run", "db:migrate"]
+
 # Production stage - ejecutar la aplicación
 FROM node:20-alpine AS runner
 

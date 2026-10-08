@@ -7,6 +7,10 @@ services:
     container_name: goaventura-container
     networks:
       - "traefik-net"
+      - "availability-internal"
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: always
     ports:
       - "127.0.0.1:3003:3000"
@@ -37,10 +41,51 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  postgres:
+    image: postgres:16-alpine
+    container_name: goaventura-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - goaventura-postgres-data:/var/lib/postgresql/data
+    networks:
+      - availability-internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  db-migrate:
+    image: goaventura-db-migrate:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: db-migrate
+    profiles: ["tools"]
+    env_file:
+      - .env.production
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+    networks:
+      - availability-internal
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["npm", "run", "db:migrate"]
+
 volumes:
   goaventura-data:
+    driver: local
+  goaventura-postgres-data:
     driver: local
 
 networks:
   traefik-net:
     external: true
+  availability-internal:
+    internal: true
