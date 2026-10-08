@@ -203,7 +203,7 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 
 | Fase | Estado | Evidencia | Próximo paso |
 | --- | --- | --- | --- |
-| 0 — Preparación | Completa | Rama creada; checklist `a141fce` | Iniciar la base técnica |
+| 0 — Preparación | Completa | Rama creada; checklist `a141fce`; RDD `passive` | Iniciar la base técnica |
 | 1 — Base técnica | Pendiente | — | Implementar `AV-100` a `AV-105` |
 
 ## Registro de commits
