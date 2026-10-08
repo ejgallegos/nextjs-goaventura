@@ -76,7 +76,7 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 - [x] `AV-002` Definir autenticación, sincronización y política ante errores.
 - [x] `AV-003` Crear la rama `codex/availability-mvp` desde `develop`.
 - [x] `AV-004` Crear este checklist recuperable.
-- [ ] `AV-005` Registrar el commit y cerrar la fase 0.
+- [x] `AV-005` Registrar el commit y cerrar la fase 0.
 
 ### Fase 1 — Base técnica y PostgreSQL
 
@@ -203,11 +203,11 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 
 | Fase | Estado | Evidencia | Próximo paso |
 | --- | --- | --- | --- |
-| 0 — Preparación | En curso | Rama creada; checklist generado | Commitir y registrar evidencia |
-| 1 — Base técnica | Pendiente | — | Iniciar luego de aprobar fase 0 |
+| 0 — Preparación | Completa | Rama creada; checklist `a141fce` | Iniciar la base técnica |
+| 1 — Base técnica | Pendiente | — | Implementar `AV-100` a `AV-105` |
 
 ## Registro de commits
 
 | Unidad | Commit | Verificación | Rollback |
 | --- | --- | --- | --- |
-| Fase 0 — Preparación | Pendiente | Lectura estructural del documento | Eliminar este archivo y la rama local |
+| Fase 0 — Preparación | `a141fce` | `typecheck`, `lint` y `git diff --check` correctos | Revertir `a141fce` |
