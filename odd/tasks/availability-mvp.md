@@ -77,7 +77,7 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 | A3 — Transporte HTTPS | `AV-402` | Delegada; redirects, límites, cancelación y cleanup | `codex/availability-ics-fetch` | 462 líneas | Completa (`ab51327`); `size:exception` autorizada |
 | B1 — Parser y normalización base | `AV-403`–`AV-404` | Delegada; dependencia nueva, fixtures, VEVENT y reglas de fecha/zona horaria | `codex/availability-ics-parser` | 311 líneas | Completa (`661f573`, `716e50e`); RDD `medium` bajo presupuesto |
 | B2 — Recurrencias y excepciones | `AV-405` | Delegada; cancelaciones, overrides, exclusiones, fechas adicionales y deduplicación | `codex/availability-ics-recurrence` | 282 líneas | Completa (`6a5a900`, `f841e0b`); RDD `medium` aprobada |
-| C — Importación y locking | `AV-406`–`AV-407` | Delegada; transacciones y bloqueo PostgreSQL | `codex/availability-ics-import` | 300 líneas | Pendiente |
+| C — Importación y locking | `AV-406`–`AV-407` | Delegada; transacciones y bloqueo PostgreSQL | `codex/availability-ics-import` | 238 líneas | Completa (`b09b92d`) |
 | D — Orquestación y cooldown | `AV-408`–`AV-409` | Delegada; concurrencia y política temporal | `codex/availability-ics-sync` | 250 líneas | Pendiente |
 | E — Fail-safe y retención | `AV-410`–`AV-412` | Delegada; protección de snapshots y limpieza | `codex/availability-ics-retention` | 320 líneas | Pendiente |
 
@@ -134,8 +134,8 @@ Para C, la importación bloquea por fuente dentro de PostgreSQL y reemplaza el s
 - [x] `AV-403` Incorporar y encapsular el parser ICS.
 - [x] `AV-404` Normalizar fechas completas, horarios y zonas horarias.
 - [x] `AV-405` Procesar cancelaciones, modificaciones, duplicados y recurrencias soportadas.
-- [ ] `AV-406` Implementar importación transaccional e idempotente.
-- [ ] `AV-407` Evitar ejecuciones solapadas mediante bloqueo en PostgreSQL.
+- [x] `AV-406` Implementar importación transaccional e idempotente.
+- [x] `AV-407` Evitar ejecuciones solapadas mediante bloqueo en PostgreSQL.
 - [ ] `AV-408` Sincronizar fuentes en paralelo con concurrencia acotada.
 - [ ] `AV-409` Implementar cooldown de 2 minutos y sincronización manual forzada.
 - [ ] `AV-410` Preservar snapshots válidos ante errores.
