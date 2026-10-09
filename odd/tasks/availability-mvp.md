@@ -75,12 +75,13 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 | A1 — Cifrado de fuentes | `AV-400` | Delegada; criptografía y tests RED → GREEN | `codex/availability-ics-security` | 117 líneas | Completa (`d949b10`) |
 | A2 — Política de red | `AV-401` | Delegada; validación SSRF/DNS y tests RED → GREEN | `codex/availability-ics-network-policy` | 294 líneas | Completa (`5d3bc6d`) |
 | A3 — Transporte HTTPS | `AV-402` | Delegada; redirects, límites, cancelación y cleanup | `codex/availability-ics-fetch` | 462 líneas | Completa (`ab51327`); `size:exception` autorizada |
-| B — Parser y normalización | `AV-403`–`AV-405` | Delegada; dependencia nueva, fixtures y reglas de calendario | `codex/availability-ics-parser` | 380 líneas | Pendiente |
+| B1 — Parser y normalización base | `AV-403`–`AV-404` | Delegada; dependencia nueva, fixtures, VEVENT y reglas de fecha/zona horaria | `codex/availability-ics-parser` | 320–360 líneas | Pendiente |
+| B2 — Recurrencias y excepciones | `AV-405` | Delegada; cancelaciones, overrides, exclusiones, fechas adicionales y deduplicación | `codex/availability-ics-recurrence` | 300–340 líneas | Pendiente |
 | C — Importación y locking | `AV-406`–`AV-407` | Delegada; transacciones y bloqueo PostgreSQL | `codex/availability-ics-import` | 300 líneas | Pendiente |
 | D — Orquestación y cooldown | `AV-408`–`AV-409` | Delegada; concurrencia y política temporal | `codex/availability-ics-sync` | 250 líneas | Pendiente |
 | E — Fail-safe y retención | `AV-410`–`AV-412` | Delegada; protección de snapshots y limpieza | `codex/availability-ics-retention` | 320 líneas | Pendiente |
 
-El forecast total de la fase es de aproximadamente 1.500 líneas. Cada slice mantiene sus pruebas y documentación junto con el comportamiento y constituye un límite de rollback independiente.
+El forecast total de la fase es de aproximadamente 1.800 líneas después de la división preventiva de B. Cada slice mantiene sus pruebas y documentación junto con el comportamiento y constituye un límite de rollback independiente.
 
 ## Checklist
 
