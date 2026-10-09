@@ -26,6 +26,7 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 | Historial | Retención de 30 días |
 | Vaciado sospechoso | Conservar datos anteriores y requerir aprobación manual |
 | Zona horaria | `America/Argentina/La_Rioja` |
+| Horizonte de recurrencias ICS | Desde la fecha de sincronización hasta 18 meses hacia adelante |
 
 ## Capacidades máximas confirmadas
 
@@ -64,8 +65,20 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 - Política test-first: RED → GREEN → REFACTOR cuando exista un test determinista y ejecutable; documentar excepciones cuando todavía no exista runner o el cambio sea pasivo.
 - Estrategia de entrega: `ask-on-risk`.
 - Presupuesto orientativo: 400 líneas por unidad/PR; el MVP completo superará ese tamaño y se dividirá por comportamiento coherente.
-- Estrategia de cadena: pendiente hasta alcanzar el primer límite de entrega.
+- Estrategia de cadena: `feature-branch-chain`; `codex/availability-mvp` funciona como rama integradora y cada slice coherente se implementa en una rama hija encadenada.
 - Espejo Engram: pendiente porque las herramientas de memoria no están disponibles en esta sesión.
+
+### Plan de implementación de la Fase 4
+
+| Slice | Tareas | Ruta | Rama prevista | Presupuesto orientativo | Estado |
+| --- | --- | --- | --- | ---: | --- |
+| A — Cifrado y descarga segura | `AV-400`–`AV-402` | Delegada; seguridad multarchivo y tests RED → GREEN | `codex/availability-ics-security` | 250 líneas | Pendiente |
+| B — Parser y normalización | `AV-403`–`AV-405` | Delegada; dependencia nueva, fixtures y reglas de calendario | `codex/availability-ics-parser` | 380 líneas | Pendiente |
+| C — Importación y locking | `AV-406`–`AV-407` | Delegada; transacciones y bloqueo PostgreSQL | `codex/availability-ics-import` | 300 líneas | Pendiente |
+| D — Orquestación y cooldown | `AV-408`–`AV-409` | Delegada; concurrencia y política temporal | `codex/availability-ics-sync` | 250 líneas | Pendiente |
+| E — Fail-safe y retención | `AV-410`–`AV-412` | Delegada; protección de snapshots y limpieza | `codex/availability-ics-retention` | 320 líneas | Pendiente |
+
+El forecast total de la fase es de aproximadamente 1.500 líneas. Cada slice mantiene sus pruebas y documentación junto con el comportamiento y constituye un límite de rollback independiente.
 
 ## Checklist
 
