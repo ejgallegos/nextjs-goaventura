@@ -4,7 +4,7 @@ import ICAL from 'ical.js';
 
 export const AVAILABILITY_TIME_ZONE = 'America/Argentina/La_Rioja';
 
-export type IcsParserErrorCode = 'MALFORMED_FEED' | 'INVALID_PERIOD' | 'INVALID_DATETIME' | 'UNSUPPORTED_TIMEZONE' | 'RECURRENCE_UNSUPPORTED';
+export type IcsParserErrorCode = 'MALFORMED_FEED' | 'INVALID_PERIOD' | 'INVALID_DATETIME' | 'UNSUPPORTED_TIMEZONE' | 'RECURRENCE_UNSUPPORTED' | 'INVALID_RECURRENCE';
 
 export class IcsParserError extends Error {
   readonly code: IcsParserErrorCode;
@@ -33,6 +33,7 @@ function parserError(code: IcsParserErrorCode): IcsParserError {
     INVALID_DATETIME: 'ICS event date-time is invalid',
     UNSUPPORTED_TIMEZONE: 'ICS timezone is unsupported',
     RECURRENCE_UNSUPPORTED: 'ICS recurrence processing is deferred',
+    INVALID_RECURRENCE: 'ICS recurrence definition is invalid',
   };
   return new IcsParserError(code, messages[code]);
 }
@@ -88,8 +89,7 @@ function normalizedDate(time: ICAL.Time): string {
   }
 }
 
-function validateRawDateTime(property: ICAL.Property): void {
-  const raw = String(property.jCal[3] ?? '');
+function validateRawValue(raw: string): void {
   const match = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(Z)?)?$/.exec(raw);
   if (!match) throw parserError('INVALID_DATETIME');
   const [, yearText, monthText, dayText, hourText, minuteText, secondText] = match;
@@ -105,6 +105,21 @@ function validateRawDateTime(property: ICAL.Property): void {
   }
 }
 
+function validateRawDateTime(property: ICAL.Property): void {
+  validateRawValue(String(property.jCal[3] ?? ''));
+}
+
+function validateRecurrenceDates(component: ICAL.Component): void {
+  for (const name of ['rdate', 'exdate']) {
+    for (const property of component.getAllProperties(name)) {
+      for (const raw of property.jCal.slice(3)) {
+        const values = Array.isArray(raw) ? raw : [raw];
+        for (const value of values) validateRawValue(String(value));
+      }
+    }
+  }
+}
+
 function validateTimezoneParameter(property: ICAL.Property): void {
   const timezone = property.getFirstParameter('tzid');
   if (typeof timezone !== 'string' || timezone.length === 0) return;
@@ -115,15 +130,13 @@ function validateTimezoneParameter(property: ICAL.Property): void {
   }
 }
 
-function hasDeferredFeatures(component: ICAL.Component): boolean {
-  return ['rrule', 'rdate', 'exdate', 'recurrence-id'].some((name) => component.hasProperty(name)) ||
-    String(component.getFirstPropertyValue('status') ?? '').toUpperCase() === 'CANCELLED';
+function isCancelled(component: ICAL.Component): boolean {
+  return String(component.getFirstPropertyValue('status') ?? '').toUpperCase() === 'CANCELLED';
 }
 
 function eventPeriod(component: ICAL.Component): OccupancyPeriod {
-  if (hasDeferredFeatures(component) || !component.hasProperty('dtstart') ||
+  if (!component.hasProperty('dtstart') ||
     (!component.hasProperty('dtend') && !component.hasProperty('duration'))) {
-    if (hasDeferredFeatures(component)) throw parserError('RECURRENCE_UNSUPPORTED');
     throw parserError('INVALID_PERIOD');
   }
 
@@ -158,22 +171,151 @@ function eventPeriod(component: ICAL.Component): OccupancyPeriod {
   return uid ? { checkIn, checkOut, uid } : { checkIn, checkOut };
 }
 
+function addCalendarMonths(value: string, months: number): string {
+  const [year, month, day] = value.split('-').map(Number);
+  const target = new Date(Date.UTC(year, month - 1 + months, 1));
+  const lastDay = new Date(Date.UTC(target.getUTCFullYear(), target.getUTCMonth() + 1, 0)).getUTCDate();
+  return dateString(target.getUTCFullYear(), target.getUTCMonth() + 1, Math.min(day, lastDay));
+}
+
+function validateComponentDates(component: ICAL.Component): void {
+  const startProperty = component.getFirstProperty('dtstart');
+  const endProperty = component.getFirstProperty('dtend');
+  if (!startProperty) throw parserError('INVALID_PERIOD');
+  validateRawDateTime(startProperty);
+  validateTimezoneParameter(startProperty);
+  if (endProperty) {
+    validateRawDateTime(endProperty);
+    validateTimezoneParameter(endProperty);
+  }
+}
+
+function periodFromTimes(startDate: ICAL.Time, endDate: ICAL.Time, uid?: string): OccupancyPeriod {
+  let checkIn: string;
+  let checkOut: string;
+  try {
+    checkIn = normalizedDate(startDate);
+    checkOut = normalizedDate(endDate);
+  } catch (error) {
+    if (error instanceof IcsParserError) throw error;
+    throw parserError('INVALID_DATETIME');
+  }
+  if (checkOut <= checkIn) throw parserError('INVALID_PERIOD');
+  return uid ? { checkIn, checkOut, uid } : { checkIn, checkOut };
+}
+
+function recurrenceExceptionPeriod(component: ICAL.Component, uid: string | undefined): OccupancyPeriod | null {
+  const recurrenceId = component.getFirstProperty('recurrence-id');
+  if (!recurrenceId) throw parserError('INVALID_RECURRENCE');
+  validateRawDateTime(recurrenceId);
+  validateTimezoneParameter(recurrenceId);
+  validateComponentDates(component);
+  if (isCancelled(component)) return null;
+  let event: ICAL.Event;
+  try {
+    event = new ICAL.Event(component);
+  } catch {
+    throw parserError('INVALID_RECURRENCE');
+  }
+  return periodFromTimes(event.startDate, event.endDate, uid);
+}
+
+function recurringPeriods(
+  component: ICAL.Component,
+  synchronizationDate: string,
+  horizon: string,
+  exceptions: ICAL.Component[],
+): OccupancyPeriod[] {
+  validateComponentDates(component);
+  try {
+    validateRecurrenceDates(component);
+  } catch (error) {
+    if (error instanceof IcsParserError) throw parserError('INVALID_RECURRENCE');
+    throw error;
+  }
+  if (!component.hasProperty('dtend') && !component.hasProperty('duration')) throw parserError('INVALID_RECURRENCE');
+  let event: ICAL.Event;
+  try {
+    event = new ICAL.Event(component);
+  } catch {
+    throw parserError('INVALID_RECURRENCE');
+  }
+  if (!event.isRecurring()) throw parserError('INVALID_RECURRENCE');
+  const uid = event.uid?.trim();
+  const iterator = event.iterator();
+  const periods: OccupancyPeriod[] = [];
+  let finished = false;
+  for (let count = 0; count < 100_000; count += 1) {
+    let occurrence: ICAL.Time | null;
+    try {
+      occurrence = iterator.next();
+    } catch {
+      throw parserError('INVALID_RECURRENCE');
+    }
+    if (!occurrence) {
+      finished = true;
+      break;
+    }
+    const occurrenceDate = normalizedDate(occurrence);
+    if (occurrenceDate >= horizon) {
+      finished = true;
+      break;
+    }
+    const details = event.getOccurrenceDetails(occurrence);
+    const itemComponent = details.item.component;
+    validateComponentDates(itemComponent);
+    if (isCancelled(itemComponent)) continue;
+    const period = periodFromTimes(details.startDate, details.endDate, uid);
+    if (period.checkIn >= synchronizationDate && period.checkIn < horizon) periods.push(period);
+  }
+  if (!finished) throw parserError('INVALID_RECURRENCE');
+  for (const exception of exceptions) {
+    const period = recurrenceExceptionPeriod(exception, uid);
+    if (period && period.checkIn >= synchronizationDate && period.checkIn < horizon) periods.push(period);
+  }
+  return periods;
+}
+
 export function parseIcsCalendar(source: string, options: IcsParserOptions): OccupancyPeriod[] {
   if (typeof source !== 'string' || !(options?.synchronizationDate instanceof Date) || Number.isNaN(options.synchronizationDate.getTime())) {
     throw parserError('MALFORMED_FEED');
   }
 
   let calendar: ICAL.Component;
+  const hasRecurrenceProperty = /(?:^|\r?\n)(?:RRULE|RDATE|EXDATE|RECURRENCE-ID)(?:;[^:]*)?:/i.test(source);
   try {
     calendar = new ICAL.Component(ICAL.parse(source));
     if (calendar.name !== 'vcalendar') throw parserError('MALFORMED_FEED');
   } catch (error) {
     if (error instanceof IcsParserError) throw error;
-    throw parserError('MALFORMED_FEED');
+    throw parserError(hasRecurrenceProperty ? 'INVALID_RECURRENCE' : 'MALFORMED_FEED');
   }
 
   try {
-    return calendar.getAllSubcomponents('vevent').map(eventPeriod).sort((left, right) =>
+    const synchronizationDate = dateInZone(options.synchronizationDate, AVAILABILITY_TIME_ZONE);
+    const horizon = addCalendarMonths(synchronizationDate, 18);
+    const periods: OccupancyPeriod[] = [];
+    const components = calendar.getAllSubcomponents('vevent');
+    const exceptionsByUid = new Map<string, ICAL.Component[]>();
+    for (const component of components) {
+      if (!component.hasProperty('recurrence-id')) continue;
+      const uid = String(component.getFirstPropertyValue('uid') ?? '').trim();
+      if (!uid) throw parserError('INVALID_RECURRENCE');
+      exceptionsByUid.set(uid, [...(exceptionsByUid.get(uid) ?? []), component]);
+    }
+    for (const component of components) {
+      if (component.hasProperty('recurrence-id')) continue;
+      if (isCancelled(component)) continue;
+      const uid = String(component.getFirstPropertyValue('uid') ?? '').trim();
+      if (component.hasProperty('rrule') || component.hasProperty('rdate') || component.hasProperty('exdate') || exceptionsByUid.has(uid)) {
+        periods.push(...recurringPeriods(component, synchronizationDate, horizon, exceptionsByUid.get(uid) ?? []));
+      } else {
+        periods.push(eventPeriod(component));
+      }
+    }
+    const unique = new Map<string, OccupancyPeriod>();
+    for (const period of periods) unique.set(`${period.uid ?? ''}|${period.checkIn}|${period.checkOut}`, period);
+    return [...unique.values()].sort((left, right) =>
       left.checkIn.localeCompare(right.checkIn) || left.checkOut.localeCompare(right.checkOut) || (left.uid ?? '').localeCompare(right.uid ?? ''),
     );
   } catch (error) {
