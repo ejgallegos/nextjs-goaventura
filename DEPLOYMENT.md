@@ -8,6 +8,14 @@ Guía para desplegar la aplicación Next.js y su PostgreSQL interno con Docker C
 - Una red externa de Docker llamada `traefik-net` si se mantienen las etiquetas de Traefik.
 - Un archivo `.env.production` privado, basado en `.env.example`.
 
+La aplicación escucha únicamente en `127.0.0.1:3003` y Traefik es el único
+ingress público. El middleware de Traefik debe mantener
+`forwardedHeaders.insecure` deshabilitado; si existe un proxy upstream
+confiable, configurá explícitamente sus `trustedIPs` y no aceptes cabeceras
+reenviadas arbitrarias desde Internet. La aplicación usa solamente el
+`X-Real-IP` que Traefik agrega después de esa configuración para el límite de
+intentos de login; una cabecera ausente o inválida cae en un bucket estable.
+
 ```bash
 cp .env.example .env.production
 chmod 600 .env.production

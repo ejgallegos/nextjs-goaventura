@@ -100,13 +100,13 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 
 ### Fase 3 — Autenticación y autorización
 
-- [ ] `AV-300` Crear login exclusivo del módulo.
-- [ ] `AV-301` Verificar contraseña mediante bcrypt y variables de entorno.
-- [ ] `AV-302` Implementar cookie de sesión firmada de 8 horas.
-- [ ] `AV-303` Implementar logout e invalidación de cookie.
-- [ ] `AV-304` Proteger páginas y APIs del lado del servidor.
-- [ ] `AV-305` Aplicar rate limiting específico al login.
-- [ ] `AV-306` Confirmar que el panel heredado continúa deshabilitado.
+- [x] `AV-300` Crear login exclusivo del módulo.
+- [x] `AV-301` Verificar contraseña mediante bcrypt y variables de entorno.
+- [x] `AV-302` Implementar cookie de sesión firmada de 8 horas.
+- [x] `AV-303` Implementar logout e invalidación de cookie.
+- [x] `AV-304` Proteger páginas y APIs del lado del servidor.
+- [x] `AV-305` Aplicar rate limiting específico al login.
+- [x] `AV-306` Confirmar que el panel heredado continúa deshabilitado.
 
 ### Fase 4 — Importación y sincronización ICS
 
@@ -206,6 +206,7 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 | 0 — Preparación | Completa | Rama creada; checklist `a141fce`; RDD `passive` | Iniciar la base técnica |
 | 1 — Base técnica | Completa | Commit `28ef200`; RDD `medium` aprobado y reconocido en el linaje `review-12df1f3fdf32cf7e`; `postgres:16-alpine` inició saludable; un marcador persistió después de `docker compose restart postgres`; la imagen `goaventura-db-migrate:local` se construyó y aplicó correctamente las migraciones versionadas; se eliminaron el contenedor, red, volumen y archivo de entorno temporales. Además, `typecheck`, `lint`, tests sin archivos, Compose config con perfil `tools`, `db:generate` convergente y `git diff --check` correctos | Comenzar la fase 2; considerar por separado las advertencias informativas `R3-001` y `R3-002` |
 | 2 — Modelo de datos | Completa | Commit `2f862c6`; RDD `medium` aprobado sin hallazgos y reconocido en el linaje `review-1d1745c69ab446bd`; ruta `delegated`; excepción test-first: el seam aprobado se verificó directamente contra PostgreSQL real. `maxCapacity` agregado a los cinco alojamientos; cuatro tablas sin campos de huéspedes, enums, checks, FKs e índices generados. La imagen Docker se construyó; la migración se aplicó dos veces; el seed se ejecutó tres veces y conservó cinco slugs únicos. Se preservaron una URL cifrada de prueba y el estado activo existentes. PostgreSQL rechazó intervalos inválidos, estados/timestamps inconsistentes, aprobaciones ajenas a `no_data` y aprobaciones duplicadas. `db:generate` repetido permaneció convergente. Cambio real: 1.198 líneas añadidas/eliminadas incluyendo snapshot/migración | Comenzar la fase 3 |
+| 3 — Autenticación y autorización | Implementada y verificada | Ruta `delegated`; corrección RED → GREEN observada en limiter/CSRF/cookies/client-address: los focused runs iniciales fallaron por entradas sin límite, cabeceras manipulables, comparación por prefijo, opciones de cookie inexistentes y helper ausente; el run final pasó con 11 tests. El limiter ahora limpia expirados, tiene máximo configurable y eviction determinista, usa únicamente `X-Real-IP` válido detrás del Traefik sole-ingress, reinicia el bucket tras autenticación exitosa y mantiene un fallback estable. CSRF parsea URL y compara `.origin` exactamente. El middleware activo quedó en `src/middleware.ts`, con `/admin` y `/admin/**` bloqueados sin afectar `/administrator`; las opciones de cookie tienen seam determinista para Secure, HttpOnly, SameSite=Strict, Path=/, Max-Age 28800 y logout epoch/zero. El padre verificó HTTP exitosamente: redirects, 401/no-store, cuerpos idénticos de credenciales inválidas, login, atributos de cookie en desarrollo, página/API protegida, rechazo de tamper, 429/retry, logout, redirect de legacy page, legacy API 410 y `/administrator` 404. El build de producción finalizó con exit 0; solo permanecen advertencias no relacionadas de Genkit/OpenTelemetry. `typecheck`, `lint`, tests y `git diff --check` correctos. Cambio estimado: 850 líneas | Crear commit de unidad cuando el padre lo autorice; luego continuar Fase 4 |
 
 ## Registro de commits
 
@@ -214,3 +215,4 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 | Fase 0 — Preparación | `a141fce` | `typecheck`, `lint` y `git diff --check` correctos | Revertir `a141fce` |
 | Fase 1 — Base técnica | `28ef200` | Ruta `delegated`; excepción test-first: configuración/fundación sin RED conductual significativo; `npm run typecheck` ✅; `npm run lint` ✅ (warnings preexistentes); `npm test -- --run` ✅ (sin archivos, `passWithNoTests`); `npm run db:generate` ✅ y convergente (0 tablas, solo `drizzle/meta/_journal.json`); imagen `db-migrate` ✅; `npm run db:migrate` ✅ contra PostgreSQL temporal; `docker compose --profile tools ... config --quiet` ✅; `git diff --check` ✅; PostgreSQL saludable y persistencia tras reinicio ✅; RDD `medium` aprobado, reconocido y consumido (`review-12df1f3fdf32cf7e`) con dos advertencias informativas no bloqueantes | Revertir `28ef200`; aproximadamente 4.933 líneas añadidas/eliminadas (incluye lockfile) |
 | Fase 2 — Modelo de datos | `2f862c6` | Ruta `delegated`; `typecheck` ✅; `lint` ✅ (warnings preexistentes); tests ✅ (sin archivos); `db:generate` convergente ✅; Compose config ✅; imagen Docker ✅; migración repetida ✅; seed repetido y preservación de configuración ✅; restricciones de integridad ejercitadas en PostgreSQL ✅; `git diff --check` ✅; `public/data/statistics.json` intacto ✅; RDD `medium` aprobado sin hallazgos, reconocido y consumido (`review-1d1745c69ab446bd`) | Revertir `2f862c6`; 1.198 líneas añadidas/eliminadas |
+| Fase 3 — Autenticación y autorización | Pendiente de commit | Ruta `delegated`; focused RED → GREEN ✅ para bounded/expiring limiter, trusted `X-Real-IP`, bucket reset, exact CSRF origins, middleware relocation, cookie options y Edge-compatible client address; `typecheck` ✅; `lint` ✅ con warnings preexistentes; `npm test -- --run` ✅ (11 tests); `git diff --check` ✅; los tres warnings nuevos de `src/middleware.ts` desaparecieron; build de producción final ✅ exit 0 con advertencias no relacionadas; verificación HTTP final del padre ✅ para redirects, 401/no-store, credenciales inválidas idénticas, login, cookies, página/API protegida, tamper, 429/retry, logout, legacy page/API y `/administrator`; `public/data/statistics.json` intacto ✅ | Crear commit de unidad cuando el padre lo autorice |

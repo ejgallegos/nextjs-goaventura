@@ -1,7 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SECURITY_CONFIG } from '@/lib/config/security-config';
-import { SecurityLogger } from '@/lib/monitoring/security-logger';
-import { getClientIP } from '@/lib/security';
+import { SECURITY_CONFIG } from '../config/security-config';
+import { SecurityLogger } from '../monitoring/security-logger';
+import { getTrustedClientAddress } from './client-address';
+
+function parseOrigin(value: string): string | null {
+  try {
+    return new URL(value).origin;
+  } catch {
+    return null;
+  }
+}
+
+export function isAllowedCsrfOrigin(value: string | null): boolean {
+  if (value === null) return false;
+  const requestOrigin = parseOrigin(value);
+  if (!requestOrigin) return false;
+  return SECURITY_CONFIG.cors.allowedOrigins.some((allowed) => parseOrigin(allowed) === requestOrigin);
+}
 
 export class SecurityMiddleware {
   private static rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -30,7 +45,7 @@ export class SecurityMiddleware {
   static async rateLimit(request: NextRequest): Promise<NextResponse | null> {
     this.cleanupRateLimitStore();
     
-    const ip = getClientIP(request);
+    const ip = getTrustedClientAddress(request.headers);
     const now = Date.now();
     const config = SECURITY_CONFIG.rateLimit;
 
@@ -83,7 +98,7 @@ export class SecurityMiddleware {
           SecurityLogger.log({
             type: 'csrf_attempt',
             severity: 'high',
-            ip: getClientIP(request),
+            ip: getTrustedClientAddress(request.headers),
             userAgent: request.headers.get('user-agent') || undefined,
             details: { path: request.nextUrl.pathname, method: request.method }
           }).catch(console.error);
@@ -94,8 +109,8 @@ export class SecurityMiddleware {
           );
         }
 
-        const checkOrigin = origin || referer;
-        if (checkOrigin && !SECURITY_CONFIG.cors.allowedOrigins.some(allowed => checkOrigin!.startsWith(allowed))) {
+        const checkOrigin = origin !== null ? origin : referer;
+        if (!isAllowedCsrfOrigin(checkOrigin)) {
           return new NextResponse(
             JSON.stringify({ error: 'CSRF protection: Invalid origin' }),
             { status: 403, headers: { 'Content-Type': 'application/json' } }
