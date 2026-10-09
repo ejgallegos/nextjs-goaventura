@@ -21,6 +21,7 @@ export interface Accommodation {
     lng: number;
   };
   capacity: string;
+  maxCapacity: number;
   bedrooms?: number;
   bathrooms?: number;
   services: string[];
@@ -60,6 +61,7 @@ WiFi de alta velocidad para que estés conectado con tus seres queridos o trabaj
       lng: -68.22681317352131,
     },
     capacity: '2 personas',
+    maxCapacity: 2,
     bedrooms: 1,
     bathrooms: 1,
     services: [
@@ -130,6 +132,7 @@ A solo minutos del centro de Villa Unión y en la entrada de la ciudad, fácil a
       lng: -68.22305917749192,
     },
     capacity: '6-8 personas',
+    maxCapacity: 8,
     bedrooms: 3,
     bathrooms: 2,
     services: [
@@ -204,6 +207,7 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
       lng: -68.22527481842684,
     },
     capacity: '2 personas',
+    maxCapacity: 2,
     bedrooms: 1,
     bathrooms: 1,
     services: [
@@ -267,6 +271,7 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
     location: 'Verne Costa, Villa Unión, La Rioja',
     mapUrl: 'https://www.google.com/maps?q=Verne+Costa%2C+Villa+Uni%C3%B3n%2C+La+Rioja&z=16&output=embed',
     capacity: '2-4 personas',
+    maxCapacity: 4,
     bedrooms: 2,
     bathrooms: 1,
     services: [
@@ -331,6 +336,7 @@ Dispone de cochera y Wi-Fi.
       lng: -68.225492,
     },
     capacity: '2 personas',
+    maxCapacity: 2,
     bedrooms: 1,
     bathrooms: 1,
     services: [

@@ -8,7 +8,7 @@ const databaseEnvSchema = z.object({
   DATABASE_URL: z.string().url().startsWith('postgresql://'),
 });
 
-type Database = PostgresJsDatabase;
+export type Database = PostgresJsDatabase;
 
 let sqlClient: Sql | null = null;
 let database: Database | null = null;

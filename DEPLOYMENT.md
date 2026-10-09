@@ -17,7 +17,7 @@ Definí `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` y `DATABASE_URL`. En
 
 ## Build, migración y arranque
 
-La imagen final de la aplicación es standalone y no incluye npm ni Drizzle Kit. El target `db-migrate` del Dockerfile reutiliza la capa de dependencias ya instalada durante el build y copia únicamente la configuración Drizzle, el schema y las migraciones versionadas. El servicio aplica únicamente las migraciones ya presentes en `drizzle/`; no monta el código ni instala paquetes durante el despliegue.
+La imagen final de la aplicación es standalone y no incluye npm ni Drizzle Kit. El target `db-migrate` del Dockerfile reutiliza la capa de dependencias ya instalada durante el build y copia la configuración Drizzle, el schema, las migraciones versionadas y los archivos necesarios para ejecutar el seed. El servicio aplica únicamente las migraciones ya presentes en `drizzle/`; no monta el código ni instala paquetes durante el despliegue.
 
 ```bash
 # Validar la interpolación sin mostrar valores
@@ -32,6 +32,9 @@ docker compose --env-file .env.production -f docker-compose.production.yml up -d
 # Aplicar migraciones versionadas (perfil de herramientas)
 docker compose --env-file .env.production -f docker-compose.production.yml --profile tools run --rm db-migrate
 
+# Crear o actualizar las cinco fuentes sin configurar URLs ICS reales
+docker compose --env-file .env.production -f docker-compose.production.yml --profile tools run --rm db-seed
+
 # Iniciar la aplicación solamente después de una migración exitosa
 docker compose --env-file .env.production -f docker-compose.production.yml up -d goaventura
 ```
@@ -40,7 +43,8 @@ Para un despliegue desde cero, ejecutá la migración antes de enviar tráfico. 
 
 Las nuevas tablas se generan durante el desarrollo con `npm run db:generate` y
 los archivos resultantes de `drizzle/` se revisan y versionan junto con el
-cambio. El despliegue no modifica el árbol de migraciones.
+cambio. El despliegue no modifica el árbol de migraciones. El seed es idempotente,
+mantiene las URLs ICS sin configurar y no reemplaza una URL administrada.
 
 ## Comprobaciones
 
@@ -49,22 +53,22 @@ npm run typecheck
 npm run lint
 npm run build
 docker compose --env-file .env.production -f docker-compose.production.yml ps
-docker compose -f docker-compose.production.yml logs --tail=100 postgres
+docker compose --env-file .env.production -f docker-compose.production.yml logs --tail=100 postgres
 ```
 
 Verificá manualmente la portada, alojamientos, viajes, formulario de contacto, enlaces de WhatsApp y navegación móvil. La caché de imágenes continúa siendo el único destino escribible de la imagen de aplicación:
 
 ```bash
-docker compose -f docker-compose.production.yml exec goaventura sh -c 'touch /app/.next/cache/images/.write-check && rm /app/.next/cache/images/.write-check'
+docker compose --env-file .env.production -f docker-compose.production.yml exec goaventura sh -c 'touch /app/.next/cache/images/.write-check && rm /app/.next/cache/images/.write-check'
 ```
 
 ## Operación y persistencia
 
 ```bash
-docker compose -f docker-compose.production.yml ps
-docker compose -f docker-compose.production.yml logs -f goaventura
-docker compose -f docker-compose.production.yml restart goaventura
-docker compose -f docker-compose.production.yml restart postgres
+docker compose --env-file .env.production -f docker-compose.production.yml ps
+docker compose --env-file .env.production -f docker-compose.production.yml logs -f goaventura
+docker compose --env-file .env.production -f docker-compose.production.yml restart goaventura
+docker compose --env-file .env.production -f docker-compose.production.yml restart postgres
 ```
 
 Los datos viven en el volumen nombrado `goaventura-postgres-data`. No borres ese volumen durante un reinicio normal.

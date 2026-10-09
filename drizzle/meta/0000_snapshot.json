@@ -1,0 +1,541 @@
+{
+  "id": "88c8f28b-7c04-4eb1-bd3c-f0570a42f001",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.calendar_sources": {
+      "name": "calendar_sources",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "accommodation_slug": {
+          "name": "accommodation_slug",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ics_url": {
+          "name": "ics_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "calendar_source_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'inactive'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "calendar_sources_accommodation_lookup": {
+          "name": "calendar_sources_accommodation_lookup",
+          "columns": [
+            {
+              "expression": "accommodation_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "calendar_sources_accommodation_slug_unique": {
+          "name": "calendar_sources_accommodation_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "accommodation_slug"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "calendar_sources_accommodation_slug_not_blank": {
+          "name": "calendar_sources_accommodation_slug_not_blank",
+          "value": "length(trim(\"calendar_sources\".\"accommodation_slug\")) > 0"
+        },
+        "calendar_sources_ics_url_not_blank": {
+          "name": "calendar_sources_ics_url_not_blank",
+          "value": "\"calendar_sources\".\"ics_url\" is null or length(trim(\"calendar_sources\".\"ics_url\")) > 0"
+        },
+        "calendar_sources_active_requires_url": {
+          "name": "calendar_sources_active_requires_url",
+          "value": "\"calendar_sources\".\"status\" <> 'active' or (\"calendar_sources\".\"ics_url\" is not null and length(trim(\"calendar_sources\".\"ics_url\")) > 0)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.empty_feed_approvals": {
+      "name": "empty_feed_approvals",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sync_run_id": {
+          "name": "sync_run_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sync_run_status": {
+          "name": "sync_run_status",
+          "type": "sync_run_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'no_data'"
+        },
+        "status": {
+          "name": "status",
+          "type": "empty_feed_approval_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "detected_at": {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "previous_period_count": {
+          "name": "previous_period_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "proposed_period_count": {
+          "name": "proposed_period_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "reviewed_at": {
+          "name": "reviewed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "review_notes": {
+          "name": "review_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "empty_feed_approvals_pending_lookup": {
+          "name": "empty_feed_approvals_pending_lookup",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "detected_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "empty_feed_approvals_sync_run_no_data_fk": {
+          "name": "empty_feed_approvals_sync_run_no_data_fk",
+          "tableFrom": "empty_feed_approvals",
+          "tableTo": "sync_runs",
+          "columnsFrom": [
+            "sync_run_id",
+            "sync_run_status"
+          ],
+          "columnsTo": [
+            "id",
+            "status"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "empty_feed_approvals_sync_run_unique": {
+          "name": "empty_feed_approvals_sync_run_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "sync_run_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "empty_feed_approvals_non_negative_counts": {
+          "name": "empty_feed_approvals_non_negative_counts",
+          "value": "\"empty_feed_approvals\".\"previous_period_count\" >= 0 and \"empty_feed_approvals\".\"proposed_period_count\" >= 0"
+        },
+        "empty_feed_approvals_sync_run_must_be_no_data": {
+          "name": "empty_feed_approvals_sync_run_must_be_no_data",
+          "value": "\"empty_feed_approvals\".\"sync_run_status\" = 'no_data'"
+        },
+        "empty_feed_approvals_lifecycle_status_matches_review": {
+          "name": "empty_feed_approvals_lifecycle_status_matches_review",
+          "value": "(\"empty_feed_approvals\".\"status\" = 'pending' and \"empty_feed_approvals\".\"reviewed_at\" is null) or (\"empty_feed_approvals\".\"status\" <> 'pending' and \"empty_feed_approvals\".\"reviewed_at\" is not null)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.occupancy_periods": {
+      "name": "occupancy_periods",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "calendar_source_id": {
+          "name": "calendar_source_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "external_event_id": {
+          "name": "external_event_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "check_in": {
+          "name": "check_in",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "check_out": {
+          "name": "check_out",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "occupancy_periods_source_range_lookup": {
+          "name": "occupancy_periods_source_range_lookup",
+          "columns": [
+            {
+              "expression": "calendar_source_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "check_in",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "check_out",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "occupancy_periods_calendar_source_id_calendar_sources_id_fk": {
+          "name": "occupancy_periods_calendar_source_id_calendar_sources_id_fk",
+          "tableFrom": "occupancy_periods",
+          "tableTo": "calendar_sources",
+          "columnsFrom": [
+            "calendar_source_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "occupancy_periods_source_event_unique": {
+          "name": "occupancy_periods_source_event_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "calendar_source_id",
+            "external_event_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "occupancy_periods_valid_half_open_interval": {
+          "name": "occupancy_periods_valid_half_open_interval",
+          "value": "\"occupancy_periods\".\"check_out\" > \"occupancy_periods\".\"check_in\""
+        },
+        "occupancy_periods_external_event_id_not_blank": {
+          "name": "occupancy_periods_external_event_id_not_blank",
+          "value": "length(trim(\"occupancy_periods\".\"external_event_id\")) > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.sync_runs": {
+      "name": "sync_runs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "calendar_source_id": {
+          "name": "calendar_source_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "sync_run_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'running'"
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "events_seen": {
+          "name": "events_seen",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "periods_imported": {
+          "name": "periods_imported",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "warning": {
+          "name": "warning",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error": {
+          "name": "error",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "sync_runs_source_history_lookup": {
+          "name": "sync_runs_source_history_lookup",
+          "columns": [
+            {
+              "expression": "calendar_source_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "started_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "sync_runs_retention_lookup": {
+          "name": "sync_runs_retention_lookup",
+          "columns": [
+            {
+              "expression": "started_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "sync_runs_calendar_source_id_calendar_sources_id_fk": {
+          "name": "sync_runs_calendar_source_id_calendar_sources_id_fk",
+          "tableFrom": "sync_runs",
+          "tableTo": "calendar_sources",
+          "columnsFrom": [
+            "calendar_source_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sync_runs_id_status_unique": {
+          "name": "sync_runs_id_status_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id",
+            "status"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "sync_runs_non_negative_counters": {
+          "name": "sync_runs_non_negative_counters",
+          "value": "\"sync_runs\".\"events_seen\" >= 0 and \"sync_runs\".\"periods_imported\" >= 0"
+        },
+        "sync_runs_completed_after_start": {
+          "name": "sync_runs_completed_after_start",
+          "value": "\"sync_runs\".\"completed_at\" is null or \"sync_runs\".\"completed_at\" >= \"sync_runs\".\"started_at\""
+        },
+        "sync_runs_lifecycle_status_matches_completion": {
+          "name": "sync_runs_lifecycle_status_matches_completion",
+          "value": "(\"sync_runs\".\"status\" = 'running' and \"sync_runs\".\"completed_at\" is null) or (\"sync_runs\".\"status\" <> 'running' and \"sync_runs\".\"completed_at\" is not null)"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.calendar_source_status": {
+      "name": "calendar_source_status",
+      "schema": "public",
+      "values": [
+        "active",
+        "inactive"
+      ]
+    },
+    "public.empty_feed_approval_status": {
+      "name": "empty_feed_approval_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "public.sync_run_status": {
+      "name": "sync_run_status",
+      "schema": "public",
+      "values": [
+        "running",
+        "succeeded",
+        "failed",
+        "no_data"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

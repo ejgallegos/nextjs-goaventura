@@ -37,7 +37,10 @@ FROM deps AS db-migrate
 WORKDIR /app
 
 COPY drizzle.config.ts ./
+COPY scripts/seed-availability.ts ./scripts/seed-availability.ts
+COPY src/lib/db/index.ts ./src/lib/db/index.ts
 COPY src/lib/db/schema.ts ./src/lib/db/schema.ts
+COPY src/lib/db/seed.ts ./src/lib/db/seed.ts
 COPY drizzle ./drizzle
 
 ENV NODE_ENV=production

@@ -26,8 +26,9 @@ yarn-error.log*
 *.md
 !README.md
 
-# Scripts (not needed in container)
-scripts
+# Scripts (not needed in container, except the availability seed entrypoint)
+scripts/*
+!scripts/seed-availability.ts
 *.sh
 
 # Test files (not needed in container)
