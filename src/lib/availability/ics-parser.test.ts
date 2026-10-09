@@ -79,6 +79,13 @@ describe('ICS parser B1/B2', () => {
     ]);
   });
 
+  it('retains occupancy periods overlapping the synchronization date', () => {
+    const source = 'BEGIN:VCALENDAR\nBEGIN:VEVENT\nUID:ongoing@example.test\nDTSTART;VALUE=DATE:20260930\nDTEND;VALUE=DATE:20261003\nRRULE:FREQ=DAILY;COUNT=1\nEND:VEVENT\nEND:VCALENDAR';
+    expect(parseIcsCalendar(source, { synchronizationDate: syncDate })).toEqual([
+      { checkIn: '2026-09-30', checkOut: '2026-10-03', uid: 'ongoing@example.test' },
+    ]);
+  });
+
   it('classifies malformed RDATE-only recurrence input safely', () => {
     const source = 'BEGIN:VCALENDAR\nBEGIN:VEVENT\nUID:bad-rdate@example.test\nDTSTART;VALUE=DATE:20261001\nDTEND;VALUE=DATE:20261002\nRDATE;VALUE=DATE:20261301\nEND:VEVENT\nEND:VCALENDAR';
     expect(() => parseIcsCalendar(source, { synchronizationDate: syncDate })).toThrowError(

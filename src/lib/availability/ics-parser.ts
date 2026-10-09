@@ -204,6 +204,10 @@ function periodFromTimes(startDate: ICAL.Time, endDate: ICAL.Time, uid?: string)
   return uid ? { checkIn, checkOut, uid } : { checkIn, checkOut };
 }
 
+function overlapsWindow(period: OccupancyPeriod, synchronizationDate: string, horizon: string): boolean {
+  return period.checkOut > synchronizationDate && period.checkIn < horizon;
+}
+
 function recurrenceExceptionPeriod(component: ICAL.Component, uid: string | undefined): OccupancyPeriod | null {
   const recurrenceId = component.getFirstProperty('recurrence-id');
   if (!recurrenceId) throw parserError('INVALID_RECURRENCE');
@@ -266,12 +270,12 @@ function recurringPeriods(
     validateComponentDates(itemComponent);
     if (isCancelled(itemComponent)) continue;
     const period = periodFromTimes(details.startDate, details.endDate, uid);
-    if (period.checkIn >= synchronizationDate && period.checkIn < horizon) periods.push(period);
+    if (overlapsWindow(period, synchronizationDate, horizon)) periods.push(period);
   }
   if (!finished) throw parserError('INVALID_RECURRENCE');
   for (const exception of exceptions) {
     const period = recurrenceExceptionPeriod(exception, uid);
-    if (period && period.checkIn >= synchronizationDate && period.checkIn < horizon) periods.push(period);
+    if (period && overlapsWindow(period, synchronizationDate, horizon)) periods.push(period);
   }
   return periods;
 }
