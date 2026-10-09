@@ -83,6 +83,8 @@ Construir un módulo protegido en `/admin/disponibilidad` que sincronice calenda
 
 El forecast total de la fase es de aproximadamente 1.800 líneas después de la división preventiva de B. Cada slice mantiene sus pruebas y documentación junto con el comportamiento y constituye un límite de rollback independiente.
 
+Para C, la importación bloquea por fuente dentro de PostgreSQL y reemplaza el snapshot únicamente tras validar los períodos. Las descargas HTTP quedan fuera de la transacción. Un feed vacío conserva el snapshot y su aprobación manual se resuelve en E (`AV-410`–`AV-411`).
+
 ## Checklist
 
 ### Fase 0 — Preparación
