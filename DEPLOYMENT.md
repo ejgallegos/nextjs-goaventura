@@ -2,6 +2,9 @@
 
 Guía para desplegar la aplicación Next.js y su PostgreSQL interno con Docker Compose. PostgreSQL no publica ningún puerto al host: solo la aplicación y el servicio temporal de migraciones pueden alcanzarlo por `availability-internal`.
 
+Para la operación diaria de disponibilidad, backups/restores y registro seguro
+de fuentes ICS, consultá el [runbook operativo](docs/availability-operations.md).
+
 ## Requisitos y configuración
 
 - Docker Engine y Docker Compose v2.
@@ -82,6 +85,8 @@ docker compose --env-file .env.production -f docker-compose.production.yml resta
 Los datos viven en el volumen nombrado `goaventura-postgres-data`. No borres ese volumen durante un reinicio normal.
 
 ## Backup y restore
+
+Usá primero el preflight no destructivo del [runbook operativo](docs/availability-operations.md): valida el archivo custom-format con `pg_restore --list`, exige una confirmación explícita para restaurar y conserva el volumen nombrado durante la recuperación normal.
 
 Ejecutá el backup desde el contenedor para no exponer el puerto de PostgreSQL:
 
