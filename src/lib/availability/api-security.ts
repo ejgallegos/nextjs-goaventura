@@ -45,3 +45,9 @@ export function sourceError(error: unknown): NextResponse {
 export function invalidInput(): NextResponse {
   return apiJson({ error: 'INVALID_INPUT' }, 400);
 }
+
+export function domainError(error: unknown): NextResponse {
+  const code = typeof error === 'object' && error !== null && 'code' in error ? (error as { code?: unknown }).code : null;
+  const allowed = new Set(['INVALID_DATE', 'PAST_DATE', 'INVALID_RANGE', 'INVALID_GUESTS', 'QUERY_UNAVAILABLE', 'PAST_MONTH', 'INVALID_CALENDAR_QUERY', 'SOURCE_NOT_FOUND']);
+  return apiJson({ error: typeof code === 'string' && allowed.has(code) ? code : 'REQUEST_FAILED' }, code === 'SOURCE_NOT_FOUND' ? 404 : 400);
+}
