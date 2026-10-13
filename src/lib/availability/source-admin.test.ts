@@ -24,4 +24,21 @@ describe('source administration ownership boundaries', () => {
       db: fakeDb({ id: 'source', accommodationSlug: 'loft-centro', status: 'inactive', icsUrl: null }),
     })).rejects.toMatchObject({ code: 'SOURCE_NOT_CONFIGURED' });
   });
+
+  it('rejects unsafe URL configuration without leaking URL or resolver details', async () => {
+    const secretUrl = 'https://user:secret@127.0.0.1/private.ics';
+    await expect(configureSource({ sourceId: 'source', accommodationSlug: 'loft-centro', icsUrl: secretUrl }, {
+      db: fakeDb({ id: 'source', accommodationSlug: 'loft-centro', status: 'inactive', icsUrl: null }),
+      validateUrl: async () => { throw new Error(`resolver rejected ${secretUrl}`); },
+    })).rejects.toMatchObject({ code: 'INVALID_URL' });
+    try {
+      await configureSource({ sourceId: 'source', accommodationSlug: 'loft-centro', icsUrl: secretUrl }, {
+        db: fakeDb({ id: 'source', accommodationSlug: 'loft-centro', status: 'inactive', icsUrl: null }),
+        validateUrl: async () => { throw new Error(`resolver rejected ${secretUrl}`); },
+      });
+    } catch (error) {
+      expect(String(error)).not.toContain(secretUrl);
+      expect(String(error)).not.toContain('resolver rejected');
+    }
+  });
 });

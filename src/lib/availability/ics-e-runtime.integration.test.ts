@@ -29,6 +29,12 @@ afterAll(async () => {
 });
 
 runtime('ICS retention and approval runtime boundary', () => {
+  it('enforces unique seeded accommodation ownership in PostgreSQL', async () => {
+    await expect(db.insert(calendarSources).values({
+      accommodationSlug: 'runtime-test', icsUrl: 'runtime-placeholder', status: 'active',
+    })).rejects.toThrow();
+  });
+
   it('preserves then explicitly clears a no-data snapshot and rejects stale or duplicate approval', async () => {
     const first = await importAvailabilityPeriods(sourceId, [period]);
     const empty = await importAvailabilityPeriods(sourceId, []);

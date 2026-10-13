@@ -56,6 +56,37 @@ function request(method: string, body?: unknown, withOrigin = true): Request {
 }
 
 describe('availability administration API boundaries', () => {
+  it('rejects an invalid or missing session across every protected API', async () => {
+    mocks.session.mockResolvedValue(null);
+    const unauthenticated = [
+      GET(new Request('http://localhost/api/admin/disponibilidad/sources')),
+      GET_AVAILABILITY(new Request('http://localhost/api/admin/disponibilidad/availability?checkIn=2026-10-10&checkOut=2026-10-11&guests=1')),
+      GET_CALENDAR(new Request('http://localhost/api/admin/disponibilidad/calendar?month=2026-10&guests=1')),
+      GET_HISTORY(new Request(`http://localhost/api/admin/disponibilidad/history?sourceId=${sourceId}`)),
+      POST_ALL(request('POST', { force: false })),
+      POST(request('POST', { sourceId, accommodationSlug: 'loft-centro', icsUrl: 'https://feed.example/a' })),
+      PATCH(request('PATCH', { status: 'active' }), { params: { sourceId } }),
+      POST_ONE(request('POST', { force: false }), { params: { sourceId } }),
+      POST_APPROVAL(request('POST', {}), { params: { sourceId, syncRunId: sourceId } }),
+    ];
+    for (const response of await Promise.all(unauthenticated)) {
+      expect(response.status).toBe(401);
+      expect(response.headers.get('cache-control')).toBe('no-store');
+    }
+  });
+
+  it('enforces the exact origin on every mutating availability API', async () => {
+    mocks.session.mockResolvedValue(session);
+    const missingOrigin = [
+      POST_ALL(request('POST', { force: false }, false)),
+      POST(request('POST', { sourceId, accommodationSlug: 'loft-centro', icsUrl: 'https://feed.example/a' }, false)),
+      PATCH(request('PATCH', { status: 'active' }, false), { params: { sourceId } }),
+      POST_ONE(request('POST', { force: false }, false), { params: { sourceId } }),
+      POST_APPROVAL(request('POST', {}, false), { params: { sourceId, syncRunId: sourceId } }),
+    ];
+    for (const response of await Promise.all(missingOrigin)) expect(response.status).toBe(403);
+  });
+
   it('rejects unauthenticated source reads without caching', async () => {
     mocks.session.mockResolvedValueOnce(null);
     const response = await GET(new Request('http://localhost/api/admin/disponibilidad/sources'));
