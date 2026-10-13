@@ -8,7 +8,7 @@ vi.mock('../data/accommodations', () => ({
     { id: 'loft-centro', slug: 'loft-centro', maxCapacity: 2 },
     { id: 'altos-del-talampaya-casa', slug: 'altos-del-talampaya-casa', maxCapacity: 8 },
     { id: 'altos-del-talampaya-casa-ii', slug: 'altos-del-talampaya-casa-ii', maxCapacity: 2 },
-    { id: 'altos-del-talampaya-casa-iii', slug: 'altos-del-talampaya-casa-iii', maxCapacity: 4 },
+    { id: 'casa-altos-del-talampaya-iii', slug: 'casa-altos-del-talampaya-iii', maxCapacity: 4 },
     { id: 'altos-del-talampaya-dpto', slug: 'altos-del-talampaya-dpto', maxCapacity: 2 },
   ],
 }));
@@ -22,7 +22,7 @@ const slugs = [
   'loft-centro',
   'altos-del-talampaya-casa',
   'altos-del-talampaya-casa-ii',
-  'altos-del-talampaya-casa-iii',
+  'casa-altos-del-talampaya-iii',
   'altos-del-talampaya-dpto',
 ] as const;
 

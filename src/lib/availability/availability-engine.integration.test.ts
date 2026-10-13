@@ -6,7 +6,7 @@ vi.mock('../data/accommodations', () => ({
     { id: 'loft-centro', slug: 'loft-centro', maxCapacity: 2 },
     { id: 'altos-del-talampaya-casa', slug: 'altos-del-talampaya-casa', maxCapacity: 8 },
     { id: 'altos-del-talampaya-casa-ii', slug: 'altos-del-talampaya-casa-ii', maxCapacity: 2 },
-    { id: 'altos-del-talampaya-casa-iii', slug: 'altos-del-talampaya-casa-iii', maxCapacity: 4 },
+    { id: 'casa-altos-del-talampaya-iii', slug: 'casa-altos-del-talampaya-iii', maxCapacity: 4 },
     { id: 'altos-del-talampaya-dpto', slug: 'altos-del-talampaya-dpto', maxCapacity: 2 },
   ],
 }));
@@ -28,7 +28,7 @@ beforeEach(async () => {
     'loft-centro',
     'altos-del-talampaya-casa',
     'altos-del-talampaya-casa-ii',
-    'altos-del-talampaya-casa-iii',
+    'casa-altos-del-talampaya-iii',
     'altos-del-talampaya-dpto',
   ].map((accommodationSlug) => ({
     accommodationSlug,
@@ -81,7 +81,7 @@ runtime('availability engine PostgreSQL boundary', () => {
     await db.update(syncRuns).set({ status: 'running', completedAt: null })
       .where(eq(syncRuns.calendarSourceId, sourceIds['altos-del-talampaya-casa-ii']));
     await db.update(syncRuns).set({ status: 'no_data', completedAt: new Date('2026-10-01T13:00:00Z') })
-      .where(eq(syncRuns.calendarSourceId, sourceIds['altos-del-talampaya-casa-iii']));
+      .where(eq(syncRuns.calendarSourceId, sourceIds['casa-altos-del-talampaya-iii']));
 
     const result = await queryAvailability(
       { checkIn: '2026-10-01', checkOut: '2026-10-02', guests: 1 },
