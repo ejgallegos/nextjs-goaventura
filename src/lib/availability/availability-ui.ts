@@ -75,3 +75,28 @@ export function safeAvailabilityMessage(error?: unknown): string {
   void error;
   return 'No se pudo completar la consulta. Intentá nuevamente.';
 }
+
+export function validateSourceUrl(value: string): string | null {
+  try {
+    const url = new URL(value);
+    if (url.protocol !== 'https:' || url.username || url.password || url.hash || url.port) throw new Error('invalid');
+    return null;
+  } catch {
+    return 'Usá una URL HTTPS válida sin credenciales.';
+  }
+}
+
+export function sourceStatusLabel(status: 'active' | 'inactive', configured: boolean): string {
+  return `${status === 'active' ? 'Activa' : 'Inactiva'} · ${configured ? 'configurada' : 'sin configurar'}`;
+}
+
+export function historyWarningLabel(status: 'running' | 'succeeded' | 'failed' | 'no_data'): string {
+  if (status === 'failed') return 'Sincronización fallida';
+  if (status === 'no_data') return 'Feed vacío pendiente de revisión';
+  if (status === 'running') return 'Sincronización en curso';
+  return 'Sincronización exitosa';
+}
+
+export function confirmEmptyFeedMessage(): string {
+  return 'Este feed llegó vacío. No se borrarán datos automáticamente; confirmá solo si revisaste la fuente.';
+}

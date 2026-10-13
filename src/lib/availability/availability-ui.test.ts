@@ -5,6 +5,10 @@ import { describe, expect, it } from 'vitest';
 import { AvailabilityDashboard } from '../../app/admin/disponibilidad/availability-dashboard';
 import {
   calendarAccommodationRows,
+  confirmEmptyFeedMessage,
+  historyWarningLabel,
+  sourceStatusLabel,
+  validateSourceUrl,
   localCalendarDate,
   safeAvailabilityMessage,
   sortAvailabilityResults,
@@ -42,6 +46,16 @@ describe('availability admin UI boundaries', () => {
     expect(rows[4].days).toEqual([{ date: '2026-10-10', status: 'NO_VERIFICABLE' }]);
   });
 
+  it('validates source configuration and maps only sanitized administration labels', () => {
+    expect(validateSourceUrl('http://calendar.example.test/feed.ics')).toBe('Usá una URL HTTPS válida sin credenciales.');
+    expect(validateSourceUrl('https://user:secret@calendar.example.test/feed.ics')).toBe('Usá una URL HTTPS válida sin credenciales.');
+    expect(validateSourceUrl('https://calendar.example.test/feed.ics')).toBeNull();
+    expect(sourceStatusLabel('active', true)).toBe('Activa · configurada');
+    expect(sourceStatusLabel('inactive', false)).toBe('Inactiva · sin configurar');
+    expect(historyWarningLabel('failed')).toBe('Sincronización fallida');
+    expect(confirmEmptyFeedMessage()).toContain('No se borrarán datos automáticamente');
+  });
+
   it('renders an accessible, mobile-first blocking synchronization state', () => {
     const markup = renderToStaticMarkup(React.createElement(AvailabilityDashboard));
     expect(markup).toContain('aria-busy="true"');
@@ -51,6 +65,10 @@ describe('availability admin UI boundaries', () => {
     expect(markup).toContain('sm:grid-cols-3');
     expect(markup).toContain('min="');
     expect(markup).toContain('motion-reduce:transition-none');
+    expect(markup).toContain('Información estimada');
+    expect(markup).toContain('Fuentes ICS');
+    expect(markup).toContain('Sincronizar todas');
+    expect(markup).not.toContain('v1.secret-ciphertext');
     expect(markup).not.toContain('feed.ics');
   });
 });
