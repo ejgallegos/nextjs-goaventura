@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { and, desc, eq, sql } from 'drizzle-orm';
 
 import { getDb, type Database } from '../db';
-import { calendarSources, occupancyPeriods, syncRuns } from '../db/schema';
+import { calendarSources, emptyFeedApprovals, occupancyPeriods, syncRuns } from '../db/schema';
 import type { OccupancyPeriod } from './ics-parser';
 
 export type AvailabilityImportErrorCode = 'INVALID_PERIODS' | 'SOURCE_NOT_ACTIVE';
@@ -118,6 +118,17 @@ export async function importAvailabilityPeriods(
           periodsImported: validated.length,
           completedAt: new Date(),
         }).where(eq(syncRuns.id, runId));
+        if (status === 'no_data') {
+          const [countRow] = await snapshotTx.select({ count: sql<number>`count(*)` })
+            .from(occupancyPeriods).where(eq(occupancyPeriods.calendarSourceId, sourceId));
+          await snapshotTx.insert(emptyFeedApprovals).values({
+            syncRunId: runId,
+            syncRunStatus: 'no_data',
+            status: 'pending',
+            previousPeriodCount: Number(countRow?.count ?? 0),
+            proposedPeriodCount: 0,
+          }).onConflictDoNothing();
+        }
       });
       const status = validated.length === 0 ? 'no_data' : 'succeeded';
       return { status, syncRunId: runId, imported: validated.length };

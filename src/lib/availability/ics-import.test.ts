@@ -36,6 +36,13 @@ describe('ICS import boundary', () => {
     const update = vi.fn(() => ({
       set: vi.fn(() => ({ where: vi.fn().mockResolvedValue([]) })),
     }));
+    const approvalValues = vi.fn(() => ({ onConflictDoNothing: vi.fn().mockResolvedValue([]) }));
+    const approvalInsert = vi.fn(() => ({ values: approvalValues }));
+    const snapshotTx = {
+      select: vi.fn(() => ({ from: vi.fn(() => ({ where: vi.fn().mockResolvedValue([{ count: 2 }]) })) })),
+      insert: approvalInsert,
+      update,
+    };
     const tx = {
       execute: vi.fn().mockResolvedValue([{ locked: true }]),
       select: vi.fn(() => ({
@@ -46,7 +53,7 @@ describe('ICS import boundary', () => {
       insert: vi.fn(() => ({
         values: vi.fn(() => ({ returning: vi.fn().mockResolvedValue([{ id: 'run-id' }]) })),
       })),
-      transaction: vi.fn(async (callback: (transaction: { update: typeof update }) => Promise<unknown>) => callback({ update })),
+      transaction: vi.fn(async (callback: (transaction: typeof snapshotTx) => Promise<unknown>) => callback(snapshotTx)),
       update,
     };
     const db = { transaction: vi.fn((callback: (transaction: typeof tx) => Promise<unknown>) => callback(tx)) } as unknown as Database;
@@ -63,6 +70,8 @@ describe('ICS import boundary', () => {
     });
     expect(db.transaction).toHaveBeenCalledTimes(2);
     expect(update).toHaveBeenCalledTimes(2);
+    expect(approvalInsert).toHaveBeenCalledTimes(2);
+    expect(approvalValues).toHaveBeenCalledWith(expect.objectContaining({ previousPeriodCount: 2 }));
   });
 
   it('records a sanitized failure while the snapshot transaction rolls back', async () => {

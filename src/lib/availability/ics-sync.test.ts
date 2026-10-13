@@ -51,6 +51,21 @@ describe('ICS synchronization orchestration', () => {
     expect(importPeriods).toHaveBeenCalledOnce();
   });
 
+  it('closes a reserved run when import reports busy', async () => {
+    const data = dataAccess([source('one')]);
+    data.reserveSyncAttempt = async () => 'reserved-run';
+    const recordAttemptFailure = vi.fn(async () => undefined);
+    data.recordAttemptFailure = recordAttemptFailure;
+    await expect(syncSource('one', { force: true }, {
+      data,
+      fetchDocument: vi.fn(async () => ({ document: 'ics', contentType: 'text/calendar', bytes: 3, redirects: 0 })),
+      parseCalendar: vi.fn(() => []),
+      importPeriods: vi.fn(async () => ({ status: 'busy' as const })),
+      now: () => now,
+    })).resolves.toMatchObject({ status: 'busy', code: 'BUSY' });
+    expect(recordAttemptFailure).toHaveBeenCalledWith('one', 'reserved-run');
+  });
+
   it('records pre-import failures for cooldown while force retries', async () => {
     let lastAttempt: Date | null = null;
     let failures = 0;

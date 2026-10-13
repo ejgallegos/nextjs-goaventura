@@ -20,6 +20,7 @@ export interface SyncDataAccess {
   latestAttempt: (sourceId: string) => Promise<Date | null>;
   reserveSyncAttempt?: (sourceId: string, startedAt: Date, force: boolean) => Promise<string | null>;
   recordPreImportFailure?: (sourceId: string, completedAt: Date, attemptId?: string) => Promise<void>;
+  recordAttemptFailure?: (sourceId: string, attemptId: string) => Promise<void>;
 }
 
 export interface SyncDependencies {
@@ -90,6 +91,10 @@ function dbDataAccess(db: Database): SyncDataAccess {
         error: 'ICS synchronization failed',
       });
     },
+    recordAttemptFailure: async (sourceId, attemptId) => {
+      await db.update(syncRuns).set({ status: 'failed', completedAt: new Date(), error: 'ICS synchronization failed' })
+        .where(and(eq(syncRuns.id, attemptId), eq(syncRuns.calendarSourceId, sourceId)));
+    },
   };
 }
 
@@ -117,6 +122,14 @@ export async function syncSource(sourceId: string, options: SyncOptions = {}, de
   if (!source.icsUrl) return { sourceId, status: 'failed', code: 'SOURCE_NOT_CONFIGURED' };
   const attemptId = await resolved.data.reserveSyncAttempt?.(sourceId, now, options.force === true);
   if (resolved.data.reserveSyncAttempt && !attemptId) return { sourceId, status: 'cooldown', code: 'COOLDOWN' };
+  const markAttemptFailure = async () => {
+    if (!attemptId) return;
+    try {
+      await resolved.data.recordAttemptFailure?.(sourceId, attemptId);
+    } catch {
+      // Preserve the original sanitized synchronization outcome.
+    }
+  };
 
   let periods: OccupancyPeriod[];
   try {
@@ -133,11 +146,15 @@ export async function syncSource(sourceId: string, options: SyncOptions = {}, de
 
   try {
     const imported = await resolved.importPeriods(sourceId, periods, attemptId ?? undefined);
-    if (imported.status === 'busy') return { sourceId, status: 'busy', code: 'BUSY' };
-    if (imported.status === 'failed') return { sourceId, status: 'failed', code: 'IMPORT_FAILED' };
-    if (imported.status === 'stale') return { sourceId, status: 'stale', code: 'STALE_ATTEMPT' };
+    if (imported.status === 'busy' || imported.status === 'failed' || imported.status === 'stale') {
+      await markAttemptFailure();
+      if (imported.status === 'busy') return { sourceId, status: 'busy', code: 'BUSY' };
+      if (imported.status === 'stale') return { sourceId, status: 'stale', code: 'STALE_ATTEMPT' };
+      return { sourceId, status: 'failed', code: 'IMPORT_FAILED' };
+    }
     return { sourceId, status: imported.status, imported: imported.imported };
   } catch {
+    await markAttemptFailure();
     return { sourceId, status: 'failed', code: 'SYNC_FAILED' };
   }
 }
