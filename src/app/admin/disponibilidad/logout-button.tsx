@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export function AvailabilityLogoutButton() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -18,7 +18,7 @@ export function AvailabilityLogoutButton() {
   }
 
   return (
-    <button className="rounded border px-4 py-2 text-sm" disabled={isLoggingOut} onClick={logout} type="button">
+    <button className="min-h-11 rounded border px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none" disabled={isLoggingOut} onClick={logout} type="button">
       {isLoggingOut ? 'Saliendo…' : 'Cerrar sesión'}
     </button>
   );

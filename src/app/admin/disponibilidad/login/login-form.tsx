@@ -41,7 +41,7 @@ export function AvailabilityLoginForm() {
         <label className="block text-sm font-medium" htmlFor="availability-username">Usuario</label>
         <input
           autoComplete="username"
-          className="mt-2 w-full rounded border px-3 py-2"
+          className="mt-2 min-h-11 w-full rounded border px-3 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
           id="availability-username"
           name="username"
           onChange={(event) => setUsername(event.target.value)}
@@ -53,7 +53,7 @@ export function AvailabilityLoginForm() {
         <label className="block text-sm font-medium" htmlFor="availability-password">Contraseña</label>
         <input
           autoComplete="current-password"
-          className="mt-2 w-full rounded border px-3 py-2"
+          className="mt-2 min-h-11 w-full rounded border px-3 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
           id="availability-password"
           name="password"
           onChange={(event) => setPassword(event.target.value)}
@@ -64,7 +64,7 @@ export function AvailabilityLoginForm() {
       </div>
       {error ? <p className="text-sm text-red-700" role="alert">{error}</p> : null}
       <button
-        className="w-full rounded bg-primary px-4 py-2 font-medium text-primary-foreground disabled:opacity-50"
+        className="min-h-11 w-full rounded bg-primary px-4 py-2 font-medium text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none disabled:opacity-50"
         disabled={isSubmitting}
         type="submit"
       >
