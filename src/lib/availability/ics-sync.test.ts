@@ -95,7 +95,7 @@ describe('ICS synchronization orchestration', () => {
     expect(fetchDocument).toHaveBeenCalledTimes(3);
   });
 
-  it('rejects an older fetch that completes after a newer reservation imports', async () => {
+  it('rejects an older fetch after equal-timestamp reservations reverse completion order', async () => {
     let releaseOld!: (document: { document: string; contentType: string; bytes: number; redirects: number }) => void;
     let releaseNew!: (document: { document: string; contentType: string; bytes: number; redirects: number }) => void;
     let reservation = 0;
@@ -104,7 +104,10 @@ describe('ICS synchronization orchestration', () => {
       else releaseNew = resolve;
     }));
     const data = dataAccess([source('one')]);
-    data.reserveSyncAttempt = async () => `attempt-${++reservation}`;
+    data.reserveSyncAttempt = async (_sourceId, startedAt) => {
+      expect(startedAt).toEqual(now);
+      return `attempt-${++reservation}`;
+    };
     const importPeriods = vi.fn(async (_sourceId: string, _periods: readonly unknown[], attemptId?: string) =>
       attemptId === 'attempt-1'
         ? { status: 'stale' as const, syncRunId: attemptId, imported: 0 }

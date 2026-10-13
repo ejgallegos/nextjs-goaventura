@@ -117,4 +117,32 @@ describe('ICS import boundary', () => {
     expect(snapshotUpdate).toHaveBeenCalledOnce();
     expect(outerUpdate).toHaveBeenCalledOnce();
   });
+
+  it('records eventsSeen when completing a reserved non-empty run', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    const update = vi.fn(() => ({ set: vi.fn((values: Record<string, unknown>) => {
+      updates.push(values);
+      return { where: vi.fn().mockResolvedValue([]) };
+    }) }));
+    let selectCalls = 0;
+    const tx = {
+      execute: vi.fn().mockResolvedValue([{ locked: true }]),
+      select: vi.fn(() => ({ from: vi.fn(() => ({ where: vi.fn(() => {
+        selectCalls += 1;
+        return selectCalls === 1
+          ? { limit: vi.fn().mockResolvedValue([{ id: 'source-id' }]) }
+          : { orderBy: vi.fn(() => ({ limit: vi.fn().mockResolvedValue([{ id: 'attempt-2' }]) })) };
+      }) })) })),
+      transaction: vi.fn(async (callback: (transaction: { delete: (...args: unknown[]) => unknown; insert: (...args: unknown[]) => unknown; update: typeof update }) => Promise<unknown>) => callback({
+        delete: vi.fn(() => ({ where: vi.fn().mockResolvedValue([]) })),
+        insert: vi.fn(() => ({ values: vi.fn().mockResolvedValue([]) })),
+        update,
+      })),
+      update,
+    };
+    const db = { transaction: vi.fn((callback: (transaction: typeof tx) => Promise<unknown>) => callback(tx)) } as unknown as Database;
+
+    await expect(importAvailabilityPeriods('source-id', [validPeriod], { db }, 'attempt-2')).resolves.toMatchObject({ status: 'succeeded' });
+    expect(updates).toContainEqual(expect.objectContaining({ eventsSeen: 1 }));
+  });
 });

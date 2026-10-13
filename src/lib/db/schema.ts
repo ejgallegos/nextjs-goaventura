@@ -1,6 +1,7 @@
 import {
   check,
   date,
+  bigserial,
   foreignKey,
   index,
   integer,
@@ -109,6 +110,7 @@ export const syncRuns = pgTable(
       .notNull()
       .references(() => calendarSources.id, { onDelete: 'cascade' }),
     status: syncRunStatus('status').default('running').notNull(),
+    reservationSequence: bigserial('reservation_sequence', { mode: 'number' }).notNull(),
     startedAt: timestamp('started_at', { withTimezone: true }).defaultNow().notNull(),
     completedAt: timestamp('completed_at', { withTimezone: true }),
     eventsSeen: integer('events_seen').default(0).notNull(),
@@ -135,6 +137,8 @@ export const syncRuns = pgTable(
       sql`(${table.status} = 'running' and ${table.completedAt} is null) or (${table.status} <> 'running' and ${table.completedAt} is not null)`,
     ),
     idStatusUnique: unique('sync_runs_id_status_unique').on(table.id, table.status),
+    reservationSequenceUnique: unique('sync_runs_reservation_sequence_unique').on(table.reservationSequence),
+    sourceReservationLookup: index('sync_runs_source_reservation_lookup').on(table.calendarSourceId, table.reservationSequence),
   }),
 );
 

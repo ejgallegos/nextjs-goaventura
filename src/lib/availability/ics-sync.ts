@@ -59,7 +59,7 @@ function dbDataAccess(db: Database): SyncDataAccess {
       const [run] = await db.select({ startedAt: syncRuns.startedAt })
         .from(syncRuns)
         .where(eq(syncRuns.calendarSourceId, sourceId))
-        .orderBy(desc(syncRuns.startedAt))
+        .orderBy(desc(syncRuns.reservationSequence))
         .limit(1);
       return run?.startedAt ?? null;
     },
@@ -67,7 +67,7 @@ function dbDataAccess(db: Database): SyncDataAccess {
       await tx.execute(sql`select pg_advisory_xact_lock(hashtextextended(${sourceId}, 0))`);
       const [latest] = await tx.select({ startedAt: syncRuns.startedAt })
         .from(syncRuns).where(eq(syncRuns.calendarSourceId, sourceId))
-        .orderBy(desc(syncRuns.startedAt)).limit(1);
+        .orderBy(desc(syncRuns.reservationSequence)).limit(1);
       if (!force && latest && isWithinSyncCooldown(startedAt, latest.startedAt)) return null;
       const [run] = await tx.insert(syncRuns).values({
         calendarSourceId: sourceId, status: 'running', startedAt, eventsSeen: 0, periodsImported: 0,

@@ -82,7 +82,7 @@ export async function importAvailabilityPeriods(
     let runId: string;
     if (attemptId) {
       const [latest] = await tx.select({ id: syncRuns.id }).from(syncRuns)
-        .where(eq(syncRuns.calendarSourceId, sourceId)).orderBy(desc(syncRuns.startedAt)).limit(1);
+        .where(eq(syncRuns.calendarSourceId, sourceId)).orderBy(desc(syncRuns.reservationSequence)).limit(1);
       if (latest?.id !== attemptId) {
         await tx.update(syncRuns).set({ status: 'failed', completedAt: new Date(), error: 'ICS import superseded' })
           .where(eq(syncRuns.id, attemptId));
@@ -114,6 +114,7 @@ export async function importAvailabilityPeriods(
         const status = validated.length === 0 ? 'no_data' : 'succeeded';
         await snapshotTx.update(syncRuns).set({
           status,
+          eventsSeen: validated.length,
           periodsImported: validated.length,
           completedAt: new Date(),
         }).where(eq(syncRuns.id, runId));
