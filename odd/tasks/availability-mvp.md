@@ -144,12 +144,12 @@ Para C, la importación bloquea por fuente dentro de PostgreSQL y reemplaza el s
 
 ### Fase 5 — Motor de disponibilidad
 
-- [ ] `AV-500` Implementar solapamiento `existing.start < requested.end && requested.start < existing.end`.
-- [ ] `AV-501` Validar fechas presentes/futuras y check-out posterior.
-- [ ] `AV-502` Validar huéspedes positivos y capacidad máxima.
-- [ ] `AV-503` Implementar `DISPONIBLE`, `OCUPADO`, `NO_VERIFICABLE` y `CAPACIDAD_INSUFICIENTE`.
-- [ ] `AV-504` Resolver consultas exclusivamente contra PostgreSQL.
-- [ ] `AV-505` Verificar semántica de fechas `DATE` en `America/Argentina/La_Rioja`.
+- [x] `AV-500` Implementar solapamiento `existing.start < requested.end && requested.start < existing.end`.
+- [x] `AV-501` Validar fechas presentes/futuras y check-out posterior.
+- [x] `AV-502` Validar huéspedes positivos y capacidad máxima.
+- [x] `AV-503` Implementar `DISPONIBLE`, `OCUPADO`, `NO_VERIFICABLE` y `CAPACIDAD_INSUFICIENTE`.
+- [x] `AV-504` Resolver consultas exclusivamente contra PostgreSQL.
+- [x] `AV-505` Verificar semántica de fechas `DATE` en `America/Argentina/La_Rioja`.
 
 ### Fase 6 — API protegida
 
@@ -226,6 +226,7 @@ Para C, la importación bloquea por fuente dentro de PostgreSQL y reemplaza el s
 | 2 — Modelo de datos | Completa | Commit `2f862c6`; RDD `medium` aprobado sin hallazgos y reconocido en el linaje `review-1d1745c69ab446bd`; ruta `delegated`; excepción test-first: el seam aprobado se verificó directamente contra PostgreSQL real. `maxCapacity` agregado a los cinco alojamientos; cuatro tablas sin campos de huéspedes, enums, checks, FKs e índices generados. La imagen Docker se construyó; la migración se aplicó dos veces; el seed se ejecutó tres veces y conservó cinco slugs únicos. Se preservaron una URL cifrada de prueba y el estado activo existentes. PostgreSQL rechazó intervalos inválidos, estados/timestamps inconsistentes, aprobaciones ajenas a `no_data` y aprobaciones duplicadas. `db:generate` repetido permaneció convergente. Cambio real: 1.198 líneas añadidas/eliminadas incluyendo snapshot/migración | Comenzar la fase 3 |
 | 3 — Autenticación y autorización | Completa | Commit `139d46f`; ruta `delegated`; corrección RED → GREEN observada en limiter/CSRF/cookies/client-address: los focused runs iniciales fallaron por entradas sin límite, cabeceras manipulables, comparación por prefijo, opciones de cookie inexistentes y helper ausente; el run final pasó con 11 tests. El limiter ahora limpia expirados, tiene máximo configurable y eviction determinista, usa únicamente `X-Real-IP` válido detrás del Traefik sole-ingress, reinicia el bucket tras autenticación exitosa y mantiene un fallback estable. CSRF parsea URL y compara `.origin` exactamente. El middleware activo quedó en `src/middleware.ts`, con `/admin` y `/admin/**` bloqueados sin afectar `/administrator`; las opciones de cookie tienen seam determinista para Secure, HttpOnly, SameSite=Strict, Path=/, Max-Age 28800 y logout epoch/zero. El padre verificó HTTP exitosamente: redirects, 401/no-store, cuerpos idénticos de credenciales inválidas, login, atributos de cookie en desarrollo, página/API protegida, rechazo de tamper, 429/retry, logout, redirect de legacy page, legacy API 410 y `/administrator` 404. El build de producción finalizó con exit 0; solo permanecen advertencias no relacionadas de Genkit/OpenTelemetry. `typecheck`, `lint`, tests y `git diff --check` correctos. RDD `high` aprobado y reconocido en el linaje `review-0c0ded3894f1d3ac`; dejó cuatro advertencias informativas no bloqueantes sobre logout y validación IPv6 para trabajo posterior. Cambio real: 1.023 líneas añadidas/eliminadas | Comenzar la Fase 4 |
 | 4 — Importación y sincronización ICS | Completa | `AV-400`–`AV-412` completados. La orquestación y sus correcciones quedaron en `f1cb95b`, `e963973` y `6f71996`; la secuencia de PostgreSQL ordena reservas entre procesos y los imports reservados actualizan `eventsSeen`. RDD `medium` aprobado, reconocido y consumido (`review-50d122bbece2ae51`) con `R3-001` informativo sobre terminalización de reservas, cerrado en Slice E. `5c3eac3` preserva snapshots, exige aprobación exacta para vaciados y limpia solo runs terminales antiguos; 17/17 tests focalizados, 47 tests completos y 2/2 integraciones PostgreSQL pasaron. Su evaluación RDD quedó `medium/under_budget` con 246 líneas | Comenzar la fase 5 |
+| 5 — Motor de disponibilidad | Completa técnicamente | `7136147` y `72e915f`; consulta server-only contra PostgreSQL con solapamiento half-open, validaciones estrictas, precedencia capacidad→confianza→ocupación→disponible y fechas en `America/Argentina/La_Rioja`. 7 tests focalizados, 54 tests completos y 2/2 integraciones PostgreSQL pasaron; el fixture de slug canónico quedó alineado. La revisión RDD quedó pendiente por decisión explícita del usuario de revisar al final de las fases restantes | Comenzar la fase 6 |
 
 ## Registro de commits
 
