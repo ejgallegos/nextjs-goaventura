@@ -76,6 +76,13 @@ describe('availability query engine', () => {
       dependencies(sourceStates),
     );
     expect(partialOverlap[0].status).toBe('OCUPADO');
+
+    sourceStates[0].overlappingPeriods = [{ checkIn: '2026-10-09', checkOut: '2026-10-14' }];
+    const fullOverlap = await queryAvailability(
+      { checkIn: '2026-10-10', checkOut: '2026-10-12', guests: 1 },
+      dependencies(sourceStates),
+    );
+    expect(fullOverlap[0].status).toBe('OCUPADO');
   });
 
   it('gives capacity insufficiency precedence over occupancy', async () => {

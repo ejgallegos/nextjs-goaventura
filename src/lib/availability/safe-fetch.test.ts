@@ -118,6 +118,23 @@ describe('ICS safe fetch transport', () => {
     })).rejects.toThrow('ICS redirect limit exceeded');
   });
 
+  it('rejects failed HTTP responses without exposing response content', async () => {
+    const responseBody = 'private feed failure with https://secret.example.test/calendar.ics';
+    await expect(fetchIcsDocument(encryptIcsUrl(testUrl), {
+      resolveHost: async () => [safeAddress],
+      request: scriptedRequest([response(503, { 'content-type': 'text/plain' }, responseBody)]),
+    })).rejects.toThrow('ICS request failed');
+    try {
+      await fetchIcsDocument(encryptIcsUrl(testUrl), {
+        resolveHost: async () => [safeAddress],
+        request: scriptedRequest([response(503, { 'content-type': 'text/plain' }, responseBody)]),
+      });
+    } catch (error) {
+      expect(String(error)).not.toContain(responseBody);
+      expect(String(error)).not.toContain(testUrl);
+    }
+  });
+
   it('aborts pending requests and destroys active responses on timeout or rejection', async () => {
     const abort = vi.fn();
     const pendingRequest = (() => ({

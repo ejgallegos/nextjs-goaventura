@@ -9,6 +9,10 @@ const fixture = (name: string) => readFileSync(new URL(`./fixtures/ics/${name}`,
 const syncDate = new Date('2026-10-01T12:00:00Z');
 
 describe('ICS parser B1/B2', () => {
+  it('accepts an empty but structurally valid calendar as an empty snapshot', () => {
+    expect(parseIcsCalendar('BEGIN:VCALENDAR\nVERSION:2.0\nEND:VCALENDAR', { synchronizationDate: syncDate })).toEqual([]);
+  });
+
   it('normalizes DATE, UTC, floating, and TZID events into half-open periods', () => {
     const periods = parseIcsCalendar(fixture('base-events.ics'), { synchronizationDate: syncDate });
     expect(periods).toEqual([
