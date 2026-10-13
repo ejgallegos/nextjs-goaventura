@@ -20,6 +20,10 @@ The complete deployment sequence and PostgreSQL backup commands are in
 [`DEPLOYMENT.md`](../DEPLOYMENT.md). PostgreSQL is internal-only; the
 application remains the only public service.
 
+Use Compose's `--env-file` for `.env.production`; do not `source` or execute
+that file as a shell script. Compose dotenv syntax is not shell syntax, and
+values such as bcrypt hashes must remain literal.
+
 ## AV-905: backup, restore, and consistency checks
 
 ### Non-destructive backup preflight
@@ -29,15 +33,14 @@ port. Set `BACKUP_FILE` to a new path; do not overwrite the only known-good
 copy.
 
 ```bash
-set -a; . .env.production; set +a
 mkdir -p backups
 BACKUP_FILE="backups/goaventura-$(date +%Y%m%d-%H%M%S).dump"
 docker compose --env-file .env.production -f docker-compose.production.yml \
-  exec -T postgres pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
-  --format=custom --file=- > "$BACKUP_FILE"
+  exec -T postgres sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" --format=custom --file=-' \
+  > "$BACKUP_FILE"
 test -s "$BACKUP_FILE"
 docker compose --env-file .env.production -f docker-compose.production.yml \
-  exec -T postgres pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+  exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
 docker compose --env-file .env.production -f docker-compose.production.yml \
   exec -T postgres pg_restore --list < "$BACKUP_FILE" >/dev/null
 ```
@@ -54,7 +57,7 @@ The following command refuses to run unless the operator explicitly sets
 objects and starts it again only after `pg_restore` succeeds.
 
 ```bash
-set -a; . .env.production; set +a
+set -eu
 BACKUP_FILE="backups/REEMPLAZAR.dump"
 test -s "$BACKUP_FILE"
 docker compose --env-file .env.production -f docker-compose.production.yml \
@@ -63,8 +66,8 @@ docker compose --env-file .env.production -f docker-compose.production.yml \
 test "$CONFIRM_RESTORE" = YES
 docker compose --env-file .env.production -f docker-compose.production.yml stop goaventura
 docker compose --env-file .env.production -f docker-compose.production.yml \
-  exec -T postgres pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
-  --clean --if-exists --exit-on-error < "$BACKUP_FILE"
+  exec -T postgres sh -c 'pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists --exit-on-error' \
+  < "$BACKUP_FILE"
 docker compose --env-file .env.production -f docker-compose.production.yml start goaventura
 ```
 
@@ -160,7 +163,7 @@ return successfully. Check readiness with:
 ```bash
 docker compose --env-file .env.production -f docker-compose.production.yml ps
 docker compose --env-file .env.production -f docker-compose.production.yml \
-  exec -T postgres pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+  exec -T postgres sh -c 'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
 ```
 
 ### Rollback boundaries

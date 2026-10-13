@@ -88,21 +88,34 @@ Los datos viven en el volumen nombrado `goaventura-postgres-data`. No borres ese
 
 Usá primero el preflight no destructivo del [runbook operativo](docs/availability-operations.md): valida el archivo custom-format con `pg_restore --list`, exige una confirmación explícita para restaurar y conserva el volumen nombrado durante la recuperación normal.
 
+No ejecutes `.env.production` como shell: Compose debe leerlo mediante
+`--env-file`, porque su sintaxis dotenv no es necesariamente sintaxis shell.
+
 Ejecutá el backup desde el contenedor para no exponer el puerto de PostgreSQL:
 
 ```bash
 mkdir -p backups
-set -a; . .env.production; set +a
-docker compose -f docker-compose.production.yml exec -T postgres pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" --format=custom > "backups/goaventura-$(date +%Y%m%d-%H%M%S).dump"
+BACKUP_FILE="backups/goaventura-$(date +%Y%m%d-%H%M%S).dump"
+docker compose --env-file .env.production -f docker-compose.production.yml exec -T postgres sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" --format=custom --file=-' > "$BACKUP_FILE"
+test -s "$BACKUP_FILE"
+docker compose --env-file .env.production -f docker-compose.production.yml exec -T postgres pg_restore --list < "$BACKUP_FILE" >/dev/null
 ```
 
 Para restaurar, detené la aplicación, recreá el esquema destino y usá el dump desde stdin. Confirmá el archivo y el entorno antes de ejecutar una operación destructiva:
 
 ```bash
-set -a; . .env.production; set +a
-docker compose -f docker-compose.production.yml stop goaventura
-docker compose -f docker-compose.production.yml exec -T postgres pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists < backups/REEMPLAZAR.dump
-docker compose -f docker-compose.production.yml start goaventura
+set -eu
+BACKUP_FILE="backups/REEMPLAZAR.dump"
+test -s "$BACKUP_FILE"
+docker compose --env-file .env.production -f docker-compose.production.yml exec -T postgres pg_restore --list < "$BACKUP_FILE" >/dev/null
+: "${CONFIRM_RESTORE:?Set CONFIRM_RESTORE=YES after inspecting the archive}"
+test "$CONFIRM_RESTORE" = YES
+docker compose --env-file .env.production -f docker-compose.production.yml stop goaventura
+docker compose --env-file .env.production -f docker-compose.production.yml exec -T postgres sh -c 'pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists --exit-on-error' < "$BACKUP_FILE"
+docker compose --env-file .env.production -f docker-compose.production.yml start goaventura
 ```
+
+`set -eu` stops the sequence on a failed archive check or restore; the
+application is never restarted after a failed `pg_restore`.
 
 Conservá varias copias fuera del host y verificá periódicamente que una copia pueda restaurarse en un entorno aislado.

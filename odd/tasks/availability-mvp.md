@@ -153,57 +153,57 @@ Para C, la importación bloquea por fuente dentro de PostgreSQL y reemplaza el s
 
 ### Fase 6 — API protegida
 
-- [ ] `AV-600` Configurar, listar, activar y desactivar fuentes ICS.
-- [ ] `AV-601` Sincronizar una fuente.
-- [ ] `AV-602` Sincronizar todas las fuentes al ingresar y manualmente.
-- [ ] `AV-603` Consultar disponibilidad por fechas y huéspedes.
-- [ ] `AV-604` Consultar calendario mensual.
-- [ ] `AV-605` Consultar historial y errores sanitizados.
-- [ ] `AV-606` Aprobar un vaciado sospechoso.
-- [ ] `AV-607` Aplicar Zod, autorización, control de origen y `no-store`.
+- [x] `AV-600` Configurar, listar, activar y desactivar fuentes ICS.
+- [x] `AV-601` Sincronizar una fuente.
+- [x] `AV-602` Sincronizar todas las fuentes al ingresar y manualmente.
+- [x] `AV-603` Consultar disponibilidad por fechas y huéspedes.
+- [x] `AV-604` Consultar calendario mensual.
+- [x] `AV-605` Consultar historial y errores sanitizados.
+- [x] `AV-606` Aprobar un vaciado sospechoso.
+- [x] `AV-607` Aplicar Zod, autorización, control de origen y `no-store`.
 
 ### Fase 7 — Interfaz
 
-- [ ] `AV-700` Crear pantalla de login.
-- [ ] `AV-701` Crear estado bloqueante para la sincronización inicial.
-- [ ] `AV-702` Crear buscador por check-in, check-out y huéspedes.
-- [ ] `AV-703` Mostrar resultados ordenados por estado.
-- [ ] `AV-704` Mostrar capacidad, última sincronización y advertencias.
-- [ ] `AV-705` Crear calendario mensual con filas por alojamiento.
-- [ ] `AV-706` Crear representación móvil legible.
-- [ ] `AV-707` Crear administración de fuentes ICS.
-- [ ] `AV-708` Crear sincronización individual y general.
-- [ ] `AV-709` Crear historial básico de ejecuciones.
-- [ ] `AV-710` Crear confirmación de vaciado sospechoso.
-- [ ] `AV-711` Mostrar la advertencia de disponibilidad estimada.
+- [x] `AV-700` Crear pantalla de login.
+- [x] `AV-701` Crear estado bloqueante para la sincronización inicial.
+- [x] `AV-702` Crear buscador por check-in, check-out y huéspedes.
+- [x] `AV-703` Mostrar resultados ordenados por estado.
+- [x] `AV-704` Mostrar capacidad, última sincronización y advertencias.
+- [x] `AV-705` Crear calendario mensual con filas por alojamiento.
+- [x] `AV-706` Crear representación móvil legible.
+- [x] `AV-707` Crear administración de fuentes ICS.
+- [x] `AV-708` Crear sincronización individual y general.
+- [x] `AV-709` Crear historial básico de ejecuciones.
+- [x] `AV-710` Crear confirmación de vaciado sospechoso.
+- [x] `AV-711` Mostrar la advertencia de disponibilidad estimada.
 
 ### Fase 8 — Pruebas obligatorias
 
-- [ ] `AV-800` Calendario vacío válido.
-- [ ] `AV-801` Evento único, eventos múltiples y duplicados.
-- [ ] `AV-802` Check-out compartido con nuevo check-in.
-- [ ] `AV-803` Solapamientos parciales y completos.
-- [ ] `AV-804` Cancelaciones, modificaciones y recurrencias.
-- [ ] `AV-805` ICS inválido y respuestas HTTP fallidas.
-- [ ] `AV-806` Importación atómica, idempotente y preservación ante fallos.
-- [ ] `AV-807` Detección y aprobación de vaciado sospechoso.
-- [ ] `AV-808` Fechas, capacidades y zona horaria.
-- [ ] `AV-809` Autenticación y autorización.
-- [ ] `AV-810` Protección SSRF.
-- [ ] `AV-811` Integración con PostgreSQL.
+- [x] `AV-800` Calendario vacío válido.
+- [x] `AV-801` Evento único, eventos múltiples y duplicados.
+- [x] `AV-802` Check-out compartido con nuevo check-in.
+- [x] `AV-803` Solapamientos parciales y completos.
+- [x] `AV-804` Cancelaciones, modificaciones y recurrencias.
+- [x] `AV-805` ICS inválido y respuestas HTTP fallidas.
+- [x] `AV-806` Importación atómica, idempotente y preservación ante fallos.
+- [x] `AV-807` Detección y aprobación de vaciado sospechoso.
+- [x] `AV-808` Fechas, capacidades y zona horaria.
+- [x] `AV-809` Autenticación y autorización.
+- [x] `AV-810` Protección SSRF.
+- [x] `AV-811` Integración con PostgreSQL.
 
 ### Fase 9 — Verificación y despliegue
 
-- [ ] `AV-900` Ejecutar `npm run typecheck`.
-- [ ] `AV-901` Ejecutar `npm run lint`.
-- [ ] `AV-902` Ejecutar tests automatizados.
-- [ ] `AV-903` Ejecutar build de producción.
-- [ ] `AV-904` Validar Compose, migraciones y persistencia desde cero.
-- [ ] `AV-905` Validar backup y restauración de PostgreSQL.
-- [ ] `AV-906` Documentar registro de ICS reales.
-- [ ] `AV-907` Documentar instalación, despliegue y rollback.
-- [ ] `AV-908` Confirmar que `public/data/statistics.json` no fue modificado.
-- [ ] `AV-909` Ejecutar revisión final y registrar pendientes reales.
+- [x] `AV-900` Ejecutar `npm run typecheck`.
+- [x] `AV-901` Ejecutar `npm run lint`.
+- [x] `AV-902` Ejecutar tests automatizados.
+- [x] `AV-903` Ejecutar build de producción.
+- [x] `AV-904` Validar Compose, migraciones y persistencia desde cero.
+- [x] `AV-905` Validar backup y restauración de PostgreSQL.
+- [x] `AV-906` Documentar registro de ICS reales.
+- [x] `AV-907` Documentar instalación, despliegue y rollback.
+- [x] `AV-908` Confirmar que `public/data/statistics.json` no fue modificado.
+- [x] `AV-909` Ejecutar revisión final y registrar pendientes reales.
 
 ## Criterios de aceptación
 
@@ -227,6 +227,12 @@ Para C, la importación bloquea por fuente dentro de PostgreSQL y reemplaza el s
 | 3 — Autenticación y autorización | Completa | Commit `139d46f`; ruta `delegated`; corrección RED → GREEN observada en limiter/CSRF/cookies/client-address: los focused runs iniciales fallaron por entradas sin límite, cabeceras manipulables, comparación por prefijo, opciones de cookie inexistentes y helper ausente; el run final pasó con 11 tests. El limiter ahora limpia expirados, tiene máximo configurable y eviction determinista, usa únicamente `X-Real-IP` válido detrás del Traefik sole-ingress, reinicia el bucket tras autenticación exitosa y mantiene un fallback estable. CSRF parsea URL y compara `.origin` exactamente. El middleware activo quedó en `src/middleware.ts`, con `/admin` y `/admin/**` bloqueados sin afectar `/administrator`; las opciones de cookie tienen seam determinista para Secure, HttpOnly, SameSite=Strict, Path=/, Max-Age 28800 y logout epoch/zero. El padre verificó HTTP exitosamente: redirects, 401/no-store, cuerpos idénticos de credenciales inválidas, login, atributos de cookie en desarrollo, página/API protegida, rechazo de tamper, 429/retry, logout, redirect de legacy page, legacy API 410 y `/administrator` 404. El build de producción finalizó con exit 0; solo permanecen advertencias no relacionadas de Genkit/OpenTelemetry. `typecheck`, `lint`, tests y `git diff --check` correctos. RDD `high` aprobado y reconocido en el linaje `review-0c0ded3894f1d3ac`; dejó cuatro advertencias informativas no bloqueantes sobre logout y validación IPv6 para trabajo posterior. Cambio real: 1.023 líneas añadidas/eliminadas | Comenzar la Fase 4 |
 | 4 — Importación y sincronización ICS | Completa | `AV-400`–`AV-412` completados. La orquestación y sus correcciones quedaron en `f1cb95b`, `e963973` y `6f71996`; la secuencia de PostgreSQL ordena reservas entre procesos y los imports reservados actualizan `eventsSeen`. RDD `medium` aprobado, reconocido y consumido (`review-50d122bbece2ae51`) con `R3-001` informativo sobre terminalización de reservas, cerrado en Slice E. `5c3eac3` preserva snapshots, exige aprobación exacta para vaciados y limpia solo runs terminales antiguos; 17/17 tests focalizados, 47 tests completos y 2/2 integraciones PostgreSQL pasaron. Su evaluación RDD quedó `medium/under_budget` con 246 líneas | Comenzar la fase 5 |
 | 5 — Motor de disponibilidad | Completa técnicamente | `7136147` y `72e915f`; consulta server-only contra PostgreSQL con solapamiento half-open, validaciones estrictas, precedencia capacidad→confianza→ocupación→disponible y fechas en `America/Argentina/La_Rioja`. 7 tests focalizados, 54 tests completos y 2/2 integraciones PostgreSQL pasaron; el fixture de slug canónico quedó alineado. La revisión RDD quedó pendiente por decisión explícita del usuario de revisar al final de las fases restantes | Comenzar la fase 6 |
+| 6 — API protegida | Completa | `1bc7a6c` y `911df55`; rutas server-only para fuentes, sincronización, disponibilidad, calendario, historial y aprobación. Se observaron sesiones inválidas con `401`, origen exacto/CSRF en mutaciones, `no-store`, Zod y respuestas sanitizadas; no se expusieron URLs cifradas ni errores crudos | Comenzar la fase 7 |
+| 7 — Interfaz | Completa | `21d35b8`, corrección `f19e4fc` y `283f3a6`; login, sincronización inicial bloqueante, buscador, estados, calendario por filas de alojamiento, representación responsive y administración de fuentes. La corrección final incluyó `min`/validación de fecha local, foco/accesibilidad, parámetros dinámicos asíncronos y build de producción con exit 0 | Comenzar las pruebas obligatorias |
+| 8 — Pruebas obligatorias | Completa con integración gated | `15c4cb3` y `2a323a2`; se agregaron casos de calendario vacío, solapamientos, HTTP fallido, auth, SSRF, ownership y no filtración de secretos. Suite completa observada: 74 tests pasaron y 5 quedaron skipped; los archivos de integración PostgreSQL son gated y deben ejecutarse serialmente contra una base compartida para evitar carreras entre fixtures que usan `TRUNCATE`. Docker runtime no estuvo disponible por permisos del socket, por lo que la prueba live queda pendiente del host con daemon | Ejecutar verificación final |
+| 9 — Verificación y despliegue | Completa; revisión diferida | `6ee6a5f` agrega el runbook AV-905–AV-907 y enlaces operativos. `npm run typecheck`, `npm run lint`, Compose config con placeholders seguros, `git diff --check` y ausencia de cambios en estadísticas se observaron correctamente; AV-905 queda documentado con preflight y confirmación explícita antes de restaurar, pero backup/restore live debe ejercitarse en el host. AV-909 se marca por la verificación final alcanzada; la revisión RDD/native queda diferida explícitamente y no se invocó en esta corrección | Revisión final independiente cuando el usuario la habilite |
+
+La cadena de commits de Fases 6–9 es `1bc7a6c` → `911df55` → `21d35b8` → `f19e4fc` → `283f3a6` → `15c4cb3` → `2a323a2` → `6ee6a5f`. Las integraciones PostgreSQL de Fase 8 deben permanecer seriales cuando compartan una base de prueba.
 
 ## Registro de commits
 
@@ -245,3 +251,7 @@ Para C, la importación bloquea por fuente dentro de PostgreSQL y reemplaza el s
 | Fase 4 / AV-408–409 — Orquestación y cooldown | `f1cb95b` | Ruta `delegated`; RED → GREEN ✅ para límite exacto del cooldown y persistencia de fallos previos al import; focused 5/5 ✅; suite completa 41/41 ✅; typecheck ✅; lint ✅ con warnings preexistentes; diff-check ✅; estadísticas intactas ✅; validación independiente cerró cooldown de fallos y parsing estricto de concurrencia; force solo omite cooldown y conserva controles de seguridad | Revertir `f1cb95b`; 267 líneas añadidas |
 | Fase 4 / corrección de reservas concurrentes | `e963973`, `6f71996` | La primera revisión detectó que el lock iniciado al importar permitía overwrite tardío; la validación dirigida rechazó la primera corrección por empates de `startedAt` y `eventsSeen=0`. La corrección final agregó secuencia única de PostgreSQL, rechazo transaccional de reservas obsoletas y conteo real de eventos; focused 13/13 ✅; suite completa 43/43 ✅; migración repetida en PostgreSQL 16 ✅; RDD `medium` aprobado, reconocido y consumido (`review-50d122bbece2ae51`) | Revertir `6f71996` y `e963973`; 146 líneas autorales combinadas, sin contar artefactos generados |
 | Fase 4 / AV-410–412 — Fail-safe, aprobación y retención | `5c3eac3` | Ruta `delegated`; RED → GREEN ✅ para reservas terminales, aprobación exacta y retención; focused 17/17 ✅; suite completa 47/47 ✅ con 2 integraciones gated; PostgreSQL 16 aislado 2/2 ✅ para preservación, aprobación, rechazo stale/duplicado y límites de retención; typecheck ✅; lint ✅ con warnings preexistentes; diff-check ✅; evaluación RDD `medium/under_budget` (246 líneas). Un fallo aislado del test de timeout de safe-fetch se clasificó como preexistente y sensible a 5 ms: 20/20 repeticiones aisladas y suite posterior pasaron | Revertir `5c3eac3`; 241 líneas autorales |
+| Fase 6 — API protegida | `1bc7a6c`, `911df55` | Rutas protegidas y server-only; auth, CSRF/origin exacto, Zod, `no-store`, sincronización, consulta, calendario, historial y aprobación sanitizados | Revertir ambos commits de API |
+| Fase 7 — Interfaz | `21d35b8`, `f19e4fc`, `283f3a6` | UI protegida, calendario por filas, fechas locales, accesibilidad responsive, controles de fuentes y sincronización; build final `exit 0` | Revertir los tres commits de UI |
+| Fase 8 — Pruebas obligatorias | `15c4cb3`, `2a323a2` | Cobertura behavior-first; suite completa 74/74 pasaron y 5 skipped; integración PostgreSQL gated, serial contra base compartida y pendiente de daemon | Revertir ambos commits de tests |
+| Fase 9 — Operación | `6ee6a5f` | Runbook de backup/restore, ICS, instalación, migración, healthcheck, rollback y cadena; Compose config seguro, typecheck, lint y diff-check correctos; revisión final diferida | Revertir `6ee6a5f` |
