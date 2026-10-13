@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 vi.mock('server-only', () => ({}));
 
 import { syncAllSources, syncSource, type SyncDataAccess, type SyncSource } from './ics-sync';
+import type { IcsDocument } from './safe-fetch';
 import { isWithinSyncCooldown, resolveSyncConcurrency, SYNC_COOLDOWN_MS } from './sync-cooldown';
 
 const now = new Date('2026-10-01T12:00:00Z');
@@ -92,6 +93,30 @@ describe('ICS synchronization orchestration', () => {
     expect(outcomes[1]).toEqual({ sourceId: 'm', status: 'failed', code: 'SYNC_FAILED' });
     expect(maximum).toBeLessThanOrEqual(2);
     expect(fetchDocument).toHaveBeenCalledTimes(3);
+  });
+
+  it('rejects an older fetch that completes after a newer reservation imports', async () => {
+    let releaseOld!: (document: { document: string; contentType: string; bytes: number; redirects: number }) => void;
+    let releaseNew!: (document: { document: string; contentType: string; bytes: number; redirects: number }) => void;
+    let reservation = 0;
+    const fetchDocument = vi.fn((encryptedUrl: string): Promise<IcsDocument> => new Promise((resolve) => {
+      if (encryptedUrl.endsWith('old')) releaseOld = resolve;
+      else releaseNew = resolve;
+    }));
+    const data = dataAccess([source('one')]);
+    data.reserveSyncAttempt = async () => `attempt-${++reservation}`;
+    const importPeriods = vi.fn(async (_sourceId: string, _periods: readonly unknown[], attemptId?: string) =>
+      attemptId === 'attempt-1'
+        ? { status: 'stale' as const, syncRunId: attemptId, imported: 0 }
+        : { status: 'succeeded' as const, syncRunId: attemptId ?? 'run', imported: 1 });
+    const dependencies = { data, fetchDocument, parseCalendar: vi.fn(() => []), importPeriods, now: () => now };
+    const old = syncSource('one', { force: true }, { ...dependencies, data: { ...data, findActiveSource: async () => ({ id: 'one', icsUrl: 'encrypted-old' }) } });
+    const newer = syncSource('one', { force: true }, { ...dependencies, data: { ...data, findActiveSource: async () => ({ id: 'one', icsUrl: 'encrypted-new' }) } });
+    await vi.waitFor(() => expect(releaseNew).toBeTypeOf('function'));
+    releaseNew({ document: 'new', contentType: 'text/calendar', bytes: 3, redirects: 0 });
+    await expect(newer).resolves.toMatchObject({ status: 'succeeded' });
+    releaseOld({ document: 'old', contentType: 'text/calendar', bytes: 3, redirects: 0 });
+    await expect(old).resolves.toMatchObject({ status: 'stale', code: 'STALE_ATTEMPT' });
   });
 
   it('resolves safe concurrency defaults and caps configured values', () => {

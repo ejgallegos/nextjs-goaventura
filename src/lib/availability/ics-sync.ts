@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, sql } from 'drizzle-orm';
 
 import { getDb, type Database } from '../db';
 import { calendarSources, syncRuns } from '../db/schema';
@@ -18,14 +18,15 @@ export interface SyncDataAccess {
   listActiveSources: () => Promise<SyncSource[]>;
   findActiveSource: (sourceId: string) => Promise<SyncSource | null>;
   latestAttempt: (sourceId: string) => Promise<Date | null>;
-  recordPreImportFailure?: (sourceId: string, completedAt: Date) => Promise<void>;
+  reserveSyncAttempt?: (sourceId: string, startedAt: Date, force: boolean) => Promise<string | null>;
+  recordPreImportFailure?: (sourceId: string, completedAt: Date, attemptId?: string) => Promise<void>;
 }
 
 export interface SyncDependencies {
   data?: SyncDataAccess;
   fetchDocument?: typeof fetchIcsDocument;
   parseCalendar?: typeof parseIcsCalendar;
-  importPeriods?: (sourceId: string, periods: readonly OccupancyPeriod[]) => Promise<AvailabilityImportResult>;
+  importPeriods?: (sourceId: string, periods: readonly OccupancyPeriod[], attemptId?: string) => Promise<AvailabilityImportResult>;
   now?: () => Date;
   concurrency?: number;
 }
@@ -36,9 +37,9 @@ export interface SyncOptions {
 
 export type SyncOutcome = {
   sourceId: string;
-  status: 'succeeded' | 'no_data' | 'busy' | 'cooldown' | 'failed';
+  status: 'succeeded' | 'no_data' | 'busy' | 'cooldown' | 'failed' | 'stale';
   imported?: number;
-  code?: 'COOLDOWN' | 'BUSY' | 'SOURCE_NOT_ACTIVE' | 'SOURCE_NOT_CONFIGURED' | 'SYNC_FAILED' | 'IMPORT_FAILED';
+  code?: 'COOLDOWN' | 'BUSY' | 'SOURCE_NOT_ACTIVE' | 'SOURCE_NOT_CONFIGURED' | 'SYNC_FAILED' | 'IMPORT_FAILED' | 'STALE_ATTEMPT';
 };
 
 function dbDataAccess(db: Database): SyncDataAccess {
@@ -62,7 +63,23 @@ function dbDataAccess(db: Database): SyncDataAccess {
         .limit(1);
       return run?.startedAt ?? null;
     },
-    recordPreImportFailure: async (sourceId, completedAt) => {
+    reserveSyncAttempt: async (sourceId, startedAt, force) => db.transaction(async (tx) => {
+      await tx.execute(sql`select pg_advisory_xact_lock(hashtextextended(${sourceId}, 0))`);
+      const [latest] = await tx.select({ startedAt: syncRuns.startedAt })
+        .from(syncRuns).where(eq(syncRuns.calendarSourceId, sourceId))
+        .orderBy(desc(syncRuns.startedAt)).limit(1);
+      if (!force && latest && isWithinSyncCooldown(startedAt, latest.startedAt)) return null;
+      const [run] = await tx.insert(syncRuns).values({
+        calendarSourceId: sourceId, status: 'running', startedAt, eventsSeen: 0, periodsImported: 0,
+      }).returning({ id: syncRuns.id });
+      return run?.id ?? null;
+    }),
+    recordPreImportFailure: async (sourceId, completedAt, attemptId) => {
+      if (attemptId) {
+        await db.update(syncRuns).set({ status: 'failed', completedAt, error: 'ICS synchronization failed' })
+          .where(and(eq(syncRuns.id, attemptId), eq(syncRuns.calendarSourceId, sourceId)));
+        return;
+      }
       await db.insert(syncRuns).values({
         calendarSourceId: sourceId,
         status: 'failed',
@@ -82,7 +99,7 @@ function dependenciesWithDefaults(dependencies: SyncDependencies): Required<Pick
     data,
     fetchDocument: dependencies.fetchDocument ?? fetchIcsDocument,
     parseCalendar: dependencies.parseCalendar ?? parseIcsCalendar,
-    importPeriods: dependencies.importPeriods ?? importAvailabilityPeriods,
+    importPeriods: dependencies.importPeriods ?? ((sourceId, periods, attemptId) => importAvailabilityPeriods(sourceId, periods, {}, attemptId)),
     now: dependencies.now ?? (() => new Date()),
     concurrency: dependencies.concurrency,
   };
@@ -98,6 +115,8 @@ export async function syncSource(sourceId: string, options: SyncOptions = {}, de
     return { sourceId, status: 'cooldown', code: 'COOLDOWN' };
   }
   if (!source.icsUrl) return { sourceId, status: 'failed', code: 'SOURCE_NOT_CONFIGURED' };
+  const attemptId = await resolved.data.reserveSyncAttempt?.(sourceId, now, options.force === true);
+  if (resolved.data.reserveSyncAttempt && !attemptId) return { sourceId, status: 'cooldown', code: 'COOLDOWN' };
 
   let periods: OccupancyPeriod[];
   try {
@@ -105,7 +124,7 @@ export async function syncSource(sourceId: string, options: SyncOptions = {}, de
     periods = resolved.parseCalendar(document.document, { synchronizationDate: now });
   } catch {
     try {
-      await resolved.data.recordPreImportFailure?.(sourceId, now);
+      await resolved.data.recordPreImportFailure?.(sourceId, now, attemptId ?? undefined);
     } catch {
       // Preserve the original sanitized synchronization failure.
     }
@@ -113,9 +132,10 @@ export async function syncSource(sourceId: string, options: SyncOptions = {}, de
   }
 
   try {
-    const imported = await resolved.importPeriods(sourceId, periods);
+    const imported = await resolved.importPeriods(sourceId, periods, attemptId ?? undefined);
     if (imported.status === 'busy') return { sourceId, status: 'busy', code: 'BUSY' };
     if (imported.status === 'failed') return { sourceId, status: 'failed', code: 'IMPORT_FAILED' };
+    if (imported.status === 'stale') return { sourceId, status: 'stale', code: 'STALE_ATTEMPT' };
     return { sourceId, status: imported.status, imported: imported.imported };
   } catch {
     return { sourceId, status: 'failed', code: 'SYNC_FAILED' };

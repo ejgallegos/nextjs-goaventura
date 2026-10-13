@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { createHash } from 'node:crypto';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, sql } from 'drizzle-orm';
 
 import { getDb, type Database } from '../db';
 import { calendarSources, occupancyPeriods, syncRuns } from '../db/schema';
@@ -21,7 +21,7 @@ export class AvailabilityImportError extends Error {
 
 export type AvailabilityImportResult =
   | { status: 'busy' }
-  | { status: 'succeeded' | 'no_data' | 'failed'; syncRunId: string; imported: number };
+  | { status: 'succeeded' | 'no_data' | 'failed' | 'stale'; syncRunId: string; imported: number };
 
 function importError(code: AvailabilityImportErrorCode): AvailabilityImportError {
   const messages: Record<AvailabilityImportErrorCode, string> = {
@@ -63,6 +63,7 @@ export async function importAvailabilityPeriods(
   sourceId: string,
   periods: readonly OccupancyPeriod[],
   dependencies: { db?: Database } = {},
+  attemptId?: string,
 ): Promise<AvailabilityImportResult> {
   const validated = validateImportPeriods(periods);
   const db = dependencies.db ?? getDb();
@@ -78,13 +79,26 @@ export async function importAvailabilityPeriods(
       .limit(1);
     if (source.length === 0) throw importError('SOURCE_NOT_ACTIVE');
 
-    const [run] = await tx.insert(syncRuns).values({
-      calendarSourceId: sourceId,
-      status: 'running',
-      eventsSeen: validated.length,
-      periodsImported: 0,
-    }).returning({ id: syncRuns.id });
-    if (!run) throw new Error('Import run could not be created');
+    let runId: string;
+    if (attemptId) {
+      const [latest] = await tx.select({ id: syncRuns.id }).from(syncRuns)
+        .where(eq(syncRuns.calendarSourceId, sourceId)).orderBy(desc(syncRuns.startedAt)).limit(1);
+      if (latest?.id !== attemptId) {
+        await tx.update(syncRuns).set({ status: 'failed', completedAt: new Date(), error: 'ICS import superseded' })
+          .where(eq(syncRuns.id, attemptId));
+        return { status: 'stale', syncRunId: attemptId, imported: 0 };
+      }
+      runId = latest.id;
+    } else {
+      const [run] = await tx.insert(syncRuns).values({
+        calendarSourceId: sourceId,
+        status: 'running',
+        eventsSeen: validated.length,
+        periodsImported: 0,
+      }).returning({ id: syncRuns.id });
+      if (!run) throw new Error('Import run could not be created');
+      runId = run.id;
+    }
 
     try {
       await tx.transaction(async (snapshotTx) => {
@@ -102,17 +116,17 @@ export async function importAvailabilityPeriods(
           status,
           periodsImported: validated.length,
           completedAt: new Date(),
-        }).where(eq(syncRuns.id, run.id));
+        }).where(eq(syncRuns.id, runId));
       });
       const status = validated.length === 0 ? 'no_data' : 'succeeded';
-      return { status, syncRunId: run.id, imported: validated.length };
+      return { status, syncRunId: runId, imported: validated.length };
     } catch {
       await tx.update(syncRuns).set({
         status: 'failed',
         completedAt: new Date(),
         error: 'ICS import failed',
-      }).where(eq(syncRuns.id, run.id));
-      return { status: 'failed', syncRunId: run.id, imported: 0 };
+      }).where(eq(syncRuns.id, runId));
+      return { status: 'failed', syncRunId: runId, imported: 0 };
     }
   });
 }
