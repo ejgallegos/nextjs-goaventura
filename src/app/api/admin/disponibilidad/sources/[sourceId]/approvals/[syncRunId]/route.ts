@@ -6,11 +6,14 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 const idSchema = z.string().uuid();
 
-export async function POST(request: Request, context: { params: { sourceId: string; syncRunId: string } }): Promise<Response> {
+export function POST(request: Request, context: { params: { sourceId: string; syncRunId: string } }): Promise<Response>;
+export function POST(request: Request, context: { params: Promise<{ sourceId: string; syncRunId: string }> }): Promise<Response>;
+export async function POST(request: Request, context: { params: Promise<{ sourceId: string; syncRunId: string }> | { sourceId: string; syncRunId: string } }): Promise<Response> {
   const denied = await availabilityGuard(request, true);
   if (denied) return denied;
-  const sourceId = idSchema.safeParse(context.params.sourceId);
-  const syncRunId = idSchema.safeParse(context.params.syncRunId);
+  const { sourceId: rawSourceId, syncRunId: rawSyncRunId } = await context.params;
+  const sourceId = idSchema.safeParse(rawSourceId);
+  const syncRunId = idSchema.safeParse(rawSyncRunId);
   if (!sourceId.success || !syncRunId.success) return invalidInput();
   try {
     const result = await approveEmptyFeed(sourceId.data, syncRunId.data);

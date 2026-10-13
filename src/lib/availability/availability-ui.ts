@@ -7,7 +7,7 @@ const statusOrder: Record<AvailabilityStatus, number> = {
   CAPACIDAD_INSUFICIENTE: 3,
 };
 
-const catalogOrder = [
+export const catalogOrder = [
   'loft-centro',
   'altos-del-talampaya-casa',
   'altos-del-talampaya-casa-ii',
@@ -25,11 +25,50 @@ export function sortAvailabilityResults(results: readonly AvailabilityResult[]):
     .map(({ result }) => result);
 }
 
-export function validateAvailabilityForm(input: { checkIn: string; checkOut: string; guests: string }): string | null {
+export function localCalendarDate(now: Date = new Date()): string {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Argentina/La_Rioja', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(now);
+  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+export function validateAvailabilityForm(
+  input: { checkIn: string; checkOut: string; guests: string },
+  today?: string,
+): string | null {
   if (!input.checkIn || !input.checkOut || !input.guests) return 'Completá las fechas y la cantidad de huéspedes.';
+  if (today && (input.checkIn < today || input.checkOut < today)) return 'No se permiten fechas anteriores a hoy.';
   if (!Number.isSafeInteger(Number(input.guests)) || Number(input.guests) <= 0) return 'La cantidad de huéspedes debe ser positiva.';
   if (input.checkOut <= input.checkIn) return 'El check-out debe ser posterior al check-in.';
   return null;
+}
+
+export interface CalendarDayForRows {
+  date: string;
+  results: readonly AvailabilityResult[];
+}
+
+export interface CalendarAccommodationRow {
+  accommodationId: string;
+  accommodationSlug: string;
+  maxCapacity?: number;
+  days: Array<{ date: string; status: AvailabilityStatus }>;
+}
+
+export function calendarAccommodationRows(days: readonly CalendarDayForRows[]): CalendarAccommodationRow[] {
+  const rows = new Map<string, CalendarAccommodationRow>();
+  for (const slug of catalogOrder) {
+    rows.set(slug, { accommodationId: slug, accommodationSlug: slug, days: [] });
+  }
+  for (const row of rows.values()) {
+    for (const day of days) {
+      const result = day.results.find((candidate) => candidate.accommodationSlug === row.accommodationSlug);
+      row.maxCapacity ??= result?.maxCapacity;
+      row.days.push({ date: day.date, status: result?.status ?? 'NO_VERIFICABLE' });
+    }
+  }
+  return [...rows.values()];
 }
 
 export function safeAvailabilityMessage(error?: unknown): string {

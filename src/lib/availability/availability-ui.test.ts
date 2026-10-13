@@ -4,6 +4,8 @@ import { describe, expect, it } from 'vitest';
 
 import { AvailabilityDashboard } from '../../app/admin/disponibilidad/availability-dashboard';
 import {
+  calendarAccommodationRows,
+  localCalendarDate,
   safeAvailabilityMessage,
   sortAvailabilityResults,
   validateAvailabilityForm,
@@ -25,8 +27,19 @@ describe('availability admin UI boundaries', () => {
   it('validates the search seam and never presents raw errors', () => {
     expect(validateAvailabilityForm({ checkIn: '', checkOut: '', guests: '' })).toBe('Completá las fechas y la cantidad de huéspedes.');
     expect(validateAvailabilityForm({ checkIn: '2026-10-12', checkOut: '2026-10-10', guests: '2' })).toBe('El check-out debe ser posterior al check-in.');
-    expect(validateAvailabilityForm({ checkIn: '2026-10-10', checkOut: '2026-10-12', guests: '2' })).toBeNull();
+    expect(validateAvailabilityForm({ checkIn: '2026-10-09', checkOut: '2026-10-12', guests: '2' }, '2026-10-10')).toBe('No se permiten fechas anteriores a hoy.');
+    expect(validateAvailabilityForm({ checkIn: '2026-10-10', checkOut: '2026-10-12', guests: '2' }, '2026-10-10')).toBeNull();
+    expect(localCalendarDate(new Date('2026-10-10T02:00:00Z'))).toBe('2026-10-09');
     expect(safeAvailabilityMessage('https://secret.example/feed.ics raw stack')).toBe('No se pudo completar la consulta. Intentá nuevamente.');
+  });
+
+  it('groups calendar days into stable accommodation rows', () => {
+    const result = { accommodationSlug: 'loft-centro', accommodationId: 'loft-centro', maxCapacity: 2, status: 'DISPONIBLE' as const };
+    const rows = calendarAccommodationRows([{ date: '2026-10-10', results: [result] }]);
+    expect(rows).toHaveLength(5);
+    expect(rows[0]).toMatchObject({ accommodationSlug: 'loft-centro', days: [{ date: '2026-10-10', status: 'DISPONIBLE' }] });
+    expect(rows[4].accommodationSlug).toBe('altos-del-talampaya-dpto');
+    expect(rows[4].days).toEqual([{ date: '2026-10-10', status: 'NO_VERIFICABLE' }]);
   });
 
   it('renders an accessible, mobile-first blocking synchronization state', () => {
@@ -36,6 +49,7 @@ describe('availability admin UI boundaries', () => {
     expect(markup).toContain('for="availability-check-in"');
     expect(markup).toContain('focus-visible:ring-2');
     expect(markup).toContain('sm:grid-cols-3');
+    expect(markup).toContain('min="');
     expect(markup).toContain('motion-reduce:transition-none');
     expect(markup).not.toContain('feed.ics');
   });

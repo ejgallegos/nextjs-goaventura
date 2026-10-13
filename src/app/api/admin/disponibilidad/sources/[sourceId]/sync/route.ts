@@ -19,10 +19,13 @@ async function readOptions(request: Request): Promise<{ force: boolean } | null>
   }
 }
 
-export async function POST(request: Request, context: { params: { sourceId: string } }): Promise<Response> {
+export function POST(request: Request, context: { params: { sourceId: string } }): Promise<Response>;
+export function POST(request: Request, context: { params: Promise<{ sourceId: string }> }): Promise<Response>;
+export async function POST(request: Request, context: { params: Promise<{ sourceId: string }> | { sourceId: string } }): Promise<Response> {
   const denied = await availabilityGuard(request, true);
   if (denied) return denied;
-  const sourceId = sourceIdSchema.safeParse(context.params.sourceId);
+  const { sourceId: rawSourceId } = await context.params;
+  const sourceId = sourceIdSchema.safeParse(rawSourceId);
   const options = await readOptions(request);
   if (!sourceId.success || !options) return invalidInput();
   try {

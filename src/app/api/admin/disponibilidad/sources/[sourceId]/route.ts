@@ -8,10 +8,13 @@ export const dynamic = 'force-dynamic';
 const sourceIdSchema = z.string().uuid();
 const statusSchema = z.object({ status: z.enum(['active', 'inactive']) });
 
-export async function PATCH(request: Request, context: { params: { sourceId: string } }): Promise<Response> {
+export function PATCH(request: Request, context: { params: { sourceId: string } }): Promise<Response>;
+export function PATCH(request: Request, context: { params: Promise<{ sourceId: string }> }): Promise<Response>;
+export async function PATCH(request: Request, context: { params: Promise<{ sourceId: string }> | { sourceId: string } }): Promise<Response> {
   const denied = await availabilityGuard(request, true);
   if (denied) return denied;
-  const sourceId = sourceIdSchema.safeParse(context.params.sourceId);
+  const { sourceId: rawSourceId } = await context.params;
+  const sourceId = sourceIdSchema.safeParse(rawSourceId);
   if (!sourceId.success) return invalidInput();
   let input: unknown;
   try { input = await request.json(); } catch { return invalidInput(); }
