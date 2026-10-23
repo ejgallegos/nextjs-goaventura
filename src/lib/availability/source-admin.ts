@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { accommodations } from '../data/accommodations';
 import { getDb, type Database } from '../db';
 import { calendarSources } from '../db/schema';
-import { encryptIcsUrl } from './ics-secrets';
+import { decryptIcsUrl, encryptIcsUrl } from './ics-secrets';
 import { validateIcsUrl } from './network-policy';
 
 export type SourceStatus = 'active' | 'inactive';
@@ -14,9 +14,10 @@ export interface SourceView {
   accommodationSlug: string;
   status: SourceStatus;
   configured: boolean;
+  maskedUrl: string | null;
 }
 
-export type SourceAdminErrorCode = 'INVALID_URL' | 'SOURCE_NOT_FOUND' | 'SOURCE_MISMATCH' | 'SOURCE_NOT_CONFIGURED';
+export type SourceAdminErrorCode = 'INVALID_URL' | 'SOURCE_NOT_FOUND' | 'SOURCE_MISMATCH' | 'SOURCE_NOT_CONFIGURED' | 'SOURCE_ACTIVE';
 
 export class SourceAdminError extends Error {
   readonly code: SourceAdminErrorCode;
@@ -33,14 +34,26 @@ export interface SourceAdminDependencies {
   db?: Database;
   validateUrl?: (value: string) => Promise<URL>;
   encryptUrl?: (value: string) => string;
+  decryptUrl?: (value: string) => string;
 }
 
-function view(row: SourceRow): SourceView {
+function maskUrl(payload: string, decryptUrl: (value: string) => string): string {
+  try {
+    const url = new URL(decryptUrl(payload));
+    return `${url.origin}/••••`;
+  } catch {
+    // A corrupted or unavailable secret must never be returned to the admin UI.
+    return '••••';
+  }
+}
+
+function view(row: SourceRow, decryptUrl: (value: string) => string = decryptIcsUrl): SourceView {
   return {
     id: row.id,
     accommodationSlug: row.accommodationSlug,
     status: row.status,
     configured: row.icsUrl !== null,
+    maskedUrl: row.icsUrl ? maskUrl(row.icsUrl, decryptUrl) : null,
   };
 }
 
@@ -56,7 +69,9 @@ export async function listSources(dependencies: SourceAdminDependencies = {}): P
     status: calendarSources.status,
     icsUrl: calendarSources.icsUrl,
   }).from(calendarSources);
-  return rows.sort((left, right) => catalogIndex(left.accommodationSlug) - catalogIndex(right.accommodationSlug)).map(view);
+  return rows
+    .sort((left, right) => catalogIndex(left.accommodationSlug) - catalogIndex(right.accommodationSlug))
+    .map((row) => view(row, dependencies.decryptUrl));
 }
 
 export async function configureSource(
@@ -75,6 +90,7 @@ export async function configureSource(
   }).from(calendarSources).where(eq(calendarSources.id, input.sourceId)).limit(1);
   if (!source) throw new SourceAdminError('SOURCE_NOT_FOUND');
   if (source.accommodationSlug !== input.accommodationSlug) throw new SourceAdminError('SOURCE_MISMATCH');
+  if (source.status === 'active') throw new SourceAdminError('SOURCE_ACTIVE');
   let encryptedUrl: string;
   try {
     const url = await (dependencies.validateUrl ?? validateIcsUrl)(input.icsUrl);
@@ -85,7 +101,7 @@ export async function configureSource(
   const [updated] = await db.update(calendarSources).set({ icsUrl: encryptedUrl, updatedAt: new Date() })
     .where(eq(calendarSources.id, source.id)).returning({ id: calendarSources.id, accommodationSlug: calendarSources.accommodationSlug, status: calendarSources.status, icsUrl: calendarSources.icsUrl });
   if (!updated) throw new SourceAdminError('SOURCE_NOT_FOUND');
-  return view(updated);
+  return view(updated, dependencies.decryptUrl);
 }
 
 export async function setSourceStatus(
@@ -101,5 +117,5 @@ export async function setSourceStatus(
   const [updated] = await db.update(calendarSources).set({ status, updatedAt: new Date() })
     .where(eq(calendarSources.id, sourceId)).returning({ id: calendarSources.id, accommodationSlug: calendarSources.accommodationSlug, status: calendarSources.status, icsUrl: calendarSources.icsUrl });
   if (!updated) throw new SourceAdminError('SOURCE_NOT_FOUND');
-  return view(updated);
+  return view(updated, dependencies.decryptUrl);
 }
