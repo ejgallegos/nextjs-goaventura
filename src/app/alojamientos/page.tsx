@@ -7,8 +7,22 @@ import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
 import { MapPin, BedDouble, Users, Bath, ArrowDown } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Alojamientos en Villa Unión',
-  description: 'Loft, casas y departamentos cerca del Parque Nacional Talampaya. La mejor ubicación para tu estadía en La Rioja.',
+  title: 'Altos del Talampaya - Casas y departamentos turísticos',
+  description: 'Alojamientos Altos del Talampaya en Villa Unión: casas, lofts y departamentos turísticos para descansar cerca del Parque Nacional Talampaya.',
+  alternates: {
+    canonical: '/alojamientos',
+  },
+  openGraph: {
+    title: 'Altos del Talampaya - Casas y departamentos turísticos',
+    description: 'Casas, lofts y departamentos turísticos en Villa Unión para hacer base cerca del Parque Nacional Talampaya.',
+    url: '/alojamientos',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Altos del Talampaya - Casas y departamentos turísticos',
+    description: 'Casas, lofts y departamentos turísticos en Villa Unión para hacer base cerca del Parque Nacional Talampaya.',
+  },
 };
 
 const isFamilySuitable = (accommodation: (typeof accommodations)[number]) =>

@@ -32,14 +32,14 @@ export const metadata: Metadata = {
     template: "%s — Go Aventura",
   },
   description:
-    "Excursiones en 4x4, transfers y alojamientos premium en Villa Unión del Talampaya. Viví La Rioja con los mejores guías locales.",
+    "Go Aventura te invita a descubrir Villa Unión del Talampaya: alojamientos Altos del Talampaya, excursiones 4x4 y transfers para completar tu estadía.",
   openGraph: {
     title: {
       default: "Go Aventura - Descubrí Villa Unión del Talampaya",
       template: "%s — Go Aventura",
     },
     description:
-      "Excursiones en 4x4, transfers y alojamientos premium en Villa Unión del Talampaya.",
+      "Go Aventura te invita a descubrir Villa Unión del Talampaya: alojamientos Altos del Talampaya, excursiones 4x4 y transfers para completar tu estadía.",
     url: siteUrl,
     siteName: "Go Aventura",
     images: [
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Go Aventura - Descubrí Villa Unión del Talampaya",
     description:
-      "Excursiones, transfers y alojamientos en Villa Unión del Talampaya.",
+      "Go Aventura te invita a descubrir Villa Unión del Talampaya: alojamientos Altos del Talampaya, excursiones 4x4 y transfers para completar tu estadía.",
     images: ["/logo-goaventura.png"],
   },
 };

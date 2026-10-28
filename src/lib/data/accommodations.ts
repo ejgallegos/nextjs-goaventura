@@ -340,7 +340,7 @@ Dispone de cochera y Wi-Fi.
       '🚗 Cochera',
       '📶 Wi-Fi',
     ],
-    whatsapp: WHATSAPP_NUMBER,
+    whatsapp: '3804509885',
     booking: 'https://www.booking.com/hotel/ar/altos-del-talampaya-dpto.es-ar.html',
     images: [
       { src: '/images/alojamientos/altos-del-talampaya-dpto-16.jpg', alt: 'Fachada y cochera techada con un automóvil estacionado', hint: 'departamento fachada cochera auto' },

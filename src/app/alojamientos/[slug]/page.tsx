@@ -25,13 +25,25 @@ export async function generateMetadata({ params }: AccommodationPageProps): Prom
   const { slug } = await params;
   const acc = getAccommodationBySlug(slug);
   if (!acc) return { title: 'Alojamiento no encontrado' };
+  const shareDescription = `${acc.name} en Villa Unión del Talampaya: alojamiento para ${acc.capacity}. ${acc.shortDescription}`;
   return {
-    title: `${acc.name} — Alojamiento en Villa Unión`,
-    description: acc.description,
+    title: `${acc.name} | Alojamiento turístico en Villa Unión`,
+    description: shareDescription,
+    alternates: {
+      canonical: `/alojamientos/${acc.slug}`,
+    },
     openGraph: {
-      title: `${acc.name} — Go Aventura`,
-      description: acc.tagline,
+      title: `${acc.name} | Alojamiento turístico en Villa Unión`,
+      description: shareDescription,
+      url: `/alojamientos/${acc.slug}`,
+      type: 'website',
       images: acc.images.slice(0, 3).map(i => ({ url: i.src, width: 1200, height: 630, alt: i.alt })),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${acc.name} | Alojamiento turístico en Villa Unión`,
+      description: shareDescription,
+      images: [acc.images[0].src],
     },
   };
 }
