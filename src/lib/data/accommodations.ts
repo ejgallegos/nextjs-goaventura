@@ -30,6 +30,14 @@ export interface Accommodation {
   highlights: string[];
 }
 
+export const getGoogleMapsUrl = (accommodation: Pick<Accommodation, 'coordinates' | 'location'>): string => {
+  const query = accommodation.coordinates
+    ? `${accommodation.coordinates.lat},${accommodation.coordinates.lng}`
+    : accommodation.location;
+
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+};
+
 export const accommodations: Accommodation[] = [
   {
     id: 'loft-centro',
@@ -54,10 +62,10 @@ WiFi de alta velocidad para que estés conectado con tus seres queridos o trabaj
     shortDescription:
       'Departamento para dos personas en pleno centro de Villa Unión, ideal para parejas.',
     location: 'Villa Unión, La Rioja',
-    mapUrl: 'https://maps.google.com/maps?q=-29.31720449181527,%20-68.22681317352131&t=m&z=17&output=embed&iwloc=near',
+    mapUrl: 'https://www.google.com/maps?q=-29.3171686,-68.2266014&z=17&output=embed&iwloc=near',
     coordinates: {
-      lat: -29.31720449181527,
-      lng: -68.22681317352131,
+      lat: -29.3171686,
+      lng: -68.2266014,
     },
     capacity: '2 personas',
     bedrooms: 1,
@@ -124,10 +132,10 @@ A solo minutos del centro de Villa Unión y en la entrada de la ciudad, fácil a
     shortDescription:
       'Casa completa con 3 habitaciones, ideal para familias. Patio con jardín y vistas a la montaña.',
     location: 'Villa Unión, La Rioja',
-    mapUrl: 'https://www.google.com/maps?q=-29.327004271198664,-68.22305917749192&z=17&output=embed&iwloc=near',
+    mapUrl: 'https://www.google.com/maps?q=-29.32704,-68.2230544&z=17&output=embed&iwloc=near',
     coordinates: {
-      lat: -29.327004271198664,
-      lng: -68.22305917749192,
+      lat: -29.32704,
+      lng: -68.2230544,
     },
     capacity: '6-8 personas',
     bedrooms: 3,
@@ -198,10 +206,10 @@ Cerca del centro pero en un entorno tranquilo. Fácil acceso a restaurantes, sup
     shortDescription:
       'Casa acogedora para dos personas. Cocina completa y cochera privada.',
     location: 'Villa Unión, La Rioja',
-    mapUrl: 'https://www.google.com/maps?q=-29.32156271227418,-68.22527481842684&z=17&output=embed&iwloc=near',
+    mapUrl: 'https://www.google.com/maps?q=-29.3215627,-68.2252748&z=17&output=embed&iwloc=near',
     coordinates: {
-      lat: -29.32156271227418,
-      lng: -68.22527481842684,
+      lat: -29.3215627,
+      lng: -68.2252748,
     },
     capacity: '2 personas',
     bedrooms: 1,
@@ -265,7 +273,11 @@ Contás con aire acondicionado, Wi-Fi gratis y estacionamiento privado gratuito 
     shortDescription:
       'Casa completa para 2 a 4 personas con 2 dormitorios, cocina y estacionamiento privado.',
     location: 'Verne Costa, Villa Unión, La Rioja',
-    mapUrl: 'https://www.google.com/maps?q=Verne+Costa%2C+Villa+Uni%C3%B3n%2C+La+Rioja&z=16&output=embed',
+    mapUrl: 'https://www.google.com/maps?q=-29.319478,-68.2228345&z=17&output=embed&iwloc=near',
+    coordinates: {
+      lat: -29.319478,
+      lng: -68.2228345,
+    },
     capacity: '2-4 personas',
     bedrooms: 2,
     bathrooms: 1,
@@ -325,10 +337,10 @@ Dispone de cochera y Wi-Fi.
     shortDescription:
       'Departamento para dos personas con aire acondicionado, calefacción, ropa de cama, cochera y Wi-Fi.',
     location: 'Villa Unión, La Rioja',
-    mapUrl: 'https://www.google.com/maps?q=-29.323099,-68.225492&z=17&output=embed&iwloc=near',
+    mapUrl: 'https://www.google.com/maps?q=-29.3231183,-68.2255025&z=17&output=embed&iwloc=near',
     coordinates: {
-      lat: -29.323099,
-      lng: -68.225492,
+      lat: -29.3231183,
+      lng: -68.2255025,
     },
     capacity: '2 personas',
     bedrooms: 1,

@@ -56,8 +56,8 @@ const heroImageByAccommodationSlug: Record<string, string> = {
 const institutionalHeroSlide: HomeHeroSlide = {
   id: 'home-intro',
   type: 'Institucional',
-  title: 'Primero elegí dónde quedarte.',
-  description: 'Después, viví La Rioja. En Go Aventura encontrás alojamientos y, como complemento, viajes y experiencias para recorrer la región.',
+  title: 'Encontrá tu lugar. Descubrí Villa Unión.',
+  description: 'Con Go Aventura, convertí tu viaje en una experiencia inolvidable. Con Altos del Talampaya, encontrá el alojamiento ideal para descansar y disfrutar. Todo lo que necesitás para vivir tu próxima aventura, en un solo lugar.',
   image: '/images/alojamientos/casa-altos-i-pileta-1.jpg',
   imageAlt: 'Pileta exterior de Casa Altos del Talampaya I',
 };

@@ -1,10 +1,17 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { accommodations } from '@/lib/data/accommodations';
+import { accommodations, getGoogleMapsUrl } from '@/lib/data/accommodations';
 import AccommodationWhatsAppCta from '@/components/accommodation-whatsapp-cta';
 import WhatsAppCtaButton from '@/components/whatsapp-cta-button';
-import { MapPin, BedDouble, Users, Bath, ArrowDown } from 'lucide-react';
+import { MapPin, BedDouble, Users, Bath, ArrowDown, ExternalLink } from 'lucide-react';
+
+const accommodationBrandImage = {
+  url: '/images/alojamientos/altos-del-talampaya-social.jpeg',
+  width: 1200,
+  height: 1200,
+  alt: 'Altos del Talampaya, casas y departamentos turísticos',
+};
 
 export const metadata: Metadata = {
   title: 'Altos del Talampaya - Casas y departamentos turísticos',
@@ -17,11 +24,13 @@ export const metadata: Metadata = {
     description: 'Casas, lofts y departamentos turísticos en Villa Unión para hacer base cerca del Parque Nacional Talampaya.',
     url: '/alojamientos',
     type: 'website',
+    images: [accommodationBrandImage],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Altos del Talampaya - Casas y departamentos turísticos',
     description: 'Casas, lofts y departamentos turísticos en Villa Unión para hacer base cerca del Parque Nacional Talampaya.',
+    images: [accommodationBrandImage.url],
   },
 };
 
@@ -38,17 +47,15 @@ const AlojamientosPage = () => {
   return (
     <div className="bg-background">
       <section className="grid min-h-[30rem] bg-secondary lg:grid-cols-2">
-        <div className="relative order-1 min-h-64 sm:min-h-80 lg:order-2 lg:min-h-[34rem]">
+        <div className="relative order-1 h-72 bg-[#F6F0E2] sm:h-80 lg:order-2 lg:h-auto lg:min-h-[34rem]">
           <Image
-            src={accommodations[0].images[0].src}
-            alt={accommodations[0].images[0].alt}
+            src={accommodationBrandImage.url}
+            alt={accommodationBrandImage.alt}
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover object-[center_62%]"
+            className="object-contain"
           />
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 to-transparent" />
-          <p className="absolute bottom-5 left-5 text-sm font-medium text-white sm:left-8">Alojamiento en Villa Unión</p>
         </div>
         <div className="order-2 flex items-center lg:order-1">
           <div className="w-full max-w-xl px-5 py-12 sm:px-8 sm:py-16 lg:ml-auto lg:px-12 xl:px-16">
@@ -98,59 +105,70 @@ const AlojamientosPage = () => {
                   phoneNumber={acc.whatsapp}
                 />
               </div>
-              <Link
-                href={`/alojamientos/${acc.slug}`}
-                className="group block min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
-              >
-                <div className="space-y-3 pt-5">
+              <div className="space-y-3 pt-5">
+                <Link
+                  href={`/alojamientos/${acc.slug}`}
+                  className="group block min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
+                >
                   <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                     <h3 className="min-w-0 max-w-[25ch] font-headline text-xl font-bold leading-tight text-foreground group-hover:text-accent sm:text-2xl">
                       {acc.name}
                     </h3>
                   </div>
-                  <div className="flex items-start gap-1 text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    <span className="min-w-0 break-words">{acc.location}</span>
-                  </div>
-                  <ul aria-label={`Características de ${acc.name}`} className="flex flex-wrap gap-2">
-                    <li className="inline-flex min-h-7 items-center gap-1.5 rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                      <Users className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                      {acc.capacity}
+                </Link>
+                <a
+                  href={getGoogleMapsUrl(acc)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-start gap-1 rounded-md text-sm text-muted-foreground underline decoration-accent/40 underline-offset-4 transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+                >
+                  <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span className="min-w-0 break-words">{acc.location}</span>
+                  <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                </a>
+                <ul aria-label={`Características de ${acc.name}`} className="flex flex-wrap gap-2">
+                  <li className="inline-flex min-h-7 items-center gap-1.5 rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                    <Users className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+                    {acc.capacity}
+                  </li>
+                  {isFamilySuitable(acc) && (
+                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                      Ideal para familias
                     </li>
-                    {isFamilySuitable(acc) && (
-                      <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                        Ideal para familias
-                      </li>
-                    )}
-                    {acceptsPets(acc) && (
-                      <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                        Se admiten mascotas
-                      </li>
-                    )}
-                    {hasPool(acc) && (
-                      <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
-                        Pileta
-                      </li>
-                    )}
-                  </ul>
-                  <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
-                    {acc.bedrooms !== undefined && (
-                      <span className="inline-flex items-center gap-2">
-                        <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
-                        {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
-                      </span>
-                    )}
-                    {acc.bathrooms !== undefined && (
-                      <span className="inline-flex items-center gap-2">
-                        <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
-                        {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
-                      </span>
-                    )}
-                  </div>
-                  <p className="pt-1 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">Ver alojamiento</p>
+                  )}
+                  {acceptsPets(acc) && (
+                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                      Se admiten mascotas
+                    </li>
+                  )}
+                  {hasPool(acc) && (
+                    <li className="inline-flex min-h-7 items-center rounded-full border border-accent/20 bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                      Pileta
+                    </li>
+                  )}
+                </ul>
+                <p className="max-w-[58ch] text-base leading-relaxed text-muted-foreground">{acc.shortDescription}</p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-3 text-sm text-foreground">
+                  {acc.bedrooms !== undefined && (
+                    <span className="inline-flex items-center gap-2">
+                      <BedDouble className="h-4 w-4 text-accent" aria-hidden="true" />
+                      {acc.bedrooms} {acc.bedrooms === 1 ? 'dormitorio' : 'dormitorios'}
+                    </span>
+                  )}
+                  {acc.bathrooms !== undefined && (
+                    <span className="inline-flex items-center gap-2">
+                      <Bath className="h-4 w-4 text-accent" aria-hidden="true" />
+                      {acc.bathrooms} baño{acc.bathrooms > 1 ? 's' : ''}
+                    </span>
+                  )}
                 </div>
-              </Link>
+                <Link
+                  href={`/alojamientos/${acc.slug}`}
+                  className="group inline-block rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+                >
+                  <span className="pt-1 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">Ver alojamiento</span>
+                </Link>
+              </div>
             </article>
           ))}
         </div>

@@ -8,10 +8,10 @@ import AccommodationGallery from '@/components/accommodation-gallery';
 import AccommodationExperienceCard from '@/components/accommodation-experience-card';
 import BookingCtaLink from '@/components/booking-cta-link';
 import AccommodationPageTracker from '@/components/accommodation-page-tracker';
-import { accommodations, getAccommodationBySlug } from '@/lib/data/accommodations';
+import { accommodations, getAccommodationBySlug, getGoogleMapsUrl } from '@/lib/data/accommodations';
 import { getProducts } from '@/lib/data/products';
 import { getPromotions } from '@/lib/data/promotions';
-import { ArrowLeft, MapPin, Users, BedDouble, Bath, CheckCircle, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
+import { ArrowLeft, MapPin, Users, BedDouble, Bath, CheckCircle, Clock, ShieldCheck, ArrowRight, ExternalLink } from 'lucide-react';
 
 interface AccommodationPageProps {
   params: Promise<{ slug: string }>;
@@ -53,6 +53,7 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
   const accommodation = getAccommodationBySlug(slug);
   if (!accommodation) notFound();
 
+  const googleMapsUrl = getGoogleMapsUrl(accommodation);
   const others = accommodations.filter((a) => a.id !== accommodation.id);
   const [productsResult, promotionsResult] = await Promise.allSettled([
     getProducts(),
@@ -117,10 +118,16 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
           </Button>
         </div>
         <div className="absolute bottom-0 left-0 right-0 section-container pb-8 md:pb-10">
-          <div className="flex items-center gap-2 text-sm text-white/90 mb-3">
-            <MapPin className="h-4 w-4" />
+          <a
+            href={googleMapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mb-3 inline-flex items-center gap-2 rounded-md text-sm text-white/90 underline decoration-white/50 underline-offset-4 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
+          >
+            <MapPin className="h-4 w-4" aria-hidden="true" />
             {accommodation.location}
-          </div>
+            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
           <h1 className="max-w-[18ch] font-headline text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">{accommodation.name}</h1>
           <p className="mt-3 max-w-2xl text-base text-white/90 md:text-lg">{accommodation.tagline}</p>
           <WhatsAppCtaButton
@@ -187,8 +194,35 @@ export default async function AccommodationPage({ params }: AccommodationPagePro
             {/* Map */}
             <div>
               <h2 className="font-headline text-2xl font-bold text-foreground mb-4">Ubicación</h2>
-              <div className="rounded-2xl overflow-hidden h-64 md:h-80 bg-secondary/30">
-                <iframe src={accommodation.mapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title={`Mapa de ${accommodation.name}`} />
+              <div className="overflow-hidden rounded-2xl bg-secondary/30">
+                <div className="relative h-64 md:h-80">
+                  <iframe
+                    src={accommodation.mapUrl}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    title={`Mapa de ${accommodation.name}`}
+                    className="pointer-events-none"
+                  />
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Abrir la ubicación de ${accommodation.name} en Google Maps`}
+                    className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+                  />
+                </div>
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 px-4 text-sm font-semibold text-foreground underline decoration-accent/50 underline-offset-4 transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+                >
+                  Abrir en Google Maps
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                </a>
               </div>
             </div>
           </div>
