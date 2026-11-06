@@ -14,6 +14,7 @@ import {
   Home,
   KeyRound,
   LifeBuoy,
+  Mail,
   MapPin,
   MapPinned,
   MessageCircle,
@@ -21,6 +22,8 @@ import {
   Printer,
   ShieldCheck,
   ShoppingBag,
+  Sparkles,
+  Trees,
   Tv,
   Utensils,
   Wifi,
@@ -44,6 +47,8 @@ type GuideView =
   | 'compras'
   | 'gastronomia'
   | 'bodegas'
+  | 'artesanias'
+  | 'campings'
   | 'lugares'
   | 'excursiones';
 
@@ -66,6 +71,8 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
         'compras',
         'gastronomia',
         'bodegas',
+        'artesanias',
+        'campings',
         'lugares',
         'excursiones',
       ];
@@ -98,7 +105,6 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
       setCopiedKey(key);
       setTimeout(() => setCopiedKey(null), 2000);
     } catch {
-      // Fallback
       setCopiedKey(null);
     }
   };
@@ -134,15 +140,19 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             </div>
           </header>
 
-          {/* Acceso Rápido Wi-Fi y Llaves destacado */}
+          {/* Acceso Rápido Wi-Fi y Llaves */}
           <div className="my-3.5 flex items-center justify-between rounded-[16px] border border-[#E1E1E0] bg-white px-4 py-3 shadow-sm">
             <div className="flex items-center gap-3">
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#E5FBFC] text-[#2F6F73]">
                 <KeyRound className="h-4 w-4" />
               </span>
               <div>
-                <p className="text-xs font-bold text-[#262622]">Caja de llaves: <span className="font-mono text-sm text-[#2F6F73]">{privateDetails.keyBoxCode}</span></p>
-                <p className="text-[11px] text-[#676764]">Wi-Fi: <span className="font-mono font-semibold text-[#262622]">{privateDetails.wifiName}</span></p>
+                <p className="text-xs font-bold text-[#262622]">
+                  Caja de llaves: <span className="font-mono text-sm text-[#2F6F73]">{privateDetails.keyBoxCode}</span>
+                </p>
+                <p className="text-[11px] text-[#676764]">
+                  Wi-Fi: <span className="font-mono font-semibold text-[#262622]">{privateDetails.wifiName}</span>
+                </p>
               </div>
             </div>
             <button
@@ -154,20 +164,35 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             </button>
           </div>
 
-          {/* Grilla de 12 Mosaicos (Tiles) estilo tualojamiento demo */}
+          {/* Grilla de 15 Mosaicos (5 filas x 3 columnas) */}
           <nav aria-label="Secciones de la guía" className="grid grid-cols-3 gap-2.5">
             <MenuTile icon={Home} label="Bienvenida" onClick={() => navigateTo('inicio')} />
             <MenuTile icon={KeyRound} label="Check-in" onClick={() => navigateTo('checkin')} />
             <MenuTile icon={Wifi} label="WiFi" onClick={() => navigateTo('wifi')} />
+
             <MenuTile icon={Flame} label="Climatización" onClick={() => navigateTo('clima')} />
             <MenuTile icon={Tv} label="Smart TV" onClick={() => navigateTo('tv')} />
             <MenuTile icon={ShieldCheck} label="Reglas" onClick={() => navigateTo('reglas')} />
+
             <MenuTile icon={LifeBuoy} label="Útil y SOS" onClick={() => navigateTo('util')} isAlert />
             <MenuTile icon={ShoppingBag} label="Comercios" onClick={() => navigateTo('compras')} />
             <MenuTile icon={Utensils} label="Gastronomía" onClick={() => navigateTo('gastronomia')} />
+
             <MenuTile icon={Grape} label="Bodegas" onClick={() => navigateTo('bodegas')} />
+            <MenuTile icon={Sparkles} label="Artesanías" onClick={() => navigateTo('artesanias')} />
+            <MenuTile icon={Trees} label="Campings" onClick={() => navigateTo('campings')} />
+
             <MenuTile icon={MapPin} label="Lugares" onClick={() => navigateTo('lugares')} />
             <MenuTile icon={Compass} label="Excursiones" onClick={() => navigateTo('excursiones')} />
+            <a
+              href={altosDptoGuide.touristMapUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[14px] border border-[#2F6F73]/30 bg-white p-2 text-center transition active:scale-95 hover:border-[#2F6F73] hover:shadow-sm"
+            >
+              <MapPinned className="h-6 w-6 text-[#2F6F73]" />
+              <span className="text-[12px] font-semibold leading-tight text-[#262622]">Mapa Región</span>
+            </a>
           </nav>
 
           {/* Pie de página sutil con acceso a lámina QR */}
@@ -242,7 +267,9 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                   <div className="mt-3 rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-xs space-y-1.5">
                     <p className="text-[#676764]">Transferencia bancaria o efectivo:</p>
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-[#262622]">Alias: <span className="font-mono">{altosDptoGuide.payment.bankAlias}</span></span>
+                      <span className="font-bold text-[#262622]">
+                        Alias: <span className="font-mono">{altosDptoGuide.payment.bankAlias}</span>
+                      </span>
                       <button
                         type="button"
                         onClick={() => copyText(altosDptoGuide.payment.bankAlias, 'alias')}
@@ -266,9 +293,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                 </SectionCard>
 
                 <SectionCard title="Acceso autónomo con caja de llaves">
-                  <p className="text-xs text-[#676764]">
-                    {altosDptoGuide.arrival.keyBoxLocation}
-                  </p>
+                  <p className="text-xs text-[#676764]">{altosDptoGuide.arrival.keyBoxLocation}</p>
                   <div className="mt-3 flex items-center justify-between rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3.5">
                     <div>
                       <p className="text-[11px] font-bold uppercase tracking-wider text-[#676764]">Código de caja</p>
@@ -323,7 +348,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     <div className="flex items-center justify-between rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3.5">
                       <div>
                         <p className="text-[10px] font-bold uppercase tracking-wider text-[#676764]">Contraseña</p>
-                        <p className="font-mono text-base font-bold text-[#2F6F73]">{privateDetails.wifiPassword}</p>
+                        <p className="font-mono text-base font-bold text-[#262622]">{privateDetails.wifiPassword}</p>
                       </div>
                       <button
                         type="button"
@@ -472,6 +497,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
             {currentView === 'compras' && (
               <div className="space-y-3">
+                <NoticeBox text="Comercios de alimentos y abastecimiento de cercanía en Villa Unión." />
                 {altosDptoGuide.usefulServices
                   .filter((s) => s.category === 'Supermercado')
                   .map((item) => (
@@ -489,7 +515,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
             {currentView === 'gastronomia' && (
               <div className="space-y-3">
-                <NoticeBox text="Horarios y reservas sujetos a disponibilidad de temporada. Se recomienda comunicarse previamente." />
+                <NoticeBox text="Opciones gastronómicas de Villa Unión y alrededores. Confirmar horarios y reservas por teléfono." />
                 {altosDptoGuide.recommendations
                   .filter((r) => r.category === 'Gastronomía')
                   .map((item) => (
@@ -508,7 +534,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
             {currentView === 'bodegas' && (
               <div className="space-y-3">
-                <NoticeBox text="Coordinar visitas guiadas y degustaciones con anticipación." />
+                <NoticeBox text="Ruta de bodegas y viñedos de Felipe Varela. Recomendamos consultar y coordinar visitas guiadas previamente." />
                 {altosDptoGuide.recommendations
                   .filter((r) => r.category === 'Bodegas')
                   .map((item) => (
@@ -518,6 +544,28 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                       description={item.description}
                       address={item.address}
                       reservationPhone={item.reservationPhone}
+                      phone={item.phone}
+                      badge={item.badge}
+                      mapsUrl={item.href}
+                      email={item.email}
+                      web={item.web}
+                    />
+                  ))}
+              </div>
+            )}
+
+            {currentView === 'artesanias' && (
+              <div className="space-y-3">
+                <NoticeBox text="Talleres artesanales, tejidos en telar, dulces caseros, vinos y productos regionales del Bermejo." />
+                {altosDptoGuide.recommendations
+                  .filter((r) => r.category === 'Artesanías')
+                  .map((item) => (
+                    <ItemCard
+                      key={item.label}
+                      title={item.label}
+                      description={item.description}
+                      address={item.address}
+                      phone={item.phone}
                       badge={item.badge}
                       mapsUrl={item.href}
                     />
@@ -525,8 +573,29 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
               </div>
             )}
 
+            {currentView === 'campings' && (
+              <div className="space-y-3">
+                <NoticeBox text="Espacios de acampe, sombra, piletas y recreación familiar en Villa Unión y Los Palacios." />
+                {altosDptoGuide.recommendations
+                  .filter((r) => r.category === 'Campings')
+                  .map((item) => (
+                    <ItemCard
+                      key={item.label}
+                      title={item.label}
+                      description={item.description}
+                      address={item.address}
+                      phone={item.phone}
+                      badge={item.badge}
+                      mapsUrl={item.href}
+                      email={item.email}
+                    />
+                  ))}
+              </div>
+            )}
+
             {currentView === 'lugares' && (
               <div className="space-y-3">
+                <NoticeBox text="Pueblos y atractivos naturales del Valle del Bermejo para recorrer en excursión o por cuenta propia." />
                 {altosDptoGuide.recommendations
                   .filter((r) => r.category === 'Localidades')
                   .map((item) => (
@@ -543,6 +612,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
             {currentView === 'excursiones' && (
               <div className="space-y-3">
+                <NoticeBox text="Agencias de viajes habilitadas (EVT) y prestadores autorizados para excursiones al Parque Talampaya y la región." />
                 {altosDptoGuide.recommendations
                   .filter((r) => r.category === 'Excursiones')
                   .map((item) => (
@@ -550,9 +620,12 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                       key={item.label}
                       title={item.label}
                       description={item.description}
+                      address={item.address}
                       phone={item.phone}
                       badge={item.badge}
-                      externalUrl={item.href}
+                      mapsUrl={item.href}
+                      email={item.email}
+                      web={item.web}
                     />
                   ))}
 
@@ -655,6 +728,8 @@ function ItemCard({
   address,
   phone,
   reservationPhone,
+  email,
+  web,
   badge,
   mapsUrl,
   externalUrl,
@@ -664,6 +739,8 @@ function ItemCard({
   address?: string;
   phone?: string;
   reservationPhone?: string;
+  email?: string;
+  web?: string;
   badge?: string;
   mapsUrl?: string;
   externalUrl?: string;
@@ -706,6 +783,28 @@ function ItemCard({
           </a>
         )}
 
+        {email && (
+          <a
+            href={`mailto:${email}`}
+            className="inline-flex items-center gap-1 rounded-lg border border-[#D7D3CB] bg-[#F4F4F4] px-2.5 py-1 text-[11px] font-semibold text-[#262622] hover:bg-slate-100"
+          >
+            <Mail className="h-3 w-3 text-[#2F6F73]" />
+            Email
+          </a>
+        )}
+
+        {web && (
+          <a
+            href={web.startsWith('http') ? web : `https://${web}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 rounded-lg border border-[#D7D3CB] bg-[#F4F4F4] px-2.5 py-1 text-[11px] font-semibold text-[#262622] hover:bg-slate-100"
+          >
+            Web
+            <ExternalLink className="h-3 w-3 text-[#676764]" />
+          </a>
+        )}
+
         {externalUrl && (
           <a
             href={externalUrl}
@@ -713,7 +812,7 @@ function ItemCard({
             rel="noreferrer"
             className="inline-flex items-center gap-1 rounded-lg bg-[#2F6F73] px-3 py-1 text-[11px] font-bold text-white hover:bg-[#255B5E]"
           >
-            Consultar experiencia
+            Ver más
             <ExternalLink className="h-3 w-3" />
           </a>
         )}
@@ -744,10 +843,14 @@ function getViewTitle(view: GuideView): string {
       return 'Gastronomía';
     case 'bodegas':
       return 'Bodegas y Sabores';
+    case 'artesanias':
+      return 'Artesanías y Regionales';
+    case 'campings':
+      return 'Campings y Recreación';
     case 'lugares':
       return 'Lugares para descubrir';
     case 'excursiones':
-      return 'Excursiones y Transfers';
+      return 'Agencias y Excursiones';
     default:
       return 'Guía';
   }
