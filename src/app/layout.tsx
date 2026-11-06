@@ -2,8 +2,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import Header from '@/components/layout/header';
-import Footer from '@/components/layout/footer';
+import SiteLayoutWrapper from '@/components/layout/site-layout-wrapper';
 import { ThemeProvider } from '@/components/theme-provider';
 import { RecaptchaProvider } from './recaptcha-provider';
 import Script from 'next/script';
@@ -151,11 +150,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
           <RecaptchaProvider>
-            <Header />
-            <main className="flex-grow pt-20 lg:pt-24">
+            <SiteLayoutWrapper>
               {children}
-            </main>
-            <Footer />
+            </SiteLayoutWrapper>
             <Toaster />
           </RecaptchaProvider>
         </ThemeProvider>

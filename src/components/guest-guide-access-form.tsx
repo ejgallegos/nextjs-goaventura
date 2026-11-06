@@ -35,35 +35,42 @@ export default function GuestGuideAccessForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-      <label htmlFor="guest-guide-pin" className="block text-sm font-semibold text-slate-900">
-        PIN de la estadía
-      </label>
-      <input
-        id="guest-guide-pin"
-        name="pin"
-        value={pin}
-        onChange={(event) => setPin(event.target.value)}
-        autoComplete="one-time-code"
-        inputMode="numeric"
-        minLength={4}
-        maxLength={64}
-        required
-        className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-lg tracking-[0.24em] text-slate-950 shadow-sm transition focus:border-[#3E5C76] focus:outline-none focus:ring-4 focus:ring-[#C9DCE8]"
-        aria-describedby={error ? 'guest-guide-pin-error' : undefined}
-      />
+    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+      <div>
+        <label htmlFor="guest-guide-pin" className="block text-xs font-bold uppercase tracking-wider text-[#676764]">
+          PIN de acceso
+        </label>
+        <input
+          id="guest-guide-pin"
+          name="pin"
+          value={pin}
+          onChange={(event) => setPin(event.target.value)}
+          placeholder="Ej: 3417"
+          autoComplete="one-time-code"
+          inputMode="numeric"
+          minLength={4}
+          maxLength={64}
+          required
+          className="mt-1.5 h-12 w-full rounded-xl border border-[#D7D3CB] bg-[#F4F4F4] px-4 text-center font-mono text-xl font-bold tracking-[0.2em] text-[#262622] transition focus:border-[#2F6F73] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2F6F73]/20"
+          aria-describedby={error ? 'guest-guide-pin-error' : undefined}
+        />
+      </div>
       {error ? (
-        <p id="guest-guide-pin-error" role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-800">
+        <p id="guest-guide-pin-error" role="alert" className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-xs font-medium text-red-800">
           {error}
         </p>
       ) : null}
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#1D2D44] px-5 py-3 font-semibold text-white shadow-lg shadow-[#1D2D44]/20 transition hover:bg-[#3E5C76] disabled:cursor-not-allowed disabled:opacity-70"
+        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#2F6F73] px-5 font-bold text-white shadow-sm transition hover:bg-[#255B5E] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-[#2F6F73] focus:ring-offset-2"
       >
-        {isSubmitting ? <LoaderCircle className="h-5 w-5 animate-spin" aria-hidden="true" /> : <KeyRound className="h-5 w-5" aria-hidden="true" />}
-        {isSubmitting ? 'Validando acceso…' : 'Abrir mi guía'}
+        {isSubmitting ? (
+          <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+        ) : (
+          <KeyRound className="h-4 w-4" aria-hidden="true" />
+        )}
+        <span>{isSubmitting ? 'Validando…' : 'Abrir mi guía'}</span>
       </button>
     </form>
   );
