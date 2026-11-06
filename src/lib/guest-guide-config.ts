@@ -26,18 +26,35 @@ function getRequiredEnvironment(name: string): string | null {
   return value ? value : null;
 }
 
+function normalizePinHash(raw: string): string {
+  const trimmed = raw.trim().replace(/^['"]|['"]$/g, '');
+  if (trimmed.startsWith('$2')) {
+    return trimmed;
+  }
+  try {
+    const decoded = Buffer.from(trimmed, 'base64').toString('utf8');
+    if (decoded.startsWith('$2')) {
+      return decoded;
+    }
+  } catch {
+    // Fallback to raw value
+  }
+  return trimmed;
+}
+
 function getRuntimeConfig(): GuestGuideRuntimeConfig | null {
-  const pinHash = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_PIN_HASH');
+  const rawPinHash = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_PIN_HASH');
   const expiresAt = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_PIN_EXPIRES_AT');
   const sessionSecret = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_SESSION_SECRET');
   const wifiName = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_WIFI_NAME');
   const wifiPassword = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_WIFI_PASSWORD');
   const keyBoxCode = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_KEYBOX_CODE');
 
-  if (!pinHash || !expiresAt || !sessionSecret || !wifiName || !wifiPassword || !keyBoxCode) {
+  if (!rawPinHash || !expiresAt || !sessionSecret || !wifiName || !wifiPassword || !keyBoxCode) {
     return null;
   }
 
+  const pinHash = normalizePinHash(rawPinHash);
   const pinExpiresAt = new Date(expiresAt);
   if (Number.isNaN(pinExpiresAt.getTime()) || sessionSecret.length < 32) {
     return null;
