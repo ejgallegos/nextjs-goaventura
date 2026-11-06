@@ -551,15 +551,31 @@ export const altosDptoGuide: PropertyGuestGuide = {
     },
 
     /* ==========================================================
-       AGENCIAS DE VIAJE Y EXCURSIONES (Fuente: Servicios Turísticos)
+       AGENCIAS DE VIAJE Y EXCURSIONES (Fuente: goaventura.com.ar + Servicios Turísticos)
        ========================================================== */
     {
       category: 'Excursiones',
-      label: 'Go Aventura',
-      description: 'Excursiones guiadas en 4x4: Talampaya (Cañón, Arco Iris, Ciudad Perdida), Cañón del Triásico, Laguna Brava y transfers privados.',
+      label: 'Go Aventura · Excursiones en 4x4',
+      description: 'Agencia de viajes habilitada (Leg. 20019). Especialistas en turismo de naturaleza y circuitos de aventura en 4x4 con guías profesionales: Reserva Provincial Laguna Brava a 4.300 msnm (fauna autóctona, flamencos y refugios históricos), Parque Nacional Talampaya (Cañón de Talampaya, Arco Iris y Ciudad Perdida), Cañón del Triásico en Banda Florida y Cuesta de Miranda.',
+      address: 'San Martín s/n, Villa Unión, La Rioja',
       phone: '5493804509885',
-      badge: 'Exclusivo huéspedes',
-      href: 'https://goaventura.com.ar/viajes',
+      reservationPhone: '+54 9 380 450-9885',
+      email: 'info@goaventura.com.ar',
+      web: 'https://goaventura.com.ar/viajes',
+      badge: 'Recomendado',
+      href: 'https://www.google.com/maps/search/?api=1&query=Go+Aventura%2C+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Excursiones',
+      label: 'Go Aventura · Transfers Privados',
+      description: 'Servicio de traslados seguros y confiables en el Valle del Bermejo: traslados in/out desde y hacia aeropuertos de La Rioja, San Juan y Catamarca, transfer directo al Parque Nacional Talampaya y transporte exclusivo para grupos y huéspedes.',
+      address: 'San Martín s/n, Villa Unión, La Rioja',
+      phone: '5493804509885',
+      reservationPhone: '+54 9 380 450-9885',
+      email: 'info@goaventura.com.ar',
+      web: 'https://goaventura.com.ar/viajes?filter=Transfer',
+      badge: 'Recomendado',
+      href: 'https://www.google.com/maps/search/?api=1&query=Go+Aventura%2C+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
     {
       category: 'Excursiones',
