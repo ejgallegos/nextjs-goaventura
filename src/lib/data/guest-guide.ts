@@ -230,6 +230,24 @@ export const altosDptoGuide: PropertyGuestGuide = {
       badge: 'Farmacia céntrica',
       href: 'https://www.google.com/maps/search/?api=1&query=Farmanor%2C+Nicol%C3%A1s+D%C3%A1vila%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
+    {
+      category: 'Salud',
+      label: 'Farmacia Emanuel',
+      description: 'Farmacia y perfumería en Villa Unión. Venta de medicamentos recetados y de venta libre, primeros auxilios, obras sociales y delivery.',
+      address: 'Hipólito Yrigoyen (esq. Av. Perón / zona céntrica), Villa Unión',
+      phone: '03825-470383',
+      badge: 'Farmacia y Perfumería',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+Emanuel%2C+Hip%C3%B3lito+Yrigoyen%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Salud',
+      label: 'Farmacia San Luis',
+      description: 'Dispensación de medicamentos, recetas, mutuales, artículos de cuidado personal y primeros auxilios en Villa Unión.',
+      address: 'Zona centro, Villa Unión, La Rioja',
+      phone: '03825-477702',
+      badge: 'Farmacia',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+San+Luis%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
 
     /* ==========================================================
        BOMBEROS
@@ -375,6 +393,24 @@ export const altosDptoGuide: PropertyGuestGuide = {
       address: 'Av. Nicolás Dávila (frente a Plaza San Martín)',
       badge: 'Farmacia céntrica',
       href: 'https://www.google.com/maps/search/?api=1&query=Farmanor%2C+Nicol%C3%A1s+D%C3%A1vila%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'Farmacia Emanuel',
+      description: 'Farmacia y perfumería céntrica. Medicamentos, primeros auxilios, artículos para bebés, perfumería y delivery en Villa Unión.',
+      address: 'Hipólito Yrigoyen (esq. Av. Perón), Villa Unión',
+      phone: '03825-470383',
+      badge: 'Farmacia y Perfumería',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+Emanuel%2C+Hip%C3%B3lito+Yrigoyen%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'Farmacia San Luis',
+      description: 'Medicamentos, recetas, atención de obras sociales, perfumería y atención farmacéutica en Villa Unión.',
+      address: 'Zona centro, Villa Unión, La Rioja',
+      phone: '03825-477702',
+      badge: 'Farmacia',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+San+Luis%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
     {
       category: 'Comercios',

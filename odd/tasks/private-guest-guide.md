@@ -32,6 +32,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T9 | S4-S5 | inline | completed | d9793c4 | Quitar Farmacia Talampaya, Farmacias de turno y Comisaría; corregir dirección de Oficina de Turismo a Nicolás Dávila Sur.
 - T10 | S4-S5 | inline | completed | fa9d0ff | Remover indicación de 24 horas a Supermercado Valeriana en Comercios.
 - T11 | S4-S5 | inline | completed | e0f3d39 | Renombrar sección Lugares a Atractivos y cargar catálogo curado de 20 atractivos turísticos con mapas y coordenadas.
+- T12 | S4-S5 | inline | completed | pending | Incorporar Farmacia Emanuel y Farmacia San Luis con coordenadas de Google Maps y teléfono de contacto.
 
 ## Log
 
@@ -51,3 +52,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L14 (2026-11-09): User request: "quita estas farmacias, Farmacia Talampaya y Farmacias de turno en Villa Union; quita tambien Comisaria de Villa Union; Corrige la dirección de la Oficina de Turismo, es Nicolas Dávila Sur". Removed Farmacia Talampaya, Farmacias de turno and Comisaría cards; updated Oficina de Informes Turísticos Municipal address and Google Maps query to Nicolás Dávila Sur (commit d9793c4).
 - L15 (2026-11-09): User request: "A supermercado Valeriana quitale el 24 horas abierto.". Removed 24hs label and description from Supermercado Valeriana; updated badge to "Almacén y Carnes" (commit fa9d0ff).
 - L16 (2026-11-09): User request: "bien! ahora vamos a revisar estos documentos y registrar lo que sea necesario, sobre todo en la seccion 'Lugares' que quiero que lo cambier por 'Atractivos'". Renamed view, tile, and headings from "Lugares" to "Atractivos" (maintaining backward-compatible hash routing). Curated 20 tourist attractions from primary sources (official Felipe Varela guide, folleto 2025, and geographical points CSV) with badges, descriptions, locations, and precise Google Maps links. Verified with 38 test assertions passing, 0 TypeScript errors, 0 ESLint errors, and full production build succeeded.
+- L17 (2026-11-09): User request: "faltan dos farmacias, identificalas en el mapa y carga la información. Son: Farmacia Emanuel y Farmacia San Luis". Added Farmacia Emanuel (Hipólito Yrigoyen esq. Av. Perón, tel. 03825-470383) and Farmacia San Luis (Zona centro, tel. 03825-477702) under Salud and Comercios with verified direct Google Maps search URLs. 44 assertions passed, 0 type errors, 0 lint errors.

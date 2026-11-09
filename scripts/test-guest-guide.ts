@@ -194,6 +194,18 @@ async function runTests() {
   const allHaveMaps = atractivos.every((r) => r.href && r.href.includes('google.com/maps'));
   assert(allHaveMaps, 'Todos los atractivos cuentan con enlace a Google Maps');
 
+  // Test 10: Pharmacies in usefulServices
+  const farmacias = altosDptoGuide.usefulServices.filter((s) => s.category === 'Salud');
+  const emanuel = farmacias.find((s) => s.label.toLowerCase().includes('emanuel'));
+  assert(Boolean(emanuel), 'Farmacia Emanuel presente en servicios de salud');
+  assert(Boolean(emanuel?.href?.includes('google.com/maps')), 'Farmacia Emanuel tiene enlace a Google Maps');
+  assert(Boolean(emanuel?.phone), 'Farmacia Emanuel tiene teléfono de contacto');
+
+  const sanLuis = farmacias.find((s) => s.label.toLowerCase().includes('san luis'));
+  assert(Boolean(sanLuis), 'Farmacia San Luis presente en servicios de salud');
+  assert(Boolean(sanLuis?.href?.includes('google.com/maps')), 'Farmacia San Luis tiene enlace a Google Maps');
+  assert(Boolean(sanLuis?.phone), 'Farmacia San Luis tiene teléfono de contacto');
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);
