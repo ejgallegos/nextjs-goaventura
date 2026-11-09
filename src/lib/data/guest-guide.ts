@@ -37,8 +37,10 @@ export interface GuideUsefulService {
   description: string;
   address?: string;
   phone?: string;
+  reservationPhone?: string;
+  badge?: string;
   href: string;
-  category: 'Salud' | 'Supermercado' | 'Seguridad' | 'Servicios';
+  category: 'Salud' | 'Supermercado' | 'Seguridad' | 'Servicios' | 'Comercios';
 }
 
 export type RecommendationCategory =
@@ -217,17 +219,83 @@ export const altosDptoGuide: PropertyGuestGuide = {
     {
       category: 'Supermercado',
       label: 'Supermercado El Negro',
-      description: 'Alimentos, bebidas, panificados frescos y artículos de primera necesidad.',
-      address: 'Villa Unión centro',
+      description: 'El autoservicio de referencia más completo de Villa Unión. Cuenta con carnicería, verdulería, fiambrería, almacén y panadería propia con productos frescos.',
+      address: 'Ruta Nacional N° 76, Villa Unión',
+      badge: 'Completo · Panadería',
       href: 'https://www.google.com/maps/search/?api=1&query=Supermercado+El+Negro%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
     {
       category: 'Supermercado',
+      label: 'Supermercado Valeriana (24 hs)',
+      description: 'Tradicional comercio de proximidad con atención las 24 horas todos los días. Almacén completo, fiambrería, carnes, bebidas frías y artículos de primera necesidad a toda hora.',
+      address: 'Zona Céntrica, Villa Unión',
+      badge: 'Abierto 24 hs',
+      href: 'https://www.google.com/maps/search/?api=1&query=Supermercado+Valeriana%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Supermercado',
+      label: 'Supermercado Centro',
+      description: 'Autoservicio céntrico ideal para compras cotidianas. Lácteos, bebidas, comestibles, artículos de limpieza y abastecimiento diario.',
+      address: 'Nicolás Dávila N° 88, Villa Unión',
+      badge: 'Centro',
+      href: 'https://www.google.com/maps/search/?api=1&query=Supermercado+Centro%2C+Nicol%C3%A1s+D%C3%A1vila+88%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Supermercado',
       label: 'Valle del Bermejo Autoservicio',
-      description: 'Supermercado, cafetería y abastecimiento sobre acceso sur.',
+      description: 'Supermercado, cafetería y abastecimiento sobre acceso sur. Muy conveniente para abastecerse antes o después de visitar el Parque Nacional Talampaya.',
       address: 'Ruta Nacional N° 76 – Acceso Sur',
       phone: '3825 479700',
+      badge: 'Acceso Sur',
       href: 'https://www.google.com/maps/search/?api=1&query=Valle+del+Bermejo+Autoservicio%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'Polirubro Santa Bárbara',
+      description: 'Polirubro y autoservicio sobre el acceso de ruta. Variedad en bebidas frías, hielo, galletas, snacks, artículos de limpieza y almacén con horario extendido.',
+      address: 'Ruta Nacional N° 76 (cerca del ingreso principal)',
+      badge: 'Horario extendido',
+      href: 'https://www.google.com/maps/search/?api=1&query=Polirubro+Santa+B%C3%A1rbara%2C+Ruta+76%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'Farmanor XI · Farmacia y Perfumería',
+      description: 'Farmacia de cadena frente a la plaza céntrica con horario extendido. Medicamentos, primeros auxilios, perfumería y artículos de cuidado personal.',
+      address: 'Av. Nicolás Dávila (frente a Plaza San Martín)',
+      badge: 'Farmacia céntrica',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmanor%2C+Nicol%C3%A1s+D%C3%A1vila%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'Farmacia Talampaya',
+      description: 'Farmacia tradicional del centro de Villa Unión. Medicamentos bajo receta y de venta libre, productos solares, analgésicos y cuidado personal.',
+      address: 'San Martín esq. Hipólito Yrigoyen',
+      badge: 'Farmacia',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+Talampaya%2C+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'YPF Servicompras (24 horas)',
+      description: 'Tienda de conveniencia abierta las 24 horas y combustible sobre la ruta. Bebidas frías, hielo, agua caliente para termos, cafetería, alfajores y minutas.',
+      address: 'Ruta Nacional N° 76, Villa Unión',
+      badge: 'Combustible y 24 hs',
+      href: 'https://www.google.com/maps/search/?api=1&query=YPF%2C+Ruta+Nacional+76%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'Estación de Servicio Gulf · Minimarket',
+      description: 'Estación de servicio con tienda de conveniencia, confitería, café, bebidas y artículos para el viajero sobre la ruta nacional.',
+      address: 'Ruta Nacional N° 76, Villa Unión',
+      badge: 'Combustible y Parador',
+      href: 'https://www.google.com/maps/search/?api=1&query=Gulf%2C+Ruta+Nacional+76%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Comercios',
+      label: 'Bebidas y Almacén Quilpe',
+      description: 'Distribución y venta directa de bebidas, gaseosas, aguas minerales, vinos regionales y productos de almacén.',
+      address: 'Calle Ing. Lorenz, Villa Unión',
+      badge: 'Bebidas',
+      href: 'https://www.google.com/maps/search/?api=1&query=Quilpe%2C+Ingeniero+Lorenz%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
     {
       category: 'Seguridad',

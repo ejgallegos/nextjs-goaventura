@@ -497,9 +497,9 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
             {currentView === 'compras' && (
               <div className="space-y-3">
-                <NoticeBox text="Comercios de alimentos y abastecimiento de cercanía en Villa Unión." />
+                <NoticeBox text="Supermercados, autoservicios, farmacias y comercios esenciales para abastecerte en Villa Unión." />
                 {altosDptoGuide.usefulServices
-                  .filter((s) => s.category === 'Supermercado')
+                  .filter((s) => s.category === 'Supermercado' || s.category === 'Comercios')
                   .map((item) => (
                     <ItemCard
                       key={item.label}
@@ -507,6 +507,8 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                       description={item.description}
                       address={item.address}
                       phone={item.phone}
+                      reservationPhone={item.reservationPhone}
+                      badge={item.badge}
                       mapsUrl={item.href}
                     />
                   ))}
