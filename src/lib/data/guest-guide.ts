@@ -40,7 +40,15 @@ export interface GuideUsefulService {
   reservationPhone?: string;
   badge?: string;
   href: string;
-  category: 'Salud' | 'Supermercado' | 'Seguridad' | 'Servicios' | 'Comercios';
+  category:
+    | 'Salud'
+    | 'Supermercado'
+    | 'Seguridad'
+    | 'Servicios'
+    | 'Comercios'
+    | 'Bancos'
+    | 'Iglesias'
+    | 'Combustible';
 }
 
 export type RecommendationCategory =
@@ -201,21 +209,147 @@ export const altosDptoGuide: PropertyGuestGuide = {
     ],
   },
   usefulServices: [
+    /* ==========================================================
+       SALUD Y FARMACIAS
+       ========================================================== */
     {
       category: 'Salud',
-      label: 'Hospital Dr. Eduardo Neira',
-      description: 'Atención de salud y emergencias médicas en Villa Unión.',
-      address: 'Villa Unión, La Rioja',
+      label: 'Hospital Dr. Eduardo Neira (Guardia 24 hs)',
+      description: 'Hospital zonal y centro asistencial cabecera del Valle del Bermejo. Guardia médica permanente de urgencias las 24 horas y base del servicio de ambulancia 107.',
+      address: 'Hipólito Yrigoyen s/n, Villa Unión, La Rioja',
       phone: '107',
+      badge: 'Guardia 24 hs',
       href: 'https://www.google.com/maps/search/?api=1&query=Hospital+Dr.+Eduardo+Neira%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
     {
       category: 'Salud',
+      label: 'Farmanor XI · Farmacia y Perfumería',
+      description: 'Farmacia céntrica con horario extendido frente a la plaza principal. Medicamentos, recetas, primeros auxilios y artículos de cuidado personal.',
+      address: 'Av. Nicolás Dávila (frente a Plaza San Martín), Villa Unión',
+      badge: 'Farmacia céntrica',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmanor%2C+Nicol%C3%A1s+D%C3%A1vila%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Salud',
+      label: 'Farmacia Talampaya',
+      description: 'Farmacia tradicional del centro de Villa Unión. Medicamentos bajo receta y venta libre, analgésicos, protectores solares y productos de higiene.',
+      address: 'San Martín esq. Hipólito Yrigoyen, Villa Unión',
+      badge: 'Farmacia',
+      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+Talampaya%2C+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Salud',
       label: 'Farmacias de turno en Villa Unión',
-      description: 'Consultá ubicación y turnos vigentes antes de trasladarte.',
+      description: 'Consultá ubicación y turnos vigentes de farmacias de guardia antes de trasladarte.',
       address: 'Centro comercial Villa Unión',
       href: 'https://www.google.com/maps/search/?api=1&query=farmacia%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
+
+    /* ==========================================================
+       SEGURIDAD Y BOMBEROS
+       ========================================================== */
+    {
+      category: 'Seguridad',
+      label: 'Cuartel de Bomberos Voluntarios',
+      description: 'Cuerpo activo de bomberos voluntarios para asistencia ante siniestros, rescates urbanos, apoyo en rutas y emergencias en todo el departamento.',
+      address: 'Villa Unión, La Rioja',
+      phone: '100',
+      badge: 'Emergencias 100',
+      href: 'https://www.google.com/maps/search/?api=1&query=Bomberos+Voluntarios%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Seguridad',
+      label: 'Comisaría Villa Unión (Policía de la Provincia)',
+      description: 'Destacamento policial departamental y guardia de seguridad ciudadana del Valle del Bermejo.',
+      address: 'Joaquín V. González s/n, Villa Unión, La Rioja',
+      phone: '101',
+      badge: 'Policía 101',
+      href: 'https://www.google.com/maps/search/?api=1&query=Comisar%C3%ADa+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+
+    /* ==========================================================
+       BANCOS Y CAJEROS AUTOMÁTICOS
+       ========================================================== */
+    {
+      category: 'Bancos',
+      label: 'Banco de la Nación Argentina (BNA)',
+      description: 'Sucursal bancaria oficial con cajeros automáticos Red Link activos las 24 horas para extracción de dinero en efectivo y operaciones de débito/crédito.',
+      address: 'Joaquín V. González N° 1 (esq. Plaza San Martín), Villa Unión',
+      badge: 'Cajeros Link 24 hs',
+      href: 'https://www.google.com/maps/search/?api=1&query=Banco+de+la+Naci%C3%B3n+Argentina%2C+Joaqu%C3%ADn+V.+Gonz%C3%A1lez%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Bancos',
+      label: 'Banco Rioja · Cajeros Link',
+      description: 'Sucursal bancaria provincial con cajeros automáticos Red Link en calle San Martín y punto de cajero adicional en la Terminal de Ómnibus.',
+      address: 'San Martín esq. Nicolás Dávila / Terminal de Ómnibus',
+      badge: 'Cajeros Link',
+      href: 'https://www.google.com/maps/search/?api=1&query=Banco+Rioja%2C+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+
+    /* ==========================================================
+       ESTACIONES DE SERVICIO Y COMBUSTIBLE
+       ========================================================== */
+    {
+      category: 'Combustible',
+      label: 'YPF Valle del Bermejo (Servicompras 24 hs)',
+      description: 'Estación oficial YPF sobre la traza de la Ruta Nacional 76. Combustibles Infinia/Ultra, tienda Servicompras 24 hs, cafetería, agua caliente para termos y hielo.',
+      address: 'Ruta Nacional N° 76, Villa Unión, La Rioja',
+      badge: 'Combustible y 24 hs',
+      href: 'https://www.google.com/maps/search/?api=1&query=YPF%2C+Ruta+Nacional+76%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Combustible',
+      label: 'Estación de Servicio Gulf · Minimarket',
+      description: 'Estación de servicio sobre la ruta nacional con minimarket, confitería, café, bebidas y artículos para el viajero.',
+      address: 'Ruta Nacional N° 76, Villa Unión, La Rioja',
+      badge: 'Combustible y Parador',
+      href: 'https://www.google.com/maps/search/?api=1&query=Gulf%2C+Ruta+Nacional+76%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+
+    /* ==========================================================
+       IGLESIAS Y PATRIMONIO HISTÓRICO
+       ========================================================== */
+    {
+      category: 'Iglesias',
+      label: 'Parroquia Nuestra Señora del Rosario',
+      description: 'Templo histórico y principal iglesia de Villa Unión, construido en 1895. En su interior se destaca un tradicional y valioso Vía Crucis tallado en algarrobo blanco por artesanos locales.',
+      address: 'Hipólito Yrigoyen s/n (frente a Plaza San Martín), Villa Unión',
+      badge: 'Templo Histórico',
+      href: 'https://www.google.com/maps/search/?api=1&query=Parroquia+Nuestra+Se%C3%B1ora+del+Rosario%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+
+    /* ==========================================================
+       PLAZA PRINCIPAL Y SERVICIOS CÍVICOS
+       ========================================================== */
+    {
+      category: 'Servicios',
+      label: 'Plaza Principal San Martín',
+      description: 'Corazón urbano, cívico y social de Villa Unión. Espacio arbolado rodeado por la parroquia histórica, bancos, confiterías, restaurantes y ferias de artesanos.',
+      address: 'Centro urbano de Villa Unión, La Rioja',
+      badge: 'Plaza Principal',
+      href: 'https://www.google.com/maps/search/?api=1&query=Plaza+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Servicios',
+      label: 'Oficina de Informes Turísticos Municipal',
+      description: 'Oficina oficial de la Secretaría de Turismo departamental. Información sobre el Parque Nacional Talampaya, estado de rutas, clima y atractivos del Valle del Bermejo.',
+      address: 'Plaza San Martín, Villa Unión, La Rioja',
+      badge: 'Informes Oficiales',
+      href: 'https://www.google.com/maps/search/?api=1&query=Secretaria+de+Turismo%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Servicios',
+      label: 'Terminal de Ómnibus Villa Unión',
+      description: 'Conexión de transporte de pasajeros de media y larga distancia hacia La Rioja capital, San Juan y provincias vecinas. Cuenta con parador y cajero de Banco Rioja.',
+      address: 'Av. Nicolás Dávila Sur s/n, Villa Unión, La Rioja',
+      badge: 'Transporte',
+      href: 'https://www.google.com/maps/search/?api=1&query=Terminal+de+Omnibus%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+
+    /* ==========================================================
+       SUPERMERCADOS Y COMERCIOS (Sección Comercios)
+       ========================================================== */
     {
       category: 'Supermercado',
       label: 'Supermercado El Negro',

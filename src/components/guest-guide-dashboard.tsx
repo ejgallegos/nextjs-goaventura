@@ -438,7 +438,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             )}
 
             {currentView === 'util' && (
-              <>
+              <div className="space-y-4">
                 <SectionCard title="Botiquín y primeros auxilios">
                   <p className="text-xs leading-relaxed text-[#262622]">
                     {altosDptoGuide.emergencies.firstAidKitLocation}
@@ -449,28 +449,28 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                   <div className="grid grid-cols-2 gap-2 mt-1">
                     <a
                       href="tel:107"
-                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white"
+                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white active:scale-[0.98]"
                     >
                       <span className="text-lg font-black text-[#2F6F73]">107</span>
                       <span className="text-[11px] font-semibold text-[#676764]">Hospital Neira</span>
                     </a>
                     <a
                       href="tel:101"
-                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white"
+                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white active:scale-[0.98]"
                     >
                       <span className="text-lg font-black text-[#2F6F73]">101</span>
                       <span className="text-[11px] font-semibold text-[#676764]">Policía</span>
                     </a>
                     <a
                       href="tel:100"
-                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white"
+                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white active:scale-[0.98]"
                     >
                       <span className="text-lg font-black text-[#2F6F73]">100</span>
                       <span className="text-[11px] font-semibold text-[#676764]">Bomberos</span>
                     </a>
                     <a
                       href={`tel:${altosDptoGuide.contactPhone}`}
-                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white"
+                      className="flex flex-col items-center justify-center rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-center transition hover:bg-white active:scale-[0.98]"
                     >
                       <span className="text-xs font-black text-[#2F6F73]">Anfitrión</span>
                       <span className="text-[11px] font-semibold text-[#676764]">Llamada directa</span>
@@ -478,21 +478,126 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                   </div>
                 </SectionCard>
 
-                <SectionCard title="Farmacias">
-                  <p className="text-xs text-[#676764]">
-                    Consultá turnos y horarios antes de trasladarte:
-                  </p>
-                  <a
-                    href="https://www.google.com/maps/search/?api=1&query=farmacia%2C+Villa+Uni%C3%B3n%2C+La+Rioja"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-3 flex items-center justify-between rounded-xl border border-[#E1E1E0] bg-[#F4F4F4] p-3 text-xs font-bold text-[#262622] hover:bg-white"
-                  >
-                    <span>Farmacias de turno en Google Maps</span>
-                    <ExternalLink className="h-4 w-4 text-[#2F6F73]" />
-                  </a>
-                </SectionCard>
-              </>
+                {/* Bancos y Cajeros Automáticos */}
+                <div className="space-y-2">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
+                    Bancos y Cajeros Automáticos
+                  </h3>
+                  {altosDptoGuide.usefulServices
+                    .filter((s) => s.category === 'Bancos')
+                    .map((item) => (
+                      <ItemCard
+                        key={item.label}
+                        title={item.label}
+                        description={item.description}
+                        address={item.address}
+                        phone={item.phone}
+                        badge={item.badge}
+                        mapsUrl={item.href}
+                      />
+                    ))}
+                </div>
+
+                {/* Hospital y Salud */}
+                <div className="space-y-2">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
+                    Hospital y Farmacias
+                  </h3>
+                  {altosDptoGuide.usefulServices
+                    .filter((s) => s.category === 'Salud')
+                    .map((item) => (
+                      <ItemCard
+                        key={item.label}
+                        title={item.label}
+                        description={item.description}
+                        address={item.address}
+                        phone={item.phone}
+                        badge={item.badge}
+                        mapsUrl={item.href}
+                      />
+                    ))}
+                </div>
+
+                {/* Bomberos y Seguridad */}
+                <div className="space-y-2">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
+                    Bomberos y Seguridad
+                  </h3>
+                  {altosDptoGuide.usefulServices
+                    .filter((s) => s.category === 'Seguridad')
+                    .map((item) => (
+                      <ItemCard
+                        key={item.label}
+                        title={item.label}
+                        description={item.description}
+                        address={item.address}
+                        phone={item.phone}
+                        badge={item.badge}
+                        mapsUrl={item.href}
+                      />
+                    ))}
+                </div>
+
+                {/* Estaciones de Servicio y Combustible */}
+                <div className="space-y-2">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
+                    Estaciones de Servicio (Combustible)
+                  </h3>
+                  {altosDptoGuide.usefulServices
+                    .filter((s) => s.category === 'Combustible')
+                    .map((item) => (
+                      <ItemCard
+                        key={item.label}
+                        title={item.label}
+                        description={item.description}
+                        address={item.address}
+                        phone={item.phone}
+                        badge={item.badge}
+                        mapsUrl={item.href}
+                      />
+                    ))}
+                </div>
+
+                {/* Iglesias y Patrimonio Cultural */}
+                <div className="space-y-2">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
+                    Iglesias y Patrimonio Cultural
+                  </h3>
+                  {altosDptoGuide.usefulServices
+                    .filter((s) => s.category === 'Iglesias')
+                    .map((item) => (
+                      <ItemCard
+                        key={item.label}
+                        title={item.label}
+                        description={item.description}
+                        address={item.address}
+                        phone={item.phone}
+                        badge={item.badge}
+                        mapsUrl={item.href}
+                      />
+                    ))}
+                </div>
+
+                {/* Plaza Principal y Servicios Cívicos */}
+                <div className="space-y-2">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
+                    Plaza Principal y Servicios Cívicos
+                  </h3>
+                  {altosDptoGuide.usefulServices
+                    .filter((s) => s.category === 'Servicios')
+                    .map((item) => (
+                      <ItemCard
+                        key={item.label}
+                        title={item.label}
+                        description={item.description}
+                        address={item.address}
+                        phone={item.phone}
+                        badge={item.badge}
+                        mapsUrl={item.href}
+                      />
+                    ))}
+                </div>
+              </div>
             )}
 
             {currentView === 'compras' && (
