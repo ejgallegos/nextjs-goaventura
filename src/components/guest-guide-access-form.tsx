@@ -38,20 +38,23 @@ export default function GuestGuideAccessForm() {
     <form onSubmit={handleSubmit} className="space-y-4" noValidate>
       <div>
         <label htmlFor="guest-guide-pin" className="block text-xs font-bold uppercase tracking-wider text-[#676764]">
-          PIN de acceso
+          Clave de acceso (Wi-Fi)
         </label>
         <input
           id="guest-guide-pin"
           name="pin"
+          type="text"
           value={pin}
           onChange={(event) => setPin(event.target.value)}
-          placeholder="Ej: 3417"
-          autoComplete="one-time-code"
-          inputMode="numeric"
+          placeholder="Ingresá la clave de Wi-Fi"
+          autoComplete="off"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
           minLength={4}
           maxLength={64}
           required
-          className="mt-1.5 h-12 w-full rounded-xl border border-[#D7D3CB] bg-[#F4F4F4] px-4 text-center font-mono text-xl font-bold tracking-[0.2em] text-[#262622] transition focus:border-[#2F6F73] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2F6F73]/20"
+          className="mt-1.5 h-12 w-full rounded-xl border border-[#D7D3CB] bg-[#F4F4F4] px-4 text-center font-mono text-base font-bold tracking-wider text-[#262622] transition focus:border-[#2F6F73] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2F6F73]/20"
           aria-describedby={error ? 'guest-guide-pin-error' : undefined}
         />
       </div>

@@ -67,14 +67,24 @@ async function runTests() {
   const isValid = await verifyGuestGuidePin(TEST_PIN);
   assert(isValid === true, 'El PIN válido se valida correctamente contra bcrypt');
 
+  // Test 2b: Wi-Fi password authentication
+  const isWifiValid = await verifyGuestGuidePin('TEST_SECRET_PASSWORD_99');
+  assert(isWifiValid === true, 'La clave de Wi-Fi se valida correctamente como clave de acceso');
+
   const isInvalid = await verifyGuestGuidePin('999999');
   assert(isInvalid === false, 'Un PIN incorrecto es rechazado');
 
-  // Test 2b: Base64-encoded PIN hash support
+  // Test 2c: Base64-encoded PIN hash support
   const base64Hash = Buffer.from(TEST_HASH).toString('base64');
   process.env.GUEST_GUIDE_ALTOS_DPTO_PIN_HASH = base64Hash;
   const isValidBase64 = await verifyGuestGuidePin(TEST_PIN);
   assert(isValidBase64 === true, 'El PIN válido se valida correctamente cuando el hash está en formato Base64');
+  process.env.GUEST_GUIDE_ALTOS_DPTO_PIN_HASH = TEST_HASH;
+
+  // Test 2d: Wi-Fi password works even without GUEST_GUIDE_ALTOS_DPTO_PIN_HASH
+  delete process.env.GUEST_GUIDE_ALTOS_DPTO_PIN_HASH;
+  const isWifiOnlyValid = await verifyGuestGuidePin('TEST_SECRET_PASSWORD_99');
+  assert(isWifiOnlyValid === true, 'La clave de Wi-Fi valida el acceso sin necesidad de configurar PIN_HASH');
   process.env.GUEST_GUIDE_ALTOS_DPTO_PIN_HASH = TEST_HASH;
 
   // Test 3: Session token generation and validation

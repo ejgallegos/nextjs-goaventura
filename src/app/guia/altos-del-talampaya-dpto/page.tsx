@@ -70,7 +70,7 @@ export default async function AltosDptoGuestGuidePage() {
             </h2>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-[#676764]">
-            Ingresá el PIN de acceso provisto por el anfitrión para consultar Wi-Fi, llaves, climatización y recomendaciones locales.
+            Ingresá la clave de Wi-Fi del departamento provista para tu estadía para consultar llaves, climatización y recomendaciones locales.
           </p>
 
           <div className="mt-6">
@@ -95,7 +95,7 @@ export default async function AltosDptoGuestGuidePage() {
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#676764] hover:text-[#262622] transition"
           >
             <MessageCircle className="h-3.5 w-3.5 text-[#1F9D55]" aria-hidden="true" />
-            ¿Dudas con tu PIN? Consultá por WhatsApp
+            ¿Dudas con tu clave? Consultá por WhatsApp
           </a>
         </div>
       </div>

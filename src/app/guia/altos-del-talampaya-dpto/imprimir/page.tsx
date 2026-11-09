@@ -84,7 +84,7 @@ export default function GuestGuidePrintSheetPage() {
                   2
                 </span>
                 <span>
-                  <strong>Ingresá el PIN provisto</strong> para tu estadía.
+                  <strong>Ingresá la clave de Wi-Fi</strong> provista para tu estadía.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">

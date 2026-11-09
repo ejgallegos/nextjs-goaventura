@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
 
     if (!isValid) {
       return NextResponse.json(
-        { error: 'El PIN no es válido. Revisalo e intentá nuevamente.' },
+        { error: 'La clave de acceso no es válida. Revisala e intentá nuevamente.' },
         { status: 401, headers: getSecurityHeaders() }
       );
     }
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Ingresá el PIN de acceso provisto para tu estadía.' },
+        { error: 'Ingresá la clave de acceso provista para tu estadía.' },
         { status: 400, headers: getSecurityHeaders() }
       );
     }

@@ -50,12 +50,12 @@ function getRuntimeConfig(): GuestGuideRuntimeConfig | null {
   const wifiPassword = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_WIFI_PASSWORD');
   const keyBoxCode = getRequiredEnvironment('GUEST_GUIDE_ALTOS_DPTO_KEYBOX_CODE');
 
-  if (!rawPinHash || !expiresAt || !sessionSecret || !wifiName || !wifiPassword || !keyBoxCode) {
+  if (!sessionSecret || !wifiName || !wifiPassword || !keyBoxCode) {
     return null;
   }
 
-  const pinHash = normalizePinHash(rawPinHash);
-  const pinExpiresAt = new Date(expiresAt);
+  const pinHash = rawPinHash ? normalizePinHash(rawPinHash) : '';
+  const pinExpiresAt = expiresAt ? new Date(expiresAt) : new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
   if (Number.isNaN(pinExpiresAt.getTime()) || sessionSecret.length < 32) {
     return null;
   }
@@ -87,7 +87,31 @@ export async function verifyGuestGuidePin(pin: string): Promise<boolean> {
     return false;
   }
 
-  return comparePassword(pin, config.pinHash);
+  const trimmedPin = pin.trim();
+  if (!trimmedPin) {
+    return false;
+  }
+
+  // 1. Validar contra la clave de Wi-Fi configurada (tiempo constante para evitar timing attacks)
+  const wifiPassword = config.privateDetails.wifiPassword.trim();
+  if (wifiPassword) {
+    const wifiBuf = Buffer.from(wifiPassword);
+    const inputBuf = Buffer.from(trimmedPin);
+    if (wifiBuf.length === inputBuf.length && timingSafeEqual(wifiBuf, inputBuf)) {
+      return true;
+    }
+  }
+
+  // 2. Validar contra el hash bcrypt del PIN si estuviera configurado
+  if (config.pinHash) {
+    try {
+      return await comparePassword(trimmedPin, config.pinHash);
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
 }
 
 export function createGuestGuideSession(): { token: string; expiresAt: Date } | null {
