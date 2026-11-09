@@ -33,6 +33,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T10 | S4-S5 | inline | completed | fa9d0ff | Remover indicación de 24 horas a Supermercado Valeriana en Comercios.
 - T11 | S4-S5 | inline | completed | e0f3d39 | Renombrar sección Lugares a Atractivos y cargar catálogo curado de 20 atractivos turísticos con mapas y coordenadas.
 - T12 | S4-S5 | inline | completed | c86d261 | Incorporar Farmacia Emanuel y Farmacia San Luis con coordenadas de Google Maps y teléfono de contacto.
+- T13 | S4-S5 | inline | completed | pending | Remover enlace 'Ver lámina A4 con QR para imprimir' y acción de impresión del dashboard del huésped.
 
 ## Log
 
@@ -53,3 +54,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L15 (2026-11-09): User request: "A supermercado Valeriana quitale el 24 horas abierto.". Removed 24hs label and description from Supermercado Valeriana; updated badge to "Almacén y Carnes" (commit fa9d0ff).
 - L16 (2026-11-09): User request: "bien! ahora vamos a revisar estos documentos y registrar lo que sea necesario, sobre todo en la seccion 'Lugares' que quiero que lo cambier por 'Atractivos'". Renamed view, tile, and headings from "Lugares" to "Atractivos" (maintaining backward-compatible hash routing). Curated 20 tourist attractions from primary sources (official Felipe Varela guide, folleto 2025, and geographical points CSV) with badges, descriptions, locations, and precise Google Maps links. Verified with 38 test assertions passing, 0 TypeScript errors, 0 ESLint errors, and full production build succeeded.
 - L17 (2026-11-09): User request: "faltan dos farmacias, identificalas en el mapa y carga la información. Son: Farmacia Emanuel y Farmacia San Luis". Added Farmacia Emanuel (Hipólito Yrigoyen esq. Av. Perón, tel. 03825-470383) and Farmacia San Luis (Zona centro, tel. 03825-477702) under Salud and Comercios with verified direct Google Maps search URLs. 44 assertions passed, 0 type errors, 0 lint errors.
+- L18 (2026-11-09): User request: "quita 'Ver lámina A4 con QR para imprimir'". Removed footer link to printable sheet and header print icon from GuestGuideDashboard. Verified 44 unit tests pass, typecheck 0 errors.

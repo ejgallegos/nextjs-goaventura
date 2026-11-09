@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import {
   ArrowLeft,
   Check,
@@ -19,7 +18,6 @@ import {
   MapPinned,
   MessageCircle,
   Phone,
-  Printer,
   ShieldCheck,
   ShoppingBag,
   Sparkles,
@@ -197,18 +195,9 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             </a>
           </nav>
 
-          {/* Pie de página sutil con acceso a lámina QR */}
-          <footer className="mt-8 text-center text-xs text-[#676764] space-y-2">
+          {/* Pie de página sutil */}
+          <footer className="mt-8 text-center text-xs text-[#676764]">
             <p className="font-medium">Altos del Talampaya Dpto · Villa Unión, La Rioja</p>
-            <div>
-              <Link
-                href="/guia/altos-del-talampaya-dpto/imprimir"
-                className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#2F6F73] hover:underline"
-              >
-                <Printer className="h-3.5 w-3.5" />
-                Ver lámina A4 con QR para imprimir
-              </Link>
-            </div>
           </footer>
         </div>
       ) : (
@@ -227,15 +216,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             <h2 className="text-sm font-bold uppercase tracking-wider text-[#262622]">
               {getViewTitle(currentView)}
             </h2>
-            <div className="w-16 text-right">
-              <Link
-                href="/guia/altos-del-talampaya-dpto/imprimir"
-                className="inline-grid h-8 w-8 place-items-center rounded-xl text-[#676764] hover:text-[#262622]"
-                title="Lámina QR"
-              >
-                <Printer className="h-4 w-4" />
-              </Link>
-            </div>
+            <div className="w-16" />
           </header>
 
           {/* Contenido de la sección seleccionada */}
