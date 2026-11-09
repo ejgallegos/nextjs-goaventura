@@ -336,10 +336,10 @@ export const altosDptoGuide: PropertyGuestGuide = {
     },
     {
       category: 'Supermercado',
-      label: 'Supermercado Valeriana (24 hs)',
-      description: 'Tradicional comercio de proximidad con atención las 24 horas todos los días. Almacén completo, fiambrería, carnes, bebidas frías y artículos de primera necesidad a toda hora.',
+      label: 'Supermercado Valeriana',
+      description: 'Tradicional comercio de proximidad en el centro de Villa Unión. Almacén completo, fiambrería, carnes, bebidas frías y artículos de primera necesidad.',
       address: 'Zona Céntrica, Villa Unión',
-      badge: 'Abierto 24 hs',
+      badge: 'Almacén y Carnes',
       href: 'https://www.google.com/maps/search/?api=1&query=Supermercado+Valeriana%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
     {
