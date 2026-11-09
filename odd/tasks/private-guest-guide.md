@@ -34,7 +34,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T11 | S4-S5 | inline | completed | e0f3d39 | Renombrar sección Lugares a Atractivos y cargar catálogo curado de 20 atractivos turísticos con mapas y coordenadas.
 - T12 | S4-S5 | inline | completed | c86d261 | Incorporar Farmacia Emanuel y Farmacia San Luis con coordenadas de Google Maps y teléfono de contacto.
 - T13 | S4-S5 | inline | completed | 2730afb | Remover enlace 'Ver lámina A4 con QR para imprimir' y acción de impresión del dashboard del huésped.
-- T14 | S4-S5 | inline | completed | pending | Desactivar y ocultar el proveedor y badge de reCAPTCHA en las rutas de la guía privada.
+- T14 | S4-S5 | inline | completed | 71b66cd | Desactivar y ocultar el proveedor y badge de reCAPTCHA en las rutas de la guía privada.
 
 ## Log
 
