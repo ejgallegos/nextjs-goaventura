@@ -31,7 +31,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T8 | S4-S5 | inline | completed | f886b9d | Incorporar bancos, hospital, bomberos, parroquia, plaza principal y estaciones en Útil y SOS.
 - T9 | S4-S5 | inline | completed | d9793c4 | Quitar Farmacia Talampaya, Farmacias de turno y Comisaría; corregir dirección de Oficina de Turismo a Nicolás Dávila Sur.
 - T10 | S4-S5 | inline | completed | fa9d0ff | Remover indicación de 24 horas a Supermercado Valeriana en Comercios.
-- T11 | S4-S5 | inline | completed | pending | Renombrar sección Lugares a Atractivos y cargar catálogo curado de 20 atractivos turísticos con mapas y coordenadas.
+- T11 | S4-S5 | inline | completed | e0f3d39 | Renombrar sección Lugares a Atractivos y cargar catálogo curado de 20 atractivos turísticos con mapas y coordenadas.
 
 ## Log
 
