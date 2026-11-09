@@ -28,6 +28,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T5 | S4-S5 | inline | completed | 76fce41 | Highlight Go Aventura as recommended with official web data and direct booking buttons.
 - T6 | S1-S3 | inline | completed | a9a9966 | Habilitar clave de Wi-Fi como clave de acceso a la guía privada y actualizar formulario.
 - T7 | S4-S5 | inline | completed | 44411c0 | Ampliar comercios de Villa Unión (supermercados, 24hs, polirubro, farmacias y paradores).
+- T8 | S4-S5 | inline | completed | f886b9d | Incorporar bancos, hospital, bomberos, parroquia, plaza principal y estaciones en Útil y SOS.
 
 ## Log
 
@@ -43,3 +44,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L10 (2026-11-06): Highlighted Go Aventura as "Recomendado" and incorporated complete details from goaventura.com.ar (Leg. 20019, 4x4 expeditions to Laguna Brava, Talampaya, Cañón del Triásico, private transfers, direct WhatsApp reservation buttons, and teal-accented cards) (commit 76fce41).
 - L11 (2026-11-09): User request: "quiero que el acceso a la guia sea con la misma clave del wifi y te consulto, es posible restringir el acceso según la mac del rooter que acceda? de esta manera le agrego mayor seguridad o que recomendarias?". Enabled constant-time validation with accommodation's Wi-Fi password (`GUEST_GUIDE_ALTOS_DPTO_WIFI_PASSWORD`); made PIN_HASH optional; updated form input and copy; verified 25 test cases passing. Addressed router MAC restriction consultation and security recommendations.
 - L12 (2026-11-09): User request: "en la sección comercios agrega más, solo aparecen dos.". Added verified supermarkets, 24hs convenience store, central grocery, polirubro, pharmacies, service station minimarkets and beverage distributor in Villa Unión (10 total commercial spots) (commit 44411c0).
+- L13 (2026-11-09): User request: "en información Util agrega los Bancos, el hospital, bomberos, iglesias, plaza principal, estacion de servicios, etc.". Enriched Útil y SOS view with structured sub-sections: emergency dials, Banco Nación (BNA) and Banco Rioja with 24hs Link ATMs, Hospital Dr. Eduardo Neira with 24hs emergency guard, Cuartel de Bomberos Voluntarios, historic Parroquia Nuestra Señora del Rosario, Plaza San Martín, Tourist Office, Bus Terminal, and 24hs YPF and Gulf service stations with direct Google Maps links (commit f886b9d).
