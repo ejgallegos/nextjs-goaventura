@@ -49,6 +49,7 @@ type GuideView =
   | 'bodegas'
   | 'artesanias'
   | 'campings'
+  | 'atractivos'
   | 'lugares'
   | 'excursiones';
 
@@ -73,11 +74,12 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
         'bodegas',
         'artesanias',
         'campings',
+        'atractivos',
         'lugares',
         'excursiones',
       ];
       if (validViews.includes(hash)) {
-        setCurrentView(hash);
+        setCurrentView(hash === 'lugares' ? 'atractivos' : hash);
       } else {
         setCurrentView('menu');
       }
@@ -182,7 +184,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             <MenuTile icon={Sparkles} label="Artesanías" onClick={() => navigateTo('artesanias')} />
             <MenuTile icon={Trees} label="Campings" onClick={() => navigateTo('campings')} />
 
-            <MenuTile icon={MapPin} label="Lugares" onClick={() => navigateTo('lugares')} />
+            <MenuTile icon={MapPin} label="Atractivos" onClick={() => navigateTo('atractivos')} />
             <MenuTile icon={Compass} label="Excursiones" onClick={() => navigateTo('excursiones')} />
             <a
               href={altosDptoGuide.touristMapUrl}
@@ -700,18 +702,20 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
               </div>
             )}
 
-            {currentView === 'lugares' && (
+            {(currentView === 'atractivos' || currentView === 'lugares') && (
               <div className="space-y-3">
-                <NoticeBox text="Pueblos y atractivos naturales del Valle del Bermejo para recorrer en excursión o por cuenta propia." />
+                <NoticeBox text="Atractivos naturales, paisajes geológicos y sitios históricos de Villa Unión, el Valle del Bermejo y la región." />
                 {altosDptoGuide.recommendations
-                  .filter((r) => r.category === 'Localidades')
+                  .filter((r) => r.category === 'Atractivos' || r.category === 'Localidades')
                   .map((item) => (
                     <ItemCard
                       key={item.label}
                       title={item.label}
                       description={item.description}
                       address={item.address}
+                      badge={item.badge}
                       mapsUrl={item.href}
+                      externalUrl={item.web}
                     />
                   ))}
               </div>
@@ -985,8 +989,9 @@ function getViewTitle(view: GuideView): string {
       return 'Artesanías y Regionales';
     case 'campings':
       return 'Campings y Recreación';
+    case 'atractivos':
     case 'lugares':
-      return 'Lugares para descubrir';
+      return 'Atractivos turísticos';
     case 'excursiones':
       return 'Agencias y Excursiones';
     default:

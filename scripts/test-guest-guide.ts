@@ -161,6 +161,39 @@ async function runTests() {
   assert(details?.wifiPassword === 'TEST_SECRET_PASSWORD_99', 'Obtiene contraseña de Wi-Fi privada');
   assert(details?.keyBoxCode === '7788', 'Obtiene código de caja de llaves privado');
 
+  // Test 9: Tourist Attractions (Atractivos) catalog
+  const { altosDptoGuide } = await import('@/lib/data/guest-guide');
+  const atractivos = altosDptoGuide.recommendations.filter(
+    (r) => r.category === 'Atractivos' || (r.category as string) === 'Localidades'
+  );
+  assert(atractivos.length >= 15, `El catálogo de atractivos cuenta con al menos 15 puntos curados (actual: ${atractivos.length})`);
+  
+  const atractivosCategoryItems = altosDptoGuide.recommendations.filter(
+    (r) => r.category === 'Atractivos'
+  );
+  assert(atractivosCategoryItems.length >= 15, `Existen al menos 15 ítems bajo la categoría 'Atractivos' (actual: ${atractivosCategoryItems.length})`);
+
+  const requiredNames = [
+    'Parque Nacional Talampaya',
+    'Cañón del Triásico',
+    'Cañón de Anchumbil',
+    'Mirador La Loma',
+    'Embalse Lateral',
+    'Vallecito Encantado',
+    'Monumento Natural Cerro Bola',
+    'Cuesta de Miranda',
+    'Angelito Milagroso (Miguel Ángel Gaitán)',
+    'Reserva Provincial Laguna Brava',
+  ];
+
+  for (const name of requiredNames) {
+    const found = atractivos.some((r) => r.label.toLowerCase().includes(name.toLowerCase()));
+    assert(found, `Atractivo requerido presente: ${name}`);
+  }
+
+  const allHaveMaps = atractivos.every((r) => r.href && r.href.includes('google.com/maps'));
+  assert(allHaveMaps, 'Todos los atractivos cuentan con enlace a Google Maps');
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);
