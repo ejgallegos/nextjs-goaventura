@@ -498,10 +498,10 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     ))}
                 </div>
 
-                {/* Hospital y Salud */}
+                {/* Hospital y Farmacia */}
                 <div className="space-y-2">
                   <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
-                    Hospital y Farmacias
+                    Hospital y Farmacia
                   </h3>
                   {altosDptoGuide.usefulServices
                     .filter((s) => s.category === 'Salud')
@@ -518,10 +518,10 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     ))}
                 </div>
 
-                {/* Bomberos y Seguridad */}
+                {/* Bomberos Voluntarios */}
                 <div className="space-y-2">
                   <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
-                    Bomberos y Seguridad
+                    Bomberos Voluntarios
                   </h3>
                   {altosDptoGuide.usefulServices
                     .filter((s) => s.category === 'Seguridad')

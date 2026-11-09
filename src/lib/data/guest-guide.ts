@@ -229,24 +229,9 @@ export const altosDptoGuide: PropertyGuestGuide = {
       badge: 'Farmacia céntrica',
       href: 'https://www.google.com/maps/search/?api=1&query=Farmanor%2C+Nicol%C3%A1s+D%C3%A1vila%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
-    {
-      category: 'Salud',
-      label: 'Farmacia Talampaya',
-      description: 'Farmacia tradicional del centro de Villa Unión. Medicamentos bajo receta y venta libre, analgésicos, protectores solares y productos de higiene.',
-      address: 'San Martín esq. Hipólito Yrigoyen, Villa Unión',
-      badge: 'Farmacia',
-      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+Talampaya%2C+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
-    },
-    {
-      category: 'Salud',
-      label: 'Farmacias de turno en Villa Unión',
-      description: 'Consultá ubicación y turnos vigentes de farmacias de guardia antes de trasladarte.',
-      address: 'Centro comercial Villa Unión',
-      href: 'https://www.google.com/maps/search/?api=1&query=farmacia%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
-    },
 
     /* ==========================================================
-       SEGURIDAD Y BOMBEROS
+       BOMBEROS
        ========================================================== */
     {
       category: 'Seguridad',
@@ -256,15 +241,6 @@ export const altosDptoGuide: PropertyGuestGuide = {
       phone: '100',
       badge: 'Emergencias 100',
       href: 'https://www.google.com/maps/search/?api=1&query=Bomberos+Voluntarios%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
-    },
-    {
-      category: 'Seguridad',
-      label: 'Comisaría Villa Unión (Policía de la Provincia)',
-      description: 'Destacamento policial departamental y guardia de seguridad ciudadana del Valle del Bermejo.',
-      address: 'Joaquín V. González s/n, Villa Unión, La Rioja',
-      phone: '101',
-      badge: 'Policía 101',
-      href: 'https://www.google.com/maps/search/?api=1&query=Comisar%C3%ADa+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
 
     /* ==========================================================
@@ -334,9 +310,9 @@ export const altosDptoGuide: PropertyGuestGuide = {
       category: 'Servicios',
       label: 'Oficina de Informes Turísticos Municipal',
       description: 'Oficina oficial de la Secretaría de Turismo departamental. Información sobre el Parque Nacional Talampaya, estado de rutas, clima y atractivos del Valle del Bermejo.',
-      address: 'Plaza San Martín, Villa Unión, La Rioja',
+      address: 'Nicolás Dávila Sur, Villa Unión, La Rioja',
       badge: 'Informes Oficiales',
-      href: 'https://www.google.com/maps/search/?api=1&query=Secretaria+de+Turismo%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+      href: 'https://www.google.com/maps/search/?api=1&query=Secretaria+de+Turismo%2C+Nicol%C3%A1s+D%C3%A1vila+Sur%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
     {
       category: 'Servicios',
@@ -401,14 +377,6 @@ export const altosDptoGuide: PropertyGuestGuide = {
     },
     {
       category: 'Comercios',
-      label: 'Farmacia Talampaya',
-      description: 'Farmacia tradicional del centro de Villa Unión. Medicamentos bajo receta y de venta libre, productos solares, analgésicos y cuidado personal.',
-      address: 'San Martín esq. Hipólito Yrigoyen',
-      badge: 'Farmacia',
-      href: 'https://www.google.com/maps/search/?api=1&query=Farmacia+Talampaya%2C+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
-    },
-    {
-      category: 'Comercios',
       label: 'YPF Servicompras (24 horas)',
       description: 'Tienda de conveniencia abierta las 24 horas y combustible sobre la ruta. Bebidas frías, hielo, agua caliente para termos, cafetería, alfajores y minutas.',
       address: 'Ruta Nacional N° 76, Villa Unión',
@@ -430,14 +398,6 @@ export const altosDptoGuide: PropertyGuestGuide = {
       address: 'Calle Ing. Lorenz, Villa Unión',
       badge: 'Bebidas',
       href: 'https://www.google.com/maps/search/?api=1&query=Quilpe%2C+Ingeniero+Lorenz%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
-    },
-    {
-      category: 'Seguridad',
-      label: 'Comisaría Villa Unión',
-      description: 'Destacamento policial del Valle del Bermejo.',
-      address: 'Villa Unión, La Rioja',
-      phone: '101',
-      href: 'https://www.google.com/maps/search/?api=1&query=Comisar%C3%ADa+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
   ],
   recommendations: [
