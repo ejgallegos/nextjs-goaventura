@@ -30,6 +30,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T7 | S4-S5 | inline | completed | 44411c0 | Ampliar comercios de Villa Unión (supermercados, 24hs, polirubro, farmacias y paradores).
 - T8 | S4-S5 | inline | completed | f886b9d | Incorporar bancos, hospital, bomberos, parroquia, plaza principal y estaciones en Útil y SOS.
 - T9 | S4-S5 | inline | completed | d9793c4 | Quitar Farmacia Talampaya, Farmacias de turno y Comisaría; corregir dirección de Oficina de Turismo a Nicolás Dávila Sur.
+- T10 | S4-S5 | inline | completed | fa9d0ff | Remover indicación de 24 horas a Supermercado Valeriana en Comercios.
 
 ## Log
 
@@ -47,3 +48,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L12 (2026-11-09): User request: "en la sección comercios agrega más, solo aparecen dos.". Added verified supermarkets, 24hs convenience store, central grocery, polirubro, pharmacies, service station minimarkets and beverage distributor in Villa Unión (10 total commercial spots) (commit 44411c0).
 - L13 (2026-11-09): User request: "en información Util agrega los Bancos, el hospital, bomberos, iglesias, plaza principal, estacion de servicios, etc.". Enriched Útil y SOS view with structured sub-sections: emergency dials, Banco Nación (BNA) and Banco Rioja with 24hs Link ATMs, Hospital Dr. Eduardo Neira with 24hs emergency guard, Cuartel de Bomberos Voluntarios, historic Parroquia Nuestra Señora del Rosario, Plaza San Martín, Tourist Office, Bus Terminal, and 24hs YPF and Gulf service stations with direct Google Maps links (commit f886b9d).
 - L14 (2026-11-09): User request: "quita estas farmacias, Farmacia Talampaya y Farmacias de turno en Villa Union; quita tambien Comisaria de Villa Union; Corrige la dirección de la Oficina de Turismo, es Nicolas Dávila Sur". Removed Farmacia Talampaya, Farmacias de turno and Comisaría cards; updated Oficina de Informes Turísticos Municipal address and Google Maps query to Nicolás Dávila Sur (commit d9793c4).
+- L15 (2026-11-09): User request: "A supermercado Valeriana quitale el 24 horas abierto.". Removed 24hs label and description from Supermercado Valeriana; updated badge to "Almacén y Carnes" (commit fa9d0ff).
