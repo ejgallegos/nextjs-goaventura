@@ -214,3 +214,12 @@ code, pre {
     scroll-behavior: auto !important;
   }
 }
+
+/* Ocultar badge flotante de reCAPTCHA en las rutas de la guía privada */
+body.guide-active .grecaptcha-badge,
+body:has(.is-guide-page) .grecaptcha-badge {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
