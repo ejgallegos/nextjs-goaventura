@@ -26,7 +26,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T3 | S6 | inline | completed | 44e3f0e | Produce QR assets and print layout.
 - T4 | S7 | inline | completed | 44e3f0e | Run checks and validate privacy/access behavior.
 - T5 | S4-S5 | inline | completed | 76fce41 | Highlight Go Aventura as recommended with official web data and direct booking buttons.
-- T6 | S1-S3 | inline | completed | pending | Habilitar clave de Wi-Fi como clave de acceso a la guía privada y actualizar formulario.
+- T6 | S1-S3 | inline | completed | a9a9966 | Habilitar clave de Wi-Fi como clave de acceso a la guía privada y actualizar formulario.
 
 ## Log
 
