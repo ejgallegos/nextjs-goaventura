@@ -35,7 +35,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T12 | S4-S5 | inline | completed | c86d261 | Incorporar Farmacia Emanuel y Farmacia San Luis con coordenadas de Google Maps y teléfono de contacto.
 - T13 | S4-S5 | inline | completed | 2730afb | Remover enlace 'Ver lámina A4 con QR para imprimir' y acción de impresión del dashboard del huésped.
 - T14 | S4-S5 | inline | completed | 71b66cd | Desactivar y ocultar el proveedor y badge de reCAPTCHA en las rutas de la guía privada.
-- T15 | S4-S5 | inline | completed | pending | Actualizar enlace de mapa regional al nuevo mapa personalizado Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk).
+- T15 | S4-S5 | inline | completed | 10409f9 | Actualizar enlace de mapa regional al nuevo mapa personalizado Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk).
 
 ## Log
 
