@@ -335,10 +335,18 @@ export const altosDptoGuide: PropertyGuestGuide = {
     },
     {
       category: 'Servicios',
-      label: 'Terminal de Ómnibus Villa Unión',
-      description: 'Conexión de transporte de pasajeros de media y larga distancia hacia La Rioja capital, San Juan y provincias vecinas. Cuenta con parador y cajero de Banco Rioja.',
+      label: 'Terminal de Ómnibus Villa Unión (Larga y Media Distancia)',
+      description: 'Punto neurálgico de llegada y salida en ómnibus con servicios diarios hacia La Rioja capital, Chilecito, Patquía, San Juan y conexiones a Córdoba/Buenos Aires (Empresas: 20 de Mayo, Facundo, Arce). Cuenta con boleterías, parador y cajero automático Banco Rioja (Red Link). Recomendamos reservar pasajes con anticipación en fines de semana largos.',
       address: 'Av. Nicolás Dávila Sur s/n, Villa Unión, La Rioja',
-      badge: 'Transporte',
+      badge: 'Ómnibus y Boleterías',
+      href: 'https://www.google.com/maps/search/?api=1&query=Terminal+de+Omnibus%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Servicios',
+      label: 'Parada de Taxis y Remises Villa Unión',
+      description: 'Servicio de traslados urbanos e interurbanos para desplazamientos dentro de Villa Unión, traslados hacia la Terminal de Ómnibus y viajes hacia localidades cercanas (Banda Florida, Los Palacios, Pagancillo).',
+      address: 'Plaza San Martín / Terminal de Ómnibus, Villa Unión',
+      badge: 'Traslados Locales',
       href: 'https://www.google.com/maps/search/?api=1&query=Terminal+de+Omnibus%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
 
@@ -671,6 +679,14 @@ export const altosDptoGuide: PropertyGuestGuide = {
        ========================================================== */
     {
       category: 'Artesanías',
+      label: 'Teleras Tradicionales de Palo Plantado',
+      description: 'Emblemático grupo de maestras teleras que mantienen vivo el tejido criollo ancestral en telar horizontal, hilado a mano en huso y rueca con pura lana de oveja y tintes naturales autóctonos (jarilla, algarrobo y cáscara de nuez). Mantas, ponchos y caminos rústicos de colección.',
+      address: 'Palo Plantado (sobre RP, a 15 km de Villa Unión)',
+      badge: 'Patrimonio Textil Criollo',
+      href: 'https://www.google.com/maps/search/?api=1&query=Palo+Plantado%2C+La+Rioja',
+    },
+    {
+      category: 'Artesanías',
       label: 'Regionales del Oeste',
       description: 'Dulces caseros, nueces, alfajores, vinos y artesanías locales sobre el cruce de rutas.',
       address: 'Intersección Ruta Nac. N° 76 y Ruta Nac. N° 40, Villa Unión',
@@ -852,25 +868,65 @@ export const altosDptoGuide: PropertyGuestGuide = {
       badge: 'Leg. 19.032',
       href: 'https://www.google.com/maps/search/?api=1&query=Triasico+Aventura+EVT%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
     },
+    {
+      category: 'Excursiones',
+      label: 'Runamayu · Turismo Aventura',
+      description: 'Operador receptivo habilitado con amplia trayectoria en expediciones 4x4, trekking por cañones andinos, travesías guiadas al Cráter Corona del Inca y circuitos de alta montaña en el Bermejo.',
+      address: 'Villa Unión, La Rioja',
+      badge: 'Aventura y 4x4',
+      href: 'https://www.google.com/maps/search/?api=1&query=Runamayu%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Excursiones',
+      label: 'Cooperativa de Trabajo Talampaya',
+      description: 'Asociación cooperativa de guías y transportistas locales habilitados para excursiones regulares, traslados al Parque Nacional Talampaya y paseos departamentales.',
+      address: 'Villa Unión / Acceso a Talampaya, La Rioja',
+      badge: 'Prestador Habilitado',
+      href: 'https://www.google.com/maps/search/?api=1&query=Cooperativa+Talampaya%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
+    {
+      category: 'Excursiones',
+      label: 'Argentina Paisajes Viajes y Turismo',
+      description: 'Agencia de viajes y turismo receptivo habilitada (Leg. 20.057). Salidas programadas por el corredor del Bermejo, Cuesta de Miranda y paquetes regionales.',
+      address: 'Villa Unión, La Rioja',
+      badge: 'Leg. 20.057',
+      href: 'https://www.google.com/maps/search/?api=1&query=Argentina+Paisajes%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
+    },
 
     /* ==========================================================
-       ATRACTIVOS TURÍSTICOS (Fuente: Folletos y Guías Oficiales Dpto. Gral. Felipe Varela)
+       ATRACTIVOS TURÍSTICOS (Fuente: Folletos y Estadísticas Oficiales Dpto. Gral. Felipe Varela)
        ========================================================== */
     {
       category: 'Atractivos',
       label: 'Parque Nacional Talampaya',
       description: 'Patrimonio Natural de la Humanidad UNESCO y una de las 7 Maravillas Naturales de Argentina. Imponentes murallones rojizos de 150 m, cañones geológicos, petroglifos milenarios, fauna andina y excursiones al Cañón de Talampaya, Quebrada de Don Eduardo, Safari Arco Iris y Ciudad Perdida.',
       address: 'RN 76 km 148 (a 59 km de Villa Unión)',
-      badge: 'Imperdible UNESCO',
+      badge: 'Top #1 Visitas · UNESCO',
       href: 'https://www.google.com/maps/search/?api=1&query=-29.784404%2C-67.993831',
       web: 'https://talampaya.com',
+    },
+    {
+      category: 'Atractivos',
+      label: 'Angelito Milagroso (Miguel Ángel Gaitán)',
+      description: 'Mausoleo y centro de devoción popular de Miguel Ángel Gaitán en el cementerio de Villa Unión. Es el contenido y atractivo de fe más consultado del departamento: miles de promeseros y viajeros de todo el país se acercan a diario para agradecer favores y dejar flores, juguetes y placas recordatorias.',
+      address: 'Cementerio municipal de Villa Unión (a 10 cuadras del centro)',
+      badge: 'Top #1 Devoción y Fe Popular',
+      href: 'https://www.google.com/maps/search/?api=1&query=-29.3059111%2C-68.2273528',
+    },
+    {
+      category: 'Atractivos',
+      label: 'Vallecito Encantado',
+      description: 'Fascinante paisaje lunar sobre la Quebrada del Bermejo con tonalidades multicolores y esculturas naturales talladas por la erosión milenaria: la Copa del Mundo, El Sombrero, El Barco y El Perfil del Indio.',
+      address: 'RN 40 km 3768 (entre Villa Unión y Guandacol)',
+      badge: 'Top Visitas · Geoformas RN 40',
+      href: 'https://www.google.com/maps/search/?api=1&query=-29.52%2C-68.45',
     },
     {
       category: 'Atractivos',
       label: 'Cañón del Triásico',
       description: 'Aventura geológica de 250 millones de años en la Reserva Cerros Colorados. Laberintos de arenisca roja, cárcavas y miradores panorámicos. Excursiones guiadas en vehículos 4x4, senderismo diurno y salidas de astroturismo nocturno bajo cielos pristinos.',
       address: 'Banda Florida (a 5 km de Villa Unión)',
-      badge: 'Aventura 4x4 y Astroturismo',
+      badge: 'Top Aventura 4x4 y Astroturismo',
       href: 'https://www.google.com/maps/search/?api=1&query=-29.2857832%2C-68.2614131',
     },
     {
@@ -878,8 +934,16 @@ export const altosDptoGuide: PropertyGuestGuide = {
       label: 'Cañón de Anchumbil',
       description: 'Conocido como el "pequeño Talampaya": laberintos de roca rojiza esculpidos por el agua y el viento, vertientes naturales de agua dulce, vegetación autóctona y antiguas pinturas rupestres en un entorno íntimo ideal para trekking.',
       address: 'A 7 km al este de Villa Unión',
-      badge: 'Trekking y Vertientes',
+      badge: 'Top Trekking y Pinturas Rupestres',
       href: 'https://www.google.com/maps/search/?api=1&query=-29.2904472%2C-68.1661487',
+    },
+    {
+      category: 'Atractivos',
+      label: 'Cuesta de Miranda',
+      description: 'Uno de los tramos escénicos más bellos de la Argentina: 12 km de cornisa totalmente pavimentada con miradores espectaculares y cumbre en Bordo Atravesado a 2.040 msnm, serpenteando entre quebradas rojizas y el cauce del río Miranda.',
+      address: 'RN 40 (tramo Villa Unión - Chilecito)',
+      badge: 'Camino Escénico (2.040 msnm)',
+      href: 'https://www.google.com/maps/search/?api=1&query=-29.3430926%2C-67.7621978',
     },
     {
       category: 'Atractivos',
@@ -899,35 +963,11 @@ export const altosDptoGuide: PropertyGuestGuide = {
     },
     {
       category: 'Atractivos',
-      label: 'Vallecito Encantado',
-      description: 'Fascinante paisaje lunar sobre la Quebrada del Bermejo con tonalidades multicolores y esculturas naturales talladas por la erosión: la Copa del Mundo, El Sombrero, El Barco y El Perfil del Indio.',
-      address: 'RN 40 km 3768 (entre Villa Unión y Guandacol)',
-      badge: 'Geoformas Curiosas RN 40',
-      href: 'https://www.google.com/maps/search/?api=1&query=-29.52%2C-68.45',
-    },
-    {
-      category: 'Atractivos',
       label: 'Monumento Natural Cerro Bola',
       description: 'Singular plegamiento geológico doble que semeja una inmensa esfera partida emergiendo de la serranía. Hito paisajístico emblemático sobre la mítica Ruta Nacional 40, declarado área de protección geológica.',
       address: 'RN 40 (cercano al Vallecito Encantado)',
       badge: 'Monumento Geológico',
       href: 'https://www.google.com/maps/search/?api=1&query=-29.5204481%2C-68.3898283',
-    },
-    {
-      category: 'Atractivos',
-      label: 'Cuesta de Miranda',
-      description: 'Uno de los tramos escénicos más bellos de la Argentina: 12 km de cornisa totalmente pavimentada con miradores espectaculares y cumbre en Bordo Atravesado a 2.040 msnm, serpenteando entre quebradas rojizas y el cauce del río Miranda.',
-      address: 'RN 40 (tramo Villa Unión - Chilecito)',
-      badge: 'Camino Escénico (2.040 msnm)',
-      href: 'https://www.google.com/maps/search/?api=1&query=-29.3430926%2C-67.7621978',
-    },
-    {
-      category: 'Atractivos',
-      label: 'Angelito Milagroso (Miguel Ángel Gaitán)',
-      description: 'Mausoleo y centro de devoción popular del niño Miguel Ángel Gaitán en el cementerio de Villa Unión. Miles de devotos y promeseros de todo el país se acercan a diario para agradecer favores y dejar flores, juguetes y placas recordatorias.',
-      address: 'Cementerio municipal de Villa Unión (a 10 cuadras del centro)',
-      badge: 'Fe y Devoción Popular',
-      href: 'https://www.google.com/maps/search/?api=1&query=-29.3059111%2C-68.2273528',
     },
     {
       category: 'Atractivos',
@@ -948,7 +988,7 @@ export const altosDptoGuide: PropertyGuestGuide = {
     {
       category: 'Atractivos',
       label: 'Guandacol y Casa del Gral. Felipe Varela',
-      description: 'Tierra de caudillos e historia federal al sur del departamento: visitá el solar histórico de adobe y algarrobo del General Felipe Varela, la centenaria iglesia de San Nicolás, olivares históricos y bodegas familiares artesanales.',
+      description: 'Tierra de caudillos e historia federal al sur del departamento: visitá el solar histórico de adobe y algarrobo del General Felipe Varela, el santuario popular de Pancho de la Cuchilla, la centenaria iglesia de San Nicolás, olivares históricos y bodegas familiares artesanales.',
       address: 'Guandacol (a 45 km al sur de Villa Unión por RN 40)',
       badge: 'Historia y Caudillos',
       href: 'https://www.google.com/maps/search/?api=1&query=-29.5245519%2C-68.5584428',
@@ -990,7 +1030,7 @@ export const altosDptoGuide: PropertyGuestGuide = {
       label: 'Cráter Corona del Inca',
       description: 'Impresionante laguna navegable de azul zafiro a 5.500 msnm dentro del cráter de un coloso volcánico andino. Una de las travesías 4x4 más altas y extremas del mundo, rodeada por los picos Monte Pissis y Bonete Chico (operativa de diciembre a abril con agencia habilitada).',
       address: 'Alta Cordillera riojana (exclusivo 4x4 guiada)',
-      badge: 'Aventura Extrema (5.500 msnm)',
+      badge: 'Top 4x4 Extrema (5.500 msnm)',
       href: 'https://www.google.com/maps/search/?api=1&query=-27.91%2C-68.82',
     },
     {
