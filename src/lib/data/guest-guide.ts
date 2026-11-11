@@ -112,7 +112,7 @@ export const altosDptoGuide: PropertyGuestGuide = {
   propertyMapUrl:
     'https://www.google.com/maps/search/?api=1&query=Altos+del+Talampaya+Dpto%2C+Calle+Ing+Elio+Vergara%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
   touristMapUrl:
-    'https://www.google.com/maps/d/viewer?mid=1F3VQHqOqyy6tlGwqeVPG6ExZXu4snwY&ll=-29.539943300244904%2C-68.10310008030167&z=9',
+    'https://www.google.com/maps/d/viewer?mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk',
   arrival: {
     address: 'Calle Ing. Elio Vergara s/n, Villa Unión, La Rioja',
     checkIn: '15:00 hs',

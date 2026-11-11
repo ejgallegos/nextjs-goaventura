@@ -206,6 +206,12 @@ async function runTests() {
   assert(Boolean(sanLuis?.href?.includes('google.com/maps')), 'Farmacia San Luis tiene enlace a Google Maps');
   assert(Boolean(sanLuis?.phone), 'Farmacia San Luis tiene teléfono de contacto');
 
+  // Test 11: Tourist map URL
+  assert(
+    altosDptoGuide.touristMapUrl.includes('1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk'),
+    'El mapa de la región utiliza el nuevo mapa personalizado de Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk)'
+  );
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);

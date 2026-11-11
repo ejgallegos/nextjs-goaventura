@@ -35,6 +35,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T12 | S4-S5 | inline | completed | c86d261 | Incorporar Farmacia Emanuel y Farmacia San Luis con coordenadas de Google Maps y teléfono de contacto.
 - T13 | S4-S5 | inline | completed | 2730afb | Remover enlace 'Ver lámina A4 con QR para imprimir' y acción de impresión del dashboard del huésped.
 - T14 | S4-S5 | inline | completed | 71b66cd | Desactivar y ocultar el proveedor y badge de reCAPTCHA en las rutas de la guía privada.
+- T15 | S4-S5 | inline | completed | pending | Actualizar enlace de mapa regional al nuevo mapa personalizado Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk).
 
 ## Log
 
@@ -57,3 +58,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L17 (2026-11-09): User request: "faltan dos farmacias, identificalas en el mapa y carga la información. Son: Farmacia Emanuel y Farmacia San Luis". Added Farmacia Emanuel (Hipólito Yrigoyen esq. Av. Perón, tel. 03825-470383) and Farmacia San Luis (Zona centro, tel. 03825-477702) under Salud and Comercios with verified direct Google Maps search URLs. 44 assertions passed, 0 type errors, 0 lint errors.
 - L18 (2026-11-09): User request: "quita 'Ver lámina A4 con QR para imprimir'". Removed footer link to printable sheet and header print icon from GuestGuideDashboard. Verified 44 unit tests pass, typecheck 0 errors.
 - L19 (2026-11-09): User request: "oculta el recaptcha de la guia.". Excluded GoogleReCaptchaProvider from mounting on `/guia` routes and added CSS hide rules for `.grecaptcha-badge` under `.guide-active` and `:has(.is-guide-page)`. Verified 44 unit tests pass, typecheck 0 errors.
+- L20 (2026-11-11): User request: "ya cree el mapa, quiero que pongas éste en la guia. Solo este vamos a usar. https://www.google.com/maps/d/u/0/edit?mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk&usp=sharing". Replaced `touristMapUrl` with the clean viewer URL for mid `1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk`. Verified 45 unit tests pass, typecheck 0 errors.
