@@ -696,15 +696,6 @@ export const altosDptoGuide: PropertyGuestGuide = {
     },
     {
       category: 'Artesanías',
-      label: 'Regionales Milor',
-      description: 'Productos típicos riojanos, tejidos y recuerdos frente a la plaza principal.',
-      address: 'San Martín s/n (frente a Plaza Principal), Villa Unión',
-      phone: '3825 666801',
-      badge: 'Centro cívico',
-      href: 'https://www.google.com/maps/search/?api=1&query=Regionales+Milor%2C+Villa+Uni%C3%B3n%2C+La+Rioja',
-    },
-    {
-      category: 'Artesanías',
       label: 'Regionales Don Dámaso',
       description: 'Elaboración tradicional de dulces, conservas y productos del Bermejo.',
       address: 'Ruta Nac. N° 76 Km 111, Villa Unión',

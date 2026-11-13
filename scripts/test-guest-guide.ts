@@ -226,6 +226,10 @@ async function runTests() {
   );
   assert(dsUno?.badge === 'Recomendado', 'DS Uno Viajes está marcado como Recomendado');
 
+  // Test 13: Removal of Regionales Milor
+  const milor = altosDptoGuide.recommendations.find((r) => r.label.includes('Milor'));
+  assert(!milor, 'Regionales Milor no debe figurar en el catálogo de recomendaciones');
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);
