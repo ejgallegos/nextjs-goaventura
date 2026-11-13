@@ -561,10 +561,10 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     ))}
                 </div>
 
-                {/* Plaza Principal y Servicios Cívicos */}
+                {/* Plaza Principal y Centro */}
                 <div className="space-y-2">
                   <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#676764]">
-                    Plaza Principal y Servicios Cívicos
+                    Plaza Principal y Centro
                   </h3>
                   {altosDptoGuide.usefulServices
                     .filter((s) => s.category === 'Servicios')

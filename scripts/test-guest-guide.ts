@@ -230,6 +230,13 @@ async function runTests() {
   const milor = altosDptoGuide.recommendations.find((r) => r.label.includes('Milor'));
   assert(!milor, 'Regionales Milor no debe figurar en el catálogo de recomendaciones');
 
+  // Test 14: No occurrences of "cívico" in guide data
+  const fs = await import('fs');
+  const guideDataRaw = fs.readFileSync('src/lib/data/guest-guide.ts', 'utf8');
+  const dashboardRaw = fs.readFileSync('src/components/guest-guide-dashboard.tsx', 'utf8');
+  assert(!/c[íi]vic[oa]/i.test(guideDataRaw), 'No debe aparecer la palabra cívico/a en guest-guide.ts');
+  assert(!/c[íi]vic[oa]/i.test(dashboardRaw), 'No debe aparecer la palabra cívico/a en guest-guide-dashboard.tsx');
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);

@@ -315,12 +315,12 @@ export const altosDptoGuide: PropertyGuestGuide = {
     },
 
     /* ==========================================================
-       PLAZA PRINCIPAL Y SERVICIOS CÍVICOS
+       PLAZA PRINCIPAL Y CENTRO
        ========================================================== */
     {
       category: 'Servicios',
       label: 'Plaza Principal San Martín',
-      description: 'Corazón urbano, cívico y social de Villa Unión. Espacio arbolado rodeado por la parroquia histórica, bancos, confiterías, restaurantes y ferias de artesanos.',
+      description: 'Corazón urbano y social de Villa Unión. Espacio arbolado rodeado por la parroquia histórica, bancos, confiterías, restaurantes y ferias de artesanos.',
       address: 'Centro urbano de Villa Unión, La Rioja',
       badge: 'Plaza Principal',
       href: 'https://www.google.com/maps/search/?api=1&query=Plaza+San+Mart%C3%ADn%2C+Villa+Uni%C3%B3n%2C+La+Rioja',

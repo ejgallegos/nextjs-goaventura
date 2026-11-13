@@ -38,6 +38,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T15 | S4-S5 | inline | completed | 10409f9 | Actualizar enlace de mapa regional al nuevo mapa personalizado Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk).
 - T16 | S4-S5 | inline | completed | 986cceb | Actualizar teléfono de Go Aventura a +54 9 3825 52-6275 y destacar DS Uno Viajes como Recomendado en Excursiones.
 - T17 | S4-S5 | inline | completed | 4e80909 | Quitar Regionales Milor de la categoría Artesanías en el catálogo de recomendaciones.
+- T18 | S4-S5 | inline | completed | pending | Remover la palabra 'cívico' de los títulos y descripciones de la guía.
 
 ## Log
 
@@ -63,3 +64,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L20 (2026-11-11): User request: "ya cree el mapa, quiero que pongas éste en la guia. Solo este vamos a usar. https://www.google.com/maps/d/u/0/edit?mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk&usp=sharing". Replaced `touristMapUrl` with the clean viewer URL for mid `1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk`. Verified 45 unit tests pass, typecheck 0 errors.
 - L21 (2026-11-13): User request: "en Excursiones, cambia el nro de telefono de Go Aventura por éste +54 9 3825 52-6275; Y a DS Uno tambien agregalo como recomendado.". Updated Go Aventura phone and WhatsApp reservation phone in Excursiones to +54 9 3825 52-6275. Set DS Uno Viajes badge to 'Recomendado' with direct WhatsApp reservation button. 47 tests pass, 0 type errors.
 - L22 (2026-11-13): User request: "de Artesanías quita Regionales Milor". Removed Regionales Milor from Artesanías in guest-guide.ts. Verified with 48 unit tests passing, typecheck 0 errors.
+- L23 (2026-11-13): User request: "quita la palabra 'cívico' de todos lados donde aparezca. Por ej donde dice 'Centro cívico' dejar 'Centro'.". Replaced "Plaza Principal y Servicios Cívicos" with "Plaza Principal y Centro" in dashboard and guide data, removed "cívico" from Plaza San Martín description. Verified 50 tests pass, 0 occurrences of cívico in src/.
