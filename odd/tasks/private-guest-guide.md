@@ -36,6 +36,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T13 | S4-S5 | inline | completed | 2730afb | Remover enlace 'Ver lámina A4 con QR para imprimir' y acción de impresión del dashboard del huésped.
 - T14 | S4-S5 | inline | completed | 71b66cd | Desactivar y ocultar el proveedor y badge de reCAPTCHA en las rutas de la guía privada.
 - T15 | S4-S5 | inline | completed | 10409f9 | Actualizar enlace de mapa regional al nuevo mapa personalizado Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk).
+- T16 | S4-S5 | inline | completed | pending | Actualizar teléfono de Go Aventura a +54 9 3825 52-6275 y destacar DS Uno Viajes como Recomendado en Excursiones.
 
 ## Log
 
@@ -59,3 +60,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L18 (2026-11-09): User request: "quita 'Ver lámina A4 con QR para imprimir'". Removed footer link to printable sheet and header print icon from GuestGuideDashboard. Verified 44 unit tests pass, typecheck 0 errors.
 - L19 (2026-11-09): User request: "oculta el recaptcha de la guia.". Excluded GoogleReCaptchaProvider from mounting on `/guia` routes and added CSS hide rules for `.grecaptcha-badge` under `.guide-active` and `:has(.is-guide-page)`. Verified 44 unit tests pass, typecheck 0 errors.
 - L20 (2026-11-11): User request: "ya cree el mapa, quiero que pongas éste en la guia. Solo este vamos a usar. https://www.google.com/maps/d/u/0/edit?mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk&usp=sharing". Replaced `touristMapUrl` with the clean viewer URL for mid `1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk`. Verified 45 unit tests pass, typecheck 0 errors.
+- L21 (2026-11-13): User request: "en Excursiones, cambia el nro de telefono de Go Aventura por éste +54 9 3825 52-6275; Y a DS Uno tambien agregalo como recomendado.". Updated Go Aventura phone and WhatsApp reservation phone in Excursiones to +54 9 3825 52-6275. Set DS Uno Viajes badge to 'Recomendado' with direct WhatsApp reservation button. 47 tests pass, 0 type errors.

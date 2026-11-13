@@ -212,6 +212,20 @@ async function runTests() {
     'El mapa de la región utiliza el nuevo mapa personalizado de Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk)'
   );
 
+  // Test 12: Excursiones updates (Go Aventura phone and DS Uno as recommended)
+  const goAventuraExcursion = altosDptoGuide.recommendations.find(
+    (r) => r.category === 'Excursiones' && r.label.includes('Go Aventura · Excursiones')
+  );
+  assert(
+    Boolean(goAventuraExcursion?.phone?.includes('3825526275') || goAventuraExcursion?.reservationPhone?.includes('3825 52-6275')),
+    'Go Aventura en Excursiones tiene el nuevo número de teléfono +54 9 3825 52-6275'
+  );
+
+  const dsUno = altosDptoGuide.recommendations.find(
+    (r) => r.category === 'Excursiones' && r.label.includes('DS Uno')
+  );
+  assert(dsUno?.badge === 'Recomendado', 'DS Uno Viajes está marcado como Recomendado');
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);
