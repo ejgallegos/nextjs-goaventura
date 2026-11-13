@@ -40,7 +40,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T17 | S4-S5 | inline | completed | 4e80909 | Quitar Regionales Milor de la categoría Artesanías en el catálogo de recomendaciones.
 - T18 | S4-S5 | inline | completed | 7769c64 | Remover la palabra 'cívico' de los títulos y descripciones de la guía.
 - T19 | S4-S5 | inline | completed | a3d0512 | Mejorar botón flotante de WhatsApp con icono oficial WhatsAppIcon, color de marca #25D366 y soporte pointer-events para clics.
-- T20 | S4-S5 | inline | completed | pending | Remover borde de color e indicador de alerta del botón 'Útil y SOS' para unificar diseño.
+- T20 | S4-S5 | inline | completed | 149c9af | Remover borde de color e indicador de alerta del botón 'Útil y SOS' para unificar diseño.
 
 ## Log
 
