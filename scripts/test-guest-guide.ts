@@ -243,6 +243,12 @@ async function runTests() {
     'El botón flotante de WhatsApp integra el icono oficial WhatsAppIcon y el color de marca #25D366'
   );
 
+  // Test 16: Útil y SOS tile without alert styling
+  assert(
+    !dashboardRaw.includes('isAlert'),
+    'El mosaico Útil y SOS no tiene el borde diferenciado ni el punto de alerta isAlert'
+  );
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);

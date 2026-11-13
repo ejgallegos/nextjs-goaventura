@@ -40,6 +40,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T17 | S4-S5 | inline | completed | 4e80909 | Quitar Regionales Milor de la categoría Artesanías en el catálogo de recomendaciones.
 - T18 | S4-S5 | inline | completed | 7769c64 | Remover la palabra 'cívico' de los títulos y descripciones de la guía.
 - T19 | S4-S5 | inline | completed | a3d0512 | Mejorar botón flotante de WhatsApp con icono oficial WhatsAppIcon, color de marca #25D366 y soporte pointer-events para clics.
+- T20 | S4-S5 | inline | completed | pending | Remover borde de color e indicador de alerta del botón 'Útil y SOS' para unificar diseño.
 
 ## Log
 
@@ -67,3 +68,4 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - L22 (2026-11-13): User request: "de Artesanías quita Regionales Milor". Removed Regionales Milor from Artesanías in guest-guide.ts. Verified with 48 unit tests passing, typecheck 0 errors.
 - L23 (2026-11-13): User request: "quita la palabra 'cívico' de todos lados donde aparezca. Por ej donde dice 'Centro cívico' dejar 'Centro'.". Replaced "Plaza Principal y Servicios Cívicos" with "Plaza Principal y Centro" in dashboard and guide data, removed "cívico" from Plaza San Martín description. Verified 50 tests pass, 0 occurrences of cívico in src/.
 - L24 (2026-11-13): User request: "mejora el botón flotante de 'Consultar por WhatsApp', agregale el icono original y mejoralo.". Integrated official SVG WhatsAppIcon, set official brand color #25D366 (hover: #20BD5A), added drop-shadow and pointer-events-none on gradient wrapper to allow pass-through scrolling/clicks. Also updated WhatsApp buttons in ItemCard and login view. Verified 51 tests pass, typecheck 0 errors.
+- L25 (2026-11-13): User request: "Quita el borde de color y el puntito de 'Útil y SOS', dejalo como estan los otros.". Removed isAlert prop and border-[#C9A265] / alert dot from MenuTile so Útil y SOS has the same border-[#E1E1E0] styling as all other tiles. Verified 52 tests pass, typecheck 0 errors.

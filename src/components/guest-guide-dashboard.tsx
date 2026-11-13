@@ -174,7 +174,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             <MenuTile icon={Tv} label="Smart TV" onClick={() => navigateTo('tv')} />
             <MenuTile icon={ShieldCheck} label="Reglas" onClick={() => navigateTo('reglas')} />
 
-            <MenuTile icon={LifeBuoy} label="Útil y SOS" onClick={() => navigateTo('util')} isAlert />
+            <MenuTile icon={LifeBuoy} label="Útil y SOS" onClick={() => navigateTo('util')} />
             <MenuTile icon={ShoppingBag} label="Comercios" onClick={() => navigateTo('compras')} />
             <MenuTile icon={Utensils} label="Gastronomía" onClick={() => navigateTo('gastronomia')} />
 
@@ -767,22 +767,17 @@ function MenuTile({
   icon: Icon,
   label,
   onClick,
-  isAlert,
 }: {
   icon: React.ElementType;
   label: string;
   onClick: () => void;
-  isAlert?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`relative flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[14px] border bg-white p-2 text-center transition active:scale-95 hover:border-[#2F6F73]/50 hover:shadow-sm ${
-        isAlert ? 'border-[#C9A265]' : 'border-[#E1E1E0]'
-      }`}
+      className="relative flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[14px] border border-[#E1E1E0] bg-white p-2 text-center transition active:scale-95 hover:border-[#2F6F73]/50 hover:shadow-sm"
     >
-      {isAlert && <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#C9A265]" />}
       <Icon className="h-6 w-6 text-[#2F6F73]" aria-hidden="true" />
       <span className="text-[12px] font-semibold leading-tight text-[#262622]">{label}</span>
     </button>
