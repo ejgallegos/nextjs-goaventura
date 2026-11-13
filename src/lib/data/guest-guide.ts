@@ -80,6 +80,7 @@ export interface PropertyGuestGuide {
   location: string;
   capacity: string;
   coverImage: string;
+  logo?: string;
   contactPhone: string;
   contactLabel: string;
   propertyMapUrl: string;
@@ -107,6 +108,7 @@ export const altosDptoGuide: PropertyGuestGuide = {
   location: 'Villa Unión, La Rioja',
   capacity: 'Exclusivo para 2 personas · 1 dormitorio sommier, baño y cocina equipada',
   coverImage: '/images/alojamientos/altos-del-talampaya-dpto-07.jpg',
+  logo: '/guest-guides/altos-del-talampaya-dpto/logo.png',
   contactPhone: '5493804509885',
   contactLabel: 'Anfitrión Altos del Talampaya',
   propertyMapUrl:

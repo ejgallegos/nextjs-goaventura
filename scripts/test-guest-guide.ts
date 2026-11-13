@@ -251,7 +251,7 @@ async function runTests() {
     'El mosaico Útil y SOS no tiene el borde diferenciado ni el punto de alerta isAlert'
   );
 
-  // Test 17: Go Aventura brand color palette integration
+  // Test 17: Altos del Talampaya brand color palette and logo integration
   const accessFormRaw = readFileSync(
     join(__dirname, '../src/components/guest-guide-access-form.tsx'),
     'utf-8'
@@ -270,8 +270,15 @@ async function runTests() {
     'La página de acceso y formulario no contienen #2F6F73'
   );
   assert(
-    dashboardRaw.includes('text-primary') && dashboardRaw.includes('bg-primary'),
-    'El dashboard utiliza los tokens de color primario de Go Aventura (text-primary, bg-primary)'
+    dashboardRaw.includes('#F9F5EB') &&
+      dashboardRaw.includes('#002B5B') &&
+      dashboardRaw.includes('#EA5455') &&
+      dashboardRaw.includes('#2D4059'),
+    'El dashboard integra la paleta de colores oficial de Altos del Talampaya (#F9F5EB, #EA5455, #2D4059, #002B5B)'
+  );
+  assert(
+    dashboardRaw.includes('altosDptoGuide.logo') && guidePageRaw.includes('altosDptoGuide.logo'),
+    'El logo oficial de Altos del Talampaya se muestra en el dashboard y en la página de acceso'
   );
 
   // Test 18: Mobile responsive design standards (skill responsive-design)

@@ -114,51 +114,63 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
   )}`;
 
   return (
-    <div className="min-h-screen min-h-dvh overflow-x-hidden bg-slate-50 font-body text-foreground pb-28 pb-[max(7rem,calc(5.5rem+env(safe-area-inset-bottom)))] antialiased selection:bg-primary selection:text-white">
+    <div className="min-h-screen min-h-dvh overflow-x-hidden bg-[#F9F5EB] font-body text-[#2D4059] pb-28 pb-[max(7rem,calc(5.5rem+env(safe-area-inset-bottom)))] antialiased selection:bg-[#002B5B] selection:text-white">
       {currentView === 'menu' ? (
         /* VISTA PRINCIPAL: MENÚ EN MOSAICO (TILES) ESTILO DEMO */
         <div className="mx-auto max-w-[490px] px-3.5 py-3 sm:px-4 sm:py-6">
           {/* Tarjeta de Portada con Foto */}
-          <header className="relative min-h-[200px] overflow-hidden rounded-[20px] bg-[#1A1A1A] text-center text-white shadow-sm sm:min-h-[240px]">
+          <header className="relative min-h-[240px] overflow-hidden rounded-[20px] bg-[#002B5B] text-center text-white shadow-sm sm:min-h-[260px]">
             <Image
               src={altosDptoGuide.coverImage}
               alt="Altos del Talampaya Dpto"
               fill
               priority
               sizes="(max-width: 640px) 100vw, 490px"
-              className="object-cover opacity-65"
+              className="object-cover opacity-50"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
-            <div className="relative flex min-h-[200px] flex-col justify-end p-5 sm:min-h-[240px] sm:p-7">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#002B5B]/90 via-[#002B5B]/50 to-transparent" />
+            <div className="relative flex min-h-[240px] flex-col justify-end p-5 sm:min-h-[260px] sm:p-7">
+              {altosDptoGuide.logo && (
+                <div className="mx-auto mb-3 flex h-18 w-18 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-white/95 p-2 shadow-lg backdrop-blur-sm">
+                  <Image
+                    src={altosDptoGuide.logo}
+                    alt="Logo Altos del Talampaya"
+                    width={72}
+                    height={72}
+                    priority
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+              )}
               <h1 className="font-headline text-xl font-bold uppercase tracking-wider text-white drop-shadow-md sm:text-2xl md:text-3xl">
                 {altosDptoGuide.propertyName}
               </h1>
-              <div className="mx-auto my-2.5 h-px w-20 bg-white/40" />
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/90">
+              <div className="mx-auto my-2.5 h-0.5 w-16 rounded-full bg-[#EA5455]" />
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/90">
                 Guía de bienvenida · Villa Unión
               </p>
             </div>
           </header>
 
           {/* Acceso Rápido Wi-Fi y Llaves */}
-          <div className="my-3.5 flex items-center justify-between gap-2.5 rounded-[16px] border border-slate-200 bg-white p-3 sm:px-4 sm:py-3.5 shadow-sm">
+          <div className="my-3.5 flex items-center justify-between gap-2.5 rounded-[16px] border border-[#2D4059]/15 bg-white p-3 sm:px-4 sm:py-3.5 shadow-xs">
             <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#EA5455]/10 text-[#EA5455]">
                 <KeyRound className="h-4 w-4" />
               </span>
               <div className="min-w-0">
-                <p className="text-xs font-bold text-foreground truncate">
-                  Caja de llaves: <span className="font-mono text-sm text-primary">{privateDetails.keyBoxCode}</span>
+                <p className="text-xs font-bold text-[#002B5B] truncate">
+                  Caja de llaves: <span className="font-mono text-sm font-black text-[#EA5455]">{privateDetails.keyBoxCode}</span>
                 </p>
-                <p className="text-[11px] text-muted-foreground truncate">
-                  Wi-Fi: <span className="font-mono font-semibold text-foreground">{privateDetails.wifiName}</span>
+                <p className="text-[11px] text-[#2D4059]/75 truncate">
+                  Wi-Fi: <span className="font-mono font-semibold text-[#002B5B]">{privateDetails.wifiName}</span>
                 </p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => copyText(privateDetails.wifiPassword, 'quick-wifi')}
-              className="touch-manipulation inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
+              className="touch-manipulation inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-xl bg-[#002B5B] px-3.5 py-2 text-xs font-bold text-white transition hover:bg-[#2D4059] active:scale-95"
             >
               {copiedKey === 'quick-wifi' ? '¡Copiada!' : 'Copiar clave'}
             </button>
@@ -188,15 +200,15 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
               href={altosDptoGuide.touristMapUrl}
               target="_blank"
               rel="noreferrer"
-              className="touch-manipulation flex min-h-[84px] sm:min-h-[88px] flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-[14px] border border-primary/30 bg-white p-2 text-center transition active:scale-95 hover:border-primary hover:shadow-sm"
+              className="touch-manipulation flex min-h-[84px] sm:min-h-[88px] flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-[14px] border border-[#EA5455]/30 bg-white p-2 text-center transition active:scale-95 hover:border-[#EA5455] hover:shadow-xs"
             >
-              <MapPinned className="h-5 w-5 sm:h-6 sm:w-6 text-primary shrink-0" />
-              <span className="text-[11px] sm:text-[12px] font-semibold leading-tight text-foreground hyphens-auto break-words line-clamp-2">Mapa Región</span>
+              <MapPinned className="h-5 w-5 sm:h-6 sm:w-6 text-[#EA5455] shrink-0" />
+              <span className="text-[11px] sm:text-[12px] font-semibold leading-tight text-[#002B5B] hyphens-auto break-words line-clamp-2">Mapa Región</span>
             </a>
           </nav>
 
           {/* Pie de página sutil */}
-          <footer className="mt-8 text-center text-xs text-muted-foreground">
+          <footer className="mt-8 text-center text-xs text-[#2D4059]/70">
             <p className="font-medium">Altos del Talampaya Dpto · Villa Unión, La Rioja</p>
           </footer>
         </div>
@@ -204,19 +216,31 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
         /* VISTAS DETALLADAS CON BARRA SUPERIOR STICKY Y BOTÓN VOLVER */
         <div className="mx-auto max-w-[490px]">
           {/* Barra superior de navegación */}
-          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-slate-50/95 px-3 py-2.5 sm:px-4 sm:py-3 backdrop-blur-md pt-[max(0.625rem,env(safe-area-inset-top))]">
+          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-[#2D4059]/15 bg-[#F9F5EB]/95 px-3 py-2.5 sm:px-4 sm:py-3 backdrop-blur-md pt-[max(0.625rem,env(safe-area-inset-top))]">
             <button
               type="button"
               onClick={() => navigateTo('menu')}
-              className="touch-manipulation inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-foreground shadow-sm transition hover:bg-slate-100 active:scale-95"
+              className="touch-manipulation inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-[#2D4059]/20 bg-white px-3.5 py-2 text-xs font-bold text-[#002B5B] shadow-xs transition hover:bg-[#F9F5EB] active:scale-95"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Volver</span>
             </button>
-            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-foreground text-center truncate max-w-[200px] sm:max-w-none">
+            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#002B5B] text-center truncate max-w-[200px] sm:max-w-none">
               {getViewTitle(currentView)}
             </h2>
-            <div className="w-12 sm:w-16" />
+            {altosDptoGuide.logo ? (
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white p-1 border border-[#2D4059]/15 shadow-2xs">
+                <Image
+                  src={altosDptoGuide.logo}
+                  alt="Altos del Talampaya"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            ) : (
+              <div className="w-12 sm:w-16" />
+            )}
           </header>
 
           {/* Contenido de la sección seleccionada */}
@@ -235,7 +259,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     href={altosDptoGuide.propertyMapUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="touch-manipulation flex min-h-[48px] h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 active:scale-[0.98]"
+                    className="touch-manipulation flex min-h-[48px] h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#002B5B] px-4 text-xs font-bold text-white shadow-xs transition hover:bg-[#2D4059] active:scale-[0.98]"
                   >
                     <MapPin className="h-4 w-4" />
                     Cómo llegar con Google Maps
@@ -244,24 +268,24 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                 </div>
 
                 <SectionCard title="Tarifa y medios de pago">
-                  <p className="text-xs leading-relaxed text-muted-foreground">
+                  <p className="text-xs leading-relaxed text-[#2D4059]/80">
                     {altosDptoGuide.payment.currencyDescription} Se abona preferentemente durante el primer día.
                   </p>
-                  <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs space-y-1.5">
-                    <p className="text-muted-foreground">Transferencia bancaria o efectivo:</p>
+                  <div className="mt-3 rounded-xl border border-[#2D4059]/15 bg-[#F9F5EB]/60 p-3 text-xs space-y-1.5">
+                    <p className="text-[#2D4059]/80">Transferencia bancaria o efectivo:</p>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-bold text-foreground truncate">
+                      <span className="font-bold text-[#002B5B] truncate">
                         Alias: <span className="font-mono">{altosDptoGuide.payment.bankAlias}</span>
                       </span>
                       <button
                         type="button"
                         onClick={() => copyText(altosDptoGuide.payment.bankAlias, 'alias')}
-                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
+                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-[#002B5B] px-3 py-1.5 text-xs font-bold text-white transition hover:bg-[#2D4059] active:scale-95"
                       >
                         {copiedKey === 'alias' ? '¡Copiado!' : 'Copiar alias'}
                       </button>
                     </div>
-                    <p className="text-[11px] text-muted-foreground">Titular: {altosDptoGuide.payment.accountHolder}</p>
+                    <p className="text-[11px] text-[#2D4059]/70">Titular: {altosDptoGuide.payment.accountHolder}</p>
                   </div>
                 </SectionCard>
               </>
@@ -276,30 +300,30 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                 </SectionCard>
 
                 <SectionCard title="Acceso autónomo con caja de llaves">
-                  <p className="text-xs text-muted-foreground">{altosDptoGuide.arrival.keyBoxLocation}</p>
-                  <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                  <p className="text-xs text-[#2D4059]/80">{altosDptoGuide.arrival.keyBoxLocation}</p>
+                  <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-[#2D4059]/15 bg-[#F9F5EB]/60 p-3.5">
                     <div>
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Código de caja</p>
-                      <p className="font-mono text-2xl font-black text-primary">{privateDetails.keyBoxCode}</p>
+                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#2D4059]/80">Código de caja</p>
+                      <p className="font-mono text-2xl font-black text-[#EA5455]">{privateDetails.keyBoxCode}</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => copyText(privateDetails.keyBoxCode, 'keybox')}
-                      className="touch-manipulation inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
+                      className="touch-manipulation inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-xl bg-[#002B5B] px-3.5 py-2 text-xs font-bold text-white transition hover:bg-[#2D4059] active:scale-95"
                     >
                       {copiedKey === 'keybox' ? '¡Copiado!' : 'Copiar código'}
                     </button>
                   </div>
-                  <p className="mt-2.5 text-xs font-medium text-foreground">
+                  <p className="mt-2.5 text-xs font-medium text-[#002B5B]">
                     🔑 {altosDptoGuide.arrival.keyDescription}
                   </p>
                 </SectionCard>
 
                 <SectionCard title="Instrucciones para el Check-out (hasta las 10:00 hs)">
-                  <ol className="space-y-2.5 text-xs leading-relaxed text-foreground">
+                  <ol className="space-y-2.5 text-xs leading-relaxed text-[#2D4059]">
                     {altosDptoGuide.departure.instructions.map((step, idx) => (
                       <li key={idx} className="flex items-start gap-2.5">
-                        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-primary/10 text-[11px] font-bold text-primary">
+                        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-[#F07B3F]/15 text-[11px] font-bold text-[#F07B3F]">
                           {idx + 1}
                         </span>
                         <span className="pt-0.5">{step}</span>
@@ -314,35 +338,35 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
               <>
                 <SectionCard title="Conexión Wi-Fi del departamento">
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                    <div className="flex items-center justify-between gap-2 rounded-xl border border-[#2D4059]/15 bg-[#F9F5EB]/60 p-3.5">
                       <div className="min-w-0">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Nombre de red</p>
-                        <p className="font-mono text-base font-bold text-foreground truncate">{privateDetails.wifiName}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#2D4059]/80">Nombre de red</p>
+                        <p className="font-mono text-base font-bold text-[#002B5B] truncate">{privateDetails.wifiName}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => copyText(privateDetails.wifiName, 'wifi-name')}
-                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
+                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-white border border-[#2D4059]/20 px-3 py-1.5 text-xs font-semibold text-[#002B5B] hover:bg-[#F9F5EB] active:scale-95"
                       >
                         {copiedKey === 'wifi-name' ? '¡Copiado!' : 'Copiar red'}
                       </button>
                     </div>
 
-                    <div className="flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                    <div className="flex items-center justify-between gap-2 rounded-xl border border-[#2D4059]/15 bg-[#F9F5EB]/60 p-3.5">
                       <div className="min-w-0">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Contraseña</p>
-                        <p className="font-mono text-base font-bold text-foreground truncate">{privateDetails.wifiPassword}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#2D4059]/80">Contraseña</p>
+                        <p className="font-mono text-base font-bold text-[#002B5B] truncate">{privateDetails.wifiPassword}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => copyText(privateDetails.wifiPassword, 'wifi-pass')}
-                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-primary px-3.5 py-1.5 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
+                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-[#002B5B] px-3.5 py-1.5 text-xs font-bold text-white transition hover:bg-[#2D4059] active:scale-95"
                       >
                         {copiedKey === 'wifi-pass' ? '¡Copiada!' : 'Copiar clave'}
                       </button>
                     </div>
                   </div>
-                  <p className="mt-3 text-xs text-muted-foreground">
+                  <p className="mt-3 text-xs text-[#2D4059]/75">
                     Red de fibra óptica exclusiva para huéspedes durante su estadía.
                   </p>
                 </SectionCard>
@@ -352,31 +376,31 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             {currentView === 'clima' && (
               <>
                 <SectionCard title="Piso Radiante (Calefacción)">
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-[#2D4059]/80">
                     Comandado por las pequeñas cajitas blancas ubicadas junto a la puerta principal y en el dormitorio.
                   </p>
-                  <ol className="mt-3 space-y-2 text-xs leading-relaxed text-foreground">
+                  <ol className="mt-3 space-y-2 text-xs leading-relaxed text-[#2D4059]">
                     <li className="flex items-start gap-2">
-                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-primary/10 text-[11px] font-bold text-primary">1</span>
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-[#F07B3F]/15 text-[11px] font-bold text-[#F07B3F]">1</span>
                       <span><strong>Encendido:</strong> Presioná el botón <em>ON</em> en la cajita.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-primary/10 text-[11px] font-bold text-primary">2</span>
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-[#F07B3F]/15 text-[11px] font-bold text-[#F07B3F]">2</span>
                       <span><strong>Temperatura:</strong> Graduá el calor deseado con las flechas (arriba / abajo).</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-primary/10 text-[11px] font-bold text-primary">3</span>
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-[#F07B3F]/15 text-[11px] font-bold text-[#F07B3F]">3</span>
                       <span><strong>Confirmar:</strong> Presioná el botón <em>Set</em> para guardar la temperatura.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-primary/10 text-[11px] font-bold text-primary">4</span>
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-[#F07B3F]/15 text-[11px] font-bold text-[#F07B3F]">4</span>
                       <span><strong>Apagado:</strong> Presioná el botón de apagado al retirarte o cuando el ambiente esté templado.</span>
                     </li>
                   </ol>
                 </SectionCard>
 
                 <SectionCard title="Aire Acondicionado">
-                  <p className="text-xs leading-relaxed text-foreground">
+                  <p className="text-xs leading-relaxed text-[#2D4059]">
                     Utilizá el equipo con el control remoto provisto.
                   </p>
                   <div className="mt-2.5 rounded-xl border border-sky-100 bg-sky-50/60 p-3 text-xs text-sky-950">
@@ -389,10 +413,10 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             {currentView === 'tv' && (
               <>
                 <SectionCard title="Smart TV · Televisión en vivo">
-                  <p className="text-xs leading-relaxed text-foreground">
+                  <p className="text-xs leading-relaxed text-[#2D4059]">
                     Para ver televisión por cable en vivo:
                   </p>
-                  <ol className="mt-2.5 space-y-1.5 text-xs text-foreground">
+                  <ol className="mt-2.5 space-y-1.5 text-xs text-[#2D4059]">
                     <li>1. Encendé el televisor desde el control remoto.</li>
                     <li>2. Seleccioná la aplicación <strong>View</strong> en la pantalla principal.</li>
                     <li>3. Podés utilizar tus aplicaciones personales de streaming (recordá cerrar sesión antes de partir).</li>
@@ -400,7 +424,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                 </SectionCard>
 
                 <SectionCard title="Cocina y equipamiento">
-                  <p className="text-xs leading-relaxed text-foreground">
+                  <p className="text-xs leading-relaxed text-[#2D4059]">
                     El departamento cuenta con vajilla, utensilios, heladera y pava eléctrica para que prepares tus desayunos y comidas con total comodidad.
                   </p>
                 </SectionCard>
@@ -409,9 +433,9 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
             {currentView === 'reglas' && (
               <SectionCard title="Normas de convivencia">
-                <ul className="space-y-3 text-xs leading-relaxed text-foreground">
+                <ul className="space-y-3 text-xs leading-relaxed text-[#2D4059]">
                   {altosDptoGuide.houseRules.map((rule, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 border-b border-slate-100 pb-2.5 last:border-b-0 last:pb-0">
+                    <li key={idx} className="flex items-start gap-2.5 border-b border-[#2D4059]/10 pb-2.5 last:border-b-0 last:pb-0">
                       <span className="mt-0.5 text-sm">🌿</span>
                       <span>{rule}</span>
                     </li>
@@ -423,7 +447,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             {currentView === 'util' && (
               <div className="space-y-4">
                 <SectionCard title="Botiquín y primeros auxilios">
-                  <p className="text-xs leading-relaxed text-foreground">
+                  <p className="text-xs leading-relaxed text-[#2D4059]">
                     {altosDptoGuide.emergencies.firstAidKitLocation}
                   </p>
                 </SectionCard>
@@ -432,38 +456,38 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                   <div className="grid grid-cols-2 gap-2 mt-1">
                     <a
                       href="tel:107"
-                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-[#2D4059]/15 bg-white p-3 text-center transition hover:border-[#EA5455]/50 active:scale-[0.96]"
                     >
-                      <span className="text-lg font-black text-primary">107</span>
-                      <span className="text-[11px] font-semibold text-muted-foreground">Hospital Neira</span>
+                      <span className="text-lg font-black text-[#EA5455]">107</span>
+                      <span className="text-[11px] font-semibold text-[#2D4059]/75">Hospital Neira</span>
                     </a>
                     <a
                       href="tel:101"
-                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-[#2D4059]/15 bg-white p-3 text-center transition hover:border-[#EA5455]/50 active:scale-[0.96]"
                     >
-                      <span className="text-lg font-black text-primary">101</span>
-                      <span className="text-[11px] font-semibold text-muted-foreground">Policía</span>
+                      <span className="text-lg font-black text-[#EA5455]">101</span>
+                      <span className="text-[11px] font-semibold text-[#2D4059]/75">Policía</span>
                     </a>
                     <a
                       href="tel:100"
-                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-[#2D4059]/15 bg-white p-3 text-center transition hover:border-[#EA5455]/50 active:scale-[0.96]"
                     >
-                      <span className="text-lg font-black text-primary">100</span>
-                      <span className="text-[11px] font-semibold text-muted-foreground">Bomberos</span>
+                      <span className="text-lg font-black text-[#EA5455]">100</span>
+                      <span className="text-[11px] font-semibold text-[#2D4059]/75">Bomberos</span>
                     </a>
                     <a
                       href={`tel:${altosDptoGuide.contactPhone}`}
-                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-[#2D4059]/15 bg-white p-3 text-center transition hover:border-[#EA5455]/50 active:scale-[0.96]"
                     >
-                      <span className="text-xs font-black text-primary">Anfitrión</span>
-                      <span className="text-[11px] font-semibold text-muted-foreground">Llamada directa</span>
+                      <span className="text-xs font-black text-[#002B5B]">Anfitrión</span>
+                      <span className="text-[11px] font-semibold text-[#2D4059]/75">Llamada directa</span>
                     </a>
                   </div>
                 </SectionCard>
 
                 {/* Bancos y Cajeros Automáticos */}
                 <div className="space-y-2">
-                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#002B5B]">
                     Bancos y Cajeros Automáticos
                   </h3>
                   {altosDptoGuide.usefulServices
@@ -483,7 +507,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
                 {/* Hospital y Farmacia */}
                 <div className="space-y-2">
-                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#002B5B]">
                     Hospital y Farmacia
                   </h3>
                   {altosDptoGuide.usefulServices
@@ -503,7 +527,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
                 {/* Bomberos Voluntarios */}
                 <div className="space-y-2">
-                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#002B5B]">
                     Bomberos Voluntarios
                   </h3>
                   {altosDptoGuide.usefulServices
@@ -523,7 +547,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
                 {/* Estaciones de Servicio y Combustible */}
                 <div className="space-y-2">
-                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#002B5B]">
                     Estaciones de Servicio (Combustible)
                   </h3>
                   {altosDptoGuide.usefulServices
@@ -543,7 +567,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
                 {/* Iglesias y Patrimonio Cultural */}
                 <div className="space-y-2">
-                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#002B5B]">
                     Iglesias y Patrimonio Cultural
                   </h3>
                   {altosDptoGuide.usefulServices
@@ -563,7 +587,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
                 {/* Plaza Principal y Centro */}
                 <div className="space-y-2">
-                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-[#002B5B]">
                     Plaza Principal y Centro
                   </h3>
                   {altosDptoGuide.usefulServices
@@ -723,17 +747,17 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                   ))}
 
                 {/* Mapa Turístico Completo */}
-                <div className="rounded-[18px] border border-slate-200 bg-white p-5 text-center shadow-sm">
-                  <MapPinned className="mx-auto h-7 w-7 text-primary" />
-                  <h3 className="mt-2 text-sm font-bold text-foreground">Mapa Turístico Oficial del Bermejo</h3>
-                  <p className="mt-1 text-xs text-muted-foreground">
+                <div className="rounded-[18px] border border-[#2D4059]/15 bg-white p-5 text-center shadow-xs">
+                  <MapPinned className="mx-auto h-7 w-7 text-[#EA5455]" />
+                  <h3 className="mt-2 text-sm font-bold text-[#002B5B]">Mapa Turístico Oficial del Bermejo</h3>
+                  <p className="mt-1 text-xs text-[#2D4059]/75">
                     Atractivos naturales, rutas, miradores y servicios en Google My Maps.
                   </p>
                   <a
                     href={altosDptoGuide.touristMapUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="touch-manipulation mt-3.5 inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
+                    className="touch-manipulation mt-3.5 inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-[#002B5B] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#2D4059] active:scale-95"
                   >
                     <span>Ver mapa interactivo completo</span>
                     <ExternalLink className="h-3.5 w-3.5" />
@@ -747,7 +771,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
       {/* Botón flotante persistente de WhatsApp mejorado con ícono oficial */}
       <aside aria-label="Contacto por WhatsApp">
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-slate-50 via-slate-50/95 to-transparent px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] pointer-events-none">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-[#F9F5EB] via-[#F9F5EB]/95 to-transparent px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] pointer-events-none">
           <a
             href={whatsappUrl}
             target="_blank"
@@ -776,18 +800,18 @@ function MenuTile({
     <button
       type="button"
       onClick={onClick}
-      className="touch-manipulation relative flex min-h-[84px] sm:min-h-[88px] flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-[14px] border border-slate-200 bg-white p-2 text-center transition active:scale-95 hover:border-primary/50 hover:shadow-sm"
+      className="touch-manipulation relative flex min-h-[84px] sm:min-h-[88px] flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-[14px] border border-[#2D4059]/15 bg-white p-2 text-center transition active:scale-95 hover:border-[#EA5455]/50 hover:shadow-xs"
     >
-      <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary shrink-0" aria-hidden="true" />
-      <span className="text-[11px] sm:text-[12px] font-semibold leading-tight text-foreground hyphens-auto break-words line-clamp-2">{label}</span>
+      <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-[#002B5B] shrink-0" aria-hidden="true" />
+      <span className="text-[11px] sm:text-[12px] font-semibold leading-tight text-[#002B5B] hyphens-auto break-words line-clamp-2">{label}</span>
     </button>
   );
 }
 
 function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
-      <h3 className="text-xs font-bold uppercase tracking-wider text-primary">{title}</h3>
+    <section className="rounded-[18px] border border-[#2D4059]/15 bg-white p-5 shadow-xs">
+      <h3 className="text-xs font-bold uppercase tracking-wider text-[#002B5B]">{title}</h3>
       <div className="mt-3">{children}</div>
     </section>
   );
@@ -795,16 +819,16 @@ function SectionCard({ title, children }: { title: string; children: React.React
 
 function KvRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between border-b border-slate-100 py-2.5 last:border-b-0 last:pb-0">
-      <span className="text-xs font-medium text-muted-foreground">{label}</span>
-      <span className="text-right text-xs font-bold text-foreground">{value}</span>
+    <div className="flex items-center justify-between border-b border-[#2D4059]/10 py-2.5 last:border-b-0 last:pb-0">
+      <span className="text-xs font-medium text-[#2D4059]/80">{label}</span>
+      <span className="text-right text-xs font-bold text-[#002B5B]">{value}</span>
     </div>
   );
 }
 
 function NoticeBox({ text }: { text: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white/80 p-3 text-xs text-muted-foreground">
+    <div className="rounded-xl border border-[#2D4059]/15 bg-white/90 p-3 text-xs text-[#2D4059]">
       ℹ️ {text}
     </div>
   );
@@ -838,34 +862,34 @@ function ItemCard({
 
   return (
     <article
-      className={`rounded-[18px] border bg-white p-4 shadow-sm transition hover:shadow-md ${
-        isRecommended ? 'border-primary/50 ring-1 ring-primary/20 bg-primary/[0.015]' : 'border-slate-200'
+      className={`rounded-[18px] border bg-white p-4 shadow-xs transition hover:shadow-md ${
+        isRecommended ? 'border-[#EA5455]/40 ring-1 ring-[#EA5455]/20 bg-[#EA5455]/[0.015]' : 'border-[#2D4059]/15'
       }`}
     >
       <div className="flex items-start justify-between gap-2">
-        <h4 className="text-sm font-bold text-foreground">{title}</h4>
+        <h4 className="text-sm font-bold text-[#002B5B]">{title}</h4>
         {badge && (
           <span
             className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold shrink-0 ${
               isRecommended
-                ? 'bg-primary/10 text-primary border border-primary/25 shadow-xs'
-                : 'bg-slate-100 text-slate-700 border border-slate-200'
+                ? 'bg-[#EA5455]/10 text-[#EA5455] border border-[#EA5455]/30 shadow-xs'
+                : 'bg-[#F9F5EB] text-[#2D4059] border border-[#2D4059]/15'
             }`}
           >
             {isRecommended ? '★ Recomendado' : badge}
           </span>
         )}
       </div>
-      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
-      {address && <p className="mt-1.5 text-[11px] text-slate-500">📍 {address}</p>}
+      <p className="mt-1 text-xs leading-relaxed text-[#2D4059]/85">{description}</p>
+      {address && <p className="mt-1.5 text-[11px] text-[#2D4059]/70">📍 {address}</p>}
 
       <div className="mt-3 flex flex-wrap gap-2">
         {contactNumber && (
           <a
             href={`tel:${contactNumber.replace(/[\s+-]/g, '')}`}
-            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-[#2D4059]/20 bg-[#F9F5EB]/60 px-3 py-1.5 text-xs font-semibold text-[#002B5B] hover:bg-[#F9F5EB] active:scale-95"
           >
-            <Phone className="h-3 w-3 text-primary" />
+            <Phone className="h-3 w-3 text-[#002B5B]" />
             Llamar
           </a>
         )}
@@ -889,20 +913,20 @@ function ItemCard({
             href={mapsUrl}
             target="_blank"
             rel="noreferrer"
-            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-[#2D4059]/20 bg-[#F9F5EB]/60 px-3 py-1.5 text-xs font-semibold text-[#002B5B] hover:bg-[#F9F5EB] active:scale-95"
           >
-            <MapPin className="h-3 w-3 text-primary" />
+            <MapPin className="h-3 w-3 text-[#EA5455]" />
             Cómo llegar
-            <ExternalLink className="h-3 w-3 text-muted-foreground" />
+            <ExternalLink className="h-3 w-3 text-[#2D4059]/60" />
           </a>
         )}
 
         {email && (
           <a
             href={`mailto:${email}`}
-            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-[#2D4059]/20 bg-[#F9F5EB]/60 px-3 py-1.5 text-xs font-semibold text-[#002B5B] hover:bg-[#F9F5EB] active:scale-95"
           >
-            <Mail className="h-3 w-3 text-primary" />
+            <Mail className="h-3 w-3 text-[#002B5B]" />
             Email
           </a>
         )}
@@ -914,8 +938,8 @@ function ItemCard({
             rel="noreferrer"
             className={`touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold active:scale-95 ${
               isRecommended
-                ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                : 'border border-slate-200 bg-slate-50 text-foreground hover:bg-slate-100'
+                ? 'bg-[#002B5B] text-white hover:bg-[#2D4059]'
+                : 'border border-[#2D4059]/20 bg-[#F9F5EB]/60 text-[#002B5B] hover:bg-[#F9F5EB]'
             }`}
           >
             <span>Ver web</span>
@@ -928,7 +952,7 @@ function ItemCard({
             href={externalUrl}
             target="_blank"
             rel="noreferrer"
-            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg bg-primary px-3.5 py-1.5 text-xs font-bold text-primary-foreground hover:bg-primary/90 active:scale-95"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg bg-[#002B5B] px-3.5 py-1.5 text-xs font-bold text-white hover:bg-[#2D4059] active:scale-95"
           >
             Ver más
             <ExternalLink className="h-3 w-3" />

@@ -37,7 +37,7 @@ export default function GuestGuideAccessForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4" noValidate>
       <div>
-        <label htmlFor="guest-guide-pin" className="block text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        <label htmlFor="guest-guide-pin" className="block text-xs font-bold uppercase tracking-wider text-[#2D4059]">
           Clave de acceso (Wi-Fi)
         </label>
         <input
@@ -56,7 +56,7 @@ export default function GuestGuideAccessForm() {
           minLength={4}
           maxLength={64}
           required
-          className="mt-1.5 h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-center font-mono text-base font-bold tracking-wider text-foreground transition focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="mt-1.5 h-12 w-full rounded-xl border border-[#2D4059]/20 bg-[#F9F5EB]/60 px-4 text-center font-mono text-base font-bold tracking-wider text-[#002B5B] transition focus:border-[#002B5B] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#002B5B]/20"
           aria-describedby={error ? 'guest-guide-pin-error' : undefined}
         />
       </div>
@@ -68,7 +68,7 @@ export default function GuestGuideAccessForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="touch-manipulation flex min-h-[48px] h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        className="touch-manipulation flex min-h-[48px] h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#002B5B] px-5 font-bold text-white shadow-sm transition hover:bg-[#2D4059] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-[#002B5B] focus:ring-offset-2"
       >
         {isSubmitting ? (
           <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
