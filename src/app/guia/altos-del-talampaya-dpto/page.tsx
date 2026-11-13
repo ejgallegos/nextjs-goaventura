@@ -36,10 +36,10 @@ export default async function AltosDptoGuestGuidePage() {
   const isConfigured = isGuestGuideConfigured();
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-6 text-foreground sm:py-10">
+    <div className="min-h-screen min-h-dvh overflow-x-hidden bg-slate-50 px-4 py-6 text-foreground sm:py-10">
       <div className="mx-auto max-w-[480px] space-y-4">
         {/* Cabecera / Tarjeta fotográfica estilo App */}
-        <header className="relative min-h-[220px] overflow-hidden rounded-[20px] border border-black/5 bg-[#1A1A1A] text-center text-white shadow-sm sm:min-h-[240px]">
+        <header className="relative min-h-[200px] overflow-hidden rounded-[20px] border border-black/5 bg-[#1A1A1A] text-center text-white shadow-sm sm:min-h-[240px]">
           <Image
             src={altosDptoGuide.coverImage}
             alt="Altos del Talampaya Dpto"
@@ -49,8 +49,8 @@ export default async function AltosDptoGuestGuidePage() {
             className="object-cover opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-          <div className="relative flex min-h-[220px] flex-col justify-end p-6 sm:min-h-[240px] sm:p-7">
-            <h1 className="font-headline text-2xl font-bold uppercase tracking-wide text-white drop-shadow-md sm:text-3xl">
+          <div className="relative flex min-h-[200px] flex-col justify-end p-5 sm:min-h-[240px] sm:p-7">
+            <h1 className="font-headline text-xl font-bold uppercase tracking-wide text-white drop-shadow-md sm:text-2xl md:text-3xl">
               {altosDptoGuide.propertyName}
             </h1>
             <div className="mx-auto my-2.5 h-px w-20 bg-white/40" />
@@ -61,7 +61,7 @@ export default async function AltosDptoGuestGuidePage() {
         </header>
 
         {/* Tarjeta de Acceso con PIN */}
-        <main className="rounded-[18px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+        <main className="rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
           <div className="flex items-center gap-2">
             <span className="grid h-7 w-7 place-items-center rounded-lg bg-primary/10 text-primary">
               <Shield className="h-4 w-4" aria-hidden="true" />
@@ -93,7 +93,7 @@ export default async function AltosDptoGuestGuidePage() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition"
+            className="touch-manipulation inline-flex min-h-[44px] items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition active:scale-[0.98]"
           >
             <WhatsAppIcon className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
             ¿Dudas con tu clave? Consultá por WhatsApp

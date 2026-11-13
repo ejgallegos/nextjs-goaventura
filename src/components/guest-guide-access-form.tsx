@@ -51,6 +51,8 @@ export default function GuestGuideAccessForm() {
           autoCapitalize="none"
           autoCorrect="off"
           spellCheck={false}
+          inputMode="text"
+          enterKeyHint="go"
           minLength={4}
           maxLength={64}
           required
@@ -66,7 +68,7 @@ export default function GuestGuideAccessForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        className="touch-manipulation flex min-h-[48px] h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       >
         {isSubmitting ? (
           <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />

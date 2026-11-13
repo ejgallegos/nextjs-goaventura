@@ -114,12 +114,12 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
   )}`;
 
   return (
-    <div className="min-h-screen bg-slate-50 font-body text-foreground pb-24 antialiased selection:bg-primary selection:text-white">
+    <div className="min-h-screen min-h-dvh overflow-x-hidden bg-slate-50 font-body text-foreground pb-28 pb-[max(7rem,calc(5.5rem+env(safe-area-inset-bottom)))] antialiased selection:bg-primary selection:text-white">
       {currentView === 'menu' ? (
         /* VISTA PRINCIPAL: MENÚ EN MOSAICO (TILES) ESTILO DEMO */
-        <div className="mx-auto max-w-[490px] px-4 py-4 sm:py-6">
+        <div className="mx-auto max-w-[490px] px-3.5 py-3 sm:px-4 sm:py-6">
           {/* Tarjeta de Portada con Foto */}
-          <header className="relative min-h-[220px] overflow-hidden rounded-[20px] bg-[#1A1A1A] text-center text-white shadow-sm sm:min-h-[240px]">
+          <header className="relative min-h-[200px] overflow-hidden rounded-[20px] bg-[#1A1A1A] text-center text-white shadow-sm sm:min-h-[240px]">
             <Image
               src={altosDptoGuide.coverImage}
               alt="Altos del Talampaya Dpto"
@@ -129,8 +129,8 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
               className="object-cover opacity-65"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
-            <div className="relative flex min-h-[220px] flex-col justify-end p-6 sm:min-h-[240px] sm:p-7">
-              <h1 className="font-headline text-2xl font-bold uppercase tracking-wider text-white drop-shadow-md sm:text-3xl">
+            <div className="relative flex min-h-[200px] flex-col justify-end p-5 sm:min-h-[240px] sm:p-7">
+              <h1 className="font-headline text-xl font-bold uppercase tracking-wider text-white drop-shadow-md sm:text-2xl md:text-3xl">
                 {altosDptoGuide.propertyName}
               </h1>
               <div className="mx-auto my-2.5 h-px w-20 bg-white/40" />
@@ -141,16 +141,16 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
           </header>
 
           {/* Acceso Rápido Wi-Fi y Llaves */}
-          <div className="my-3.5 flex items-center justify-between rounded-[16px] border border-slate-200 bg-white px-4 py-3 shadow-sm">
-            <div className="flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary/10 text-primary">
+          <div className="my-3.5 flex items-center justify-between gap-2.5 rounded-[16px] border border-slate-200 bg-white p-3 sm:px-4 sm:py-3.5 shadow-sm">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
                 <KeyRound className="h-4 w-4" />
               </span>
-              <div>
-                <p className="text-xs font-bold text-foreground">
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-foreground truncate">
                   Caja de llaves: <span className="font-mono text-sm text-primary">{privateDetails.keyBoxCode}</span>
                 </p>
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-[11px] text-muted-foreground truncate">
                   Wi-Fi: <span className="font-mono font-semibold text-foreground">{privateDetails.wifiName}</span>
                 </p>
               </div>
@@ -158,14 +158,14 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
             <button
               type="button"
               onClick={() => copyText(privateDetails.wifiPassword, 'quick-wifi')}
-              className="rounded-xl bg-primary px-3 py-1.5 text-[11px] font-bold text-primary-foreground transition hover:bg-primary/90"
+              className="touch-manipulation inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
             >
               {copiedKey === 'quick-wifi' ? '¡Copiada!' : 'Copiar clave'}
             </button>
           </div>
 
           {/* Grilla de 15 Mosaicos (5 filas x 3 columnas) */}
-          <nav aria-label="Secciones de la guía" className="grid grid-cols-3 gap-2.5">
+          <nav aria-label="Secciones de la guía" className="grid grid-cols-3 gap-2 sm:gap-2.5">
             <MenuTile icon={Home} label="Bienvenida" onClick={() => navigateTo('inicio')} />
             <MenuTile icon={KeyRound} label="Check-in" onClick={() => navigateTo('checkin')} />
             <MenuTile icon={Wifi} label="WiFi" onClick={() => navigateTo('wifi')} />
@@ -188,10 +188,10 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
               href={altosDptoGuide.touristMapUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[14px] border border-primary/30 bg-white p-2 text-center transition active:scale-95 hover:border-primary hover:shadow-sm"
+              className="touch-manipulation flex min-h-[84px] sm:min-h-[88px] flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-[14px] border border-primary/30 bg-white p-2 text-center transition active:scale-95 hover:border-primary hover:shadow-sm"
             >
-              <MapPinned className="h-6 w-6 text-primary" />
-              <span className="text-[12px] font-semibold leading-tight text-foreground">Mapa Región</span>
+              <MapPinned className="h-5 w-5 sm:h-6 sm:w-6 text-primary shrink-0" />
+              <span className="text-[11px] sm:text-[12px] font-semibold leading-tight text-foreground hyphens-auto break-words line-clamp-2">Mapa Región</span>
             </a>
           </nav>
 
@@ -204,19 +204,19 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
         /* VISTAS DETALLADAS CON BARRA SUPERIOR STICKY Y BOTÓN VOLVER */
         <div className="mx-auto max-w-[490px]">
           {/* Barra superior de navegación */}
-          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-slate-50/95 px-4 py-3 backdrop-blur-md">
+          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-slate-50/95 px-3 py-2.5 sm:px-4 sm:py-3 backdrop-blur-md pt-[max(0.625rem,env(safe-area-inset-top))]">
             <button
               type="button"
               onClick={() => navigateTo('menu')}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-foreground shadow-sm transition hover:bg-slate-100 active:scale-95"
+              className="touch-manipulation inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-foreground shadow-sm transition hover:bg-slate-100 active:scale-95"
             >
-              <ArrowLeft className="h-3.5 w-3.5" />
+              <ArrowLeft className="h-4 w-4" />
               <span>Volver</span>
             </button>
-            <h2 className="text-sm font-bold uppercase tracking-wider text-foreground">
+            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-foreground text-center truncate max-w-[200px] sm:max-w-none">
               {getViewTitle(currentView)}
             </h2>
-            <div className="w-16" />
+            <div className="w-12 sm:w-16" />
           </header>
 
           {/* Contenido de la sección seleccionada */}
@@ -235,7 +235,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     href={altosDptoGuide.propertyMapUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                    className="touch-manipulation flex min-h-[48px] h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 active:scale-[0.98]"
                   >
                     <MapPin className="h-4 w-4" />
                     Cómo llegar con Google Maps
@@ -249,14 +249,14 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                   </p>
                   <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs space-y-1.5">
                     <p className="text-muted-foreground">Transferencia bancaria o efectivo:</p>
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-foreground">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-bold text-foreground truncate">
                         Alias: <span className="font-mono">{altosDptoGuide.payment.bankAlias}</span>
                       </span>
                       <button
                         type="button"
                         onClick={() => copyText(altosDptoGuide.payment.bankAlias, 'alias')}
-                        className="rounded-lg bg-primary px-2 py-1 text-[10px] font-bold text-primary-foreground transition hover:bg-primary/90"
+                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
                       >
                         {copiedKey === 'alias' ? '¡Copiado!' : 'Copiar alias'}
                       </button>
@@ -277,7 +277,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
                 <SectionCard title="Acceso autónomo con caja de llaves">
                   <p className="text-xs text-muted-foreground">{altosDptoGuide.arrival.keyBoxLocation}</p>
-                  <div className="mt-3 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                  <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
                     <div>
                       <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Código de caja</p>
                       <p className="font-mono text-2xl font-black text-primary">{privateDetails.keyBoxCode}</p>
@@ -285,7 +285,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     <button
                       type="button"
                       onClick={() => copyText(privateDetails.keyBoxCode, 'keybox')}
-                      className="rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90"
+                      className="touch-manipulation inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
                     >
                       {copiedKey === 'keybox' ? '¡Copiado!' : 'Copiar código'}
                     </button>
@@ -314,29 +314,29 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
               <>
                 <SectionCard title="Conexión Wi-Fi del departamento">
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3.5">
-                      <div>
+                    <div className="flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                      <div className="min-w-0">
                         <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Nombre de red</p>
-                        <p className="font-mono text-base font-bold text-foreground">{privateDetails.wifiName}</p>
+                        <p className="font-mono text-base font-bold text-foreground truncate">{privateDetails.wifiName}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => copyText(privateDetails.wifiName, 'wifi-name')}
-                        className="rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100"
+                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
                       >
                         {copiedKey === 'wifi-name' ? '¡Copiado!' : 'Copiar red'}
                       </button>
                     </div>
 
-                    <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3.5">
-                      <div>
+                    <div className="flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                      <div className="min-w-0">
                         <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Contraseña</p>
-                        <p className="font-mono text-base font-bold text-foreground">{privateDetails.wifiPassword}</p>
+                        <p className="font-mono text-base font-bold text-foreground truncate">{privateDetails.wifiPassword}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => copyText(privateDetails.wifiPassword, 'wifi-pass')}
-                        className="rounded-lg bg-primary px-3.5 py-1.5 text-xs font-bold text-primary-foreground transition hover:bg-primary/90"
+                        className="touch-manipulation inline-flex min-h-[38px] shrink-0 items-center justify-center rounded-lg bg-primary px-3.5 py-1.5 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
                       >
                         {copiedKey === 'wifi-pass' ? '¡Copiada!' : 'Copiar clave'}
                       </button>
@@ -432,28 +432,28 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                   <div className="grid grid-cols-2 gap-2 mt-1">
                     <a
                       href="tel:107"
-                      className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.98]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
                     >
                       <span className="text-lg font-black text-primary">107</span>
                       <span className="text-[11px] font-semibold text-muted-foreground">Hospital Neira</span>
                     </a>
                     <a
                       href="tel:101"
-                      className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.98]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
                     >
                       <span className="text-lg font-black text-primary">101</span>
                       <span className="text-[11px] font-semibold text-muted-foreground">Policía</span>
                     </a>
                     <a
                       href="tel:100"
-                      className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.98]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
                     >
                       <span className="text-lg font-black text-primary">100</span>
                       <span className="text-[11px] font-semibold text-muted-foreground">Bomberos</span>
                     </a>
                     <a
                       href={`tel:${altosDptoGuide.contactPhone}`}
-                      className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.98]"
+                      className="touch-manipulation flex min-h-[72px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-3 text-center transition hover:bg-white hover:border-primary/40 active:scale-[0.96]"
                     >
                       <span className="text-xs font-black text-primary">Anfitrión</span>
                       <span className="text-[11px] font-semibold text-muted-foreground">Llamada directa</span>
@@ -733,7 +733,7 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
                     href={altosDptoGuide.touristMapUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3.5 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90"
+                    className="touch-manipulation mt-3.5 inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 active:scale-95"
                   >
                     <span>Ver mapa interactivo completo</span>
                     <ExternalLink className="h-3.5 w-3.5" />
@@ -747,12 +747,12 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
 
       {/* Botón flotante persistente de WhatsApp mejorado con ícono oficial */}
       <aside aria-label="Contacto por WhatsApp">
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-slate-50 via-slate-50/95 to-transparent px-4 pb-4 pt-3 pointer-events-none">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-slate-50 via-slate-50/95 to-transparent px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] pointer-events-none">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="pointer-events-auto mx-auto flex h-13 max-w-[480px] items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20BD5A] px-5 py-3 font-bold text-white shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
+            className="touch-manipulation pointer-events-auto mx-auto flex min-h-[48px] h-12 sm:h-13 max-w-[480px] items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20BD5A] px-5 py-3 font-bold text-white shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
           >
             <WhatsAppIcon className="h-5 w-5 text-white shrink-0 drop-shadow-sm" aria-hidden="true" />
             <span className="text-sm font-bold tracking-wide">Consultar por WhatsApp</span>
@@ -776,10 +776,10 @@ function MenuTile({
     <button
       type="button"
       onClick={onClick}
-      className="relative flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[14px] border border-slate-200 bg-white p-2 text-center transition active:scale-95 hover:border-primary/50 hover:shadow-sm"
+      className="touch-manipulation relative flex min-h-[84px] sm:min-h-[88px] flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-[14px] border border-slate-200 bg-white p-2 text-center transition active:scale-95 hover:border-primary/50 hover:shadow-sm"
     >
-      <Icon className="h-6 w-6 text-primary" aria-hidden="true" />
-      <span className="text-[12px] font-semibold leading-tight text-foreground">{label}</span>
+      <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary shrink-0" aria-hidden="true" />
+      <span className="text-[11px] sm:text-[12px] font-semibold leading-tight text-foreground hyphens-auto break-words line-clamp-2">{label}</span>
     </button>
   );
 }
@@ -863,7 +863,7 @@ function ItemCard({
         {contactNumber && (
           <a
             href={`tel:${contactNumber.replace(/[\s+-]/g, '')}`}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-foreground hover:bg-slate-100"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
           >
             <Phone className="h-3 w-3 text-primary" />
             Llamar
@@ -877,7 +877,7 @@ function ItemCard({
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-[#E8F8EE] px-2.5 py-1 text-[11px] font-semibold text-emerald-900 hover:bg-[#D4F3DE] transition"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1.5 rounded-lg border border-emerald-300 bg-[#E8F8EE] px-3 py-1.5 text-xs font-semibold text-emerald-900 hover:bg-[#D4F3DE] transition active:scale-95"
           >
             <WhatsAppIcon className="h-3.5 w-3.5 text-[#25D366]" />
             WhatsApp
@@ -889,7 +889,7 @@ function ItemCard({
             href={mapsUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-foreground hover:bg-slate-100"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
           >
             <MapPin className="h-3 w-3 text-primary" />
             Cómo llegar
@@ -900,7 +900,7 @@ function ItemCard({
         {email && (
           <a
             href={`mailto:${email}`}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-foreground hover:bg-slate-100"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-slate-100 active:scale-95"
           >
             <Mail className="h-3 w-3 text-primary" />
             Email
@@ -912,7 +912,7 @@ function ItemCard({
             href={web.startsWith('http') ? web : `https://${web}`}
             target="_blank"
             rel="noreferrer"
-            className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold ${
+            className={`touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold active:scale-95 ${
               isRecommended
                 ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                 : 'border border-slate-200 bg-slate-50 text-foreground hover:bg-slate-100'
@@ -928,7 +928,7 @@ function ItemCard({
             href={externalUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1 text-[11px] font-bold text-primary-foreground hover:bg-primary/90"
+            className="touch-manipulation inline-flex min-h-[38px] items-center justify-center gap-1 rounded-lg bg-primary px-3.5 py-1.5 text-xs font-bold text-primary-foreground hover:bg-primary/90 active:scale-95"
           >
             Ver más
             <ExternalLink className="h-3 w-3" />

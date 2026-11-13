@@ -274,6 +274,20 @@ async function runTests() {
     'El dashboard utiliza los tokens de color primario de Go Aventura (text-primary, bg-primary)'
   );
 
+  // Test 18: Mobile responsive design standards (skill responsive-design)
+  assert(
+    dashboardRaw.includes('min-h-dvh') && guidePageRaw.includes('min-h-dvh'),
+    'Utiliza unidades dinámicas de viewport móvil (min-h-dvh) para evitar saltos de barra de navegación'
+  );
+  assert(
+    dashboardRaw.includes('safe-area-inset-bottom'),
+    'Contempla el área segura inferior (safe-area-inset-bottom) para gestos y barras en dispositivos móviles'
+  );
+  assert(
+    dashboardRaw.includes('touch-manipulation') && dashboardRaw.includes('min-h-[44px]'),
+    'Optimiza los objetivos táctiles (touch-manipulation y touch targets >= 44px) para navegación móvil'
+  );
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);
