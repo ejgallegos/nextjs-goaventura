@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { createHmac } from 'crypto';
 import bcrypt from 'bcryptjs';
 import { NextRequest } from 'next/server';
@@ -247,6 +249,29 @@ async function runTests() {
   assert(
     !dashboardRaw.includes('isAlert'),
     'El mosaico Útil y SOS no tiene el borde diferenciado ni el punto de alerta isAlert'
+  );
+
+  // Test 17: Go Aventura brand color palette integration
+  const accessFormRaw = readFileSync(
+    join(__dirname, '../src/components/guest-guide-access-form.tsx'),
+    'utf-8'
+  );
+  const guidePageRaw = readFileSync(
+    join(__dirname, '../src/app/guia/altos-del-talampaya-dpto/page.tsx'),
+    'utf-8'
+  );
+
+  assert(
+    !dashboardRaw.includes('#2F6F73') && !dashboardRaw.includes('#F1EDE4'),
+    'El dashboard no contiene colores hardcodeados de la paleta anterior (#2F6F73, #F1EDE4)'
+  );
+  assert(
+    !accessFormRaw.includes('#2F6F73') && !guidePageRaw.includes('#2F6F73'),
+    'La página de acceso y formulario no contienen #2F6F73'
+  );
+  assert(
+    dashboardRaw.includes('text-primary') && dashboardRaw.includes('bg-primary'),
+    'El dashboard utiliza los tokens de color primario de Go Aventura (text-primary, bg-primary)'
   );
 
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);

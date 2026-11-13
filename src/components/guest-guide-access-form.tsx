@@ -37,7 +37,7 @@ export default function GuestGuideAccessForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4" noValidate>
       <div>
-        <label htmlFor="guest-guide-pin" className="block text-xs font-bold uppercase tracking-wider text-[#676764]">
+        <label htmlFor="guest-guide-pin" className="block text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Clave de acceso (Wi-Fi)
         </label>
         <input
@@ -54,7 +54,7 @@ export default function GuestGuideAccessForm() {
           minLength={4}
           maxLength={64}
           required
-          className="mt-1.5 h-12 w-full rounded-xl border border-[#D7D3CB] bg-[#F4F4F4] px-4 text-center font-mono text-base font-bold tracking-wider text-[#262622] transition focus:border-[#2F6F73] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2F6F73]/20"
+          className="mt-1.5 h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-center font-mono text-base font-bold tracking-wider text-foreground transition focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20"
           aria-describedby={error ? 'guest-guide-pin-error' : undefined}
         />
       </div>
@@ -66,7 +66,7 @@ export default function GuestGuideAccessForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#2F6F73] px-5 font-bold text-white shadow-sm transition hover:bg-[#255B5E] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-[#2F6F73] focus:ring-offset-2"
+        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       >
         {isSubmitting ? (
           <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />

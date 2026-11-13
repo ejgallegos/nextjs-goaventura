@@ -36,7 +36,7 @@ export default async function AltosDptoGuestGuidePage() {
   const isConfigured = isGuestGuideConfigured();
 
   return (
-    <div className="min-h-screen bg-[#F1EDE4] px-4 py-6 text-[#262622] sm:py-10">
+    <div className="min-h-screen bg-slate-50 px-4 py-6 text-foreground sm:py-10">
       <div className="mx-auto max-w-[480px] space-y-4">
         {/* Cabecera / Tarjeta fotográfica estilo App */}
         <header className="relative min-h-[220px] overflow-hidden rounded-[20px] border border-black/5 bg-[#1A1A1A] text-center text-white shadow-sm sm:min-h-[240px]">
@@ -61,16 +61,16 @@ export default async function AltosDptoGuestGuidePage() {
         </header>
 
         {/* Tarjeta de Acceso con PIN */}
-        <main className="rounded-[18px] border border-[#E1E1E0] bg-white p-6 shadow-sm sm:p-7">
+        <main className="rounded-[18px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
           <div className="flex items-center gap-2">
-            <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#E5FBFC] text-[#2F6F73]">
+            <span className="grid h-7 w-7 place-items-center rounded-lg bg-primary/10 text-primary">
               <Shield className="h-4 w-4" aria-hidden="true" />
             </span>
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#2F6F73]">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-primary">
               Acceso privado
             </h2>
           </div>
-          <p className="mt-3 text-sm leading-relaxed text-[#676764]">
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Ingresá la clave de Wi-Fi del departamento provista para tu estadía para consultar llaves, climatización y recomendaciones locales.
           </p>
 
@@ -93,7 +93,7 @@ export default async function AltosDptoGuestGuidePage() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#676764] hover:text-[#262622] transition"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition"
           >
             <WhatsAppIcon className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
             ¿Dudas con tu clave? Consultá por WhatsApp
