@@ -39,7 +39,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T16 | S4-S5 | inline | completed | 986cceb | Actualizar teléfono de Go Aventura a +54 9 3825 52-6275 y destacar DS Uno Viajes como Recomendado en Excursiones.
 - T17 | S4-S5 | inline | completed | 4e80909 | Quitar Regionales Milor de la categoría Artesanías en el catálogo de recomendaciones.
 - T18 | S4-S5 | inline | completed | 7769c64 | Remover la palabra 'cívico' de los títulos y descripciones de la guía.
-- T19 | S4-S5 | inline | completed | pending | Mejorar botón flotante de WhatsApp con icono oficial WhatsAppIcon, color de marca #25D366 y soporte pointer-events para clics.
+- T19 | S4-S5 | inline | completed | a3d0512 | Mejorar botón flotante de WhatsApp con icono oficial WhatsAppIcon, color de marca #25D366 y soporte pointer-events para clics.
 
 ## Log
 
