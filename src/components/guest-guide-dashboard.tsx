@@ -16,7 +16,6 @@ import {
   Mail,
   MapPin,
   MapPinned,
-  MessageCircle,
   Phone,
   ShieldCheck,
   ShoppingBag,
@@ -27,6 +26,7 @@ import {
   Wifi,
 } from 'lucide-react';
 import type { GuestGuidePrivateDetails } from '@/lib/guest-guide-config';
+import { WhatsAppIcon } from '@/components/icons/whatsapp-icon';
 import { altosDptoGuide } from '@/lib/data/guest-guide';
 
 interface GuestGuideDashboardProps {
@@ -745,17 +745,17 @@ export default function GuestGuideDashboard({ privateDetails }: GuestGuideDashbo
         </div>
       )}
 
-      {/* Botón flotante persistente de WhatsApp estilo demo */}
+      {/* Botón flotante persistente de WhatsApp mejorado con ícono oficial */}
       <aside aria-label="Contacto por WhatsApp">
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-[#F1EDE4] via-[#F1EDE4]/95 to-transparent px-4 pb-4 pt-3">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-[#F1EDE4] via-[#F1EDE4]/95 to-transparent px-4 pb-4 pt-3 pointer-events-none">
           <a
             href={whatsappUrl}
             target="_blank"
-            rel="noreferrer"
-            className="mx-auto flex h-13 max-w-[490px] items-center justify-center gap-2 rounded-2xl bg-[#1F9D55] px-4 font-bold text-white shadow-lg shadow-emerald-950/20 transition hover:bg-[#1a8548] active:scale-[0.99]"
+            rel="noopener noreferrer"
+            className="pointer-events-auto mx-auto flex h-13 max-w-[480px] items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20BD5A] px-5 py-3 font-bold text-white shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
           >
-            <MessageCircle className="h-5 w-5 fill-current" aria-hidden="true" />
-            <span className="text-sm">Consultar por WhatsApp</span>
+            <WhatsAppIcon className="h-5 w-5 text-white shrink-0 drop-shadow-sm" aria-hidden="true" />
+            <span className="text-sm font-bold tracking-wide">Consultar por WhatsApp</span>
           </a>
         </div>
       </aside>
@@ -881,10 +881,10 @@ function ItemCard({
               `Hola, estoy alojado en Altos del Talampaya Dpto y quisiera consultar sobre ${title}.`
             )}`}
             target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-800 hover:bg-emerald-100"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-[#E8F8EE] px-2.5 py-1 text-[11px] font-semibold text-emerald-900 hover:bg-[#D4F3DE] transition"
           >
-            <MessageCircle className="h-3 w-3 text-emerald-600" />
+            <WhatsAppIcon className="h-3.5 w-3.5 text-[#25D366]" />
             WhatsApp
           </a>
         )}

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
-import { MessageCircle, Shield } from 'lucide-react';
+import { Shield } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/icons/whatsapp-icon';
 import GuestGuideAccessForm from '@/components/guest-guide-access-form';
 import GuestGuideDashboard from '@/components/guest-guide-dashboard';
 import {
@@ -91,10 +92,10 @@ export default async function AltosDptoGuestGuidePage() {
               'Hola, necesito ayuda para ingresar a la guía de Altos del Talampaya Dpto.'
             )}`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#676764] hover:text-[#262622] transition"
           >
-            <MessageCircle className="h-3.5 w-3.5 text-[#1F9D55]" aria-hidden="true" />
+            <WhatsAppIcon className="h-4 w-4 text-[#25D366]" aria-hidden="true" />
             ¿Dudas con tu clave? Consultá por WhatsApp
           </a>
         </div>

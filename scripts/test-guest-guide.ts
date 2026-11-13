@@ -237,6 +237,12 @@ async function runTests() {
   assert(!/c[íi]vic[oa]/i.test(guideDataRaw), 'No debe aparecer la palabra cívico/a en guest-guide.ts');
   assert(!/c[íi]vic[oa]/i.test(dashboardRaw), 'No debe aparecer la palabra cívico/a en guest-guide-dashboard.tsx');
 
+  // Test 15: WhatsAppIcon integration in dashboard floating button
+  assert(
+    dashboardRaw.includes('WhatsAppIcon') && dashboardRaw.includes('#25D366'),
+    'El botón flotante de WhatsApp integra el icono oficial WhatsAppIcon y el color de marca #25D366'
+  );
+
   console.log(`\nResumen: ${passed} pasadas, ${failed} fallidas`);
   if (failed > 0) {
     process.exit(1);
