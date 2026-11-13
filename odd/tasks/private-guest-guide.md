@@ -43,7 +43,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T20 | S4-S5 | inline | completed | 149c9af | Remover borde de color e indicador de alerta del botón 'Útil y SOS' para unificar diseño.
 - T21 | S4-S5 | inline | completed | 647ab7b | Adaptar y aplicar la paleta de colores oficial de Go Aventura (primary, slate-50, text-foreground, border-slate-200).
 - T22 | S4-S5 | inline | completed | 6cdbb57 | Aplicar estándares de responsive design mobile: dvh, safe-area insets, touch-manipulation y touch targets >= 44px.
-- T23 | S4-S5 | inline | completed | pending | Incorporar logo oficial de Altos del Talampaya y aplicar paleta de colores de marca (#F9F5EB, #EA5455, #F07B3F, #2D4059, #002B5B).
+- T23 | S4-S5 | inline | completed | 22e0b49 | Incorporar logo oficial de Altos del Talampaya y aplicar paleta de colores de marca (#F9F5EB, #EA5455, #F07B3F, #2D4059, #002B5B).
 
 ## Log
 
