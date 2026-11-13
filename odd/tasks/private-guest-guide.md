@@ -37,7 +37,7 @@ S7. "Probar acceso sin sesión, PIN válido, inválido, vencido y exceso de inte
 - T14 | S4-S5 | inline | completed | 71b66cd | Desactivar y ocultar el proveedor y badge de reCAPTCHA en las rutas de la guía privada.
 - T15 | S4-S5 | inline | completed | 10409f9 | Actualizar enlace de mapa regional al nuevo mapa personalizado Go Aventura (mid=1bL8uHR6ugFs35-SvQ2epju3hBQlXkzk).
 - T16 | S4-S5 | inline | completed | 986cceb | Actualizar teléfono de Go Aventura a +54 9 3825 52-6275 y destacar DS Uno Viajes como Recomendado en Excursiones.
-- T17 | S4-S5 | inline | completed | pending | Quitar Regionales Milor de la categoría Artesanías en el catálogo de recomendaciones.
+- T17 | S4-S5 | inline | completed | 4e80909 | Quitar Regionales Milor de la categoría Artesanías en el catálogo de recomendaciones.
 
 ## Log
 
